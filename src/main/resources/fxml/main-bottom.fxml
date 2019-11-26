@@ -6,9 +6,37 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fxml.MainBottom"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="controller.BottomController"
+            fx:id="bottomPane"
+            stylesheets="@../css/BottomStyle.css"
+            prefHeight="60.0">
 
-</AnchorPane>
+    <left>
+        <HBox spacing="20" alignment="CENTER">
+            <padding>
+                <Insets right="29"></Insets>
+            </padding>
+            <Label fx:id="labAlbum" onMouseClicked="#onClickedAlbum">
+                <graphic>
+                    <ImageView fitHeight="58" fitWidth="58"><Image url="@/image/NeteaseDefaultAlbumWhiteBackground.png"></Image></ImageView>
+                </graphic>
+            </Label>
+            <Label fx:id="labPlayLast"></Label>
+            <Label fx:id="labPlay"></Label>
+            <Label fx:id="labPlayNext"></Label>
+        </HBox>
+    </left>
+
+    <center>
+        <Button>Test</Button>
+    </center>
+
+    <right>
+        <Button>Test</Button>
+    </right>
+</BorderPane>

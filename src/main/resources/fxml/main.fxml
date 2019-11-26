@@ -22,7 +22,20 @@
     </left>
 
     <center>
-
+        <TabPane>
+            <tabs>
+                <Tab text="First">
+                    <content>
+                        <Label>Text</Label>
+                    </content>
+                </Tab>
+                <Tab text="Second">
+                    <content>
+                        <Label>Text</Label>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
     </center>
 
     <bottom>

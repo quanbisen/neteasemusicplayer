@@ -13,7 +13,7 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.MainTopController"
             fx:id="titleBar" onMousePressed="#onTitleBarPressed" onMouseDragged="#onTitleBarDragged"
-            onMouseClicked="#onTitleBarClicked"
+            onMouseClicked="#onTitleBarDoubleClicked"
             stylesheets="@../css/TitleBarStyle.css">
     <left>
         <HBox fx:id="left_HBox">

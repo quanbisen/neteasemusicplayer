@@ -159,7 +159,7 @@ public class MainTopController {
         }
     }
     @FXML
-    public void onTitleBarClicked(MouseEvent mouseEvent){
+    public void onTitleBarDoubleClicked(MouseEvent mouseEvent){
         if (titleBar.getCursor() == Cursor.DEFAULT){
             //如果鼠标的位置不是最小化、最大化、关闭/退出按钮的范围
             if (mouseEvent.getSceneX() < titleBar.getWidth()-(labelMinimize.getWidth()+labelMaximize.getWidth()+labelExit.getWidth())){
