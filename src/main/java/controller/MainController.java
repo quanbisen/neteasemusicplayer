@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import util.SpringUtil;
 
-@Scope("singleton")
-@Controller("mainController")
+
+@Controller
 public class MainController{
 
     @FXML

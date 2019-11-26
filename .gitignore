@@ -4,6 +4,7 @@
 #IDEA relevant file
 target
 .idea
+neteasemusicplayer.iml
 
 # Log file
 *.log

@@ -38,7 +38,7 @@ public class BottomController {
 
 //        BorderPane borderPane = (BorderPane) labAlbum.getScene().getRoot();
 
-        System.out.println(mainController);
+
         System.out.println(SpringUtil.applicationContext.getBean(MainController.class,"mainController"));
 
         BorderPane borderPane = SpringUtil.applicationContext.getBean(MainController.class,"mainController").getBorderPane();
