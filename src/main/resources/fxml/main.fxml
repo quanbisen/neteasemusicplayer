@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.MainController"
+            fx:id="borderPane"
+            style="-fx-border-color: #6E6E6E"
+            prefWidth="858.0" prefHeight="570.0">
+    <top>
+
+    </top>
+
+    <left>
+
+    </left>
+
+    <center>
+
+    </center>
+
+    <bottom>
+
+    </bottom>
+</BorderPane>

@@ -1,0 +1,18 @@
+#titleBar
+{
+    -fx-pref-height: 32px;
+    -fx-background-color: #BC2F2E;
+}
+#left_HBox
+{
+    -fx-alignment: center;
+    -fx-padding: 0 0 0 10px;
+}
+.label
+{
+    -fx-text-fill: white;
+}
+#labelTitle
+{
+    -fx-padding: 0 0 0 7;
+}

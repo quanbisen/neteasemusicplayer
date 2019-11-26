@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.MainTopController"
+            fx:id="titleBar" onMousePressed="#onTitleBarPressed" onMouseDragged="#onTitleBarDragged"
+            onMouseClicked="#onTitleBarClicked"
+            stylesheets="@../css/TitleBarStyle.css">
+    <left>
+        <HBox fx:id="left_HBox">
+            <Label fx:id="labelTitle" style="-fx-font-size: 13px;">音乐</Label>
+        </HBox>
+    </left>
+    <right>
+        <HBox fx:id="right_HBox">
+            <Label fx:id="labelMinimize" onMouseClicked="#onClickedMinimize" onMouseEntered="#onEnteredMinimize"
+                   onMouseExited="#onExitedMinimize">
+                <graphic>
+                    <ImageView fitHeight="32" fitWidth="46">
+                        <Image url="@../image/NeteaseMinimizeDefault.png"></Image>
+                    </ImageView>
+                </graphic>
+            </Label>
+            <Label fx:id="labelMaximize" onMouseClicked="#onClickedMaximize" onMouseEntered="#onEnteredMaximize"
+                   onMouseExited="#onExitedMaximize">
+                <graphic>
+                    <ImageView fitHeight="32" fitWidth="46">
+                        <Image url="@../image/NeteaseMaximizeDefault.png"></Image>
+                    </ImageView>
+                </graphic>
+            </Label>
+            <Label fx:id="labelExit" onMouseClicked="#onClickedExit" onMouseEntered="#onEnteredExit"
+                   onMouseExited="#onExitedExit">
+                <graphic>
+                    <ImageView fitHeight="32" fitWidth="46">
+                        <Image url="@../image/NeteaseExitDefault.png"></Image>
+                    </ImageView>
+                </graphic>
+            </Label>
+        </HBox>
+    </right>
+</BorderPane>
