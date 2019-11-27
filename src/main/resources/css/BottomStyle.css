@@ -1,6 +1,6 @@
 #bottomPane
 {
-    -fx-border-width: 1 0 0 0;
+    -fx-border-width: 1px 0px 0px 0px;
     -fx-border-color: #e4e4e7;
     -fx-background-color: WHITE;
 }
@@ -9,9 +9,41 @@
     -fx-border-width: 1;
     -fx-border-color: f2f2f2;
 }
-#labAlbum:pressed
+#labAlbum:pressed,#labPlayLast:pressed,#labPlay:pressed,#labPlayNext:pressed
 {
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
     -fx-scale-z: 0.98;
+}
+#labPlayTime
+{
+    -fx-font-family: "宋体";
+    -fx-font-size: 9px;
+    -fx-text-fill: #666666;
+}
+#labTotalTime
+{
+    -fx-font-family: "宋体";
+    -fx-font-size: 9px;
+    -fx-text-fill: #979797;
+}
+#labMusicName,#labMusicSinger
+{
+    -fx-max-width: 150px;
+    -fx-text-fill: #979797;
+}
+#progressBarSong>.bar
+{
+    -fx-pref-height: 2;
+    -fx-min-height: 2;
+    -fx-background-insets: 0;
+}
+#progressBarSong:determinate>.bar
+{
+    -fx-background-color: #D13A3C;
+}
+#progressBarSong>.track
+{
+    -fx-min-height: 2;
+    -fx-background-color: #E5E5E5;
 }

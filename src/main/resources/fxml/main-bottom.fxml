@@ -26,14 +26,61 @@
                     <ImageView fitHeight="58" fitWidth="58"><Image url="@/image/NeteaseDefaultAlbumWhiteBackground.png"></Image></ImageView>
                 </graphic>
             </Label>
-            <Label fx:id="labPlayLast"></Label>
-            <Label fx:id="labPlay"></Label>
-            <Label fx:id="labPlayNext"></Label>
+            <Label fx:id="labPlayLast" onMouseClicked="#onClickedPlayLast">
+                <graphic>
+                    <ImageView fitHeight="30" fitWidth="30"><Image url="@/image/NeteaseLast.png"></Image></ImageView>
+                </graphic>
+            </Label>
+            <Label fx:id="labPlay" onMouseClicked="#onClickedPlay">
+                <graphic>
+                    <ImageView fitHeight="32" fitWidth="32"><Image url="@/image/NeteasePause.png"></Image></ImageView>
+                </graphic>
+            </Label>
+            <Label fx:id="labPlayNext">
+                <graphic>
+                    <ImageView fitHeight="30" fitWidth="30"><Image url="@/image/NeteaseNext.png"></Image></ImageView>
+                </graphic>
+            </Label>
         </HBox>
     </left>
 
     <center>
-        <Button>Test</Button>
+        <BorderPane>
+            <!--top为上边显示歌曲名称歌手和时间的部分-->
+            <top>
+                <BorderPane>
+                    <left>
+                        <HBox spacing="3" alignment="CENTER_RIGHT">
+                        <padding>
+                            <Insets top="10"></Insets>
+                        </padding>
+                        <Label fx:id="labPlayTime">00:00</Label>
+                        <Label style="-fx-font-size: 10px;-fx-font-family: '宋体';-fx-text-fill: #979797;" text=" / "></Label>
+                        <Label fx:id="labTotalTime">00:00</Label>
+                        </HBox>
+                    </left>
+                    <right>
+                        <HBox spacing="3" alignment="CENTER_LEFT">
+                            <padding>
+                                <Insets top="10"></Insets>
+                            </padding>
+                            <Label fx:id="labMusicName">未知</Label>
+                            <Label style="-fx-text-fill: #979797;">-</Label>
+                            <Label fx:id="labMusicSinger">未知</Label>
+                        </HBox>
+                    </right>
+                </BorderPane>
+            </top>
+            <!--center为显示进度条的部分-->
+            <center>
+                <StackPane>
+                    <children>
+                        <ProgressBar fx:id="progressBarSong"></ProgressBar>
+                       <!-- <Slider fx:id="sliderSong"></Slider>-->
+                    </children>
+                </StackPane>
+            </center>
+        </BorderPane>
     </center>
 
     <right>
