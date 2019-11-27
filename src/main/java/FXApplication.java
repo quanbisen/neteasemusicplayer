@@ -1,5 +1,5 @@
 
-import util.SpringUtil;
+import util.SpringFXMLLoader;
 import util.WindowUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +10,11 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class FXApplication extends Application {
+
+    @Override
+    public void init() throws Exception {
+
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -30,7 +35,7 @@ public class FXApplication extends Application {
     }
 
     private Parent getRoot() throws IOException {
-        FXMLLoader fxmlLoader = SpringUtil.getFXMLLoaderWithSpring();
+        FXMLLoader fxmlLoader = SpringFXMLLoader.getLoader();
         fxmlLoader.setLocation(this.getClass().getResource("/fxml/main.fxml"));
         return fxmlLoader.load();
     }
