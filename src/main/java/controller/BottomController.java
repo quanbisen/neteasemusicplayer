@@ -6,10 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import model.Person;
@@ -20,6 +17,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.sql.Time;
 
 
 @Controller
@@ -54,7 +52,10 @@ public class BottomController {
 //            borderPane1.setPrefHeight(100);
 //            borderPane1.setPrefWidth(100);
             borderPane1.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
+            Region pane = (Region) borderPane.getCenter();
 
+            System.out.println(pane.getWidth());
+            System.out.println(pane.getHeight());
             borderPane.setCenter(borderPane1);
 
             /*Fade Animation*/
@@ -68,20 +69,49 @@ public class BottomController {
 //            });
 
             /*Slide Animation*/
-            Timeline timeline = new Timeline();
-            System.out.println(borderPane.getWidth());
-            System.out.println(borderPane.getHeight());
-            borderPane1.translateXProperty().set(borderPane.getWidth());
-            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane1.translateXProperty(),0, Interpolator.EASE_OUT)));
+            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),borderPane1);
+//            translateTransition.setFromX(-pane.getWidth());
+//            translateTransition.setToX(0);
+//            borderPane1.setTranslateY(50);
+//            translateTransition.setFromY(-pane.getHeight());
+//            translateTransition.setToY(0);
+//            translateTransition.play();
+
+            Duration cycleDuration = Duration.millis(500);
+            Timeline timeline = new Timeline(
+                    new KeyFrame(cycleDuration,
+                            new KeyValue(borderPane1.maxWidthProperty(),pane.getWidth(),Interpolator.EASE_OUT))
+//                    ,
+//                    new KeyFrame(cycleDuration,
+//                            new KeyValue(borderPane1.maxHeightProperty(),pane.getHeight(),Interpolator.EASE_BOTH))
+            );
+
             timeline.play();
+
+            //No effect
+//            Timeline timeline = new Timeline();
+//            timeline.getKeyFrames().addAll(
+//                    new KeyFrame(Duration.ZERO,new KeyValue(borderPane1.prefHeightProperty(),0)),
+//                    new KeyFrame(Duration.seconds(2),new KeyValue(borderPane1.prefHeightProperty(),50))
+//            );
+//            timeline.play();
+
+
+//            Timeline timeline = new Timeline();
+//            System.out.println(borderPane.getWidth());
+//            System.out.println(borderPane.getHeight());
+//            borderPane1.minWidthProperty().set(0);
+//            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane1.minWidthProperty(),borderPane.getWidth(), Interpolator.EASE_OUT)));
+//            timeline.play();
+
 
 //            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),borderPane1);
 //            translateTransition.setToX(borderPane.getWidth());
 //            translateTransition.play();
-            Timeline timeline1 = new Timeline();
-            borderPane1.translateYProperty().set(borderPane.getHeight()-500);
-            timeline1.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane1.translateYProperty(),0, Interpolator.EASE_IN)));
-            timeline1.play();
+//            Timeline timeline1 = new Timeline();
+//            borderPane1.translateYProperty().set(borderPane1.getHeight());
+//            timeline1.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane1.translateYProperty(),0, Interpolator.EASE_IN)));
+//            timeline1.play();
         }
         else if (mouseEvent.getButton()==MouseButton.SECONDARY){
 //            borderPane.setLeft(this.getLeftPane());

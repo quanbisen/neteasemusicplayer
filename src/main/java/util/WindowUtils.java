@@ -171,6 +171,7 @@ public final class WindowUtils {
 				}
 				//修复窗体在非最大化状态下单击最小化按钮最小化窗体后再恢复窗体时最小化按钮图片没有更新的问题
 				else {
+
 					ObservableList<Node> labelList = ((HBox)(((BorderPane)(((BorderPane)primaryStage.getScene().getRoot()).getTop())).getRight())).getChildren();
 					((Label)labelList.get(0)).setGraphic(new ImageView(new Image("/image/NeteaseMinimizeDefault.png",46,32,false,false,false)));
 				}

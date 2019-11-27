@@ -46,20 +46,10 @@
 
     <center>
         <BorderPane>
-            <!--top为上边显示歌曲名称歌手和时间的部分-->
+            <!--top是上边显示歌曲名称歌手和时间的部分-->
             <top>
                 <BorderPane>
                     <left>
-                        <HBox spacing="3" alignment="CENTER_RIGHT">
-                        <padding>
-                            <Insets top="10"></Insets>
-                        </padding>
-                        <Label fx:id="labPlayTime">00:00</Label>
-                        <Label style="-fx-font-size: 10px;-fx-font-family: '宋体';-fx-text-fill: #979797;" text=" / "></Label>
-                        <Label fx:id="labTotalTime">00:00</Label>
-                        </HBox>
-                    </left>
-                    <right>
                         <HBox spacing="3" alignment="CENTER_LEFT">
                             <padding>
                                 <Insets top="10"></Insets>
@@ -68,10 +58,20 @@
                             <Label style="-fx-text-fill: #979797;">-</Label>
                             <Label fx:id="labMusicSinger">未知</Label>
                         </HBox>
+                    </left>
+                    <right>
+                        <HBox spacing="3" alignment="CENTER_RIGHT">
+                            <padding>
+                                <Insets top="10"></Insets>
+                            </padding>
+                            <Label fx:id="labPlayTime">00:00</Label>
+                            <Label style="-fx-font-size: 10px;-fx-font-family: '宋体';-fx-text-fill: #979797;" text=" / "></Label>
+                            <Label fx:id="labTotalTime">00:00</Label>
+                        </HBox>
                     </right>
                 </BorderPane>
             </top>
-            <!--center为显示进度条的部分-->
+            <!--center是显示进度条的部分-->
             <center>
                 <StackPane>
                     <children>
