@@ -2,12 +2,14 @@ package controller;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,10 @@ public class BottomController {
 
             borderPane.setLeft(null);
             BorderPane borderPane1 = new BorderPane();
+            HBox hBox = new HBox();
+            Rectangle statusBar = new Rectangle(0, 0);
+            hBox.getChildren().add(statusBar);
+            hBox.setAlignment(Pos.BOTTOM_LEFT);
 //            borderPane1.setPrefHeight(100);
 //            borderPane1.setPrefWidth(100);
             borderPane1.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
@@ -56,7 +62,20 @@ public class BottomController {
 
             System.out.println(pane.getWidth());
             System.out.println(pane.getHeight());
-            borderPane.setCenter(borderPane1);
+            borderPane.setCenter(hBox);
+
+            /**/
+
+            KeyValue widthValue = new KeyValue(statusBar.heightProperty(), statusBar.getHeight() + 100);
+            KeyFrame frame = new KeyFrame(Duration.seconds(2), widthValue);
+            Timeline timeline = new Timeline(frame);
+            KeyValue heightValue = new KeyValue(statusBar.widthProperty(),statusBar.getWidth() + 300);
+            KeyFrame frame1 = new KeyFrame(Duration.seconds(2),heightValue);
+            Timeline timeline1 = new Timeline(frame1);
+            timeline.play();
+            timeline1.play();
+//            timeline.play();
+
 
             /*Fade Animation*/
 //            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1),label);
@@ -77,16 +96,16 @@ public class BottomController {
 //            translateTransition.setToY(0);
 //            translateTransition.play();
 
-            Duration cycleDuration = Duration.millis(500);
-            Timeline timeline = new Timeline(
-                    new KeyFrame(cycleDuration,
-                            new KeyValue(borderPane1.maxWidthProperty(),pane.getWidth(),Interpolator.EASE_OUT))
+//            Duration cycleDuration = Duration.millis(500);
+//            Timeline timeline = new Timeline(
+//                    new KeyFrame(cycleDuration,
+//                            new KeyValue(borderPane1.maxWidthProperty(),pane.getWidth()))
 //                    ,
 //                    new KeyFrame(cycleDuration,
-//                            new KeyValue(borderPane1.maxHeightProperty(),pane.getHeight(),Interpolator.EASE_BOTH))
-            );
+//                            new KeyValue(borderPane1.prefHeightProperty(),pane.getHeight()))
+//            );
 
-            timeline.play();
+//            timeline.play();
 
             //No effect
 //            Timeline timeline = new Timeline();
