@@ -1,29 +1,25 @@
 package controller;
 
 import javafx.animation.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import model.Person;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.sql.Time;
-
 
 @Controller
-public class BottomController {
+public class MainBottomController {
 
     @Resource
     private MainController mainController;
@@ -34,8 +30,30 @@ public class BottomController {
     @FXML
     private ProgressBar progressBarSong;
 
-    public void initialize(){
+    @FXML
+    private Slider sliderSong;
 
+    @FXML
+    private Label labSoundIcon;
+
+    @FXML
+    private ProgressBar progressBarVolume;
+
+    @FXML
+    private Slider sliderVolume;
+
+    @FXML
+    private Label labPlayModeIcon;
+    public void initialize(){
+        progressBarSong.prefWidthProperty().bind(((StackPane)progressBarSong.getParent()).widthProperty());  //宽度绑定
+        sliderSong.prefWidthProperty().bind(((StackPane)sliderSong.getParent()).widthProperty());            //宽度绑定
+        //设置音量滚动条的监听事件，使进度条始终跟随滚动条更新
+        sliderVolume.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                progressBarVolume.setProgress(newValue.doubleValue());
+            }
+        });
     }
 
     /**专辑图片单击事件处理*/
@@ -50,31 +68,27 @@ public class BottomController {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){
 
             borderPane.setLeft(null);
-            BorderPane borderPane1 = new BorderPane();
+            VBox borderPane1 = new VBox();
             HBox hBox = new HBox();
             Rectangle statusBar = new Rectangle(0, 0);
-            hBox.getChildren().add(statusBar);
+            hBox.getChildren().add(borderPane1);
             hBox.setAlignment(Pos.BOTTOM_LEFT);
-//            borderPane1.setPrefHeight(100);
-//            borderPane1.setPrefWidth(100);
             borderPane1.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
-            Region pane = (Region) borderPane.getCenter();
 
-            System.out.println(pane.getWidth());
-            System.out.println(pane.getHeight());
+            borderPane1.setMaxWidth(0);
+            borderPane1.setMaxHeight(0);
+            Region region = (Region) borderPane.getCenter();
+
             borderPane.setCenter(hBox);
 
             /**/
 
-            KeyValue widthValue = new KeyValue(statusBar.heightProperty(), statusBar.getHeight() + 100);
-            KeyFrame frame = new KeyFrame(Duration.seconds(2), widthValue);
-            Timeline timeline = new Timeline(frame);
-            KeyValue heightValue = new KeyValue(statusBar.widthProperty(),statusBar.getWidth() + 300);
-            KeyFrame frame1 = new KeyFrame(Duration.seconds(2),heightValue);
-            Timeline timeline1 = new Timeline(frame1);
+            Timeline timeline = new Timeline();
+            timeline.getKeyFrames().addAll(
+                    new KeyFrame(Duration.seconds(1),new KeyValue(borderPane1.minHeightProperty(),region.getHeight())),
+                    new KeyFrame(Duration.seconds(1),new KeyValue(borderPane1.minWidthProperty(),region.getWidth()))
+            );
             timeline.play();
-            timeline1.play();
-//            timeline.play();
 
 
             /*Fade Animation*/

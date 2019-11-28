@@ -32,6 +32,7 @@ public class MainController{
         return fxmlLoader.load();
     }
 
+
     /**加载窗体底部播放控制组件函数*/
     private Node getBottom() throws IOException{
         FXMLLoader fxmlLoader = SpringFXMLLoader.getLoader();

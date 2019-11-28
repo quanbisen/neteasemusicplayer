@@ -32,18 +32,43 @@
     -fx-max-width: 150px;
     -fx-text-fill: #979797;
 }
-#progressBarSong>.bar
+#progressBarSong>.bar,#progressBarVolume>.bar
 {
     -fx-pref-height: 2;
     -fx-min-height: 2;
     -fx-background-insets: 0;
 }
-#progressBarSong:determinate>.bar
+#progressBarSong:determinate>.bar,#progressBarVolume:determinate>.bar
 {
     -fx-background-color: #D13A3C;
 }
-#progressBarSong>.track
+#progressBarSong>.track,#progressBarVolume>.track
 {
     -fx-min-height: 2;
     -fx-background-color: #E5E5E5;
+}
+#sliderSong .thumb,#sliderVolume .thumb
+{
+    -fx-pref-height: 16;
+    -fx-min-height: 16;
+    -fx-max-height: 16;
+    -fx-pref-width: 16;
+    -fx-min-width: 16;
+    -fx-max-width: 16;
+    -fx-background-image: url("/image/NeteaseSliderBarThumb.png");
+    -fx-background-size: 16, 16; /*背景图片尺寸*/
+    -fx-background-color: transparent;
+    -fx-background-radius: 2.0em;
+
+    -fx-border-insets: 0, 0, 0, 0;
+    -fx-padding: 0, 0, 0, 0;
+    -fx-background-insets: 0, 0, 0, 0;
+    -fx-border-image-insets: 0, 0, 0, 0;
+}
+#sliderSong .track,#sliderVolume .track
+{
+    -fx-background-color:null;
+    -fx-min-height: 16;
+    -fx-max-height: 16;
+    -fx-pref-height: 16;
 }

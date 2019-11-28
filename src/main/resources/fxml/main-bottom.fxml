@@ -11,7 +11,7 @@
 <?import javafx.scene.image.Image?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.BottomController"
+            fx:controller="controller.MainBottomController"
             fx:id="bottomPane"
             stylesheets="@../css/BottomStyle.css"
             prefHeight="60.0">
@@ -74,9 +74,12 @@
             <!--center是显示进度条的部分-->
             <center>
                 <StackPane>
+                    <padding>
+                        <Insets bottom="11"></Insets>
+                    </padding>
                     <children>
-                        <ProgressBar fx:id="progressBarSong"></ProgressBar>
-                       <!-- <Slider fx:id="sliderSong"></Slider>-->
+                        <ProgressBar fx:id="progressBarSong" progress="0"></ProgressBar>
+                        <Slider fx:id="sliderSong"></Slider>
                     </children>
                 </StackPane>
             </center>
@@ -84,6 +87,29 @@
     </center>
 
     <right>
-        <Button>Test</Button>
+        <HBox spacing="12" alignment="CENTER" prefWidth="280">
+            <padding>
+                <Insets top="10"></Insets>
+            </padding>
+            <!--音量图标-->
+            <Label fx:id="labSoundIcon" style="-fx-padding: 0 0 0 10px;">
+                <graphic><ImageView fitWidth="19" fitHeight="19"><Image url="@/image/NeteaseVolumeIcon.png"></Image></ImageView></graphic>
+            </Label>
+            <!--下面StackPane是音量条-->
+            <StackPane>
+                <children>
+                    <ProgressBar fx:id="progressBarVolume" progress="0.05"></ProgressBar>
+                    <Slider fx:id="sliderVolume" prefWidth="100" max="1" value="0.05"></Slider>
+                </children>
+            </StackPane>
+            <!--播放模式图标-->
+            <Label fx:id="labPlayModeIcon">
+                <graphic><ImageView fitWidth="24" fitHeight="24"><Image url="@../image/NeteaseRandomPlayMode.png"></Image></ImageView></graphic>
+            </Label>
+            <HBox spacing="3" alignment="CENTER">
+                <Label><graphic><ImageView fitWidth="15" fitHeight="15"><Image url="@../image/NeteasePlayListIcon.png"></Image></ImageView></graphic></Label>
+                <Label prefWidth="15" prefHeight="15" fx:id="lab" style="-fx-font-size: 10px;-fx-text-fill: WHITE;-fx-background-color: #BBBCC1;-fx-background-radius: 20;-fx-alignment: center;">0</Label>
+            </HBox>
+        </HBox>
     </right>
 </BorderPane>
