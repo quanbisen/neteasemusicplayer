@@ -22,23 +22,30 @@ public class TabsController {
 /*    *//**左侧标签的VBox容器*//*
     @FXML
     private VBox vBoxTabContainer;*/
+
     /**左侧”搜索“标签Tab*/
     @FXML
     private HBox hBoxSearchTab;
+
     /**左侧”发现音乐“标签Tab*/
     @FXML
     private HBox hBoxExploreMusicTab;
+
     /**左侧本地音乐标签Tab*/
     @FXML
     private HBox hBoxLocalMusicTab;
+
     /**左侧"最近播放"标签Tab*/
     @FXML
     private HBox hBoxRecentPlayTab;
+
     /**左侧"我喜欢的音乐“标签Tab*/
     @FXML
     private HBox hBoxMyFavorMusicTab;
+
     /**装标签的集合tabList*/
     private List<HBox> tabList;
+
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
     MainController mainController;

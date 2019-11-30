@@ -8,7 +8,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="co" prefHeight="226.0" prefWidth="362.0" stylesheets="@../css/AddMusicGroupStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="co" prefHeight="226.0" prefWidth="362.0"
+            stylesheets="@../css/AddMusicGroupStyle.css"
+            fx:controller="controller.AddMusicGroupController"
+            xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="359.0" style="-fx-border-width: 0 0 1px 0; -fx-border-color: #c9c9cb;" BorderPane.alignment="CENTER">
          <children>
@@ -23,8 +27,8 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="67.0" prefWidth="348.0" spacing="12.0" BorderPane.alignment="CENTER">
          <children>
-            <Button id="btnCreate" mnemonicParsing="false" prefHeight="32.0" prefWidth="92.0" text="新建" />
-            <Button id="btnCancel" mnemonicParsing="false" prefHeight="32.0" prefWidth="92.0" text="取消" />
+            <Button id="btnCreate" onMouseClicked="#onCreateButtonClicked" mnemonicParsing="false" prefHeight="32.0" prefWidth="92.0" text="新建" />
+            <Button id="btnCancel" onMouseClicked="#onCancelButtonClicked" mnemonicParsing="false" prefHeight="32.0" prefWidth="92.0" text="取消" />
          </children>
       </HBox>
    </bottom>
@@ -33,12 +37,12 @@
          <children>
             <HBox alignment="CENTER" prefHeight="129.0" prefWidth="360.0">
                <children>
-                  <TextField focusTraversable="false" prefHeight="44.0" prefWidth="320.0" promptText="歌单标题" />
+                  <TextField fx:id="tfInput" focusTraversable="false" prefHeight="44.0" prefWidth="320.0" promptText="歌单标题" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;; -fx-text-fill: #bc2f2d; -fx-font-size: 12px;" text="Label">
+                  <Label fx:id="labInputError" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;; -fx-text-fill: #bc2f2d; -fx-font-size: 12px;" >
                      <HBox.margin>
                         <Insets left="25.0" />
                      </HBox.margin>
