@@ -11,7 +11,7 @@
 <?import javafx.scene.image.Image?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.MainBottomController"
+            fx:controller="controller.BottomController"
             fx:id="bottomPane"
             stylesheets="@../css/BottomStyle.css"
             prefHeight="60.0">

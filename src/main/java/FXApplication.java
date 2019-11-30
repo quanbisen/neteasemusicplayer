@@ -23,7 +23,6 @@ public class FXApplication extends Application {
         primaryStage.setTitle("音乐"); // 设置标题
 //        primaryStage.getIcons().add(new Image("/image/NeteaseMusicPlayerIcon.png")); //设置图标
         Parent root = this.getRoot();
-
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.UNDECORATED); //去掉默认的标题栏

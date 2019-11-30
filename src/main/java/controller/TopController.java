@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class MainTopController {
+public class TopController {
     @FXML
     private Label labelMinimize;  //标题栏的最小化Label按钮
     @FXML
@@ -22,6 +22,7 @@ public class MainTopController {
     private Label labelExit;  //标题栏的关闭/退出Label按钮
     @FXML
     private BorderPane titleBar;  //包裹标题文字和最小化、最大化、关闭/退出按钮的BorderPane
+
 
     public void initialize(){
         labelMinimize.setCursor(Cursor.DEFAULT);

@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 
 @Controller
-public class MainBottomController {
+public class BottomController {
 
     @Resource
     private MainController mainController;

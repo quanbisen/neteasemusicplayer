@@ -11,7 +11,7 @@
 <?import javafx.scene.image.Image?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.MainTopController"
+            fx:controller="controller.TopController"
             fx:id="titleBar" onMousePressed="#onTitleBarPressed" onMouseDragged="#onTitleBarDragged"
             onMouseClicked="#onTitleBarDoubleClicked"
             stylesheets="@../css/TitleBarStyle.css">
