@@ -8,11 +8,12 @@
 
 <StackPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
+           fx:id="stackPane"
             fx:controller="controller.CenterController">
 
-    <BorderPane>
+    <BorderPane fx:id="borderPane">
         <left>
-            <fx:include source="stack-left.fxml"></fx:include>
+            <!--<fx:include source="tabs-container.fxml"></fx:include>-->
         </left>
         <center>
 

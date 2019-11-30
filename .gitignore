@@ -5,6 +5,7 @@
 target
 .idea
 neteasemusicplayer.iml
+.attach_pid*
 
 # Log file
 *.log

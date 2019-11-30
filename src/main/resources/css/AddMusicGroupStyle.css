@@ -1,0 +1,34 @@
+/*添加音乐歌单的容器样式*/
+BorderPane
+{
+    -fx-background-color: WHITE;
+    -fx-border-color: #C9C9CB;
+    -fx-border-width: 1px;
+}
+.text-field {
+    -fx-background-color:#FFFFFF;
+    -fx-border-color:#E8E8EA;
+}
+.button
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 15px;
+    -fx-background-radius: 0.0;
+    -fx-background-insets: 0;
+}
+.button:hover
+{
+    -fx-opacity: 0.9;
+}
+#btnCreate
+{
+    -fx-text-fill: WHITE;
+    -fx-background-color: #BC2F2D;
+}
+#btnCancel
+{
+    -fx-text-fill: #BC2F2D;
+    -fx-background-color: WHITE;
+    -fx-border-width: 1px;
+    -fx-border-color: #BC2F2D;
+}

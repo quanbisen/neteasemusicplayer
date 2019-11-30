@@ -37,7 +37,7 @@ public class MainController{
 
     private Node getLeft() throws IOException{
         FXMLLoader fxmlLoader = SpringFXMLLoader.getLoader();  //使用自定义Spring工具获取一个设置了Spring代理的FXMLLoader对象
-        fxmlLoader.setLocation(this.getClass().getResource("/fxml/stack-left.fxml"));
+        fxmlLoader.setLocation(this.getClass().getResource("/fxml/tabs-container.fxml"));
         return fxmlLoader.load();
     }
 

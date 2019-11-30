@@ -13,7 +13,7 @@
             xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1"
             stylesheets="@../css/LeftStyle.css"
-            fx:controller="controller.StackLeftController">
+            fx:controller="controller.TabsController">
    <!--显示顶部导航的按钮-->
     <top>
       <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
@@ -34,7 +34,7 @@
                <children>
                   <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
                      <children>
-                        <HBox styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0">
+                        <HBox fx:id="hBoxSearchTab" styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0" onMouseClicked="#onClickedSearchTab">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../image/SearchTabIcon.png" />
@@ -46,10 +46,10 @@
                   </HBox>
                   <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
                      <children>
-                        <HBox styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0">
+                        <HBox fx:id="hBoxExploreMusicTab" styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0" onMouseClicked="#onClickedExplorerMusicTab">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../image/MusicTabIcon.png" />
+                                 <Image url="@../image/ExploreMusicTabIcon.png" />
                               </image>
                            </ImageView>
                            <Label text="发现音乐" />
@@ -66,7 +66,7 @@
                   </HBox>
                   <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
                      <children>
-                        <HBox styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0">
+                        <HBox fx:id="hBoxLocalMusicTab" styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0" onMouseClicked="#onClickedLocalMusicTab">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../image/LocalMusicIcon.png" />
@@ -78,7 +78,7 @@
                   </HBox>
                   <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
                      <children>
-                        <HBox styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0">
+                        <HBox fx:id="hBoxRecentPlayTab" styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0" onMouseClicked="#onClickedRecentPlayTab">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../image/RecentPlayTabIcon.png" />
@@ -91,7 +91,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="85.0">
                      <children>
                         <Label style="-fx-text-fill: #999999; -fx-font-size: 12px;" text="创建的歌单" />
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="addMusicGroup" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#onClickedAddMusicGroup">
                            <image>
                               <Image url="@../image/AddMusicGroupTabIcon.png" />
                            </image>
@@ -100,7 +100,7 @@
                   </HBox>
                   <HBox styleClass="hBoxTab" >
                      <children>
-                        <HBox styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0">
+                        <HBox fx:id="hBoxMyFavorMusicTab" styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0" onMouseClicked="#onClickedMyFavorMusicTab">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../image/FavorTabIcon.png" />

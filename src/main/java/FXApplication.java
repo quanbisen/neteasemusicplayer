@@ -1,4 +1,5 @@
 
+import org.springframework.stereotype.Controller;
 import util.AnimationUtils;
 import util.SpringFXMLLoader;
 import util.WindowUtils;
@@ -12,6 +13,12 @@ import java.io.IOException;
 
 public class FXApplication extends Application {
 
+   /* *//**窗体主舞台对象primaryStage*//*
+    private Stage primaryStage;
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }*/
     @Override
     public void init() throws Exception {
 
@@ -19,7 +26,7 @@ public class FXApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
+//        this.primaryStage = primaryStage;
         primaryStage.setTitle("音乐"); // 设置标题
 //        primaryStage.getIcons().add(new Image("/image/NeteaseMusicPlayerIcon.png")); //设置图标
         Parent root = this.getRoot();
