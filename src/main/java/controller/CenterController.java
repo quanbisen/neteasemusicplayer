@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 @Controller
 public class CenterController {
     @FXML
-    private TabPane tabPane;
+
     @Resource
     private MainController mainController;
     public void initialize(){

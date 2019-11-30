@@ -1,3 +1,7 @@
+.label
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
 #bottomPane
 {
     -fx-border-width: 1px 0px 0px 0px;

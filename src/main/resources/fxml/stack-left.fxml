@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefWidth="190.0"
+            xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../css/LeftStyle.css"
+            fx:controller="controller.StackLeftController">
+   <!--显示顶部导航的按钮-->
+    <top>
+      <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
+               <image>
+                  <Image url="@../image/NeteaseMenuIcon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </top>
+    <!--滚动标签项-->
+   <center>
+      <ScrollPane hbarPolicy="NEVER" BorderPane.alignment="CENTER">
+        <content>
+          <VBox fx:id="vBoxTabContainer">
+               <children>
+                  <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
+                     <children>
+                        <HBox styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0">
+                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@../image/SearchTabIcon.png" />
+                              </image>
+                           </ImageView>
+                           <Label text="搜索" />
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
+                     <children>
+                        <HBox styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0">
+                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@../image/MusicTabIcon.png" />
+                              </image>
+                           </ImageView>
+                           <Label text="发现音乐" />
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="12.0">
+                     <children>
+                        <Label style="-fx-text-fill: #999999; -fx-font-size: 12px;" text="我的音乐" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
+                     <children>
+                        <HBox styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0">
+                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@../image/LocalMusicIcon.png" />
+                              </image>
+                           </ImageView>
+                           <Label text="本地音乐" />
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
+                     <children>
+                        <HBox styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0">
+                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@../image/RecentPlayTabIcon.png" />
+                              </image>
+                           </ImageView>
+                           <Label text="最近播放" />
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="85.0">
+                     <children>
+                        <Label style="-fx-text-fill: #999999; -fx-font-size: 12px;" text="创建的歌单" />
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/AddMusicGroupTabIcon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox styleClass="hBoxTab" >
+                     <children>
+                        <HBox styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0">
+                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@../image/FavorTabIcon.png" />
+                              </image>
+                           </ImageView>
+                           <Label text="我喜欢的音乐" />
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children></VBox>
+        </content>
+      </ScrollPane>
+   </center>
+    <!--显示用户头像的组件-->
+   <bottom>
+      <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="hBoxUserInfo" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/UserDefaultImage.png" />
+               </image>
+            </ImageView>
+            <Label maxWidth="120.0" text="未登录" />
+         </children></HBox>
+   </bottom>
+
+</BorderPane>

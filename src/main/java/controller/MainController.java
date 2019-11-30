@@ -26,20 +26,29 @@ public class MainController{
         borderPane.setBottom(this.getBottom());
     }
 
-    /**加载窗体顶部的标题栏组件函数*/
+
+
+    /**加载窗体顶部的标题栏容器及组件函数*/
     private Node getTop() throws IOException {
         FXMLLoader fxmlLoader = SpringFXMLLoader.getLoader();  //使用自定义Spring工具获取一个设置了Spring代理的FXMLLoader对象
         fxmlLoader.setLocation(this.getClass().getResource("/fxml/main-top.fxml"));
         return fxmlLoader.load();
     }
 
-    private Node getCenter() throws IOException{
+    private Node getLeft() throws IOException{
         FXMLLoader fxmlLoader = SpringFXMLLoader.getLoader();  //使用自定义Spring工具获取一个设置了Spring代理的FXMLLoader对象
-        fxmlLoader.setLocation(this.getClass().getResource("/fxml/Tapane.fxml"));
+        fxmlLoader.setLocation(this.getClass().getResource("/fxml/stack-left.fxml"));
         return fxmlLoader.load();
     }
 
-    /**加载窗体底部播放控制组件函数*/
+    /**加载窗体中间StackPane容器及组件的函数*/
+    private Node getCenter() throws IOException{
+        FXMLLoader fxmlLoader = SpringFXMLLoader.getLoader();  //使用自定义Spring工具获取一个设置了Spring代理的FXMLLoader对象
+        fxmlLoader.setLocation(this.getClass().getResource("/fxml/main-center.fxml"));
+        return fxmlLoader.load();
+    }
+
+    /**加载窗体底部播放控制容器及组件函数*/
     private Node getBottom() throws IOException{
         FXMLLoader fxmlLoader = SpringFXMLLoader.getLoader();  //使用自定义Spring工具获取一个设置了Spring代理的FXMLLoader对象
         fxmlLoader.setLocation(this.getClass().getResource("/fxml/main-bottom.fxml"));

@@ -104,7 +104,7 @@
             </StackPane>
             <!--播放模式图标-->
             <Label fx:id="labPlayModeIcon">
-                <graphic><ImageView fitWidth="24" fitHeight="24"><Image url="@../image/NeteaseRandomPlayMode.png"></Image></ImageView></graphic>
+                <graphic><ImageView fitWidth="24" fitHeight="24" preserveRatio="true"><Image url="@../image/NeteaseRandomPlayMode.png"></Image></ImageView></graphic>
             </Label>
             <HBox spacing="3" alignment="CENTER">
                 <Label><graphic><ImageView fitWidth="15" fitHeight="15"><Image url="@../image/NeteasePlayListIcon.png"></Image></ImageView></graphic></Label>
