@@ -67,21 +67,31 @@ public class AddMusicGroupController{
     @FXML
     public void onCreateButtonClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
-            if (tfInput.getText().equals(ERROR_MESSAGE)){  //如果没有输入文本内容，设置鼠标不可点击
-
-            }
-            else {
-
+            if (!labInputError.getText().equals(ERROR_MESSAGE)){  //如果显示错误信息的label文本内容不是错误信息内容
+                if (tfInput.getText().trim().equals("")
+                        &&tfInput.getText().trim().length()==0){     //如果输入内容的TextField组件没有合法内容，直接调用取消按钮的事件处理，隐藏窗体
+                    this.onCancelButtonClicked(mouseEvent);
+                }
+                else {  //否则
+                    this.createMusicGroup();   //调用创建音乐歌单的函数
+                }
             }
         }
+    }
+
+    /**创建音乐歌单的函数*/
+    private void createMusicGroup() {
+        System.out.println("create");
+        ((Stage)tfInput.getScene().getWindow()).close();
+        this.releaseBorderPane();
     }
 
     /**"取消"按钮鼠标单机事件处理*/
     @FXML
     public void onCancelButtonClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            ((Stage)tfInput.getScene().getWindow()).hide();
-            this.releaseBorderPane();
+            ((Stage)tfInput.getScene().getWindow()).hide();  //隐藏窗体
+            this.releaseBorderPane();                        //释放borderPane的鼠标事件并且还原透明度
         }
     }
 
