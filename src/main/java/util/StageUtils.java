@@ -7,17 +7,20 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * @author super lollipop
  * @date 19-11-30
  */
+@Service
 public final class StageUtils {
     
     /**@param primaryStage 主窗体stage舞台对象
      * @param root 根容器
      * 获取一个stage对象*/
-    public static Stage getStage(Stage primaryStage, Region root){
+    public Stage getStage(Stage primaryStage, Region root){
         Stage stage = new Stage();
         stage.initOwner(primaryStage);
         stage.initStyle(StageStyle.UNDECORATED);
@@ -33,7 +36,7 @@ public final class StageUtils {
     /**@param primaryStage 主窗体stage舞台对象
      * @param centerStage  需要同步居中到primaryStage的stage对象
      * */
-    public static void syncCenter(Stage primaryStage,Stage centerStage){
+    public void syncCenter(Stage primaryStage,Stage centerStage){
         //主窗体坐标和宽度改变时需要触发的监听器，更新子窗体的位置，让子窗体一直居中显示
         primaryStage.xProperty().addListener(new ChangeListener<Number>() {
 

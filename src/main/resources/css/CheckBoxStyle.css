@@ -1,0 +1,24 @@
+.check-box
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 14px;
+    -fx-padding: 0 0 0 10;
+    -fx-max-width: 320px;
+}
+.check-box .box
+{
+	-fx-pref-width: 12px;
+    -fx-pref-height: 12px;
+    -fx-background-color: white;
+    -fx-border-color:#8E8E8E;
+}
+.check-box > .box > .mark
+{
+	-fx-scale-shape: true;
+	-fx-scale-x: 0.5;
+    -fx-scale-y: 0.5;
+}
+.check-box:selected .mark
+{
+    -fx-background-color: #c83d3f;
+}

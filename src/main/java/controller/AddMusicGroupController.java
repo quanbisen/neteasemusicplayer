@@ -10,7 +10,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import util.WindowUtils;
 
 import javax.annotation.Resource;
 
@@ -43,6 +45,13 @@ public class AddMusicGroupController{
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
     MainController mainController;
+
+    private WindowUtils windowUtils;
+
+    @Autowired
+    public void setWindowUtils(WindowUtils windowUtils) {
+        this.windowUtils = windowUtils;
+    }
 
     /**初始化函数，自动调用，以前需要实现接口Initializable,从JavaFX2.0开始就自动会调用了，不需要实现接口*/
     public void initialize(){
@@ -83,26 +92,16 @@ public class AddMusicGroupController{
     private void createMusicGroup() {
         System.out.println("create");
         ((Stage)tfInput.getScene().getWindow()).close();
-        this.releaseBorderPane();
+        windowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
     }
 
     /**"取消"按钮鼠标单机事件处理*/
     @FXML
     public void onCancelButtonClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            ((Stage)tfInput.getScene().getWindow()).hide();  //隐藏窗体
-            this.releaseBorderPane();                        //释放borderPane的鼠标事件并且还原透明度
+            (tfInput.getScene().getWindow()).hide();  //隐藏窗体
+            windowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
         }
     }
 
-    /**还原主舞台的borderPane响应鼠标事件和改变不透明度的函数*/
-    private void releaseBorderPane(){
-        BorderPane borderPane = mainController.getBorderPane();  //通过Spring注入的mainContainer获取主舞台的根容器borderPane
-        //设置主舞台界面borderPane除了顶部的titleBar部分外，其它的部分都不响应鼠标事件
-        borderPane.getCenter().setMouseTransparent(false);
-        borderPane.getBottom().setMouseTransparent(false);
-        //顺便设置不透明色，方便提示查看
-        borderPane.getCenter().setOpacity(1);
-        borderPane.getBottom().setOpacity(1);
-    }
 }

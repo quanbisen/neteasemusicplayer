@@ -6,11 +6,13 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
-import util.SpringFXMLLoader;
+import application.SpringFXMLLoader;
 import util.StageUtils;
+import util.WindowUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -19,9 +21,6 @@ import java.util.List;
 
 @Controller
 public class TabsController {
-/*    *//**左侧标签的VBox容器*//*
-    @FXML
-    private VBox vBoxTabContainer;*/
 
     /**左侧”搜索“标签Tab*/
     @FXML
@@ -50,6 +49,22 @@ public class TabsController {
     @Resource
     MainController mainController;
 
+    /**注入窗体根容器（BorderPane）的中间容器的控制器*/
+    @Resource
+    CenterController centerController;
+
+    /**注入window工具类*/
+    @Resource
+    private WindowUtils windowUtils;
+
+    /**注入Spring上下文工具类*/
+    @Resource
+    private ConfigurableApplicationContext applicationContext;
+
+    /**注入舞台工具*/
+    @Resource
+    private StageUtils stageUtils;
+
     public void initialize(){
         tabList = new ArrayList<>();
         tabList.add(hBoxSearchTab);
@@ -64,6 +79,7 @@ public class TabsController {
     public void onClickedSearchTab(MouseEvent mouseEvent) {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxSearchTab);  //设置当前选择的为“搜索”标签
+            centerController.getBorderPane().setCenter(new Label("搜索"));
         }
     }
 
@@ -72,14 +88,17 @@ public class TabsController {
     public void onClickedExplorerMusicTab(MouseEvent mouseEvent) {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxExploreMusicTab);
+            centerController.getBorderPane().setCenter(new Label("发现音乐"));
         }
     }
 
     /**单击“本地音乐”标签事件处理*/
     @FXML
-    public void onClickedLocalMusicTab(MouseEvent mouseEvent) {
+    public void onClickedLocalMusicTab(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxLocalMusicTab);
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/tab-localmusic-content.fxml");
+            centerController.getBorderPane().setCenter(fxmlLoader.load());
         }
     }
 
@@ -88,6 +107,7 @@ public class TabsController {
     public void onClickedRecentPlayTab(MouseEvent mouseEvent) {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxRecentPlayTab);
+            centerController.getBorderPane().setCenter(new Label("最近播放"));
         }
     }
 
@@ -96,6 +116,7 @@ public class TabsController {
     public void onClickedMyFavorMusicTab(MouseEvent mouseEvent) {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxMyFavorMusicTab);
+            centerController.getBorderPane().setCenter(new Label("我喜欢的音乐"));
         }
     }
 
@@ -113,25 +134,14 @@ public class TabsController {
     @FXML
     public void onClickedAddMusicGroup(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton()==MouseButton.PRIMARY){  //鼠标左击
-            FXMLLoader fxmlLoader = SpringFXMLLoader.getLoader();  //加载添加音乐歌单的fxml文件
-            fxmlLoader.setLocation(this.getClass().getResource("/fxml/add-musicgroup.fxml"));
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/add-musicgroup.fxml");  //加载添加音乐歌单的fxml文件
             Stage primaryStage = ((Stage)hBoxSearchTab.getScene().getWindow());              //获取主窗体的stage对象primaryStage
-            Stage addMusicGroupStage = StageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
-            StageUtils.syncCenter(primaryStage,addMusicGroupStage);   //设置addMusicGroupStage对象居中到primaryStage
-            this.blockBorderPane();            //设置borderPane不响应鼠标事件和改变透明度
+            Stage addMusicGroupStage = stageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
+            stageUtils.syncCenter(primaryStage,addMusicGroupStage);   //设置addMusicGroupStage对象居中到primaryStage
+            windowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
             addMusicGroupStage.showAndWait();  //显示并且等待
 
         }
     }
 
-    /**阻止主舞台的borderPane响应鼠标事件和改变不透明度的函数*/
-    private void blockBorderPane(){
-        BorderPane borderPane = mainController.getBorderPane();  //通过Spring注入的mainContainer获取主舞台的根容器borderPane
-        //设置主舞台界面borderPane除了顶部的titleBar部分外，其它的部分都不响应鼠标事件
-        borderPane.getCenter().setMouseTransparent(true);
-        borderPane.getBottom().setMouseTransparent(true);
-        //顺便设置不透明色，方便提示查看
-        borderPane.getCenter().setOpacity(0.4);
-        borderPane.getBottom().setOpacity(0.4);
-    }
 }

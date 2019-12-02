@@ -6,7 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import org.springframework.stereotype.Controller;
-import util.SpringFXMLLoader;
+import application.SpringFXMLLoader;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -28,18 +28,6 @@ public class CenterController {
         return stackPane;
     }
 
-    public void initialize() throws IOException{
-        borderPane.setLeft(this.getLeft());
-        /*BorderPane borderPane = (BorderPane) tabPane.getParent();
-        Pane pane = (Pane) borderPane.getCenter();
-        tabPane.prefWidthProperty().bind(pane.widthProperty());
-        tabPane.prefHeightProperty().bind(pane.heightProperty());*/
-    }
+    public BorderPane getBorderPane(){ return borderPane; }
 
-    /**加载获取左侧标签项容器的函数*/
-    private Node getLeft() throws IOException {
-        FXMLLoader fxmlLoader = SpringFXMLLoader.getLoader();
-        fxmlLoader.setLocation(this.getClass().getResource("/fxml/tabs-container.fxml"));
-        return fxmlLoader.load();
-    }
 }

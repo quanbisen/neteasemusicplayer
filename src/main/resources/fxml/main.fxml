@@ -14,14 +14,14 @@
             style="-fx-border-color: #6E6E6E"
             prefWidth="858.0" prefHeight="570.0">
     <top>
-<!--        <fx:include source="main-top.fxml"></fx:include>-->
+        <fx:include source="main-top.fxml"></fx:include>
     </top>
 
     <center>
-<!--        <fx:include source="main-center.fxml"></fx:include>-->
+        <fx:include source="main-center.fxml"></fx:include>
     </center>
 
     <bottom>
-<!--        <fx:include source="main-bottom.fxml"></fx:include>-->
+        <fx:include source="main-bottom.fxml"></fx:include>
     </bottom>
 </BorderPane>

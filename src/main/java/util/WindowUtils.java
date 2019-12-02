@@ -16,32 +16,32 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import static com.sun.jna.platform.win32.WinUser.GWL_STYLE;
 
 /**
- * 使窗体在initStayle为UNDECORATED时能够缩放的工具类
+ * 使窗体在initStayle为UNDECORATED时能够缩放的类
  * **/
+@Service
 public final class WindowUtils {
+
 	/**记录鼠标按下时需要记录的某个X，Y坐标*/
-	private static double mousePressedForResizeX;
-	private static double mousePressedForResizeY;
-	/**记录窗体的高度和宽度*/
-	private static double stageWidth;
-	private static double stageHeigth;
+	private double mousePressedForResizeX;
+	private double mousePressedForResizeY;
+
 	/**记录屏幕的可视化宽度和高度*/
-	static double ScreenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-	static double ScreenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+	private double ScreenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+	private double ScreenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
 	/**
 	 * 设置stage对象能够拖拽边缘的像素实现缩放的静态方法
 	 */
-	public static void addResizable(Stage stage,double stageMinWidth,double stageMinHeight) {
+	public void addResizable(Stage stage,double stageMinWidth,double stageMinHeight) {
 		try {
 			//记录stage的scene对象
 			Scene scene=stage.getScene();
-			stageWidth = stage.getWidth();
-			stageHeigth = stage.getHeight();
 			//记录鼠标按下时的scene坐标
 			scene.setOnMousePressed(e->{
 				mousePressedForResizeX=e.getSceneX();
@@ -156,7 +156,7 @@ public final class WindowUtils {
 	}
 	/**为窗体primaryStage添加关于UI的修复代码
 	 * */
-	public static void addFixedCode(Stage primaryStage){
+	public void addFixedCode(Stage primaryStage){
 		// 获取屏幕可视化的宽高（Except TaskBar），把窗体设置在可视化的区域居中
 		primaryStage.setX((Screen.getPrimary().getVisualBounds().getWidth() - primaryStage.getWidth()) / 2.0);
 		primaryStage.setY((Screen.getPrimary().getVisualBounds().getHeight() - primaryStage.getHeight()) / 2.0);
@@ -178,11 +178,12 @@ public final class WindowUtils {
 			}
 		});
 	}
+
 	/**
 	 * 下面这段代码是使Windows平台任务栏图标响应单击事件，当stage的initStyle设置成UNDECORATED时，任务栏图标单击无法最小化窗体
 	 * 参见StackOverflow的提问：https://stackoverflow.com/questions/26972683/javafx-minimizing-undecorated-stage
 	 * **/
-	public static void addWindowsPlatformTaskBarIconifyBehavior(){
+	public void addWindowsPlatformTaskBarIconifyBehavior(){
 		if (System.getProperties().getProperty("os.name").contains("Windows")){  //判断当前os是否为Windows，如果是才执行
 			long lhwnd = com.sun.glass.ui.Window.getWindows().get(0).getNativeWindow();
 			Pointer lpVoid = new Pointer(lhwnd);
@@ -192,5 +193,27 @@ public final class WindowUtils {
 			int newStyle = oldStyle | 0x00020000;//WS_MINIMIZEBOX
 			user32.SetWindowLong(hwnd, GWL_STYLE, newStyle);
 		}
+	}
+
+	/**@param borderPane 主窗体根容器borderPane
+	 * 阻止主舞台的borderPane响应鼠标事件和改变不透明度的函数*/
+	public void blockBorderPane(BorderPane borderPane){
+		//设置主舞台界面borderPane除了顶部的titleBar部分外，其它的部分都不响应鼠标事件
+		borderPane.getCenter().setMouseTransparent(true);
+		borderPane.getBottom().setMouseTransparent(true);
+		//顺便设置不透明色，方便提示查看
+		borderPane.getCenter().setOpacity(0.4);
+		borderPane.getBottom().setOpacity(0.4);
+	}
+
+	/**@param borderPane 主窗体根容器borderPane
+	 * 还原主舞台的borderPane响应鼠标事件和改变不透明度的函数*/
+	public void releaseBorderPane(BorderPane borderPane){
+		//设置主舞台界面borderPane除了顶部的titleBar部分外，其它的部分都不响应鼠标事件
+		borderPane.getCenter().setMouseTransparent(false);
+		borderPane.getBottom().setMouseTransparent(false);
+		//顺便设置不透明色，方便提示查看
+		borderPane.getCenter().setOpacity(1);
+		borderPane.getBottom().setOpacity(1);
 	}
 }

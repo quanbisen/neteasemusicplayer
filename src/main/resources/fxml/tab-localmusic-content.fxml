@@ -1,22 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
 
+<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/LocalMusicContentStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LocalMusicContentController">
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="601.0" spacing="400.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="本地音乐">
-               <font>
-                  <Font size="11.0" />
-               </font>
+      <BorderPane prefHeight="45.0" prefWidth="603.0" stylesheets="@../css/TabPaneStyle.css" BorderPane.alignment="CENTER">
+         <left>
+            <Label style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;" text="本地音乐" textFill="#999999" BorderPane.alignment="CENTER">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
             </Label>
-            <HBox prefHeight="31.0" prefWidth="129.0" />
-         </children>
-      </HBox>
+         </left>
+         <right>
+            <HBox fx:id="hBoxChoseFolder" alignment="CENTER" prefHeight="29.0" prefWidth="77.0" spacing="5.0" BorderPane.alignment="CENTER" onMouseClicked="#onClickedChoseFolder">
+               <children>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/ChoseDirectoryIcon.png" />
+                     </image>
+                  </ImageView>
+                  <Label style="-fx-text-fill: #1a5a99; -fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;" text="选择目录" />
+               </children>
+               <BorderPane.margin>
+                  <Insets right="20.0" />
+               </BorderPane.margin></HBox>
+         </right>
+      </BorderPane>
    </top>
+
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab>
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+               <graphic>
+                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
+                     <children>
+                        <HBox alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
+                           <children>
+                              <Label styleClass="labIndicator" text="歌曲" />
+                              <Label styleClass="count" text="0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </graphic>
+          </Tab>
+          <Tab>
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+               <graphic>
+                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
+                     <children>
+                        <HBox alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
+                           <children>
+                              <Label styleClass="labIndicator" text="歌手" />
+                              <Label styleClass="count" text="0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </graphic>
+          </Tab>
+            <Tab>
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+               <graphic>
+                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
+                     <children>
+                        <HBox alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
+                           <children>
+                              <Label styleClass="labIndicator" text="专辑" />
+                              <Label styleClass="count" text="0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+
 </BorderPane>

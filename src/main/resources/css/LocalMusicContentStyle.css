@@ -1,0 +1,54 @@
+BorderPane
+{
+    -fx-background-color: #FAFAFC;
+}
+.tab-pane
+{
+    -fx-tab-max-height: 40px;
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 5px;
+}
+.tab
+{
+    -fx-background-color: transparent;
+    -fx-background-insets: 0px;
+    -fx-background-radius: 0px;
+}
+.tab:selected
+{
+    -fx-border-insets: 0;
+}
+/*被选中的HBox样式*/
+.selectedHBox
+{
+    -fx-background-color: transparent;
+    -fx-border-color: #C62E2E;
+    -fx-border-width: 0 0 2px 0;
+}
+.tab:selected .focus-indicator
+{
+    -fx-border-color: transparent;
+}
+.HBox
+{
+    -fx-background-color: transparent;
+}
+.tab-pane *.tab-header-background
+{
+    -fx-background-color: transparent;
+    -fx-border-insets: 0 15 0 10;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #E4E4E7;
+}
+.labIndicator
+{
+    -fx-font-size: 14px;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
+.count
+{
+    -fx-font-size: 10px;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-text-fill: #919192;
+}
+

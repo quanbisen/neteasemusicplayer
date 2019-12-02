@@ -21,9 +21,6 @@ import java.io.IOException;
 @Controller
 public class BottomController {
 
-    @Resource
-    private MainController mainController;
-
     @FXML
     private Label labAlbum;
 
@@ -41,6 +38,9 @@ public class BottomController {
 
     @FXML
     private Slider sliderVolume;
+
+    @Resource
+    private MainController mainController;
 
     @FXML
     private Label labPlayModeIcon;

@@ -6,4 +6,6 @@
 
     <context:component-scan base-package="controller"></context:component-scan>
     <context:component-scan base-package="model"></context:component-scan>
+    <context:component-scan base-package="util"></context:component-scan>
+    <context:component-scan base-package="application"></context:component-scan>
 </beans>
