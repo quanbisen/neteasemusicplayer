@@ -8,4 +8,5 @@
     <context:component-scan base-package="model"></context:component-scan>
     <context:component-scan base-package="util"></context:component-scan>
     <context:component-scan base-package="application"></context:component-scan>
+<!--    <context:component-scan base-package="service"></context:component-scan>-->
 </beans>

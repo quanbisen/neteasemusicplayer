@@ -11,8 +11,6 @@ import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
 import util.WindowUtils;
 
-import java.io.IOException;
-
 @Component
 public class FXApplication extends Application {
 

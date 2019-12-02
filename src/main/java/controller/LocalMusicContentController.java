@@ -1,17 +1,22 @@
 package controller;
 
+import javafx.concurrent.Worker;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
+import service.LoadingSongService;
 import util.StageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
@@ -53,6 +58,14 @@ public class LocalMusicContentController {
     /**装标签的集合tabList*/
     private List<HBox> tabList;
 
+    /**显示进度的指示器*/
+    @FXML
+    private ProgressIndicator progressIndicator;
+
+    /**VBox容器封装音乐歌曲*/
+    @FXML
+    private VBox vBoxSongContainer;
+
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
     MainController mainController;
@@ -73,11 +86,17 @@ public class LocalMusicContentController {
     @Resource
     ChoseFolderController choseFolderController;
 
+//    @Resource
+//    LoadingSongService loadingSongService;
+
     public void initialize(){
         tabList = new ArrayList<>();
         tabList.add(hBoxSong);
         tabList.add(hBoxSinger);
         tabList.add(hBoxAlbum);
+
+        progressIndicator.setVisible(false);
+        vBoxSongContainer.setVisible(false);
     }
 
     /**“选择目录”按钮按下事件处理*/
@@ -104,6 +123,14 @@ public class LocalMusicContentController {
             if (choseFolderController.isConfirm()){  //如果是按下了“确定”按钮
                 System.out.printf("confirm");
                 choseFolderController.setConfirm(false);  //标记按钮是没按下的。
+
+
+                //逻辑乱了的部分，先实现吧。
+
+                LoadingSongService loadingSongService = new LoadingSongService();
+                progressIndicator.visibleProperty().bind(loadingSongService.runningProperty());
+                vBoxSongContainer.visibleProperty().bind(loadingSongService.valueProperty());
+                loadingSongService.start();
             }
         }
     }
@@ -117,13 +144,14 @@ public class LocalMusicContentController {
 
 
 
-
+    /**单击"歌手"标签的事件处理*/
     public void onClickedHBoxSinger(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             this.setSelectedTab(hBoxSinger);
         }
     }
 
+    /**单击"专辑"标签的事件处理*/
     public void onClickedHBoxAlbum(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             this.setSelectedTab(hBoxAlbum);

@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
@@ -9,6 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/LocalMusicContentStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LocalMusicContentController">
 
@@ -21,8 +24,11 @@
                </padding>
             </Label>
          </left>
+          <center>
+              <ProgressIndicator fx:id="progressIndicator" />
+          </center>
          <right>
-            <HBox fx:id="hBoxChoseFolder" alignment="CENTER" prefHeight="29.0" prefWidth="77.0" spacing="5.0" BorderPane.alignment="CENTER" onMouseClicked="#onClickedChoseFolder">
+            <HBox fx:id="hBoxChoseFolder" alignment="CENTER" onMouseClicked="#onClickedChoseFolder" prefHeight="29.0" prefWidth="77.0" spacing="5.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -43,12 +49,18 @@
         <tabs>
           <Tab>
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <ScrollPane prefHeight="180.0" prefWidth="200.0">
+                  <VBox fx:id="vBoxSongContainer" prefHeight="311.0" prefWidth="595.0">
+                        <children>
+                           <Label text="Just a test." />
+                        </children>
+                  </VBox>
+              </ScrollPane>
             </content>
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
                      <children>
-                        <HBox fx:id="hBoxSong" alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0" onMouseClicked="#onClickedHBoxSong">
+                        <HBox fx:id="hBoxSong" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxSong" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
                            <children>
                               <Label styleClass="labIndicator" text="歌曲" />
                               <Label fx:id="labSongCount" styleClass="count" text="0" />
@@ -65,7 +77,7 @@
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
                      <children>
-                        <HBox fx:id="hBoxSinger" alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0" onMouseClicked="#onClickedHBoxSinger">
+                        <HBox fx:id="hBoxSinger" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxSinger" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
                            <children>
                               <Label styleClass="labIndicator" text="歌手" />
                               <Label fx:id="labSingerCount" styleClass="count" text="0" />
@@ -82,7 +94,7 @@
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
                      <children>
-                        <HBox fx:id="hBoxAlbum" alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0" onMouseClicked="#onClickedHBoxAlbum">
+                        <HBox fx:id="hBoxAlbum" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxAlbum" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
                            <children>
                               <Label styleClass="labIndicator" text="专辑" />
                               <Label fx:id="labAlbumCount" styleClass="count" text="0" />

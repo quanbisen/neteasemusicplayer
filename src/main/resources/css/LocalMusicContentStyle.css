@@ -51,4 +51,12 @@ BorderPane
     -fx-font-family: "Microsoft YaHei","SimSun";
     -fx-text-fill: #919192;
 }
+.progress-indicator
+{
+    -fx-pref-height: 18px;
+    -fx-max-height: 18px;
+    -fx-pref-width: 18px;
+    -fx-max-width: 18px;
+    -fx-progress-color: gray;
+}
 
