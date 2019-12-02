@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author super lollipop
  * @date 19-11-30
  */
-@Service
+@Component
 public final class StageUtils {
     
     /**@param primaryStage 主窗体stage舞台对象

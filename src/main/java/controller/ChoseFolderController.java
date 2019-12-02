@@ -10,6 +10,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import org.dom4j.DocumentException;
 import org.springframework.stereotype.Controller;
 import util.WindowUtils;
@@ -48,6 +49,17 @@ public class ChoseFolderController {
     /**播放器配置文件*/
     private File CONFIG_FILE;
 
+    /**标记“确定”按钮是否是按下状态*/
+    private boolean confirm;
+
+    public boolean isConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
+    }
+
     @Resource
     private XMLUtil xmlUtil;
 
@@ -72,7 +84,7 @@ public class ChoseFolderController {
     @FXML
     public void onClickedCloseIcon(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
-            labCloseIcon.getScene().getWindow().hide();      //关闭窗口
+            ((Stage)labCloseIcon.getScene().getWindow()).close();      //关闭窗口
             windowUtils.releaseBorderPane(mainController.getBorderPane());
         }
     }
@@ -80,6 +92,7 @@ public class ChoseFolderController {
     /**”确定“按钮的事件处理*/
     @FXML
     public void onConfirmAction(ActionEvent actionEvent) throws DocumentException, IOException {
+        confirm = true; //设置“确定”被按下
         //先删除原先的文件，然后再重新创建新文件。
         CONFIG_FILE.delete();
         CONFIG_FILE = new File(CONFIG_PATH);

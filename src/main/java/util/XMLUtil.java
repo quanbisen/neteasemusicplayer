@@ -8,15 +8,15 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.junit.Test;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("xmlUtil")
+@Component("xmlUtil")
 public class XMLUtil {
     public void createXML(File destination, String rootName) {  //创建带有根节点XML文件
         // 创建Document对象

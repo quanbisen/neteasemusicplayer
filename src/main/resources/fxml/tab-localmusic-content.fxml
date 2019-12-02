@@ -48,10 +48,10 @@
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
                      <children>
-                        <HBox alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
+                        <HBox fx:id="hBoxSong" alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0" onMouseClicked="#onClickedHBoxSong">
                            <children>
                               <Label styleClass="labIndicator" text="歌曲" />
-                              <Label styleClass="count" text="0" />
+                              <Label fx:id="labSongCount" styleClass="count" text="0" />
                            </children>
                         </HBox>
                      </children>
@@ -65,10 +65,10 @@
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
                      <children>
-                        <HBox alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
+                        <HBox fx:id="hBoxSinger" alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0" onMouseClicked="#onClickedHBoxSinger">
                            <children>
                               <Label styleClass="labIndicator" text="歌手" />
-                              <Label styleClass="count" text="0" />
+                              <Label fx:id="labSingerCount" styleClass="count" text="0" />
                            </children>
                         </HBox>
                      </children>
@@ -82,10 +82,10 @@
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
                      <children>
-                        <HBox alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
+                        <HBox fx:id="hBoxAlbum" alignment="CENTER" maxWidth="50.0" prefHeight="0.0" prefWidth="40.0" spacing="3.0" onMouseClicked="#onClickedHBoxAlbum">
                            <children>
                               <Label styleClass="labIndicator" text="专辑" />
-                              <Label styleClass="count" text="0" />
+                              <Label fx:id="labAlbumCount" styleClass="count" text="0" />
                            </children>
                         </HBox>
                      </children>

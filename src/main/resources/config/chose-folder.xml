@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<FolderList>
-  <Folder path="C:\"></Folder>
+<FolderList> 
+  <Folder path="C:\"></Folder>  
+  <Folder path="D:\"></Folder>
 </FolderList>

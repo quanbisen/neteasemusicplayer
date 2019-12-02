@@ -37,6 +37,7 @@ public class FXApplication extends Application {
         primaryStage.setTitle("音乐"); // 设置标题
 //        primaryStage.getIcons().add(new Image("/image/NeteaseMusicPlayerIcon.png")); //设置图标
         primaryStage.setScene(scene);
+        primaryStage.setIconified(true);
         primaryStage.initStyle(StageStyle.UNDECORATED); //去掉默认的标题栏
         primaryStage.show();  //显示主舞台
         WindowUtils windowUtils = applicationContext.getBean(WindowUtils.class);     //获取bean

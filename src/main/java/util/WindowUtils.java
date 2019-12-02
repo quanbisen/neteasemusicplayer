@@ -24,7 +24,7 @@ import static com.sun.jna.platform.win32.WinUser.GWL_STYLE;
 /**
  * 使窗体在initStayle为UNDECORATED时能够缩放的类
  * **/
-@Service
+@Component
 public final class WindowUtils {
 
 	/**记录鼠标按下时需要记录的某个X，Y坐标*/
