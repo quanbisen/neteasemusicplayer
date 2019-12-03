@@ -9,6 +9,9 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.RightSlide"
+            maxWidth="250.0"
             prefWidth="250.0">
-
+    <center>
+        <Label>test</Label>
+    </center>
 </BorderPane>

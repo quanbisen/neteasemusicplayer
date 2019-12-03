@@ -176,10 +176,8 @@ public class TabsController {
                 FXMLLoader fxmlLoader = springFXMLLoader.getLoader("/fxml/right-slide.fxml");
                 borderPane = fxmlLoader.load();
 
-                borderPane.setCenter(new Label("Test"));
                 borderPane.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID,null,new BorderWidths(1))));
-                borderPane.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
-                borderPane.setPrefWidth(200);
+//                borderPane.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
 
 //        borderPane.setMaxHeight(100);
 
@@ -187,7 +185,7 @@ public class TabsController {
                 Timeline timeline = new Timeline();
                 stackPane.getChildren().add(borderPane);
                 System.out.println(stackPane.getWidth()-borderPane.getWidth());
-                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane.translateXProperty(),600, Interpolator.EASE_IN)));
+                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane.translateXProperty(),stackPane.getWidth()-250*2, Interpolator.EASE_IN)));
                 timeline.play();
                 timeline.setOnFinished(event -> {
 //                    centerController.getBorderPane().setMouseTransparent(false);
