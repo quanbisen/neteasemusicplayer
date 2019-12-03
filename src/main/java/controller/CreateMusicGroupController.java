@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  * @date 19-11-30
  */
 @Controller
-public class AddMusicGroupController{
+public class CreateMusicGroupController {
 
     /**错误提示信息*/
     private static String ERROR_MESSAGE = "歌单名不能为空";

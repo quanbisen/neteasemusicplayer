@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -37,8 +38,8 @@ public class CenterController {
 
     @FXML
     public void onClickedBorderPane(MouseEvent mouseEvent) {
-//        if (tabsController.getBorderPane()!=null){
-//            stackPane.getChildren().remove(tabsController.getBorderPane());
-//        }
+        if (tabsController.getBorderPane()!=null){
+
+        }
     }
 }

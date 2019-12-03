@@ -22,6 +22,7 @@ import util.WindowUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,26 +167,41 @@ public class TabsController {
     /**单击“用户头像”HBox容器的事件处理*/
     @FXML
     public void onClickedHBoxUserInfo(MouseEvent mouseEvent) throws IOException {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){
+            if (centerController.getStackPane().getChildren().size()==1){
+                hBoxUserInfo.setMouseTransparent(true);
+//                centerController.getBorderPane().setMouseTransparent(true);
+                StackPane stackPane = centerController.getStackPane();
 
-        centerController.getBorderPane().setMouseTransparent(true);
-        StackPane stackPane = centerController.getStackPane();
+                FXMLLoader fxmlLoader = springFXMLLoader.getLoader("/fxml/right-slide.fxml");
+                borderPane = fxmlLoader.load();
 
-        FXMLLoader fxmlLoader = springFXMLLoader.getLoader("/fxml/right-slide.fxml");
-        borderPane = fxmlLoader.load();
-
-        borderPane.setCenter(new Label("Test"));
-        borderPane.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID,null,new BorderWidths(1))));
-        borderPane.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
-        borderPane.setPrefWidth(200);
+                borderPane.setCenter(new Label("Test"));
+                borderPane.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID,null,new BorderWidths(1))));
+                borderPane.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
+                borderPane.setPrefWidth(200);
 
 //        borderPane.setMaxHeight(100);
 
-        borderPane.setTranslateX(stackPane.getWidth());
-        Timeline timeline = new Timeline();
-        stackPane.getChildren().add(borderPane);
-        System.out.println(stackPane.getWidth()-borderPane.getWidth());
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),new KeyValue(borderPane.translateXProperty(),600, Interpolator.EASE_IN)));
-        timeline.play();
-        timeline.setOnFinished(event -> centerController.getBorderPane().setMouseTransparent(false));
+                borderPane.setTranslateX(stackPane.getWidth());
+                Timeline timeline = new Timeline();
+                stackPane.getChildren().add(borderPane);
+                System.out.println(stackPane.getWidth()-borderPane.getWidth());
+                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane.translateXProperty(),600, Interpolator.EASE_IN)));
+                timeline.play();
+                timeline.setOnFinished(event -> {
+//                    centerController.getBorderPane().setMouseTransparent(false);
+                    hBoxUserInfo.setMouseTransparent(false);
+                });
+            }
+            else {
+                System.out.println(borderPane.getTranslateX());
+                StackPane stackPane = centerController.getStackPane();
+                stackPane.getChildren().remove(1,stackPane.getChildren().size());
+                Timeline timeline = new Timeline();
+                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane.translateXProperty(),stackPane.getWidth(),Interpolator.EASE_OUT)));
+                timeline.play();
+            }
+        }
     }
 }
