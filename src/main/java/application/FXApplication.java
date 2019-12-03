@@ -40,7 +40,7 @@ public class FXApplication extends Application {
         primaryStage.show();  //显示主舞台
         WindowUtils windowUtils = applicationContext.getBean(WindowUtils.class);     //获取bean
         windowUtils.addResizable(primaryStage,858,570);  //为primaryStage添加自由缩放
-        windowUtils.addFixedCode(primaryStage);  //为primaryStage添加一些GUI的修复代码
+        windowUtils.addFixedCode(primaryStage);  //为primarygittage添加一些GUI的修复代码
         windowUtils.addWindowsPlatformTaskBarIconifyBehavior();  //为primaryStage添加Windows平台显示窗体时单击任务栏图标可以最小化
     }
 

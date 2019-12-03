@@ -116,7 +116,7 @@
    </center>
     <!--显示用户头像的组件-->
    <bottom>
-      <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="hBoxUserInfo" BorderPane.alignment="CENTER" onMouseClicked="#onClickedHBoxUserInfo">
+      <HBox fx:id="hBoxUserInfo" alignment="CENTER_LEFT" spacing="10.0" styleClass="hBoxUserInfo" BorderPane.alignment="CENTER" onMouseClicked="#onClickedHBoxUserInfo">
          <children>
             <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                <image>

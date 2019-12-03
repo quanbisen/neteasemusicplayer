@@ -1,6 +1,9 @@
 package controller;
 
 import javafx.animation.*;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -48,6 +51,9 @@ public class TabsController {
     /**装标签的集合tabList*/
     private List<HBox> tabList;
 
+    @FXML
+    private HBox hBoxUserInfo;
+
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
     MainController mainController;
@@ -70,6 +76,13 @@ public class TabsController {
 
     //test
     private BorderPane borderPane;
+
+    public BorderPane getBorderPane() {
+        return borderPane;
+    }
+
+    @Resource
+    private SpringFXMLLoader springFXMLLoader;
 
     public void initialize(){
         tabList = new ArrayList<>();
@@ -152,28 +165,27 @@ public class TabsController {
 
     /**单击“用户头像”HBox容器的事件处理*/
     @FXML
-    public void onClickedHBoxUserInfo(MouseEvent mouseEvent) {
+    public void onClickedHBoxUserInfo(MouseEvent mouseEvent) throws IOException {
+
+        centerController.getBorderPane().setMouseTransparent(true);
         StackPane stackPane = centerController.getStackPane();
 
-         = new BorderPane();
+        FXMLLoader fxmlLoader = springFXMLLoader.getLoader("/fxml/right-slide.fxml");
+        borderPane = fxmlLoader.load();
 
         borderPane.setCenter(new Label("Test"));
         borderPane.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID,null,new BorderWidths(1))));
         borderPane.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
         borderPane.setPrefWidth(200);
+
 //        borderPane.setMaxHeight(100);
 
-//        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(10),borderPane);
         borderPane.setTranslateX(stackPane.getWidth());
         Timeline timeline = new Timeline();
-        System.out.println(stackPane.getWidth()-borderPane.getWidth());
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),new KeyValue(borderPane.translateXProperty(),500, Interpolator.EASE_IN)));
-        timeline.play();
-
-
-
         stackPane.getChildren().add(borderPane);
-
-//        translateTransition.play();
+        System.out.println(stackPane.getWidth()-borderPane.getWidth());
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),new KeyValue(borderPane.translateXProperty(),600, Interpolator.EASE_IN)));
+        timeline.play();
+        timeline.setOnFinished(event -> centerController.getBorderPane().setMouseTransparent(false));
     }
 }

@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ public class CenterController {
     private BorderPane borderPane;
 
     @Resource
+    private TabsController tabsController;
+
+    @Resource
     private MainController mainController;
 
     public StackPane getStackPane(){
@@ -30,4 +34,11 @@ public class CenterController {
 
     public BorderPane getBorderPane(){ return borderPane; }
 
+
+    @FXML
+    public void onClickedBorderPane(MouseEvent mouseEvent) {
+//        if (tabsController.getBorderPane()!=null){
+//            stackPane.getChildren().remove(tabsController.getBorderPane());
+//        }
+    }
 }
