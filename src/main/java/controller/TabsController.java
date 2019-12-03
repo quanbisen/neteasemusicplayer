@@ -76,10 +76,10 @@ public class TabsController {
     private StageUtils stageUtils;
 
     //test
-    private BorderPane borderPane;
+    private BorderPane borderPaneRight;
 
     public BorderPane getBorderPane() {
-        return borderPane;
+        return borderPaneRight;
     }
 
     @Resource
@@ -174,32 +174,54 @@ public class TabsController {
                 StackPane stackPane = centerController.getStackPane();
 
                 FXMLLoader fxmlLoader = springFXMLLoader.getLoader("/fxml/right-slide.fxml");
-                borderPane = fxmlLoader.load();
+                BorderPane borderPaneRoot = fxmlLoader.load();
 
-                borderPane.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID,null,new BorderWidths(1))));
+                borderPaneRoot.prefWidthProperty().bind(centerController.getBorderPane().widthProperty());
+                borderPaneRoot.prefHeightProperty().bind(centerController.getBorderPane().heightProperty());
+
+                borderPaneRight = (BorderPane)borderPaneRoot.getRight();
+
+                borderPaneRight.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID,null,new BorderWidths(1))));
 //                borderPane.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
 
 //        borderPane.setMaxHeight(100);
 
-                borderPane.setTranslateX(stackPane.getWidth());
-                Timeline timeline = new Timeline();
-                stackPane.getChildren().add(borderPane);
-                System.out.println(stackPane.getWidth()-borderPane.getWidth());
-                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane.translateXProperty(),stackPane.getWidth()-250*2, Interpolator.EASE_IN)));
-                timeline.play();
-                timeline.setOnFinished(event -> {
-//                    centerController.getBorderPane().setMouseTransparent(false);
+                stackPane.getChildren().add(borderPaneRoot);
+
+                TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
+                borderPaneRoot.setTranslateX(250);
+                translateTransition.setToX(0);
+                translateTransition.play();
+                translateTransition.setOnFinished(event -> {
                     hBoxUserInfo.setMouseTransparent(false);
+                    ((Pane)borderPaneRoot.getCenter()).setOnMouseClicked(event1 -> {
+                        TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(5),borderPaneRoot);
+
+                        //not work
+//                        borderPaneRoot.setTranslateX(0);
+//                        translateTransitionOut.setToX(250);
+//                        translateTransitionOut.play();
+
+                        stackPane.getChildren().remove(1,stackPane.getChildren().size());
+                    });
                 });
+
+//                Timeline timeline = new Timeline();
+//                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPaneRight.translateXProperty(),stackPane.getWidth()-250*2, Interpolator.EASE_IN)));
+//                timeline.play();
+//                timeline.setOnFinished(event -> {
+////                    centerController.getBorderPane().setMouseTransparent(false);
+//                    hBoxUserInfo.setMouseTransparent(false);
+//                });
             }
-            else {
-                System.out.println(borderPane.getTranslateX());
-                StackPane stackPane = centerController.getStackPane();
-                stackPane.getChildren().remove(1,stackPane.getChildren().size());
-                Timeline timeline = new Timeline();
-                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane.translateXProperty(),stackPane.getWidth(),Interpolator.EASE_OUT)));
-                timeline.play();
-            }
+//            else {
+//                System.out.println(borderPaneRight.getTranslateX());
+//                StackPane stackPane = centerController.getStackPane();
+//                stackPane.getChildren().remove(1,stackPane.getChildren().size());
+//                Timeline timeline = new Timeline();
+//                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPaneRight.translateXProperty(),stackPane.getWidth(),Interpolator.EASE_OUT)));
+//                timeline.play();
+//            }
         }
     }
 }
