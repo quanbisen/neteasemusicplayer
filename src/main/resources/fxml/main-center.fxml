@@ -16,6 +16,7 @@
             <fx:include source="tabs-container.fxml"></fx:include>
         </left>
         <center>
+            <!--set default center.just use include-->
 
         </center>
     </BorderPane>

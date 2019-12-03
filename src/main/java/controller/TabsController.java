@@ -1,13 +1,16 @@
 package controller;
 
+import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
+import javafx.util.Duration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
@@ -64,6 +67,9 @@ public class TabsController {
     /**注入舞台工具*/
     @Resource
     private StageUtils stageUtils;
+
+    //test
+    private BorderPane borderPane;
 
     public void initialize(){
         tabList = new ArrayList<>();
@@ -134,7 +140,7 @@ public class TabsController {
     @FXML
     public void onClickedAddMusicGroup(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton()==MouseButton.PRIMARY){  //鼠标左击
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/add-musicgroup.fxml");  //加载添加音乐歌单的fxml文件
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/create-musicgroup.fxml");  //加载添加音乐歌单的fxml文件
             Stage primaryStage = ((Stage)hBoxSearchTab.getScene().getWindow());              //获取主窗体的stage对象primaryStage
             Stage addMusicGroupStage = stageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
             stageUtils.syncCenter(primaryStage,addMusicGroupStage);   //设置addMusicGroupStage对象居中到primaryStage
@@ -144,4 +150,30 @@ public class TabsController {
         }
     }
 
+    /**单击“用户头像”HBox容器的事件处理*/
+    @FXML
+    public void onClickedHBoxUserInfo(MouseEvent mouseEvent) {
+        StackPane stackPane = centerController.getStackPane();
+
+         = new BorderPane();
+
+        borderPane.setCenter(new Label("Test"));
+        borderPane.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID,null,new BorderWidths(1))));
+        borderPane.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
+        borderPane.setPrefWidth(200);
+//        borderPane.setMaxHeight(100);
+
+//        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(10),borderPane);
+        borderPane.setTranslateX(stackPane.getWidth());
+        Timeline timeline = new Timeline();
+        System.out.println(stackPane.getWidth()-borderPane.getWidth());
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),new KeyValue(borderPane.translateXProperty(),500, Interpolator.EASE_IN)));
+        timeline.play();
+
+
+
+        stackPane.getChildren().add(borderPane);
+
+//        translateTransition.play();
+    }
 }

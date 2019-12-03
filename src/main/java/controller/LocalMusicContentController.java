@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.concurrent.Worker;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
@@ -95,6 +93,8 @@ public class LocalMusicContentController {
         tabList.add(hBoxSinger);
         tabList.add(hBoxAlbum);
 
+        this.setSelectedTab(hBoxSong);  //设置初始选中为格式标签
+
         progressIndicator.setVisible(false);
         vBoxSongContainer.setVisible(false);
     }
@@ -103,7 +103,7 @@ public class LocalMusicContentController {
     @FXML
     public void onClickedChoseFolder(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/chose-folder.fxml");  //获取被Spring工厂接管的FXMLLoader对象
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/chose-musicfolder.fxml");  //获取被Spring工厂接管的FXMLLoader对象
             Stage choseFolderStage = stageUtils.getStage((Stage) hBoxChoseFolder.getScene().getWindow(),fxmlLoader.load());
             choseFolderStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override

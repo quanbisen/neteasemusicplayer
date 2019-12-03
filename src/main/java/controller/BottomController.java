@@ -68,15 +68,15 @@ public class BottomController {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){
 
             borderPane.setLeft(null);
-            VBox borderPane1 = new VBox();
+            VBox vBox = new VBox();
             HBox hBox = new HBox();
             Rectangle statusBar = new Rectangle(0, 0);
-            hBox.getChildren().add(borderPane1);
+            hBox.getChildren().add(vBox);
             hBox.setAlignment(Pos.BOTTOM_LEFT);
-            borderPane1.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
+            vBox.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
 
-            borderPane1.setMaxWidth(0);
-            borderPane1.setMaxHeight(0);
+            vBox.setMaxWidth(0);
+            vBox.setMaxHeight(0);
             Region region = (Region) borderPane.getCenter();
 
             borderPane.setCenter(hBox);
@@ -85,8 +85,8 @@ public class BottomController {
 
             Timeline timeline = new Timeline();
             timeline.getKeyFrames().addAll(
-                    new KeyFrame(Duration.seconds(1),new KeyValue(borderPane1.minHeightProperty(),region.getHeight())),
-                    new KeyFrame(Duration.seconds(1),new KeyValue(borderPane1.minWidthProperty(),region.getWidth()))
+                    new KeyFrame(Duration.seconds(1),new KeyValue(vBox.minHeightProperty(),region.getHeight())),
+                    new KeyFrame(Duration.seconds(1),new KeyValue(vBox.minWidthProperty(),region.getWidth()))
             );
             timeline.play();
 
@@ -102,7 +102,7 @@ public class BottomController {
 //            });
 
             /*Slide Animation*/
-            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),borderPane1);
+            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),vBox);
 //            translateTransition.setFromX(-pane.getWidth());
 //            translateTransition.setToX(0);
 //            borderPane1.setTranslateY(50);
