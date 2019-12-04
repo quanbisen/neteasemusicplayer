@@ -1,0 +1,23 @@
+BorderPane
+{
+    -fx-background-image: url("/image/NavigateLoginOrRegisterBackground.png");
+    -fx-background-size: 100% 100%;
+}
+.button
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 16px;
+    -fx-background-color: transparent;
+    -fx-border-color: #D33A31;
+    -fx-border-radius: 30px;
+    -fx-text-fill: #D33A31;
+}
+.button:hover
+{
+    -fx-background-color: #F2C4C2;
+    -fx-background-radius: 30px;
+}
+#labCloseIcon:hover
+{
+    -fx-graphic: url("/image/CloseIconHover.png");
+}

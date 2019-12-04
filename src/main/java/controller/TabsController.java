@@ -150,10 +150,10 @@ public class TabsController {
         if (mouseEvent.getButton()==MouseButton.PRIMARY){  //鼠标左击
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/create-musicgroup.fxml");  //加载添加音乐歌单的fxml文件
             Stage primaryStage = ((Stage)hBoxSearchTab.getScene().getWindow());              //获取主窗体的stage对象primaryStage
-            Stage addMusicGroupStage = stageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
-            stageUtils.syncCenter(primaryStage,addMusicGroupStage);   //设置addMusicGroupStage对象居中到primaryStage
+            Stage createMusicGroupStage = stageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
+            stageUtils.syncCenter(primaryStage,createMusicGroupStage);   //设置createMusicGroupStage对象居中到primaryStage
             windowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
-            addMusicGroupStage.showAndWait();  //显示并且等待
+            createMusicGroupStage.showAndWait();  //显示并且等待
 
         }
     }

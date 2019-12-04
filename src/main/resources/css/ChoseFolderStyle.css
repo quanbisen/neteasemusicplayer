@@ -6,7 +6,7 @@ BorderPane
 }
 #labCloseIcon:hover
 {
-    -fx-background-image: url("/image/CloseIconHover.png");
+    -fx-graphic: url("/image/CloseIconHover.png");
 }
 .scroll-pane
 {
