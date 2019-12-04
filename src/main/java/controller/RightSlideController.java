@@ -24,7 +24,9 @@ public class RightSlideController {
     @FXML
     private BorderPane borderPaneRoot;
 
+    /**右边显示”音乐”的可视化滑动容器*/
     private BorderPane visualBorderPane;
+
     /**注入窗体根容器（BorderPane）的中间容器的控制器*/
     @Resource
     CenterController centerController;
@@ -71,7 +73,12 @@ public class RightSlideController {
     /**"登录"按钮的事件处理*/
     @FXML
     public void onClickedLoginButton(ActionEvent actionEvent) {
-        System.out.println("test");
+        if (centerController.getStackPane().getChildren().size() > 1){  //如果stackPane的容器大于1，移除掉
+            centerController.getStackPane().getChildren().remove(1,centerController.getStackPane().getChildren().size());
+
+            //创建登录stage部分
+
+        }
     }
 
     /**"关于"HBox的事件处理*/

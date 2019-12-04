@@ -27,7 +27,7 @@
             </Label>
             <Label fx:id="labCloseIcon" onMouseClicked="#onClickedCloseIcon">
                <graphic>
-                  <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true"><Image url="@../image/chooseFolderCloseIcon.png" /></ImageView>
+                  <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true"><Image url="@../image/CloseIcon.png" /></ImageView>
                </graphic>
             </Label>
          </children>
