@@ -14,10 +14,10 @@ public class Shadowed extends Application {
         Label clear = new Label("Clear, with no shadow");
         StackPane shadowedPane = new StackPane(clear);
         shadowedPane.setStyle(
-                "-fx-background-color: palegreen; " +
+//                "-fx-background-color: palegreen; " +
                         "-fx-background-insets: 10; " +
-                        "-fx-background-radius: 10; " +
-                        "-fx-effect: dropshadow(three-pass-box, purple, 10, 0, 0, 0);"
+//                        "-fx-background-radius: 10; " +
+                        ""
         );
         shadowedPane.setPrefSize(200, 50);
         stage.setScene(new Scene(shadowedPane));

@@ -65,12 +65,12 @@
                         <Image url="@../image/AboutIcon.png" />
                      </image></ImageView>
                   <Label text="关于音乐" />
-                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets left="160.0" />
                      </HBox.margin>
                      <image>
-                        <Image url="@../image/Pointer.png" />
+                        <Image url="@../image/PointToRight.png" />
                      </image>
                   </ImageView>
                </children>
