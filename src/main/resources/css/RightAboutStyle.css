@@ -1,0 +1,10 @@
+BorderPane
+{
+    -fx-background-color: #FAFAFC;
+    -fx-padding: 0 0 0 2;
+    -fx-effect: dropshadow(three-pass-box, #C2C2C4, 10, 0, -2, 0);
+}
+.label
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}

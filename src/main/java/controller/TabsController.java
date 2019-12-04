@@ -74,10 +74,10 @@ public class TabsController {
     /**注入舞台工具*/
     @Resource
     private StageUtils stageUtils;
-
-
-    @Resource
-    private SpringFXMLLoader springFXMLLoader;
+//
+//    /**注入附带Spring特性的FXMLLoader*/
+//    @Resource
+//    private SpringFXMLLoader springFXMLLoader;
 
     public void initialize(){
         tabList = new ArrayList<>();
@@ -164,7 +164,7 @@ public class TabsController {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             if (centerController.getStackPane().getChildren().size()==1){
 
-                FXMLLoader fxmlLoader = springFXMLLoader.getLoader("/fxml/right-slide.fxml");
+                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/right-slide.fxml");
                 BorderPane borderPaneRoot = fxmlLoader.load();
 
                 StackPane stackPane = centerController.getStackPane();

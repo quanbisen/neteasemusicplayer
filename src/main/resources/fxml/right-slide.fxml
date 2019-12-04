@@ -58,7 +58,7 @@
             </VBox>
          </center>
          <bottom>
-            <HBox prefHeight="278.0" prefWidth="309.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <HBox prefHeight="278.0" prefWidth="309.0" spacing="10.0" BorderPane.alignment="CENTER" onMouseClicked="#onClickedAbout">
                <children>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
