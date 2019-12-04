@@ -189,7 +189,7 @@ public class TabsController {
                 stackPane.getChildren().add(borderPaneRoot);
 
                 TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
-                borderPaneRoot.setTranslateX(250);
+                borderPaneRoot.setTranslateX(310);
                 translateTransition.setToX(0);
                 translateTransition.play();
                 translateTransition.setOnFinished(event -> {
@@ -199,7 +199,7 @@ public class TabsController {
 
                         //not work
 //                        borderPaneRoot.setTranslateX(0);
-//                        translateTransitionOut.setToX(250);
+//                        translateTransitionOut.setToX(310);
 //                        translateTransitionOut.play();
 
                         stackPane.getChildren().remove(1,stackPane.getChildren().size());

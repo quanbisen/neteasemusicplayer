@@ -1,0 +1,19 @@
+.label,.button
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
+.mainContainer
+{
+    -fx-border-color: #C2C2C4;
+    -fx-border-width: 0 0 0 1;
+}
+.button
+{
+    -fx-background-color: #BC2F2D;
+    -fx-text-fill: WHITE;
+    -fx-background-insets: 0;
+}
+.button:hover
+{
+    -fx-opacity: 0.8;
+}
