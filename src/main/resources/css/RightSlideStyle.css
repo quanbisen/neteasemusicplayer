@@ -6,6 +6,7 @@
 {
     -fx-border-color: #C2C2C4;
     -fx-border-width: 0 0 0 1;
+    -fx-effect: dropshadow(three-pass-box,#BC2F2D,0,1,0,0);
 }
 .button
 {

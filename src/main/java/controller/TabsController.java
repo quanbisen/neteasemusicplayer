@@ -181,11 +181,6 @@ public class TabsController {
 
                 borderPaneRight = (BorderPane)borderPaneRoot.getRight();
 
-                borderPaneRight.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID,null,new BorderWidths(1))));
-//                borderPane.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
-
-//        borderPane.setMaxHeight(100);
-
                 stackPane.getChildren().add(borderPaneRoot);
 
                 TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
@@ -195,14 +190,16 @@ public class TabsController {
                 translateTransition.setOnFinished(event -> {
                     hBoxUserInfo.setMouseTransparent(false);
                     ((Pane)borderPaneRoot.getCenter()).setOnMouseClicked(event1 -> {
-                        TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(5),borderPaneRoot);
+                        TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
 
                         //not work
-//                        borderPaneRoot.setTranslateX(0);
-//                        translateTransitionOut.setToX(310);
-//                        translateTransitionOut.play();
+                        borderPaneRoot.setTranslateX(0);
+                        translateTransitionOut.setToX(310);
+                        translateTransitionOut.play();
+                        translateTransitionOut.setOnFinished(event2 -> {
+                            stackPane.getChildren().remove(1,stackPane.getChildren().size());
+                        });
 
-                        stackPane.getChildren().remove(1,stackPane.getChildren().size());
                     });
                 });
 
