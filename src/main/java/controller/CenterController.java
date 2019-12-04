@@ -38,8 +38,6 @@ public class CenterController {
 
     @FXML
     public void onClickedBorderPane(MouseEvent mouseEvent) {
-        if (tabsController.getBorderPane()!=null){
 
-        }
     }
 }

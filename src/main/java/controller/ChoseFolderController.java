@@ -1,5 +1,9 @@
 package controller;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,14 +54,14 @@ public class ChoseFolderController {
     private File CONFIG_FILE;
 
     /**标记“确定”按钮是否是按下状态*/
-    private boolean confirm;
+    private BooleanProperty confirm = new SimpleBooleanProperty(false);
 
-    public boolean isConfirm() {
+    public BooleanProperty confirmProperty() {
         return confirm;
     }
 
     public void setConfirm(boolean confirm) {
-        this.confirm = confirm;
+        this.confirm.set(confirm);
     }
 
     @Resource
@@ -78,6 +82,15 @@ public class ChoseFolderController {
                 vWrapCheckBox.getChildren().add(checkBox);     //添加组件
             }
         }
+
+        confirm.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue){
+                    System.out.println("test");
+                }
+            }
+        });
     }
 
     /**右上角关闭图标的事件处理*/
@@ -92,7 +105,7 @@ public class ChoseFolderController {
     /**”确定“按钮的事件处理*/
     @FXML
     public void onConfirmAction(ActionEvent actionEvent) throws DocumentException, IOException {
-        confirm = true; //设置“确定”被按下
+        confirm.setValue(true);; //设置“确定”被按下
         //先删除原先的文件，然后再重新创建新文件。
         CONFIG_FILE.delete();
         CONFIG_FILE = new File(CONFIG_PATH);

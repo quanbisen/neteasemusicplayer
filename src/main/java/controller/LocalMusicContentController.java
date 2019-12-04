@@ -120,7 +120,7 @@ public class LocalMusicContentController {
 //                System.out.println(event.getEventType());
 //            });
             choseFolderStage.showAndWait();  //显示并且等待
-            if (choseFolderController.isConfirm()){  //如果是按下了“确定”按钮
+            if (choseFolderController.confirmProperty().getValue()){  //如果是按下了“确定”按钮
                 System.out.printf("confirm");
                 choseFolderController.setConfirm(false);  //标记按钮是没按下的。
 

@@ -5,6 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
@@ -70,13 +71,15 @@ public class BottomController {
             borderPane.setLeft(null);
             VBox vBox = new VBox();
             HBox hBox = new HBox();
-            Rectangle statusBar = new Rectangle(0, 0);
             hBox.getChildren().add(vBox);
             hBox.setAlignment(Pos.BOTTOM_LEFT);
             vBox.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
 
             vBox.setMaxWidth(0);
             vBox.setMaxHeight(0);
+            vBox.getChildren().add(new Button("test"));
+            vBox.getChildren().add(new Button("test"));
+
             Region region = (Region) borderPane.getCenter();
 
             borderPane.setCenter(hBox);

@@ -75,12 +75,6 @@ public class TabsController {
     @Resource
     private StageUtils stageUtils;
 
-    //test
-    private BorderPane borderPaneRight;
-
-    public BorderPane getBorderPane() {
-        return borderPaneRight;
-    }
 
     @Resource
     private SpringFXMLLoader springFXMLLoader;
@@ -169,56 +163,13 @@ public class TabsController {
     public void onClickedHBoxUserInfo(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             if (centerController.getStackPane().getChildren().size()==1){
-                hBoxUserInfo.setMouseTransparent(true);
-//                centerController.getBorderPane().setMouseTransparent(true);
-                StackPane stackPane = centerController.getStackPane();
 
                 FXMLLoader fxmlLoader = springFXMLLoader.getLoader("/fxml/right-slide.fxml");
                 BorderPane borderPaneRoot = fxmlLoader.load();
 
-                borderPaneRoot.prefWidthProperty().bind(centerController.getBorderPane().widthProperty());
-                borderPaneRoot.prefHeightProperty().bind(centerController.getBorderPane().heightProperty());
-
-                borderPaneRight = (BorderPane)borderPaneRoot.getRight();
-
-                stackPane.getChildren().add(borderPaneRoot);
-
-                TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
-                borderPaneRoot.setTranslateX(310);
-                translateTransition.setToX(0);
-                translateTransition.play();
-                translateTransition.setOnFinished(event -> {
-                    hBoxUserInfo.setMouseTransparent(false);
-                    ((Pane)borderPaneRoot.getCenter()).setOnMouseClicked(event1 -> {
-                        TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
-
-                        //not work
-                        borderPaneRoot.setTranslateX(0);
-                        translateTransitionOut.setToX(310);
-                        translateTransitionOut.play();
-                        translateTransitionOut.setOnFinished(event2 -> {
-                            stackPane.getChildren().remove(1,stackPane.getChildren().size());
-                        });
-
-                    });
-                });
-
-//                Timeline timeline = new Timeline();
-//                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPaneRight.translateXProperty(),stackPane.getWidth()-250*2, Interpolator.EASE_IN)));
-//                timeline.play();
-//                timeline.setOnFinished(event -> {
-////                    centerController.getBorderPane().setMouseTransparent(false);
-//                    hBoxUserInfo.setMouseTransparent(false);
-//                });
+                StackPane stackPane = centerController.getStackPane();
+                stackPane.getChildren().add(borderPaneRoot);  //添加进stackPane
             }
-//            else {
-//                System.out.println(borderPaneRight.getTranslateX());
-//                StackPane stackPane = centerController.getStackPane();
-//                stackPane.getChildren().remove(1,stackPane.getChildren().size());
-//                Timeline timeline = new Timeline();
-//                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPaneRight.translateXProperty(),stackPane.getWidth(),Interpolator.EASE_OUT)));
-//                timeline.play();
-//            }
         }
     }
 }
