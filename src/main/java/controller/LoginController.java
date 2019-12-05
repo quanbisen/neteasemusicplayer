@@ -129,7 +129,7 @@ public class LoginController {
     public void onClickedLoginButton(ActionEvent actionEvent) {
         String accountID = tfAccountID.getText();
         String password = pfPassword.getText();
-        labLoginInformation.setText(accountID + " " + pfPassword);
+        labLoginInformation.setText(accountID + " " + password);
         System.out.println(accountID);
         System.out.println(password);
     }

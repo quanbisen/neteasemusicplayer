@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="430.0" prefWidth="340.0" stylesheets="@../css/LoginStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <top>
+      <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="340.0" spacing="290.0" BorderPane.alignment="CENTER_RIGHT">
+         <children>
+            <Label fx:id="labBackIcon" onMouseClicked="#onClickedBackIcon">
+               <graphic>
+                  <ImageView fitHeight="13.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/BackIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labCloseIcon" onMouseClicked="#onClickedCloseIcon">
+               <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/CloseIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets right="8.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <center>
+      <AnchorPane prefHeight="288.0" prefWidth="329.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="78.0" layoutX="136.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/smartphone-call.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </center>
+   <bottom>
+      <VBox prefHeight="266.0" prefWidth="340.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="340.0" spacing="8.0">
+               <children>
+                  <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/AccountIcon.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="tfAccountID" prefHeight="32.0" prefWidth="190.0" promptText="请输入账号" />
+                  <Label fx:id="labClearIcon" maxHeight="19" maxWidth="19" onMouseClicked="#onClickedClearIcon" prefHeight="19" prefWidth="19">
+                     <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/ClearIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="340.0" spacing="8.0">
+               <children>
+                  <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/PasswordIcon.png" />
+                     </image>
+                  </ImageView>
+                  <PasswordField fx:id="pfPassword" prefHeight="32.0" prefWidth="216.0" promptText="请输入密码" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="340.0">
+               <children>
+                  <Label fx:id="labLoginInformation" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="340.0">
+               <children>
+                  <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#onClickedLoginButton" prefHeight="40.0" prefWidth="280.0" text="登录" />
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>
