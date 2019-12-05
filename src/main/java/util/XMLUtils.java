@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("xmlUtil")
-public class XMLUtil {
+public class XMLUtils {
     public void createXML(File destination, String rootName) {  //创建带有根节点XML文件
         // 创建Document对象
         Document document = DocumentHelper.createDocument();

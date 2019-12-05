@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import org.dom4j.DocumentException;
 import org.springframework.stereotype.Controller;
 import util.WindowUtils;
-import util.XMLUtil;
+import util.XMLUtils;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
@@ -65,7 +65,7 @@ public class ChoseFolderController {
     }
 
     @Resource
-    private XMLUtil xmlUtil;
+    private XMLUtils xmlUtil;
 
     public void initialize() throws IOException, DocumentException {
         CONFIG_FILE = new File(CONFIG_PATH);

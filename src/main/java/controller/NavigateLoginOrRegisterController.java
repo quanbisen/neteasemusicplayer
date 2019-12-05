@@ -69,4 +69,14 @@ public class NavigateLoginOrRegisterController {
         FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/login.fxml");
         loginScene.setRoot(fxmlLoader.load());
     }
+
+    /**单击”注册“按钮的事件处理*/
+    @FXML
+    public void onClickedRegisterButton(ActionEvent actionEvent) throws IOException {
+        //保存当前的导航容器
+        navigateLoginOrRegister = btnLoginByPhoneNumber.getScene().getRoot();
+        Scene loginScene = btnLoginByPhoneNumber.getScene();
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/register.fxml");
+        loginScene.setRoot(fxmlLoader.load());
+    }
 }

@@ -49,7 +49,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button layoutX="55.0" layoutY="74.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="230.0" text="注册">
+            <Button layoutX="55.0" layoutY="74.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="230.0" text="注册" onAction="#onClickedRegisterButton">
                <font>
                   <Font size="16.0" />
                </font>

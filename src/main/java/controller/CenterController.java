@@ -1,17 +1,12 @@
 package controller;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import org.springframework.stereotype.Controller;
-import application.SpringFXMLLoader;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 
 @Controller
 public class CenterController {
