@@ -1,7 +1,11 @@
 package controller;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -31,7 +35,15 @@ public class LoginController {
 
     /**"密码"的TextField组件*/
     @FXML
-    private TextField tfPassword;
+    private PasswordField pfPassword;
+
+    @FXML
+    /**登录信息反馈的Label组建*/
+    private Label labLoginInformation;
+
+    /**"登录"按钮组建*/
+    @FXML
+    private Button btnLogin;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
@@ -47,15 +59,42 @@ public class LoginController {
 
     public void initialize(){
         labClearIcon.setVisible(false);  //初始化为不可见
+        btnLogin.setMouseTransparent(true); //初始化不可以点击
+        btnLogin.setOpacity(0.8);           //初始化不透明度为0.8
 
+        Platform.runLater(()->{
+            btnLogin.requestFocus();         //"登录"按钮请求聚焦
+        });
+
+        //设置"登录"按钮的可点击性和"清除"账号的图标的显示时机
         tfAccountID.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!tfAccountID.getText().equals("")){
                 labClearIcon.setVisible(true);
+                pfPassword.textProperty().addListener(((observable1, oldValue1, newValue1) -> {
+                    if (!pfPassword.getText().equals("")){
+                        btnLogin.setMouseTransparent(false);
+                        btnLogin.setOpacity(1);
+                    }
+                    else {
+                        btnLogin.setMouseTransparent(true);
+                        btnLogin.setOpacity(0.8);
+                    }
+                }));
             }
             else {
                 labClearIcon.setVisible(false);
             }
         });
+
+        //"清除"账号的图标的显示时机
+        tfAccountID.focusedProperty().addListener(((observable, oldValue, newValue) -> {
+            if (newValue == true && !tfAccountID.getText().equals("")){
+                labClearIcon.setVisible(true);
+            }
+            else {
+                labClearIcon.setVisible(false);
+            }
+        }));
 
     }
 
@@ -83,5 +122,15 @@ public class LoginController {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             tfAccountID.setText("");
         }
+    }
+
+    /**"登录"按钮点击事件处理*/
+    @FXML
+    public void onClickedLoginButton(ActionEvent actionEvent) {
+        String accountID = tfAccountID.getText();
+        String password = pfPassword.getText();
+        labLoginInformation.setText(accountID + " " + pfPassword);
+        System.out.println(accountID);
+        System.out.println(password);
     }
 }

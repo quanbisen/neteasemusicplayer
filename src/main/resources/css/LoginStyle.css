@@ -15,3 +15,21 @@ AnchorPane
 {
     -fx-graphic: url("/image/ClearIconHover.png");
 }
+.button
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 16px;
+    -fx-background-color: #BC2F2D;
+    -fx-text-fill: WHITE;
+    -fx-background-insets: 0;
+}
+.text-field
+{
+    -fx-background-color: transparent;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-border-width: 0 0 1 0;
+}
+#labLoginInformation
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
