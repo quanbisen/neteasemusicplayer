@@ -1,8 +1,17 @@
+BorderPane
+{
+    -fx-background-color: #FAFAFA;
+}
 AnchorPane
 {
     -fx-background-image: url("/image/SomeTreesBackground.png");
 }
-#labCloseIcon
+#labCloseIcon:hover
 {
     -fx-graphic: url("/image/CloseIconHover.png");
+
+}
+#labClearIcon:hover
+{
+    -fx-graphic: url("/image/ClearIconHover.png");
 }

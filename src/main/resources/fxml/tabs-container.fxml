@@ -93,7 +93,7 @@
                         <Label style="-fx-text-fill: #999999; -fx-font-size: 12px;" text="创建的歌单" />
                         <ImageView fx:id="addMusicGroup" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#onClickedAddMusicGroup">
                            <image>
-                              <Image url="@../image/AddMusicGroupTabIcon.png" />
+                              <Image url="@../image/CreateMusicGroupTabIcon.png" />
                            </image>
                         </ImageView>
                      </children>
