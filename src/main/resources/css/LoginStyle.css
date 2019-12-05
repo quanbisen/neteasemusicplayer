@@ -2,3 +2,7 @@ AnchorPane
 {
     -fx-background-image: url("/image/SomeTreesBackground.png");
 }
+#labCloseIcon
+{
+    -fx-graphic: url("/image/CloseIconHover.png");
+}

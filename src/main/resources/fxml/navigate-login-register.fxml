@@ -44,7 +44,7 @@
    <bottom>
       <AnchorPane prefHeight="241.0" prefWidth="340.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="55.0" layoutY="23.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="230.0" text="手机号登录" onAction="#onClickedLoginButton">
+            <Button fx:id="btnLoginByPhoneNumber" layoutX="55.0" layoutY="23.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="230.0" text="手机号登录" onAction="#onClickedLoginButton">
                <font>
                   <Font size="16.0" />
                </font>

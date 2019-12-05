@@ -53,6 +53,8 @@ public class RightSlideController {
     @Resource
     private WindowUtils windowUtils;
 
+    private Stage loginOrRegisterStage;
+
 //    /**注入window工具类*/
 //    @Resource
 //    private WindowUtils windowUtils;
@@ -64,6 +66,10 @@ public class RightSlideController {
 
     public BorderPane getVisualBorderPane() {
         return visualBorderPane;
+    }
+
+    public Stage getLoginOrRegisterStage() {
+        return loginOrRegisterStage;
     }
 
     public void initialize(){
@@ -94,10 +100,10 @@ public class RightSlideController {
         //创建登录stage部分
         Stage primaryStage = (Stage) borderPaneRoot.getScene().getWindow();
         FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/navigate-login-register.fxml");
-        Stage loginStage = stageUtils.getStage(primaryStage,fxmlLoader.load());
-        stageUtils.syncCenter(primaryStage,loginStage);   //设置createMusicGroupStage对象居中到primaryStage
+        loginOrRegisterStage = stageUtils.getStage(primaryStage,fxmlLoader.load());
+        stageUtils.syncCenter(primaryStage,loginOrRegisterStage);   //设置createMusicGroupStage对象居中到primaryStage
         windowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
-        loginStage.show();
+        loginOrRegisterStage.show();
 
         if (centerController.getStackPane().getChildren().size() > 1){  //如果stackPane的容器大于1，移除掉
             centerController.getStackPane().getChildren().remove(1,centerController.getStackPane().getChildren().size());
