@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
@@ -36,5 +37,11 @@ public class NavigateLoginOrRegisterController {
             windowUtils.releaseBorderPane(mainController.getBorderPane());  //调用释放borderPane的函数，改变不透明度为正常的。
             labCloseIcon.getScene().getWindow().hide();  //把当前窗口隐藏
         }
+    }
+
+    /**单击”立即登录“按钮的事件处理*/
+    @FXML
+    public void onClickedLoginButton(ActionEvent actionEvent) {
+
     }
 }
