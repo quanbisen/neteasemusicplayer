@@ -32,10 +32,6 @@ public class NavigateLoginOrRegisterController {
     @FXML
     private Button btnLoginByPhoneNumber;
 
-    /**注入window工具类*/
-    @Resource
-    private WindowUtils windowUtils;
-
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
     MainController mainController;
@@ -55,7 +51,7 @@ public class NavigateLoginOrRegisterController {
     @FXML
     public void onClickedCloseIcon(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
-            windowUtils.releaseBorderPane(mainController.getBorderPane());  //调用释放borderPane的函数，改变不透明度为正常的。
+            WindowUtils.releaseBorderPane(mainController.getBorderPane());  //调用释放borderPane的函数，改变不透明度为正常的。
             labCloseIcon.getScene().getWindow().hide();  //把当前窗口隐藏
         }
     }

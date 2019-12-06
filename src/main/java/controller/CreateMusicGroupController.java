@@ -51,9 +51,6 @@ public class CreateMusicGroupController {
     @Resource
     MainController mainController;
 
-    /**注入窗体控制工具*/
-    @Resource
-    private WindowUtils windowUtils;
 
     /**注入Spring上下文工具类*/
     @Resource
@@ -109,8 +106,9 @@ public class CreateMusicGroupController {
         ((Label)(hBoxTab.getChildren().get(1))).setText(groupName);  //拆箱设置里面的Label显示内容为输入的歌单名称
         tabsController.getVBoxTabContainer().getChildren().add(hBoxTabOut);
         tabsController.getTabList().add(hBoxTab);
+
         ((Stage)tfInput.getScene().getWindow()).close();
-        windowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
+        WindowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
     }
 
     /**"取消"按钮鼠标单机事件处理*/
@@ -118,7 +116,7 @@ public class CreateMusicGroupController {
     public void onCancelButtonClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             (tfInput.getScene().getWindow()).hide();  //隐藏窗体
-            windowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
+            WindowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
         }
     }
 

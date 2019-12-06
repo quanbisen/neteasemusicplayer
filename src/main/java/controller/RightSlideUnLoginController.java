@@ -21,14 +21,11 @@ import javax.annotation.Resource;
 import java.io.IOException;
 
 @Controller
-public class RightSlideController {
+public class RightSlideUnLoginController {
 
-    /**根容器BorderPane，见right-slide.fxml文件*/
+    /**根容器BorderPane，见right-slide-unlogin.fxml文件*/
     @FXML
     private BorderPane borderPaneRoot;
-
-    @FXML
-    private Button btnLogin;
 
     /**右边显示”音乐”的可视化滑动容器*/
     private BorderPane visualBorderPane;
@@ -41,23 +38,12 @@ public class RightSlideController {
     @Resource
     private ConfigurableApplicationContext applicationContext;
 
-    /**注入舞台工具*/
-    @Resource
-    private StageUtils stageUtils;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
     MainController mainController;
 
-    /**注入window工具类*/
-    @Resource
-    private WindowUtils windowUtils;
-
     private Stage loginOrRegisterStage;
-
-//    /**注入window工具类*/
-//    @Resource
-//    private WindowUtils windowUtils;
 
 
     public BorderPane getBorderPaneRoot() {
@@ -100,9 +86,9 @@ public class RightSlideController {
         //创建登录stage部分
         Stage primaryStage = (Stage) borderPaneRoot.getScene().getWindow();
         FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/navigate-login-register.fxml");
-        loginOrRegisterStage = stageUtils.getStage(primaryStage,fxmlLoader.load());
-        stageUtils.syncCenter(primaryStage,loginOrRegisterStage);   //设置createMusicGroupStage对象居中到primaryStage
-        windowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
+        loginOrRegisterStage = StageUtils.getStage(primaryStage,fxmlLoader.load());
+        StageUtils.syncCenter(primaryStage,loginOrRegisterStage);   //设置createMusicGroupStage对象居中到primaryStage
+        WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
         loginOrRegisterStage.show();
 
         if (centerController.getStackPane().getChildren().size() > 1){  //如果stackPane的容器大于1，移除掉

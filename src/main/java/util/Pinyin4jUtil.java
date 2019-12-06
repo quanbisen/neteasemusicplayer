@@ -14,7 +14,6 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 import org.junit.Test;
 import org.springframework.stereotype.Component;
 
-@Component
 public class Pinyin4jUtil {
 
     /**
@@ -23,7 +22,7 @@ public class Pinyin4jUtil {
      * @param str
      * @return String
      */
-    public String getFirstPinYinHeadChar(String str) {
+    public static String getFirstPinYinHeadChar(String str) {
 
         StringBuffer pybf = new StringBuffer();
         char word = str.charAt(0);
@@ -63,7 +62,7 @@ public class Pinyin4jUtil {
      * @param src
      * @return String
      */
-    public String getPinYin(String src) {
+    public static String getPinYin(String src) {
         char[] t1 = null;
         t1 = src.toCharArray();
         // System.out.println(t1.length);
@@ -101,7 +100,7 @@ public class Pinyin4jUtil {
      * @param str
      * @return String
      */
-    public String getPinYinHeadChar(String str) {
+    public static String getPinYinHeadChar(String str) {
         String convert = "";
         for (int j = 0; j < str.length(); j++) {
             char word = str.charAt(j);
@@ -122,7 +121,7 @@ public class Pinyin4jUtil {
      * @param cnStr
      * @return String
      */
-    public String getCnASCII(String cnStr) {
+    public static String getCnASCII(String cnStr) {
         StringBuffer strBuf = new StringBuffer();
         // 将字符串转换成字节序列
         byte[] bGBK = cnStr.getBytes();
@@ -141,7 +140,7 @@ public class Pinyin4jUtil {
      *            汉字
      * @return 拼音
      */
-    public String converterToFirstSpell(String chines) {
+    public static String converterToFirstSpell(String chines) {
         StringBuffer pinyinName = new StringBuffer();
         char[] nameChar = chines.toCharArray();
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
@@ -186,7 +185,7 @@ public class Pinyin4jUtil {
      *            汉字
      * @return 拼音
      */
-    public String converterToSpell(String chines) {
+    public static String converterToSpell(String chines) {
         StringBuffer pinyinName = new StringBuffer();
         char[] nameChar = chines.toCharArray();
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
@@ -224,7 +223,7 @@ public class Pinyin4jUtil {
      * @param theStr
      * @return
      */
-    private List<Map<String, Integer>> discountTheChinese(String theStr) {
+    private static List<Map<String, Integer>> discountTheChinese(String theStr) {
         // 去除重复拼音后的拼音列表
         List<Map<String, Integer>> mapList = new ArrayList<Map<String, Integer>>();
         // 用于处理每个字的多音字，去掉重复
@@ -255,7 +254,7 @@ public class Pinyin4jUtil {
      *
      * @return
      */
-    private String parseTheChineseByObject(
+    private static String parseTheChineseByObject(
             List<Map<String, Integer>> list) {
         Map<String, Integer> first = null; // 用于统计每一次,集合组合数据
         // 遍历每一组集合

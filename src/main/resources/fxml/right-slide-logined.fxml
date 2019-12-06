@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="borderPaneRoot" prefHeight="475.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="@../css/RightSlideLoginedStyle.css"
+            fx:controller="controller.RightSlideLoginedController">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <right>
+      <BorderPane prefHeight="400.0" prefWidth="310.0" styleClass="mainContainer" BorderPane.alignment="CENTER">
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="281.0" spacing="208.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="账号">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="32.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #B8B9BF; -fx-padding: 0;" text="编辑" />
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <VBox prefHeight="391.0" prefWidth="310.0" style="-fx-border-width: 1 0 1 0; -fx-border-color: #DDDEE1;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <Label fx:id="labUserImage">
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/UserDefaultImage.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="labUserName" text="quanbisen" ></Label>
+                     </children>
+                  </HBox>
+                  <HBox onMouseClicked="#onClickedAbout" prefHeight="70.0" prefWidth="310.0" spacing="10.0" style="-fx-border-color: #DDDEE1; -fx-border-width: 1 0 1 0;">
+                     <children>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/AboutIcon.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="关于音乐" />
+                        <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="160.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@../image/PointToRight.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" top="30.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </center>
+         <bottom>
+            <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER" onMouseClicked="#onClickedLogout">
+               <children>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/LogoutIcon.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="退出登录" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </right>
+</BorderPane>

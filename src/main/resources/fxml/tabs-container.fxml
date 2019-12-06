@@ -114,12 +114,16 @@
    <bottom>
       <HBox fx:id="hBoxUserInfo" alignment="CENTER_LEFT" onMouseClicked="#onClickedHBoxUserInfo" spacing="10.0" styleClass="hBoxUserInfo" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/UserDefaultImage.png" />
-               </image>
-            </ImageView>
-            <Label maxWidth="120.0" text="未登录" />
+            <Label fx:id="labUserImage">
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/UnLoginImage.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labUserName" maxWidth="120.0" text="未登录" />
          </children>
       </HBox>
    </bottom>

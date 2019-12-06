@@ -43,10 +43,6 @@ public class ChoseFolderController {
     @Resource
     private MainController mainController;
 
-    /**注入window工具类*/
-    @Resource
-    private WindowUtils windowUtils;
-
     /**播放器配置文件的存放路径*/
     private String CONFIG_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml";
 
@@ -64,17 +60,16 @@ public class ChoseFolderController {
         this.confirm.set(confirm);
     }
 
-    @Resource
-    private XMLUtils xmlUtil;
+    
 
     public void initialize() throws IOException, DocumentException {
         CONFIG_FILE = new File(CONFIG_PATH);
         if (!CONFIG_FILE.exists()){  //如果文件不存在，创建文件
             CONFIG_FILE.createNewFile();                          //创建XML文件
-            xmlUtil.createXML(CONFIG_FILE,"FolderList");//添加根元素
+            XMLUtils.createXML(CONFIG_FILE,"FolderList");//添加根元素
         }
         else {   //文件存在，读取记录
-            List<String> folderPathList =  xmlUtil.getAllRecord(CONFIG_FILE,"Folder","path");
+            List<String> folderPathList =  XMLUtils.getAllRecord(CONFIG_FILE,"Folder","path");
             for (String folderPath:folderPathList){
                 CheckBox checkBox = new CheckBox(folderPath);  //创建CheckBox组件
                 checkBox.getStylesheets().add("css/CheckBoxStyle.css"); //添加样式
@@ -98,7 +93,7 @@ public class ChoseFolderController {
     public void onClickedCloseIcon(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
             ((Stage)labCloseIcon.getScene().getWindow()).close();      //关闭窗口
-            windowUtils.releaseBorderPane(mainController.getBorderPane());
+            WindowUtils.releaseBorderPane(mainController.getBorderPane());
         }
     }
 
@@ -111,7 +106,7 @@ public class ChoseFolderController {
         CONFIG_FILE = new File(CONFIG_PATH);
         if (!CONFIG_FILE.exists()){  //如果文件不存在，创建文件
             CONFIG_FILE.createNewFile();                          //创建XML文件
-            xmlUtil.createXML(CONFIG_FILE,"FolderList");//添加根元素
+            XMLUtils.createXML(CONFIG_FILE,"FolderList");//添加根元素
         }
 
         ObservableList<Node> observableList = vWrapCheckBox.getChildren();  //获取vWrapCheckBox的子组件
@@ -120,13 +115,13 @@ public class ChoseFolderController {
             CheckBox checkBox = (CheckBox)node;
             if (checkBox.isSelected()){  //如果是选中“打勾”状态
                 String pathValue = checkBox.getText();
-                if (!xmlUtil.isExist(CONFIG_FILE,"Folder","path",pathValue)){  //如果文件的路径没有在文件中存储，才添加记录进去存储
-                    xmlUtil.addOneRecord(CONFIG_FILE,"Folder","path",pathValue);
+                if (!XMLUtils.isExist(CONFIG_FILE,"Folder","path",pathValue)){  //如果文件的路径没有在文件中存储，才添加记录进去存储
+                    XMLUtils.addOneRecord(CONFIG_FILE,"Folder","path",pathValue);
                 }
             }
         }
         labCloseIcon.getScene().getWindow().hide();      //关闭窗口
-        windowUtils.releaseBorderPane(mainController.getBorderPane());
+        WindowUtils.releaseBorderPane(mainController.getBorderPane());
     }
 
     /**"添加文件夹"按钮的事件处理*/

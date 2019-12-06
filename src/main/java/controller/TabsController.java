@@ -1,5 +1,6 @@
 package controller;
 
+import com.alibaba.fastjson.JSON;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -7,15 +8,20 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import model.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
 import util.StageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Controller
 public class TabsController {
@@ -47,8 +53,13 @@ public class TabsController {
     @FXML
     private VBox vBoxTabContainer;
 
+    /**显示用户头像的Label组件*/
     @FXML
-    private HBox hBoxUserInfo;
+    private Label labUserImage;
+
+    /**显示用户名称的Label组件*/
+    @FXML
+    private Label labUserName;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
@@ -57,18 +68,18 @@ public class TabsController {
     /**注入窗体根容器（BorderPane）的中间容器的控制器*/
     @Resource
     CenterController centerController;
-
-    /**注入window工具类*/
-    @Resource
-    private WindowUtils windowUtils;
+    
 
     /**注入Spring上下文工具类*/
     @Resource
     private ConfigurableApplicationContext applicationContext;
+    
 
-    /**注入舞台工具*/
-    @Resource
-    private StageUtils stageUtils;
+    /**播放器登录文件的存放路径*/
+    private String Login_CONFIG_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "login-config.properties";
+
+    /**播放器登录配置文件*/
+    private File LOGIN_CONFIG_FILE;
 
     public VBox getVBoxTabContainer() {
         return vBoxTabContainer;
@@ -78,7 +89,18 @@ public class TabsController {
         return tabList;
     }
 
+    public Label getLabUserImage() {
+        return labUserImage;
+    }
+
+    public Label getLabUserName() {
+        return labUserName;
+    }
+
     public void initialize(){
+
+        LOGIN_CONFIG_FILE = new File(Login_CONFIG_PATH);  //初始化播放器登录文件
+
         tabList = new ArrayList<>();
         tabList.add(hBoxSearchTab);
         tabList.add(hBoxExploreMusicTab);
@@ -147,13 +169,17 @@ public class TabsController {
     @FXML
     public void onClickedAddMusicGroup(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton()==MouseButton.PRIMARY){  //鼠标左击
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/create-musicgroup.fxml");  //加载添加音乐歌单的fxml文件
-            Stage primaryStage = ((Stage)hBoxSearchTab.getScene().getWindow());              //获取主窗体的stage对象primaryStage
-            Stage createMusicGroupStage = stageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
-            stageUtils.syncCenter(primaryStage,createMusicGroupStage);   //设置createMusicGroupStage对象居中到primaryStage
-            windowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
-            createMusicGroupStage.showAndWait();  //显示并且等待
-
+            if (!LOGIN_CONFIG_FILE.exists()){   //判断用户是否登录过了。
+                WindowUtils.toastInfo(centerController.getStackPane(),new Label("请先登录！"));
+            }
+            else{
+                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/create-musicgroup.fxml");  //加载添加音乐歌单的fxml文件
+                Stage primaryStage = ((Stage)hBoxSearchTab.getScene().getWindow());              //获取主窗体的stage对象primaryStage
+                Stage createMusicGroupStage = StageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
+                StageUtils.syncCenter(primaryStage,createMusicGroupStage);   //设置createMusicGroupStage对象居中到primaryStage
+                WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
+                createMusicGroupStage.showAndWait();  //显示并且等待
+            }
         }
     }
 
@@ -162,12 +188,20 @@ public class TabsController {
     public void onClickedHBoxUserInfo(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             if (centerController.getStackPane().getChildren().size()==1){
+                if (!LOGIN_CONFIG_FILE.exists()){  //如果登录配置文件不存在，则没有登录
+                    FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/right-slide-unlogin.fxml");
+                    BorderPane borderPaneRoot = fxmlLoader.load();
 
-                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/right-slide.fxml");
-                BorderPane borderPaneRoot = fxmlLoader.load();
+                    StackPane stackPane = centerController.getStackPane();
+                    stackPane.getChildren().add(borderPaneRoot);  //添加进stackPane
+                }
+                else {  //如果登录配置文件存在，则已经登录过了。
+                    FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/right-slide-logined.fxml");
+                    BorderPane borderPaneRoot = fxmlLoader.load();
 
-                StackPane stackPane = centerController.getStackPane();
-                stackPane.getChildren().add(borderPaneRoot);  //添加进stackPane
+                    StackPane stackPane = centerController.getStackPane();
+                    stackPane.getChildren().add(borderPaneRoot);  //添加进stackPane
+                }
             }
         }
     }

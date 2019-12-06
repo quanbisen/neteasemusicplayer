@@ -46,4 +46,5 @@ AnchorPane
 #labLoginInformation
 {
     -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-text-fill: #BC2F2D;
 }

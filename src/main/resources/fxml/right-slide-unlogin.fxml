@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="475.0" prefWidth="766.0"
-            stylesheets="@../css/RightSlideStyle.css"
+            stylesheets="@../css/RightSlideUnLoginStyle.css"
             fx:id="borderPaneRoot"
-            fx:controller="controller.RightSlideController"
+            fx:controller="controller.RightSlideUnLoginController"
             xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1" >
    <center>

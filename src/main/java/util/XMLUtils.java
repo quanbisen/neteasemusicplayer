@@ -16,9 +16,8 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component("xmlUtil")
-public class XMLUtils {
-    public void createXML(File destination, String rootName) {  //创建带有根节点XML文件
+public final class XMLUtils {
+    public static void createXML(File destination, String rootName) {  //创建带有根节点XML文件
         // 创建Document对象
         Document document = DocumentHelper.createDocument();
         // 创建根节点
@@ -32,7 +31,7 @@ public class XMLUtils {
      * @param subName 子元素名称
      * @param attributeName 子元素属性
      * @param attributeValue 子元素属性值*/
-    public void addOneRecord(File xmlFile, String subName, String attributeName, String attributeValue) throws DocumentException {
+    public static void addOneRecord(File xmlFile, String subName, String attributeName, String attributeValue) throws DocumentException {
         SAXReader reader = new SAXReader();
         Document dom = reader.read(xmlFile);
         Element root = dom.getRootElement();
@@ -41,7 +40,7 @@ public class XMLUtils {
         saveToFile(xmlFile, dom);
     }
 
-    public List<String> getAllRecord(File xmlFile, String subName, String attributeName) throws DocumentException {
+    public static List<String> getAllRecord(File xmlFile, String subName, String attributeName) throws DocumentException {
         List<String> list = new ArrayList<>();
 
         SAXReader reader = new SAXReader();
@@ -61,8 +60,8 @@ public class XMLUtils {
         return list;
     }
 
-    public boolean isExist(File xmlFile, String subName, String attributeName,String candidate) throws DocumentException{
-        List<String> list = this.getAllRecord(xmlFile,subName,attributeName);
+    public static boolean isExist(File xmlFile, String subName, String attributeName,String candidate) throws DocumentException{
+        List<String> list = getAllRecord(xmlFile,subName,attributeName);
         for (String string:list){
             if (candidate.equals(string)){
                 return true;
@@ -71,7 +70,7 @@ public class XMLUtils {
         return false;
     }
 
-    public void addOneRecordToChoseFolder(File destination, String folder, String subName, String fileName)  {
+    public static void addOneRecordToChoseFolder(File destination, String folder, String subName, String fileName)  {
         try {
             SAXReader reader = new SAXReader();
             Document dom = reader.read(destination);
@@ -90,7 +89,7 @@ public class XMLUtils {
         }
     }
 
-    public void removeOneRecord(File destination, String attributeName, String deleteValue)  {
+    public static void removeOneRecord(File destination, String attributeName, String deleteValue)  {
         try {
             SAXReader reader = new SAXReader();
             Document dom = reader.read(destination);
@@ -109,7 +108,7 @@ public class XMLUtils {
     }
 
     //删除ChoseFolder元素下面的所有子元素
-    public void removeChoseFolderSubElements(File destination, String folder) {
+    public static void removeChoseFolderSubElements(File destination, String folder) {
         try {
             SAXReader reader = new SAXReader();
             Document dom = reader.read(destination);
@@ -134,7 +133,7 @@ public class XMLUtils {
 
 
 
-    public List<String> getAllSong(File destination, String folder) {
+    public static List<String> getAllSong(File destination, String folder) {
         List<String> list = new ArrayList<>();
         try {
             SAXReader reader = new SAXReader();
@@ -157,7 +156,7 @@ public class XMLUtils {
         return list;
     }
     //对xml文件进行修改后执行的保存函数
-    private void saveToFile(File destination, Document dom) {
+    private static void saveToFile(File destination, Document dom) {
         try {
             OutputFormat outputFormat = OutputFormat.createPrettyPrint();
             outputFormat.setEncoding("UTF-8");

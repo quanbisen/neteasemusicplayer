@@ -97,7 +97,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="340.0">
                <children>
-                  <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#onClickedLoginButton" prefHeight="40.0" prefWidth="280.0" text="登录" />
+                  <Button fx:id="btnLogin" mnemonicParsing="false" onMouseClicked="#onClickedLoginButton" prefHeight="40.0" prefWidth="280.0" text="登录" />
                </children>
                <VBox.margin>
                   <Insets top="15.0" />

@@ -68,17 +68,9 @@ public class LocalMusicContentController {
     @Resource
     MainController mainController;
 
-    /**注入window工具类*/
-    @Resource
-    private WindowUtils windowUtils;
-
     /**注入Spring上下文类*/
     @Resource
     private ApplicationContext applicationContext;
-
-    /**注入舞台工具*/
-    @Resource
-    private StageUtils stageUtils;
 
     /**注入“选择目录”舞台的controller*/
     @Resource
@@ -104,7 +96,7 @@ public class LocalMusicContentController {
     public void onClickedChoseFolder(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/chose-musicfolder.fxml");  //获取被Spring工厂接管的FXMLLoader对象
-            Stage choseFolderStage = stageUtils.getStage((Stage) hBoxChoseFolder.getScene().getWindow(),fxmlLoader.load());
+            Stage choseFolderStage = StageUtils.getStage((Stage) hBoxChoseFolder.getScene().getWindow(),fxmlLoader.load());
             choseFolderStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
@@ -112,8 +104,8 @@ public class LocalMusicContentController {
                 }
             });
 
-            stageUtils.syncCenter((Stage) hBoxChoseFolder.getScene().getWindow(),choseFolderStage);   //设置addMusicGroupStage对象居中到primaryStage
-            windowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
+            StageUtils.syncCenter((Stage) hBoxChoseFolder.getScene().getWindow(),choseFolderStage);   //设置addMusicGroupStage对象居中到primaryStage
+            WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
 
 
 //            choseFolderStage.setOnHidden(event -> {
