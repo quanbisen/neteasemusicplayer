@@ -1,20 +1,25 @@
 package controller;
 
+import application.SpringFXMLLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import util.WindowUtils;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 
 /**
  * @author super lollipop
@@ -46,12 +51,16 @@ public class CreateMusicGroupController {
     @Resource
     MainController mainController;
 
+    /**注入窗体控制工具*/
+    @Resource
     private WindowUtils windowUtils;
 
-    @Autowired
-    public void setWindowUtils(WindowUtils windowUtils) {
-        this.windowUtils = windowUtils;
-    }
+    /**注入Spring上下文工具类*/
+    @Resource
+    private ConfigurableApplicationContext applicationContext;
+
+    /**注入左边放置标签的容器控制器*/
+    @Resource TabsController tabsController;
 
     /**初始化函数，自动调用，以前需要实现接口Initializable,从JavaFX2.0开始就自动会调用了，不需要实现接口*/
     public void initialize(){
@@ -74,7 +83,7 @@ public class CreateMusicGroupController {
 
     /**“新建”按钮鼠标单击事件处理*/
     @FXML
-    public void onCreateButtonClicked(MouseEvent mouseEvent) {
+    public void onCreateButtonClicked(MouseEvent mouseEvent) throws IOException{
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
             if (!labInputError.getText().equals(ERROR_MESSAGE)){  //如果显示错误信息的label文本内容不是错误信息内容
                 if (tfInput.getText().trim().equals("")
@@ -82,15 +91,24 @@ public class CreateMusicGroupController {
                     this.onCancelButtonClicked(mouseEvent);
                 }
                 else {  //否则
-                    this.createMusicGroup();   //调用创建音乐歌单的函数
+                    this.createMusicGroup(tfInput.getText());   //调用创建音乐歌单的函数
                 }
             }
         }
     }
 
     /**创建音乐歌单的函数*/
-    private void createMusicGroup() {
+    private void createMusicGroup(String groupName) throws IOException {
         System.out.println("create");
+
+
+        //UI更新部分
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/musicgroup-tab.fxml");
+        HBox hBoxTabOut = fxmlLoader.load();
+        HBox hBoxTab = ((HBox)hBoxTabOut.getChildren().get(0));
+        ((Label)(hBoxTab.getChildren().get(1))).setText(groupName);  //拆箱设置里面的Label显示内容为输入的歌单名称
+        tabsController.getVBoxTabContainer().getChildren().add(hBoxTabOut);
+        tabsController.getTabList().add(hBoxTab);
         ((Stage)tfInput.getScene().getWindow()).close();
         windowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
     }

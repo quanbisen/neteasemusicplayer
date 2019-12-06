@@ -9,11 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefWidth="190.0"
-            xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1"
-            stylesheets="@../css/LeftStyle.css"
-            fx:controller="controller.TabsController">
+<BorderPane prefWidth="195.0" stylesheets="@../css/LeftStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabsController">
    <!--显示顶部导航的按钮-->
     <top>
       <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
@@ -32,9 +28,9 @@
         <content>
           <VBox fx:id="vBoxTabContainer">
                <children>
-                  <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
+                  <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="hBoxTab">
                      <children>
-                        <HBox fx:id="hBoxSearchTab" styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0" onMouseClicked="#onClickedSearchTab">
+                        <HBox fx:id="hBoxSearchTab" alignment="CENTER_LEFT" onMouseClicked="#onClickedSearchTab" spacing="12.0" styleClass="scalableHBox">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../image/SearchTabIcon.png" />
@@ -44,9 +40,9 @@
                         </HBox>
                      </children>
                   </HBox>
-                  <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
+                  <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="hBoxTab">
                      <children>
-                        <HBox fx:id="hBoxExploreMusicTab" styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0" onMouseClicked="#onClickedExplorerMusicTab">
+                        <HBox fx:id="hBoxExploreMusicTab" alignment="CENTER_LEFT" onMouseClicked="#onClickedExplorerMusicTab" spacing="12.0" styleClass="scalableHBox">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../image/ExploreMusicTabIcon.png" />
@@ -64,9 +60,9 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
+                  <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="hBoxTab">
                      <children>
-                        <HBox fx:id="hBoxLocalMusicTab" styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0" onMouseClicked="#onClickedLocalMusicTab">
+                        <HBox fx:id="hBoxLocalMusicTab" alignment="CENTER_LEFT" onMouseClicked="#onClickedLocalMusicTab" spacing="12.0" styleClass="scalableHBox">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../image/LocalMusicIcon.png" />
@@ -76,9 +72,9 @@
                         </HBox>
                      </children>
                   </HBox>
-                  <HBox styleClass="hBoxTab" alignment="CENTER_LEFT" spacing="12.0">
+                  <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="hBoxTab">
                      <children>
-                        <HBox fx:id="hBoxRecentPlayTab" styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0" onMouseClicked="#onClickedRecentPlayTab">
+                        <HBox fx:id="hBoxRecentPlayTab" alignment="CENTER_LEFT" onMouseClicked="#onClickedRecentPlayTab" spacing="12.0" styleClass="scalableHBox">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../image/RecentPlayTabIcon.png" />
@@ -91,16 +87,16 @@
                   <HBox alignment="CENTER_LEFT" spacing="85.0">
                      <children>
                         <Label style="-fx-text-fill: #999999; -fx-font-size: 12px;" text="创建的歌单" />
-                        <ImageView fx:id="addMusicGroup" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#onClickedAddMusicGroup">
+                        <ImageView fx:id="addMusicGroup" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onClickedAddMusicGroup" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/CreateMusicGroupTabIcon.png" />
                            </image>
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox styleClass="hBoxTab" >
+                  <HBox styleClass="hBoxTab">
                      <children>
-                        <HBox fx:id="hBoxMyFavorMusicTab" styleClass="scalableHBox" alignment="CENTER_LEFT" spacing="12.0" onMouseClicked="#onClickedMyFavorMusicTab">
+                        <HBox fx:id="hBoxMyFavorMusicTab" alignment="CENTER_LEFT" onMouseClicked="#onClickedMyFavorMusicTab" spacing="12.0" styleClass="scalableHBox">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../image/FavorTabIcon.png" />
@@ -116,7 +112,7 @@
    </center>
     <!--显示用户头像的组件-->
    <bottom>
-      <HBox fx:id="hBoxUserInfo" alignment="CENTER_LEFT" spacing="10.0" styleClass="hBoxUserInfo" BorderPane.alignment="CENTER" onMouseClicked="#onClickedHBoxUserInfo">
+      <HBox fx:id="hBoxUserInfo" alignment="CENTER_LEFT" onMouseClicked="#onClickedHBoxUserInfo" spacing="10.0" styleClass="hBoxUserInfo" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -1,28 +1,19 @@
 package controller;
 
-import javafx.animation.*;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
 import util.StageUtils;
 import util.WindowUtils;
-
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +43,10 @@ public class TabsController {
     /**装标签的集合tabList*/
     private List<HBox> tabList;
 
+    /**存储标签的VBox容器*/
+    @FXML
+    private VBox vBoxTabContainer;
+
     @FXML
     private HBox hBoxUserInfo;
 
@@ -74,10 +69,14 @@ public class TabsController {
     /**注入舞台工具*/
     @Resource
     private StageUtils stageUtils;
-//
-//    /**注入附带Spring特性的FXMLLoader*/
-//    @Resource
-//    private SpringFXMLLoader springFXMLLoader;
+
+    public VBox getVBoxTabContainer() {
+        return vBoxTabContainer;
+    }
+
+    public List<HBox> getTabList() {
+        return tabList;
+    }
 
     public void initialize(){
         tabList = new ArrayList<>();
@@ -135,7 +134,7 @@ public class TabsController {
     }
 
     /**设置选择的标签背景颜色的函数*/
-    private void setSelectedTab(HBox selectedTab){
+    public void setSelectedTab(HBox selectedTab){
         //首先重置所有的标签的背景颜色，我这里的HBox标签背景颜色是由另外一个HBox包裹做背景颜色显示的，所以需要getParent，设置parent的样式
         for (HBox hBoxTab:tabList){
             ((HBox)hBoxTab.getParent()).getStyleClass().remove("selectedHBox");  //移除parent的css类名
