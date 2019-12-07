@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ProgressIndicator?>
 <BorderPane prefHeight="430.0" prefWidth="340.0" stylesheets="@../css/LoginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="340.0" spacing="290.0" BorderPane.alignment="CENTER_RIGHT">
@@ -93,6 +94,7 @@
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="340.0">
                <children>
                   <Label fx:id="labLoginInformation" />
+                  <ProgressIndicator fx:id="loginProgressIndicator" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="340.0">

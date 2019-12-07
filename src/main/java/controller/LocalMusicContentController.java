@@ -76,9 +76,6 @@ public class LocalMusicContentController {
     @Resource
     ChoseFolderController choseFolderController;
 
-//    @Resource
-//    LoadingSongService loadingSongService;
-
     public void initialize(){
         tabList = new ArrayList<>();
         tabList.add(hBoxSong);
@@ -107,10 +104,6 @@ public class LocalMusicContentController {
             StageUtils.syncCenter((Stage) hBoxChoseFolder.getScene().getWindow(),choseFolderStage);   //设置addMusicGroupStage对象居中到primaryStage
             WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
 
-
-//            choseFolderStage.setOnHidden(event -> {
-//                System.out.println(event.getEventType());
-//            });
             choseFolderStage.showAndWait();  //显示并且等待
             if (choseFolderController.confirmProperty().getValue()){  //如果是按下了“确定”按钮
                 System.out.printf("confirm");
@@ -119,7 +112,8 @@ public class LocalMusicContentController {
 
                 //逻辑乱了的部分，先实现吧。
 
-                LoadingSongService loadingSongService = new LoadingSongService();
+//                LoadingSongService loadingSongService = new LoadingSongService();
+                LoadingSongService loadingSongService = applicationContext.getBean(LoadingSongService.class);
                 progressIndicator.visibleProperty().bind(loadingSongService.runningProperty());
                 vBoxSongContainer.visibleProperty().bind(loadingSongService.valueProperty());
                 loadingSongService.start();

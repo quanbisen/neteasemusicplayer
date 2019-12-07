@@ -4,18 +4,18 @@ import com.alibaba.fastjson.JSON;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import model.User;
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
+import service.LoginService;
 import service.UserDao;
 import util.ImageUtils;
 import util.UserUtils;
@@ -51,6 +51,9 @@ public class LoginController {
     /**登录信息反馈的Label组件*/
     private Label labLoginInformation;
 
+    @FXML
+    private ProgressIndicator loginProgressIndicator;
+
     /**"登录"按钮组建*/
     @FXML
     private Button btnLogin;
@@ -75,8 +78,27 @@ public class LoginController {
     @Resource
     CenterController centerController;
 
+    /**注入Spring上下文类*/
+    @Resource
+    private ApplicationContext applicationContext;
 
+    private MouseEvent mouseEvent;
 
+    public TextField getTfAccountID() {
+        return tfAccountID;
+    }
+
+    public PasswordField getPfPassword() {
+        return pfPassword;
+    }
+
+    public Label getLabLoginInformation() {
+        return labLoginInformation;
+    }
+
+    public MouseEvent getMouseEvent() {
+        return mouseEvent;
+    }
 
     public void initialize(){
 
@@ -124,7 +146,7 @@ public class LoginController {
             }
         }));
 
-
+        loginProgressIndicator.setVisible(false);  //初始化“加载图标”不可见
 
     }
 
@@ -160,42 +182,48 @@ public class LoginController {
     @FXML
     public void onClickedLoginButton(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
-            String accountID = tfAccountID.getText();  //取出输入的账号
-            String password = pfPassword.getText();    //取出输入的密码
-            User user = new User();                    //创建用用持久化对象
-            user.setId(accountID);
-            user.setPassword(password);
-            User validUser = userDao.findUserByIdAndPassword(user);  //查询用户
-            if (validUser==null){
-                labLoginInformation.setText("登录账号或密码错误");
-            }
-            else if (validUser.getId().equals(accountID)
-                    && validUser.getPassword().equals(password)){  //数据库查询到此记录，进行登录成功处理
-                this.onClickedCloseIcon(mouseEvent);   //关闭当前登录窗口
-                ImageView userImage = new ImageView(new Image(validUser.getImage()));  //创建用户头像图片对象
-                userImage.setFitHeight(38);  //设置宽度、高度
-                userImage.setFitWidth(38);
-                tabsController.getLabUserImage().setGraphic(userImage);  //设置用户头像图片
-                tabsController.getLabUserName().setText(validUser.getName());  //设置用户名称
-                WindowUtils.toastInfo(centerController.getStackPane(),new Label("登录成功"));
+            this.mouseEvent = mouseEvent;
+            LoginService loginService = applicationContext.getBean(LoginService.class);
+            loginProgressIndicator.visibleProperty().bind(loginService.runningProperty());
+            loginService.start();
 
-                //存储登录成功的用户对象到本地文件
-                tabsController.getLOGIN_CONFIG_FILE().delete();
-                tabsController.getLOGIN_CONFIG_FILE().createNewFile();  //创建新的文件
-                UserUtils.saveUser(validUser,tabsController.getLOGIN_CONFIG_FILE());  //调用存储的函数，写入到文件
-
-                String urlString = validUser.getImage();
-                String imageName = urlString.substring(urlString.lastIndexOf("/")+1);
-                String USER_IMAGE_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + validUser.getId();
-                File path = new File(USER_IMAGE_PATH);
-                path.mkdirs();              //创建目录
-                System.out.println(USER_IMAGE_PATH);
-                File imageFile = new File(USER_IMAGE_PATH + File.separator + imageName);
-                ImageUtils.download(validUser.getImage(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
-            }
-            else {
-                labLoginInformation.setText("登录失败");
-            }
+//            String accountID = tfAccountID.getText();  //取出输入的账号
+//            String password = pfPassword.getText();    //取出输入的密码
+//            User user = new User();                    //创建用用持久化对象
+//            user.setId(accountID);
+//            user.setPassword(password);
+//            try{
+//                User validUser = userDao.findUserByIdAndPassword(user);  //查询用户
+//                if (validUser==null){
+//                    labLoginInformation.setText("登录账号或密码错误");
+//                }
+//                else if (validUser.getId().equals(accountID)
+//                        && validUser.getPassword().equals(password)){  //数据库查询到此记录，进行登录成功处理
+//                    this.onClickedCloseIcon(mouseEvent);   //关闭当前登录窗口
+//                    ImageView userImage = new ImageView(new Image(validUser.getImage()));  //创建用户头像图片对象
+//                    userImage.setFitHeight(38);  //设置宽度、高度
+//                    userImage.setFitWidth(38);
+//                    tabsController.getLabUserImage().setGraphic(userImage);  //设置用户头像图片
+//                    tabsController.getLabUserName().setText(validUser.getName());  //设置用户名称
+//                    WindowUtils.toastInfo(centerController.getStackPane(),new Label("登录成功"));
+//
+//                    //存储登录成功的用户对象到本地文件
+//                    tabsController.getLOGIN_CONFIG_FILE().delete();
+//                    tabsController.getLOGIN_CONFIG_FILE().createNewFile();  //创建新的文件
+//                    UserUtils.saveUser(validUser,tabsController.getLOGIN_CONFIG_FILE());  //调用存储的函数，写入到文件
+//
+//                    String urlString = validUser.getImage();
+//                    String imageName = urlString.substring(urlString.lastIndexOf("/")+1);
+//                    String USER_IMAGE_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + validUser.getId();
+//                    File path = new File(USER_IMAGE_PATH);
+//                    path.mkdirs();              //创建目录
+//                    System.out.println(USER_IMAGE_PATH);
+//                    File imageFile = new File(USER_IMAGE_PATH + File.separator + imageName);
+//                    ImageUtils.download(validUser.getImage(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
+//                }
+//            } catch (PersistenceException e){
+//                labLoginInformation.setText("登录失败");
+//            }
         }
     }
 
