@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/LocalMusicContentStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LocalMusicContentController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/LocalMusicContentStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LocalMusicContentController">
 
    <top>
       <BorderPane prefHeight="45.0" prefWidth="603.0" stylesheets="@../css/TabPaneStyle.css" BorderPane.alignment="CENTER">
@@ -45,17 +46,42 @@
    </top>
 
    <center>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 0;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab>
             <content>
-              <ScrollPane prefHeight="180.0" prefWidth="200.0">
-                  <VBox fx:id="vBoxSongContainer" prefHeight="311.0" prefWidth="595.0">
-                        <children>
-                           <Label text="Just a test." />
-                        </children>
-                  </VBox>
-              </ScrollPane>
+                <BorderPane>
+                    <top>
+                        <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="595.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+                                    <children>
+                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../image/NeteasePlayAll.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="64.0" style="-fx-background-color: transparent; -fx-padding: 0; -fx-font-size: 16;" text="播放全部" />
+                                    </children>
+                                    <padding>
+                                        <Insets left="20.0" />
+                                    </padding>
+                                </HBox>
+                            </children>
+                        </HBox>
+                    </top>
+                    <center>
+                        <TableView fx:id="tableViewSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;">
+                            <columns>
+                                <TableColumn maxWidth="640.0" minWidth="100.0" prefWidth="210.0" text="歌名" />
+                                <TableColumn maxWidth="310.0" minWidth="50.0" prefWidth="100.0" text="歌手" />
+                                <TableColumn maxWidth="260.0" minWidth="50.0" prefWidth="130.0" text="专辑" />
+                                <TableColumn maxWidth="180.0" minWidth="50.0" prefWidth="90.0" text="时长" />
+                                <TableColumn maxWidth="180.0" minWidth="50.0" prefWidth="90.0" text="大小" />
+                            </columns>
+                        </TableView>
+                    </center>
+                </BorderPane>
             </content>
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
@@ -72,7 +98,10 @@
           </Tab>
           <Tab>
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="272.0" layoutY="148.0" text="暂无内容" />
+                     </children></AnchorPane>
             </content>
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
@@ -89,7 +118,10 @@
           </Tab>
             <Tab>
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="272.0" layoutY="148.0" text="暂无内容" />
+                     </children></AnchorPane>
               </content>
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">

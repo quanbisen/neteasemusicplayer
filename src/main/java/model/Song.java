@@ -73,4 +73,17 @@ public class Song {
     public void setLyrics(String lyrics) {
         this.lyrics = lyrics;
     }
+
+    public Song() {
+    }
+
+    public Song(String name, String singer, String album, String totalTime, String size, String resource, String lyrics) {
+        this.name = name;
+        this.singer = singer;
+        this.album = album;
+        this.totalTime = totalTime;
+        this.size = size;
+        this.resource = resource;
+        this.lyrics = lyrics;
+    }
 }

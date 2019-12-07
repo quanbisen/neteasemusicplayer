@@ -5,12 +5,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.Song;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
@@ -64,6 +66,9 @@ public class LocalMusicContentController {
     @FXML
     private VBox vBoxSongContainer;
 
+    @FXML
+    private TableView<Song> tableViewSong;
+
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
     MainController mainController;
@@ -84,8 +89,10 @@ public class LocalMusicContentController {
 
         this.setSelectedTab(hBoxSong);  //设置初始选中为格式标签
 
+//        tableViewSong.prefHeightProperty().bind();
+
         progressIndicator.setVisible(false);
-        vBoxSongContainer.setVisible(false);
+//        vBoxSongContainer.setVisible(false);
     }
 
     /**“选择目录”按钮按下事件处理*/
@@ -94,30 +101,20 @@ public class LocalMusicContentController {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/chose-musicfolder.fxml");  //获取被Spring工厂接管的FXMLLoader对象
             Stage choseFolderStage = StageUtils.getStage((Stage) hBoxChoseFolder.getScene().getWindow(),fxmlLoader.load());
-            choseFolderStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    System.out.println("close");
-                }
-            });
 
             StageUtils.syncCenter((Stage) hBoxChoseFolder.getScene().getWindow(),choseFolderStage);   //设置addMusicGroupStage对象居中到primaryStage
             WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
 
             choseFolderStage.showAndWait();  //显示并且等待
-            if (choseFolderController.confirmProperty().getValue()){  //如果是按下了“确定”按钮
-                System.out.printf("confirm");
-                choseFolderController.setConfirm(false);  //标记按钮是没按下的。
-
-
-                //逻辑乱了的部分，先实现吧。
-
-//                LoadingSongService loadingSongService = new LoadingSongService();
-                LoadingSongService loadingSongService = applicationContext.getBean(LoadingSongService.class);
-                progressIndicator.visibleProperty().bind(loadingSongService.runningProperty());
-                vBoxSongContainer.visibleProperty().bind(loadingSongService.valueProperty());
-                loadingSongService.start();
-            }
+//            if (choseFolderController.loadProperty().getValue()){  //如果是按下了“确定”按钮
+//                //逻辑乱了的部分，先实现吧。
+//
+////                LoadingSongService loadingSongService = new LoadingSongService();
+////                LoadingSongService loadingSongService = applicationContext.getBean(LoadingSongService.class);
+////                progressIndicator.visibleProperty().bind(loadingSongService.runningProperty());
+////                vBoxSongContainer.visibleProperty().bind(loadingSongService.valueProperty());
+////                loadingSongService.start();
+//            }
         }
     }
 

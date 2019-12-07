@@ -109,6 +109,8 @@ public class TabsController {
         tabList.add(hBoxRecentPlayTab);
         tabList.add(hBoxMyFavorMusicTab);
 
+        this.setSelectedTab(hBoxExploreMusicTab);   //初始化“发现音乐”为选择的标签
+
         LOGIN_CONFIG_FILE = new File(Login_CONFIG_PATH);  //初始化播放器登录文件
 
         if (LOGIN_CONFIG_FILE.exists()){   //如果登录配置文件存在，读取设置，显示登录用户的信息

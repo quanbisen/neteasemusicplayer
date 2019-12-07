@@ -17,11 +17,15 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.dom4j.DocumentException;
 import org.springframework.stereotype.Controller;
+import util.CheckListUtils;
 import util.WindowUtils;
 import util.XMLUtils;
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -44,32 +48,23 @@ public class ChoseFolderController {
     private MainController mainController;
 
     /**播放器配置文件的存放路径*/
-    private String CONFIG_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml";
+    private String CHOSE_FOLDER_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml";
 
     /**播放器配置文件*/
-    private File CONFIG_FILE;
+    private File CHOSE_FOLDER_FILE;
 
-    /**标记“确定”按钮是否是按下状态*/
-    private BooleanProperty confirm = new SimpleBooleanProperty(false);
+    /**记录选择的音乐目录的字符串集合*/
+    private List<String> folderPathList;
 
-    public BooleanProperty confirmProperty() {
-        return confirm;
-    }
-
-    public void setConfirm(boolean confirm) {
-        this.confirm.set(confirm);
-    }
-
-    
 
     public void initialize() throws IOException, DocumentException {
-        CONFIG_FILE = new File(CONFIG_PATH);
-        if (!CONFIG_FILE.exists()){  //如果文件不存在，创建文件
-            CONFIG_FILE.createNewFile();                          //创建XML文件
-            XMLUtils.createXML(CONFIG_FILE,"FolderList");//添加根元素
+        CHOSE_FOLDER_FILE = new File(CHOSE_FOLDER_PATH);
+        if (!CHOSE_FOLDER_FILE.exists()){  //如果文件不存在，创建文件
+            CHOSE_FOLDER_FILE.createNewFile();                          //创建XML文件
+            XMLUtils.createXML(CHOSE_FOLDER_FILE,"FolderList");//添加根元素
         }
         else {   //文件存在，读取记录
-            List<String> folderPathList =  XMLUtils.getAllRecord(CONFIG_FILE,"Folder","path");
+            folderPathList =  XMLUtils.getAllRecord(CHOSE_FOLDER_FILE,"Folder","path");
             for (String folderPath:folderPathList){
                 CheckBox checkBox = new CheckBox(folderPath);  //创建CheckBox组件
                 checkBox.getStylesheets().add("css/CheckBoxStyle.css"); //添加样式
@@ -78,14 +73,6 @@ public class ChoseFolderController {
             }
         }
 
-        confirm.addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue){
-                    System.out.println("test");
-                }
-            }
-        });
     }
 
     /**右上角关闭图标的事件处理*/
@@ -100,28 +87,33 @@ public class ChoseFolderController {
     /**”确定“按钮的事件处理*/
     @FXML
     public void onConfirmAction(ActionEvent actionEvent) throws DocumentException, IOException {
-        confirm.setValue(true);; //设置“确定”被按下
+
         //先删除原先的文件，然后再重新创建新文件。
-        CONFIG_FILE.delete();
-        CONFIG_FILE = new File(CONFIG_PATH);
-        if (!CONFIG_FILE.exists()){  //如果文件不存在，创建文件
-            CONFIG_FILE.createNewFile();                          //创建XML文件
-            XMLUtils.createXML(CONFIG_FILE,"FolderList");//添加根元素
-        }
+        CHOSE_FOLDER_FILE.delete();
+        CHOSE_FOLDER_FILE.createNewFile();                          //创建XML文件
+        XMLUtils.createXML(CHOSE_FOLDER_FILE,"FolderList");//添加根元素
 
         ObservableList<Node> observableList = vWrapCheckBox.getChildren();  //获取vWrapCheckBox的子组件
         observableList.remove(labTips);  //移除用作提示的label组件
+
+        List<String> selectedPaths = new ArrayList<>();  //存储选择的目录集合
         for (Node node:observableList){  //遍历所有的checkbox集合
             CheckBox checkBox = (CheckBox)node;
-            if (checkBox.isSelected()){  //如果是选中“打勾”状态
-                String pathValue = checkBox.getText();
-                if (!XMLUtils.isExist(CONFIG_FILE,"Folder","path",pathValue)){  //如果文件的路径没有在文件中存储，才添加记录进去存储
-                    XMLUtils.addOneRecord(CONFIG_FILE,"Folder","path",pathValue);
-                }
+            if (checkBox.isSelected()){
+                selectedPaths.add(checkBox.getText());
             }
+        }
+        for(String pathValue:selectedPaths){
+            XMLUtils.addOneRecord(CHOSE_FOLDER_FILE,"Folder","path",pathValue);
         }
         labCloseIcon.getScene().getWindow().hide();      //关闭窗口
         WindowUtils.releaseBorderPane(mainController.getBorderPane());
+
+        if (!CheckListUtils.checkWeatherSame(selectedPaths,folderPathList)){   //如果不一样，证明更改了目录，重新加载目录下的歌曲文件
+            System.out.println("need to load song");
+
+        }
+
     }
 
     /**"添加文件夹"按钮的事件处理*/

@@ -17,7 +17,7 @@
         </left>
         <center>
             <!--set default center.just use include-->
-
+            <fx:include source="tab-exploremusic-content.fxml"></fx:include>
         </center>
     </BorderPane>
 </StackPane>

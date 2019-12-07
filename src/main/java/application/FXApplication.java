@@ -1,5 +1,6 @@
 package application;
 
+import javafx.scene.image.Image;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import javafx.application.Application;
@@ -33,7 +34,7 @@ public class FXApplication extends Application {
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         primaryStage.setTitle("音乐"); // 设置标题
-//        primaryStage.getIcons().add(new Image("/image/NeteaseMusicPlayerIcon.png")); //设置图标
+        primaryStage.getIcons().add(new Image("/image/NeteaseMusicPlayerIcon.png")); //设置图标
         primaryStage.setScene(scene);
 //        primaryStage.initStyle(StageStyle.UNDECORATED); //去掉默认的标题栏
         primaryStage.show();  //显示主舞台

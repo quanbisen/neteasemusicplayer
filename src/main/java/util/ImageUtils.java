@@ -39,10 +39,4 @@ public final class ImageUtils {
         return outStream.toByteArray();   //把outStream里的数据写入内存
     }
 
-    @Test
-    public void test() throws IOException {
-        String string = "http://localhost:8080/neteasemusicplayerserver_war_exploded/image/UserDefaultImage.png";
-        File imageFile = new File("src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "login-user-image.png");
-        download(string,imageFile);
-    }
 }
