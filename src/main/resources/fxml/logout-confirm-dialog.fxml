@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="160.0" prefWidth="360.0" stylesheets="@../css/LogoutConfirmDialogStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogoutConfirmDialogController">
+   <children>
+      <Label layoutX="30.0" layoutY="49.0" prefHeight="30.0" prefWidth="145.0" text="确定退出当前账号？" />
+      <Button fx:id="btnConfirm" layoutX="141.0" layoutY="108.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="确定" onAction="#onClickedConfirm" />
+      <Button fx:id="btnCancel" layoutX="249.0" layoutY="108.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="取消" onAction="#onClickedCancel"/>
+   </children>
+</AnchorPane>

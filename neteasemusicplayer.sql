@@ -5,7 +5,7 @@ create table users
 id varchar(20) primary key,
 password varchar (20) not null ,
 name varchar (30) default '空',
-image varchar(100) default 'http://192.168.1.104:8080/neteasemusicplayerserver_war_exploded/image/UserDefaultImage.png'
+image varchar(100) default 'http://localhost:8080/neteasemusicplayerserver_war_exploded/image/UserDefaultImage.png'
 );
 
 insert into users(id,password) values('13025583130','10010');

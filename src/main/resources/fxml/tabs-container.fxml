@@ -87,7 +87,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="85.0">
                      <children>
                         <Label style="-fx-text-fill: #999999; -fx-font-size: 12px;" text="创建的歌单" />
-                        <ImageView fx:id="addMusicGroup" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onClickedAddMusicGroup" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="addMusicGroup" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onClickedCreateMusicGroup" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../image/CreateMusicGroupTabIcon.png" />
                            </image>

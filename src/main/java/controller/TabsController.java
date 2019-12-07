@@ -1,9 +1,10 @@
 package controller;
 
-import com.alibaba.fastjson.JSON;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -13,15 +14,13 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
 import util.StageUtils;
+import util.UserUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.ResourceBundle;
 
 @Controller
 public class TabsController {
@@ -97,9 +96,11 @@ public class TabsController {
         return labUserName;
     }
 
-    public void initialize(){
+    public File getLOGIN_CONFIG_FILE() {
+        return LOGIN_CONFIG_FILE;
+    }
 
-        LOGIN_CONFIG_FILE = new File(Login_CONFIG_PATH);  //初始化播放器登录文件
+    public void initialize() throws IOException {
 
         tabList = new ArrayList<>();
         tabList.add(hBoxSearchTab);
@@ -107,6 +108,21 @@ public class TabsController {
         tabList.add(hBoxLocalMusicTab);
         tabList.add(hBoxRecentPlayTab);
         tabList.add(hBoxMyFavorMusicTab);
+
+        LOGIN_CONFIG_FILE = new File(Login_CONFIG_PATH);  //初始化播放器登录文件
+
+        if (LOGIN_CONFIG_FILE.exists()){   //如果登录配置文件存在，读取设置，显示登录用户的信息
+            User user = UserUtils.parseUser(LOGIN_CONFIG_FILE);  //解析用户对象
+            String urlString = user.getImage();
+            String imageName = urlString.substring(urlString.lastIndexOf("/")+1);
+            String USER_IMAGE_PATH = "/config" + File.separator + user.getId() + File.separator + imageName;
+            ImageView imageView = new ImageView(new Image(USER_IMAGE_PATH));
+            imageView.setFitWidth(38);
+            imageView.setFitHeight(38);
+            labUserImage.setGraphic(imageView);   //设置用户头像
+            labUserName.setText(user.getName());  //设置用户名称
+
+        }
     }
 
     /**单击“搜索”标签事件处理*/
@@ -167,7 +183,7 @@ public class TabsController {
 
     /**单击添加歌单图标事件处理*/
     @FXML
-    public void onClickedAddMusicGroup(MouseEvent mouseEvent) throws IOException {
+    public void onClickedCreateMusicGroup(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton()==MouseButton.PRIMARY){  //鼠标左击
             if (!LOGIN_CONFIG_FILE.exists()){   //判断用户是否登录过了。
                 WindowUtils.toastInfo(centerController.getStackPane(),new Label("请先登录！"));

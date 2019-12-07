@@ -1,7 +1,6 @@
 package controller;
 
 import application.SpringFXMLLoader;
-import com.alibaba.fastjson.JSON;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -18,10 +18,11 @@ import javafx.util.Duration;
 import model.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
+import util.StageUtils;
+import util.UserUtils;
+import util.WindowUtils;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -42,6 +43,10 @@ public class RightSlideLoginedController {
     @FXML
     private Label labUserName;
 
+    /**”退出登录“选项的HBox容器*/
+    @FXML
+    private HBox hBoxLogout;
+
     /**右边显示”音乐”的可视化滑动容器*/
     private BorderPane visualBorderPane;
 
@@ -58,15 +63,9 @@ public class RightSlideLoginedController {
     @Resource
     MainController mainController;
 
-
-    private Stage loginOrRegisterStage;
-
-    /**播放器登录文件的存放路径*/
-    private String Login_CONFIG_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "login-config.properties";
-
-    /**播放器登录配置文件*/
-    private File LOGIN_CONFIG_FILE;
-
+    /**注入标签的控制类*/
+    @Resource
+    private TabsController tabsController;
 
     public BorderPane getBorderPaneRoot() {
         return borderPaneRoot;
@@ -76,9 +75,6 @@ public class RightSlideLoginedController {
         return visualBorderPane;
     }
 
-    public Stage getLoginOrRegisterStage() {
-        return loginOrRegisterStage;
-    }
 
     public void initialize() throws IOException {
         //宽高绑定
@@ -102,25 +98,17 @@ public class RightSlideLoginedController {
         });
 
         //读取出配置文件存储的用户信息。
-        LOGIN_CONFIG_FILE = new File(Login_CONFIG_PATH);
-        FileInputStream fileInputStream = new FileInputStream(LOGIN_CONFIG_FILE);
-        int n = 0;
-        StringBuffer stringBuffer = new StringBuffer();
-        while (n!=-1){
-            n=fileInputStream.read();//读取文件的一个字节(8个二进制位),并将其由二进制转成十进制的整数返回
-            char by=(char) n; //转成字符
-            stringBuffer.append(by);
+        if (tabsController.getLOGIN_CONFIG_FILE().exists()){  //如果登录文件存在，解析成用户对象
+            User user = UserUtils.parseUser(tabsController.getLOGIN_CONFIG_FILE());
+            //设置登录用户的UI组件显示
+            Circle circle = new Circle(20,20,20);
+            ImageView userImage = new ImageView(new Image(user.getImage()));
+            userImage.setFitWidth(40);
+            userImage.setFitHeight(40);
+            userImage.setClip(circle);   //设置圆形图片
+            labUserImage.setGraphic(userImage);
+            labUserName.setText(user.getName());
         }
-        String str = stringBuffer.substring(0,stringBuffer.length()-1);
-        User user = JSON.parseObject(str,User.class);
-        //设置登录用户的UI组件显示
-        Circle circle = new Circle(20,20,20);
-        ImageView userImage = new ImageView(new Image(user.getImage()));
-        userImage.setFitWidth(40);
-        userImage.setFitHeight(40);
-        userImage.setClip(circle);   //设置圆形图片
-        labUserImage.setGraphic(userImage);
-        labUserName.setText(user.getName());
     }
 
     /**"关于"HBox的鼠标点击事件处理*/
@@ -135,22 +123,14 @@ public class RightSlideLoginedController {
 
     /**“退出登录”HBox的鼠标点击事件处理*/
     @FXML
-    public void onClickedLogout(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            //播放移除动画
-            TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
-            borderPaneRoot.setTranslateX(0);
-            translateTransitionOut.setToX(310);
-            translateTransitionOut.play();
-            translateTransitionOut.setOnFinished(event2 -> {
-                centerController.getStackPane().getChildren().remove(1,centerController.getStackPane().getChildren().size());
-            });
-            System.out.println("logout");
-
-            //清除登录存储文件
-            if (LOGIN_CONFIG_FILE.exists()){  //如果文件存在，删除它
-                LOGIN_CONFIG_FILE.delete();
-            }
+    public void onClickedLogout(MouseEvent mouseEvent) throws IOException {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/logout-confirm-dialog.fxml");
+            Stage primaryStage = ((Stage)hBoxLogout.getScene().getWindow());              //获取主窗体的stage对象primaryStage
+            Stage dialogStage = StageUtils.getStage((Stage) hBoxLogout.getScene().getWindow(),fxmlLoader.load());
+            StageUtils.syncCenter(primaryStage,dialogStage);
+            WindowUtils.blockBorderPane(mainController.getBorderPane());
+            dialogStage.showAndWait();  //显示对话框
         }
     }
 }

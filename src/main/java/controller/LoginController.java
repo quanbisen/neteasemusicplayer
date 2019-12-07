@@ -17,6 +17,8 @@ import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.UserDao;
+import util.ImageUtils;
+import util.UserUtils;
 import util.WindowUtils;
 
 import javax.annotation.Resource;
@@ -73,18 +75,10 @@ public class LoginController {
     @Resource
     CenterController centerController;
 
-    /**播放器登录文件的存放路径*/
-    private String Login_CONFIG_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "login-config.properties";
 
-    /**播放器登录配置文件*/
-    private File LOGIN_CONFIG_FILE;
 
-    public File getLOGIN_CONFIG_FILE() {
-        return LOGIN_CONFIG_FILE;
-    }
 
     public void initialize(){
-        LOGIN_CONFIG_FILE = new File(Login_CONFIG_PATH);  //初始化播放器登录文件
 
         btnLogin.setMouseTransparent(true); //初始化不可以点击
         labClearIcon.setVisible(false);  //初始化为不可见
@@ -184,46 +178,25 @@ public class LoginController {
                 tabsController.getLabUserImage().setGraphic(userImage);  //设置用户头像图片
                 tabsController.getLabUserName().setText(validUser.getName());  //设置用户名称
                 WindowUtils.toastInfo(centerController.getStackPane(),new Label("登录成功"));
-                //存储登录成功的用户对象到本地文件
 
-                LOGIN_CONFIG_FILE.delete();
-                //写入到文件
-                LOGIN_CONFIG_FILE = new File(Login_CONFIG_PATH);
-                LOGIN_CONFIG_FILE.createNewFile();
-                FileOutputStream fileOutputStream = new FileOutputStream(LOGIN_CONFIG_FILE);
-                fileOutputStream.write(JSON.toJSONString(validUser).getBytes());
-                fileOutputStream.close();
+                //存储登录成功的用户对象到本地文件
+                tabsController.getLOGIN_CONFIG_FILE().delete();
+                tabsController.getLOGIN_CONFIG_FILE().createNewFile();  //创建新的文件
+                UserUtils.saveUser(validUser,tabsController.getLOGIN_CONFIG_FILE());  //调用存储的函数，写入到文件
+
+                String urlString = validUser.getImage();
+                String imageName = urlString.substring(urlString.lastIndexOf("/")+1);
+                String USER_IMAGE_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + validUser.getId();
+                File path = new File(USER_IMAGE_PATH);
+                path.mkdirs();              //创建目录
+                System.out.println(USER_IMAGE_PATH);
+                File imageFile = new File(USER_IMAGE_PATH + File.separator + imageName);
+                ImageUtils.download(validUser.getImage(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
             }
             else {
                 labLoginInformation.setText("登录失败");
             }
         }
-    }
-    @Test
-    public void test() throws IOException {
-        LOGIN_CONFIG_FILE = new File(Login_CONFIG_PATH);
-        FileInputStream fileInputStream = new FileInputStream(LOGIN_CONFIG_FILE);
-        int n = 0;
-        StringBuffer stringBuffer = new StringBuffer();
-        while (n!=-1){
-            n=fileInputStream.read();//读取文件的一个字节(8个二进制位),并将其由二进制转成十进制的整数返回
-
-            char by=(char) n; //转成字符
-
-            stringBuffer.append(by);
-        }
-        String str = stringBuffer.substring(0,stringBuffer.length()-1);
-        System.out.println(str);
-        User user = JSON.parseObject(str,User.class);
-        System.out.println(user.getName());
-//
-//        FileOutputStream fileOutputStream = new FileOutputStream(LOGIN_CONFIG_FILE);
-//        User user = new User();
-//        user.setId("122");
-//        user.setName("t");
-//        user.setPassword("1wd2");
-//        user.setImage("tasdas");
-//        fileOutputStream.write(JSON.toJSONString(user).getBytes());
     }
 
 }

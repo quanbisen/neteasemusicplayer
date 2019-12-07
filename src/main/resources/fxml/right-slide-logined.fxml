@@ -75,7 +75,7 @@
             </VBox>
          </center>
          <bottom>
-            <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER" onMouseClicked="#onClickedLogout">
+            <HBox fx:id="hBoxLogout" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER" onMouseClicked="#onClickedLogout">
                <children>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
