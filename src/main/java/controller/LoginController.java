@@ -182,6 +182,7 @@ public class LoginController {
     @FXML
     public void onClickedLoginButton(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
+            labLoginInformation.setText("");  //清空文本信息
             this.mouseEvent = mouseEvent;
             LoginService loginService = applicationContext.getBean(LoginService.class);
             loginProgressIndicator.visibleProperty().bind(loginService.runningProperty());
