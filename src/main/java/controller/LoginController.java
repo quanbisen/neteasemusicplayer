@@ -1,24 +1,14 @@
 package controller;
 
-import com.alibaba.fastjson.JSON;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import model.User;
-import org.apache.ibatis.exceptions.PersistenceException;
-import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.LoginService;
-import service.UserDao;
-import util.ImageUtils;
-import util.UserUtils;
+import dao.UserDao;
 import util.WindowUtils;
 
 import javax.annotation.Resource;

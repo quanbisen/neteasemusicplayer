@@ -6,16 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import model.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
-import service.UserDao;
+import service.RegisterService;
+import dao.UserDao;
 import util.WindowUtils;
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -67,6 +64,10 @@ public class RegisterController {
     @FXML
     private Button btnRegister;
 
+    /**加载指示器*/
+    @FXML
+    private ProgressIndicator registerProgressIndicator;
+
     /**
      * 注入窗体根容器（BorderPane）的控制类
      */
@@ -85,10 +86,27 @@ public class RegisterController {
     @Resource
     private ConfigurableApplicationContext applicationContext;
 
+    public TextField getTfAccountID() {
+        return tfAccountID;
+    }
+
+    public PasswordField getPfPassword() {
+        return pfPassword;
+    }
+
+    public Label getLabRegisterInformation() {
+        return labRegisterInformation;
+    }
+
+    public Button getBtnRegister() {
+        return btnRegister;
+    }
+
     public void initialize() {
         labClearIcon.setVisible(false);  //初始化为不可见
         btnRegister.setMouseTransparent(true); //初始化不可以点击
         btnRegister.setOpacity(0.8);           //初始化不透明度为0.8
+        registerProgressIndicator.setVisible(false);  //设置加载指示器不显示
 
         Platform.runLater(() -> {
             btnRegister.requestFocus();         //"登录"按钮请求聚焦
@@ -169,14 +187,19 @@ public class RegisterController {
     @FXML
     public void onClickedRegisterButton(ActionEvent actionEvent) throws IOException {
         if (!btnRegister.getText().equals("转到登录页面")){   //如果还没有注册成功
-            User user1 = new User();         //创建用户对象，设置属性为输入的TextField文本内容
-            user1.setId(tfAccountID.getText());
-            user1.setPassword(pfPassword.getText());
-            int row = userDao.addUser(user1);
-            if (row==1){
-                labRegisterInformation.setText("注册成功");
-                btnRegister.setText("转到登录页面");
-            }
+
+            RegisterService registerService = applicationContext.getBean(RegisterService.class);
+            registerProgressIndicator.visibleProperty().bind(registerService.runningProperty());
+            registerService.start();
+
+//            User user1 = new User();         //创建用户对象，设置属性为输入的TextField文本内容
+//            user1.setId(tfAccountID.getText());
+//            user1.setPassword(pfPassword.getText());
+//            int row = userDao.addUser(user1);
+//            if (row==1){
+//                labRegisterInformation.setText("注册成功");
+//                btnRegister.setText("转到登录页面");
+//            }
         }
         else {  //否则,则注册成功了,按钮可以转到登录页面。
             Scene registerScene = btnRegister.getScene();

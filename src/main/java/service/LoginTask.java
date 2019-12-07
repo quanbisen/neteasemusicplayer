@@ -3,6 +3,7 @@ package service;
 import controller.CenterController;
 import controller.LoginController;
 import controller.TabsController;
+import dao.UserDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
@@ -23,15 +24,19 @@ import java.io.IOException;
 @Scope("prototype")
 public class LoginTask extends Task<Boolean> {
 
+    /**注入登录页面的控制器*/
     @Resource
     private LoginController loginController;
 
+    /**注入左侧便签的容器页面的控制器*/
     @Resource
     private TabsController tabsController;
 
+    /**注入中间显示的页面的控制器*/
     @Resource
     private CenterController centerController;
 
+    /**注入用户的操作类*/
     @Resource
     private UserDao userDao;
 

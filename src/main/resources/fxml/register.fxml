@@ -4,15 +4,17 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="430.0" prefWidth="340.0" stylesheets="@../css/RegisterStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
+<BorderPane prefHeight="430.0" prefWidth="340.0" stylesheets="@../css/RegisterStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="340.0" spacing="290.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
@@ -94,7 +96,12 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="340.0">
                <children>
-                  <Label fx:id="labRegisterInformation" />
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <ProgressIndicator fx:id="registerProgressIndicator" maxHeight="20.0" maxWidth="20.0" minHeight="20.0" minWidth="20.0" prefHeight="20.0" prefWidth="20.0" />
+                        <Label fx:id="labRegisterInformation" />
+                     </children>
+                  </StackPane>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="40.0" prefWidth="340.0">

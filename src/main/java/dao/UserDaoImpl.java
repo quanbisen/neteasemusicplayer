@@ -1,9 +1,9 @@
-package service;
+package dao;
 
 import model.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 
@@ -11,7 +11,7 @@ import javax.annotation.Resource;
  * @author super lollipop
  * @date 19-12-6
  */
-@Service
+@Repository
 public class UserDaoImpl implements UserDao{
 
     @Resource
