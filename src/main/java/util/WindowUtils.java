@@ -39,6 +39,9 @@ public final class WindowUtils {
 
 	/**
 	 * 设置stage对象能够拖拽边缘的像素实现缩放的静态方法
+	 * @param stage 需要添加自由缩放的舞台对象
+	 * @param stageMinHeight 缩放的最小高度
+	 * @param stageMinWidth  缩放的最小宽度
 	 */
 	public static void addResizable(Stage stage,double stageMinWidth,double stageMinHeight) {
 		try {

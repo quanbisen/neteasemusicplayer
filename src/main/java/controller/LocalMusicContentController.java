@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
@@ -38,16 +39,26 @@ import java.util.List;
 @Controller
 public class LocalMusicContentController {
 
+    /**本地音乐中间面板的根容器*/
+    @FXML
+    private BorderPane localMusicContentContainer;
+
+    /**根容器的中间内容容器*/
     @FXML
     public BorderPane borderPane;
+
     @FXML
     private TableColumn<Song,String> nameColumn;
+
     @FXML
     private TableColumn<Song,String> singerColumn;
+
     @FXML
     private TableColumn<Song,String> albumColumn;
+
     @FXML
     private TableColumn<Song,String> totalTimeColumn;
+
     @FXML
     private TableColumn<Song,String> sizeColumn;
 
@@ -85,7 +96,6 @@ public class LocalMusicContentController {
     /**显示进度的指示器*/
     @FXML
     private ProgressIndicator progressIndicator;
-
 
     @FXML
     private TableView<Song> tableViewSong;
@@ -143,6 +153,10 @@ public class LocalMusicContentController {
         }
 
         progressIndicator.setVisible(false);
+
+        /*******Fixed some resize bug here.*/
+        localMusicContentContainer.setCursor(Cursor.DEFAULT);
+        /*******Fixed some resize bug here.*/
     }
 
     /**“选择目录”按钮按下事件处理*/
@@ -199,5 +213,12 @@ public class LocalMusicContentController {
         }
         //然后给当前选中的标签的parent容器添加css类名
         selectedTab.getStyleClass().add("selectedHBox");
+    }
+
+    /**中间面板的鼠标移动事件，修复鼠标形状*/
+    @FXML
+    public void onBorderPaneMouseMoved(MouseEvent mouseEvent) {
+
+//        localMusicContentContainer.setCursor(Cursor.DEFAULT);
     }
 }
