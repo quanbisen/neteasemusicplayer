@@ -33,12 +33,11 @@ public class MainController{
 
     public void initialize() throws IOException {
 
-        if (WindowUtils.isWindowsPlatform()){   //如果是windows平台
+        if (WindowUtils.isWindowsPlatform()){   //如果是windows平台,加载自定义设计的标题栏
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/main-top.fxml");
             borderPane.setTop(fxmlLoader.load());
             Platform.runLater(()->{
-                Stage primaryStage = (Stage) borderPane.getScene().getWindow();
-                primaryStage.initStyle(StageStyle.UNDECORATED);   //去掉Windows自带的标题栏
+                Stage primaryStage = (Stage) borderPane.getScene().getWindow();   //获取主舞台对象
                 WindowUtils.addResizable(primaryStage,860,570);  //为primaryStage添加自由缩放
                 WindowUtils.addFixedCode(primaryStage);  //为primaryStage添加一些GUI的修复代码
                 WindowUtils.addWindowsPlatformTaskBarIconifyBehavior();  //为primaryStage添加Windows平台显示窗体时单击任务栏图标可以最小化
