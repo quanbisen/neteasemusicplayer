@@ -59,4 +59,128 @@ BorderPane
     -fx-max-width: 18px;
     -fx-progress-color: gray;
 }
+.table-view
+{
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background
+{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header
+{
+    -fx-background-color: transparent;
+    -fx-border-width: 1 1 1 0;
+    -fx-border-color: #E4E4E7;
+    -fx-size: 30;
+}
+.table-view .column-header .label
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
+.table-view .table-cell
+{
+    -fx-text-fill: #333333;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-border-color:transparent;
+    -fx-alignment: center-left;
+    -fx-padding: 5 5 5 5;
+
+}
+
+/*设置表格第一列的样式*/
+#nameColumn.table-cell{
+    -fx-text-fill: #333333;
+    -fx-padding:0 0 0 20;
+}
+/*表格行样式*/
+.table-view .table-row-cell{
+    -fx-cell-size: 40px;
+    -fx-background-color:#FAFAFC;
+    -fx-background-insets: 0;
+}
+/*.table-view .table-row-cell:pressed{*/
+/*    -fx-scale-x: 0.99;*/
+/*    -fx-scale-y: 0.99;*/
+/*}*/
+.table-view .table-row-cell:odd{
+    -fx-background-color:#F4F4F6;
+}
+
+/*选中行的背景颜色*/
+.table-view .table-row-cell:selected{
+    -fx-background-color: #DEDEE0;
+}
+
+
+.scroll-bar:vertical
+{
+    -fx-pref-width: 8;
+    -fx-background-color: transparent;
+}
+.scroll-bar:vertical .thumb
+{
+    -fx-background-color: #C8C9CC;
+    -fx-background-insets: 0;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:vertical .thumb:hover
+{
+    -fx-background-color: #ADAFB2;
+}
+.scroll-bar:vertical .track
+{
+    -fx-background-color:#F3F3F5;
+    -fx-background-insets: 0;
+}
+.scroll-bar:horizontal
+{
+    visibility: hidden;
+    -fx-pref-height: 0;
+    -fx-border:0;
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+}
+.scroll-bar:horizontal .thumb
+{
+    visibility:hidden;
+    -fx-pref-height: 2;
+    -fx-border-insets: 0;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+.scroll-bar:horizontal .thumb:hover
+{
+    -fx-background-color: #ADAFB2;
+}
+.scroll-bar:horizontal .track
+{
+    -fx-pref-height: 0;
+    -fx-border:0;
+    -fx-background-insets: 0;
+    -fx-background-color:#F3F3F5;
+}
+
+/*关闭按钮:垂直和水平的按钮*/
+.scroll-bar .increment-arrow
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .decrement-arrow
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .increment-button
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .decrement-button
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
 

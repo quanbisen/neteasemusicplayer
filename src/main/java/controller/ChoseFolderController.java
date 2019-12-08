@@ -1,9 +1,5 @@
 package controller;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,9 +11,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import model.Song;
 import org.dom4j.DocumentException;
 import org.springframework.stereotype.Controller;
 import util.CheckListUtils;
+import util.SongUtils;
 import util.WindowUtils;
 import util.XMLUtils;
 import javax.annotation.Resource;
@@ -47,6 +45,10 @@ public class ChoseFolderController {
     @Resource
     private MainController mainController;
 
+    /**注入“本地音乐”面板的控制类*/
+    @Resource
+    private LocalMusicContentController localMusicContentController;
+
     /**播放器配置文件的存放路径*/
     private String CHOSE_FOLDER_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml";
 
@@ -56,6 +58,9 @@ public class ChoseFolderController {
     /**记录选择的音乐目录的字符串集合*/
     private List<String> folderPathList;
 
+    public File getCHOSE_FOLDER_FILE() {
+        return CHOSE_FOLDER_FILE;
+    }
 
     public void initialize() throws IOException, DocumentException {
         CHOSE_FOLDER_FILE = new File(CHOSE_FOLDER_PATH);
@@ -86,7 +91,7 @@ public class ChoseFolderController {
 
     /**”确定“按钮的事件处理*/
     @FXML
-    public void onConfirmAction(ActionEvent actionEvent) throws DocumentException, IOException {
+    public void onConfirmAction(ActionEvent actionEvent) throws Exception {
 
         //先删除原先的文件，然后再重新创建新文件。
         CHOSE_FOLDER_FILE.delete();
@@ -111,7 +116,8 @@ public class ChoseFolderController {
 
         if (!CheckListUtils.checkWeatherSame(selectedPaths,folderPathList)){   //如果不一样，证明更改了目录，重新加载目录下的歌曲文件
             System.out.println("need to load song");
-
+            ObservableList<Song> observableSongList = SongUtils.getObservableSongList(selectedPaths);
+            localMusicContentController.getTableViewSong().setItems(observableSongList);
         }
 
     }

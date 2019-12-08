@@ -50,7 +50,7 @@
         <tabs>
           <Tab>
             <content>
-                <BorderPane>
+                <BorderPane fx:id="borderPane">
                     <top>
                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="595.0">
                             <children>
@@ -73,11 +73,11 @@
                     <center>
                         <TableView fx:id="tableViewSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;">
                             <columns>
-                                <TableColumn maxWidth="640.0" minWidth="100.0" prefWidth="210.0" text="歌名" />
-                                <TableColumn maxWidth="310.0" minWidth="50.0" prefWidth="100.0" text="歌手" />
-                                <TableColumn maxWidth="260.0" minWidth="50.0" prefWidth="130.0" text="专辑" />
-                                <TableColumn maxWidth="180.0" minWidth="50.0" prefWidth="90.0" text="时长" />
-                                <TableColumn maxWidth="180.0" minWidth="50.0" prefWidth="90.0" text="大小" />
+                                <TableColumn fx:id="nameColumn" maxWidth="540.0" minWidth="180.0" prefWidth="-1.0" resizable="false" text="歌名" />
+                                <TableColumn fx:id="singerColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="歌手" />
+                                <TableColumn fx:id="albumColumn" editable="false" maxWidth="405.0" minWidth="135.0" prefWidth="-1.0" resizable="false" text="专辑" />
+                                <TableColumn fx:id="totalTimeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="时长" />
+                                <TableColumn fx:id="sizeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="大小" />
                             </columns>
                         </TableView>
                     </center>

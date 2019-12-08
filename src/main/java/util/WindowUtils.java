@@ -197,6 +197,16 @@ public final class WindowUtils {
 		}
 	}
 
+	/**判断是否为Windows平台的函数
+	 * @return boolean*/
+	public static boolean isWindowsPlatform(){
+		if (System.getProperties().getProperty("os.name").contains("Windows")) {  //判断当前os是否为Windows，如果是才执行
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	/**@param borderPane 主窗体根容器borderPane
 	 * 阻止主舞台的borderPane响应鼠标事件和改变不透明度的函数*/
 	public static void blockBorderPane(BorderPane borderPane){

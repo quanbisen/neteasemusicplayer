@@ -6,9 +6,9 @@
             fx:controller="controller.MainController"
             fx:id="borderPane"
             style="-fx-border-color: #6E6E6E"
-            prefWidth="858.0" prefHeight="570.0">
+            prefWidth="860.0" prefHeight="570.0">
     <top>
-        <fx:include source="main-top.fxml"></fx:include>
+<!--        <fx:include source="main-top.fxml"></fx:include>-->
     </top>
 
     <center>

@@ -1,31 +1,55 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.Song;
+import org.dom4j.DocumentException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
 import service.LoadingSongService;
+import util.SongUtils;
 import util.StageUtils;
 import util.WindowUtils;
+import util.XMLUtils;
+
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class LocalMusicContentController {
+
+    @FXML
+    public BorderPane borderPane;
+    @FXML
+    private TableColumn<Song,String> nameColumn;
+    @FXML
+    private TableColumn<Song,String> singerColumn;
+    @FXML
+    private TableColumn<Song,String> albumColumn;
+    @FXML
+    private TableColumn<Song,String> totalTimeColumn;
+    @FXML
+    private TableColumn<Song,String> sizeColumn;
 
     /**“选择目录”的HBox容器*/
     @FXML
@@ -62,9 +86,6 @@ public class LocalMusicContentController {
     @FXML
     private ProgressIndicator progressIndicator;
 
-    /**VBox容器封装音乐歌曲*/
-    @FXML
-    private VBox vBoxSongContainer;
 
     @FXML
     private TableView<Song> tableViewSong;
@@ -81,7 +102,11 @@ public class LocalMusicContentController {
     @Resource
     ChoseFolderController choseFolderController;
 
-    public void initialize(){
+    public TableView<Song> getTableViewSong() {
+        return tableViewSong;
+    }
+
+    public void initialize() throws Exception {
         tabList = new ArrayList<>();
         tabList.add(hBoxSong);
         tabList.add(hBoxSinger);
@@ -89,10 +114,35 @@ public class LocalMusicContentController {
 
         this.setSelectedTab(hBoxSong);  //设置初始选中为格式标签
 
-//        tableViewSong.prefHeightProperty().bind();
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        singerColumn.setCellValueFactory(new PropertyValueFactory<>("singer"));
+        albumColumn.setCellValueFactory(new PropertyValueFactory<>("album"));
+        totalTimeColumn.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+        sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
+
+        //设置表格列的宽度随这个borderPane的宽度而动态改变
+        borderPane.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                nameColumn.setPrefWidth(newValue.doubleValue()/6.5*2);
+                singerColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
+                albumColumn.setPrefWidth(newValue.doubleValue()/6.5*1.5);
+                totalTimeColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
+                sizeColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
+            }
+        });
+
+        File CHOSE_FOLDER_FILE = new File("src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml");
+        if (CHOSE_FOLDER_FILE.exists()){
+            List<String> folderList = XMLUtils.getAllRecord(CHOSE_FOLDER_FILE,"Folder","path");
+            if (folderList.size()>0){
+                ObservableList<Song> songs = SongUtils.getObservableSongList(folderList);
+                tableViewSong.setItems(songs);
+            }
+
+        }
 
         progressIndicator.setVisible(false);
-//        vBoxSongContainer.setVisible(false);
     }
 
     /**“选择目录”按钮按下事件处理*/
