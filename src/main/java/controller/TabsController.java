@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -67,18 +68,31 @@ public class TabsController {
     /**注入窗体根容器（BorderPane）的中间容器的控制器*/
     @Resource
     CenterController centerController;
-    
 
     /**注入Spring上下文工具类*/
     @Resource
     private ConfigurableApplicationContext applicationContext;
-    
 
     /**播放器登录文件的存放路径*/
     private String Login_CONFIG_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "login-config.properties";
 
     /**播放器登录配置文件*/
     private File LOGIN_CONFIG_FILE;
+
+    /**"搜索"标签的内容容器*/
+    private Parent searchParent;
+
+    /**"发现音乐"标签的内容容器*/
+    private Parent exploreMusicParent;
+
+    /**"本地音乐"标签的内容容器*/
+    private Parent localMusicParent;
+
+    /**"最近播放"标签的内容容器*/
+    private Parent recentPlayParent;
+
+    /**"我喜欢的音乐"标签的内容容器*/
+    private Parent myFavorMusicParent;
 
     public VBox getVBoxTabContainer() {
         return vBoxTabContainer;
@@ -132,7 +146,10 @@ public class TabsController {
     public void onClickedSearchTab(MouseEvent mouseEvent) {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxSearchTab);  //设置当前选择的为“搜索”标签
-            centerController.getBorderPane().setCenter(new Label("搜索"));
+            if (searchParent == null){
+                searchParent = new Label("搜索");
+            }
+            centerController.getBorderPane().setCenter(searchParent);
         }
     }
 
@@ -141,7 +158,10 @@ public class TabsController {
     public void onClickedExplorerMusicTab(MouseEvent mouseEvent) {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxExploreMusicTab);
-            centerController.getBorderPane().setCenter(new Label("发现音乐"));
+            if (exploreMusicParent == null){
+                exploreMusicParent = new Label("发现音乐");
+            }
+            centerController.getBorderPane().setCenter(exploreMusicParent);
         }
     }
 
@@ -150,8 +170,12 @@ public class TabsController {
     public void onClickedLocalMusicTab(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxLocalMusicTab);
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/tab-localmusic-content.fxml");
-            centerController.getBorderPane().setCenter(fxmlLoader.load());
+            if (localMusicParent == null){
+                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/tab-localmusic-content.fxml");
+                localMusicParent = fxmlLoader.load();
+
+            }
+            centerController.getBorderPane().setCenter(localMusicParent);
         }
     }
 
@@ -160,7 +184,10 @@ public class TabsController {
     public void onClickedRecentPlayTab(MouseEvent mouseEvent) {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxRecentPlayTab);
-            centerController.getBorderPane().setCenter(new Label("最近播放"));
+            if (recentPlayParent == null){
+                recentPlayParent = new Label("最近播放");
+            }
+            centerController.getBorderPane().setCenter(recentPlayParent);
         }
     }
 
@@ -169,7 +196,10 @@ public class TabsController {
     public void onClickedMyFavorMusicTab(MouseEvent mouseEvent) {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxMyFavorMusicTab);
-            centerController.getBorderPane().setCenter(new Label("我喜欢的音乐"));
+            if (myFavorMusicParent == null){
+                myFavorMusicParent = new Label("我喜欢的音乐");
+            }
+            centerController.getBorderPane().setCenter(myFavorMusicParent);
         }
     }
 

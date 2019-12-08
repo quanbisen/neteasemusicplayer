@@ -1,16 +1,17 @@
 package controller;
 
+import com.sun.javafx.scene.control.skin.TableHeaderRow;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +20,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
+import media.IMediaPlayer;
 import model.Song;
 import org.dom4j.DocumentException;
 import org.springframework.context.ApplicationContext;
@@ -112,8 +115,20 @@ public class LocalMusicContentController {
     @Resource
     ChoseFolderController choseFolderController;
 
+    /**注入播放器*/
+    @Resource
+    IMediaPlayer mediaPlayer;
+
     public TableView<Song> getTableViewSong() {
         return tableViewSong;
+    }
+
+    public ProgressIndicator getProgressIndicator() {
+        return progressIndicator;
+    }
+
+    public Label getLabSongCount() {
+        return labSongCount;
     }
 
     public void initialize() throws Exception {
@@ -122,13 +137,36 @@ public class LocalMusicContentController {
         tabList.add(hBoxSinger);
         tabList.add(hBoxAlbum);
 
+        progressIndicator.setVisible(false);   //初始化进度指示器为不可见
         this.setSelectedTab(hBoxSong);  //设置初始选中为格式标签
-
+        //添加css名称.在CSS文件定制样式
+        nameColumn.getStyleClass().add("nameColumn");
+        singerColumn.getStyleClass().add("singerColumn");
+        albumColumn.getStyleClass().add("albumColumn");
+        totalTimeColumn.getStyleClass().add("totalTimeColumn");
+        sizeColumn.getStyleClass().add("sizeColumn");
+        //列属性绑定
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         singerColumn.setCellValueFactory(new PropertyValueFactory<>("singer"));
         albumColumn.setCellValueFactory(new PropertyValueFactory<>("album"));
         totalTimeColumn.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
+
+        //关闭表格"头"列的左右拖拽移动重新排列行为
+//        tableViewSong.widthProperty().addListener(new ChangeListener<Number>()
+//        {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> source, Number oldWidth, Number newWidth)
+//            {
+//                TableHeaderRow header = (TableHeaderRow) tableViewSong.lookup("TableHeaderRow");
+//                header.reorderingProperty().addListener(new ChangeListener<Boolean>() {
+//                    @Override
+//                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//                        header.setReordering(false);
+//                    }
+//                });
+//            }
+//        });
 
         //设置表格列的宽度随这个borderPane的宽度而动态改变
         borderPane.widthProperty().addListener(new ChangeListener<Number>() {
@@ -146,13 +184,31 @@ public class LocalMusicContentController {
         if (CHOSE_FOLDER_FILE.exists()){
             List<String> folderList = XMLUtils.getAllRecord(CHOSE_FOLDER_FILE,"Folder","path");
             if (folderList.size()>0){
-                ObservableList<Song> songs = SongUtils.getObservableSongList(folderList);
-                tableViewSong.setItems(songs);
+
+//                Platform.runLater(()->{
+//                    System.out.println("loading");
+//                    LoadingSongService loadingSongService = applicationContext.getBean(LoadingSongService.class);
+//                    progressIndicator.visibleProperty().bind(loadingSongService.runningProperty());
+//                    tableViewSong.itemsProperty().bind(loadingSongService.valueProperty());
+//                    loadingSongService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+//                        @Override
+//                        public void handle(WorkerStateEvent event) {
+//                            System.out.println("success");
+//                        }
+//                    });
+//                    loadingSongService.start();
+//                    loadingSongService.setOnFailed(event -> System.out.println("fail"));
+//                    loadingSongService.setOnCancelled(event -> System.out.println("cancel"));
+//                });
+
+                ObservableList<Song> songObservableList = SongUtils.getObservableSongList(folderList);
+                tableViewSong.setItems(songObservableList);
+                labSongCount.setText(String.valueOf(songObservableList.size()));
             }
 
         }
 
-        progressIndicator.setVisible(false);
+
 
         /*******Fixed some resize bug here.*/
         localMusicContentContainer.setCursor(Cursor.DEFAULT);
@@ -215,10 +271,19 @@ public class LocalMusicContentController {
         selectedTab.getStyleClass().add("selectedHBox");
     }
 
-    /**中间面板的鼠标移动事件，修复鼠标形状*/
+    /**单机表格存储歌曲的容器事件处理*/
     @FXML
-    public void onBorderPaneMouseMoved(MouseEvent mouseEvent) {
-
-//        localMusicContentContainer.setCursor(Cursor.DEFAULT);
+    public void onClickedTableView(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){
+            mediaPlayer.play(tableViewSong.getSelectionModel().getSelectedItem());
+        }
     }
+
+
+//    /**中间面板的鼠标移动事件，修复鼠标形状*/
+//    @FXML
+//    public void onBorderPaneMouseMoved(MouseEvent mouseEvent) {
+//
+////        localMusicContentContainer.setCursor(Cursor.DEFAULT);
+//    }
 }

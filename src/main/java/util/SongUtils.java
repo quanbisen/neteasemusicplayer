@@ -46,12 +46,14 @@ public final class SongUtils {
                     }
                 }
             });
-            songsFile.addAll(Arrays.asList(mp3Files));
+            if (mp3Files!=null){
+                songsFile.addAll(Arrays.asList(mp3Files));
+            }
         }
         return songsFile;
     }
 
-    public static ObservableList<Song> getObservableSongList(List<String> folderList) throws Exception, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
+    public static ObservableList<Song> getObservableSongList(List<String> folderList) throws Exception {
         //设置日志的输出级别，音乐文件解析时有某些音乐文件会输出警告提示在控制台，关闭它方便调试
         Logger.getLogger("org.jaudiotagger").setLevel(Level.SEVERE);
         Logger.getLogger("org.jaudiotagger.tag").setLevel(Level.OFF);

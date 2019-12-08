@@ -75,7 +75,21 @@ BorderPane
 {
     -fx-background-color: transparent;
 }
-
+/*.table-view .column-header-background .label*/
+/*{*/
+/*    -fx-alignment: center-left;*/
+/*    -fx-padding: 0 0 0 5;*/
+/*}*/
+.nameColumn .label  /*歌曲"名称"列的标题label样式*/
+{
+    -fx-padding: 0 0 0 20;
+    -fx-alignment: center-left;
+}
+.singerColumn .label,.albumColumn .label,.totalTimeColumn .label,.sizeColumn .label  /*歌曲"歌手"."专辑","总时长","大小"列的标题label样式*/
+{
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 5;
+}
 .table-view .column-header
 {
     -fx-background-color: transparent;
@@ -108,19 +122,14 @@ BorderPane
     -fx-background-color:#FAFAFC;
     -fx-background-insets: 0;
 }
-/*.table-view .table-row-cell:pressed{*/
-/*    -fx-scale-x: 0.99;*/
-/*    -fx-scale-y: 0.99;*/
-/*}*/
+/*表格偶数行样式*/
 .table-view .table-row-cell:odd{
     -fx-background-color:#F4F4F6;
 }
-
 /*选中行的背景颜色*/
 .table-view .table-row-cell:selected{
     -fx-background-color: #DEDEE0;
 }
-
 
 .scroll-bar:vertical
 {

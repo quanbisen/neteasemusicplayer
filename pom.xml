@@ -8,6 +8,8 @@
     <artifactId>neteasemusicplayer</artifactId>
     <version>1.0-SNAPSHOT</version>
     <repositories>
+        <!--增加github上面提供的jaudiotagger提供的maven下载仓库,详见:https://jitpack.io/#goxr3plus/jaudiotagger-->
+        <!--用maven下载jaudiotagger这个jar包,可以完成mp3文件解析歌曲名.歌手等信息-->
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -15,6 +17,7 @@
     </repositories>
     <build>
         <plugins>
+            <!--配置变异插件,制定Java版本为8-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -199,7 +202,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+        <!-- https://mvnrepository.com/artifact/dom4j/dom4j 处理XML文件的-->
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
@@ -227,6 +230,7 @@
             <version>1.2.62</version>
         </dependency>
 
+        <!--jaudiotagger这个jar包,可以解析mp3文件歌曲名.歌手等信息-->
         <dependency>
             <groupId>com.github.goxr3plus</groupId>
             <artifactId>jaudiotagger</artifactId>

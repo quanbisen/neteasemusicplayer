@@ -20,6 +20,7 @@ MacOS file
 .mtj.tmp/
 
 # Package Files #
+*.jar
 *.war
 *.nar
 *.ear

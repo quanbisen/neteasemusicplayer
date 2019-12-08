@@ -13,10 +13,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import javax.annotation.Resource;
 import java.io.IOException;
 
 @Controller
@@ -24,6 +23,18 @@ public class BottomController {
 
     @FXML
     private Label labAlbum;
+
+    @FXML
+    private Label labMusicName;
+
+    @FXML
+    private Label labMusicSinger;
+
+    @FXML
+    private Label labPlayTime;
+
+    @FXML
+    private Label labTotalTime;
 
     @FXML
     private ProgressBar progressBarSong;
@@ -40,11 +51,32 @@ public class BottomController {
     @FXML
     private Slider sliderVolume;
 
-    @Resource
+    @Autowired
     private MainController mainController;
 
     @FXML
     private Label labPlayModeIcon;
+
+    public Label getLabAlbum() {
+        return labAlbum;
+    }
+
+    public Label getLabMusicName() {
+        return labMusicName;
+    }
+
+    public Label getLabMusicSinger() {
+        return labMusicSinger;
+    }
+
+    public Label getLabPlayTime() {
+        return labPlayTime;
+    }
+
+    public Label getLabTotalTime() {
+        return labTotalTime;
+    }
+
     public void initialize(){
         progressBarSong.prefWidthProperty().bind(((StackPane)progressBarSong.getParent()).widthProperty());  //宽度绑定
         sliderSong.prefWidthProperty().bind(((StackPane)sliderSong.getParent()).widthProperty());            //宽度绑定

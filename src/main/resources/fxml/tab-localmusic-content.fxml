@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="localMusicContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/LocalMusicContentStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LocalMusicContentController" onMouseMoved="#onBorderPaneMouseMoved">
+<BorderPane fx:id="localMusicContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/LocalMusicContentStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LocalMusicContentController">
 
    <top>
       <BorderPane prefHeight="45.0" prefWidth="603.0" stylesheets="@../css/TabPaneStyle.css" BorderPane.alignment="CENTER">
@@ -71,14 +71,17 @@
                         </HBox>
                     </top>
                     <center>
-                        <TableView fx:id="tableViewSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;">
+                        <TableView fx:id="tableViewSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;" onMouseClicked="#onClickedTableView" >
                             <columns>
-                                <TableColumn fx:id="nameColumn" maxWidth="540.0" minWidth="180.0" prefWidth="-1.0" resizable="false" text="歌名" />
+                                <TableColumn fx:id="nameColumn" editable="false" maxWidth="540.0" minWidth="180.0" prefWidth="-1.0" resizable="false" text="歌名" />
                                 <TableColumn fx:id="singerColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="歌手" />
                                 <TableColumn fx:id="albumColumn" editable="false" maxWidth="405.0" minWidth="135.0" prefWidth="-1.0" resizable="false" text="专辑" />
                                 <TableColumn fx:id="totalTimeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="时长" />
                                 <TableColumn fx:id="sizeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="大小" />
                             </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                     </center>
                 </BorderPane>
@@ -86,7 +89,7 @@
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
                      <children>
-                        <HBox fx:id="hBoxSong" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxSong" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
+                        <HBox fx:id="hBoxSong" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxSong" prefHeight="0.0" prefWidth="50.0" spacing="3.0">
                            <children>
                               <Label styleClass="labIndicator" text="歌曲" />
                               <Label fx:id="labSongCount" styleClass="count" text="0" />
@@ -106,7 +109,7 @@
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
                      <children>
-                        <HBox fx:id="hBoxSinger" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxSinger" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
+                        <HBox fx:id="hBoxSinger" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxSinger" prefHeight="0.0" prefWidth="50.0" spacing="3.0">
                            <children>
                               <Label styleClass="labIndicator" text="歌手" />
                               <Label fx:id="labSingerCount" styleClass="count" text="0" />
@@ -126,7 +129,7 @@
                <graphic>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
                      <children>
-                        <HBox fx:id="hBoxAlbum" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxAlbum" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
+                        <HBox fx:id="hBoxAlbum" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxAlbum" prefHeight="0.0" prefWidth="50.0" spacing="3.0">
                            <children>
                               <Label styleClass="labIndicator" text="专辑" />
                               <Label fx:id="labAlbumCount" styleClass="count" text="0" />

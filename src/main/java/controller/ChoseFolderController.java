@@ -11,19 +11,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import model.Song;
 import org.dom4j.DocumentException;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
+import service.LoadingSongService;
 import util.CheckListUtils;
-import util.SongUtils;
 import util.WindowUtils;
 import util.XMLUtils;
 import javax.annotation.Resource;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -55,11 +53,22 @@ public class ChoseFolderController {
     /**播放器配置文件*/
     private File CHOSE_FOLDER_FILE;
 
-    /**记录选择的音乐目录的字符串集合*/
+    /**记录存储文件保存的音乐目录的字符串集合*/
     private List<String> folderPathList;
 
-    public File getCHOSE_FOLDER_FILE() {
-        return CHOSE_FOLDER_FILE;
+    /**记录ＵＩ界面选择的目录的字符串集合*/
+    private List<String> selectedPaths;
+
+    /**注入Spring上下文对象*/
+    @Resource
+    private ConfigurableApplicationContext applicationContext;
+
+//    public File getCHOSE_FOLDER_FILE() {
+//        return CHOSE_FOLDER_FILE;
+//    }
+
+    public List<String> getSelectedPaths() {
+        return selectedPaths;
     }
 
     public void initialize() throws IOException, DocumentException {
@@ -101,14 +110,14 @@ public class ChoseFolderController {
         ObservableList<Node> observableList = vWrapCheckBox.getChildren();  //获取vWrapCheckBox的子组件
         observableList.remove(labTips);  //移除用作提示的label组件
 
-        List<String> selectedPaths = new ArrayList<>();  //存储选择的目录集合
+        selectedPaths = new ArrayList<>();  //存储选择的目录集合
         for (Node node:observableList){  //遍历所有的checkbox集合
             CheckBox checkBox = (CheckBox)node;
             if (checkBox.isSelected()){
                 selectedPaths.add(checkBox.getText());
             }
         }
-        for(String pathValue:selectedPaths){
+        for(String pathValue:selectedPaths){  //遍历逐个目录路径保存
             XMLUtils.addOneRecord(CHOSE_FOLDER_FILE,"Folder","path",pathValue);
         }
         labCloseIcon.getScene().getWindow().hide();      //关闭窗口
@@ -116,8 +125,12 @@ public class ChoseFolderController {
 
         if (!CheckListUtils.checkWeatherSame(selectedPaths,folderPathList)){   //如果不一样，证明更改了目录，重新加载目录下的歌曲文件
             System.out.println("need to load song");
-            ObservableList<Song> observableSongList = SongUtils.getObservableSongList(selectedPaths);
-            localMusicContentController.getTableViewSong().setItems(observableSongList);
+//            ObservableList<Song> observableSongList = SongUtils.getObservableSongList(selectedPaths);
+//            localMusicContentController.getTableViewSong().setItems(observableSongList);
+            LoadingSongService loadingSongService = applicationContext.getBean(LoadingSongService.class);
+            localMusicContentController.getProgressIndicator().visibleProperty().bind(loadingSongService.runningProperty());
+            localMusicContentController.getTableViewSong().itemsProperty().bind(loadingSongService.valueProperty());
+            loadingSongService.start();
         }
 
     }
