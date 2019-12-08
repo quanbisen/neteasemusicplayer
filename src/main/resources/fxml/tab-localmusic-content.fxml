@@ -61,7 +61,7 @@
                                                 <Image url="@../image/NeteasePlayAll.png" />
                                             </image>
                                         </ImageView>
-                                        <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="64.0" style="-fx-background-color: transparent; -fx-padding: 0; -fx-font-size: 16;" text="播放全部" />
+                                        <Button fx:id="btnPlayAll" mnemonicParsing="false" prefHeight="22.0" prefWidth="64.0" text="播放全部" />
                                     </children>
                                     <padding>
                                         <Insets left="20.0" />

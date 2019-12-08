@@ -59,6 +59,14 @@ BorderPane
     -fx-max-width: 18px;
     -fx-progress-color: gray;
 }
+/*"播放全部"按钮的样式*/
+#btnPlayAll
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 16;
+}
 .table-view
 {
     -fx-background-color: transparent;
