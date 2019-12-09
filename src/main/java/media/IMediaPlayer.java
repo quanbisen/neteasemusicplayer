@@ -16,6 +16,7 @@ import java.text.ParseException;
  */
 @Component
 public interface IMediaPlayer {
+    void play();
     void play(Song song) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException, ParseException;
     void destroy();
     void pause();

@@ -12,6 +12,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import media.MyMediaPlayer;
@@ -228,8 +229,22 @@ public class BottomController {
 
     /**播放/暂停单击事件处理*/
     @FXML
-    public void onClickedPlay(MouseEvent mouseEvent) {
-        System.out.println("test");
-        progressBarSong.setProgress(0.5);
+    public void onClickedPlayOrPause(MouseEvent mouseEvent) {
+        if (myMediaPlayer.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING){
+            myMediaPlayer.pause();
+        }
+        else if (myMediaPlayer.getMediaPlayer().getStatus() == MediaPlayer.Status.PAUSED){
+            myMediaPlayer.play();
+        }
+    }
+
+    /**歌曲进度滑动条的鼠标释放事件*/
+    @FXML
+    public void onReleasedSlider(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击释放
+            if (myMediaPlayer.getMediaPlayer()!=null && !sliderSong.isValueChanging()){
+                myMediaPlayer.getMediaPlayer().seek(new Duration(1000 * sliderSong.getValue()));
+            }
+        }
     }
 }

@@ -31,9 +31,9 @@
                     <ImageView fitHeight="30" fitWidth="30"><Image url="@/image/NeteaseLast.png"></Image></ImageView>
                 </graphic>
             </Label>
-            <Label fx:id="labPlay" onMouseClicked="#onClickedPlay">
+            <Label fx:id="labPlay" onMouseClicked="#onClickedPlayOrPause">
                 <graphic>
-                    <ImageView fitHeight="32" fitWidth="32"><Image url="@/image/NeteasePlaying.png"></Image></ImageView>
+                    <ImageView fitHeight="32" fitWidth="32"><Image url="@/image/NeteasePause.png"></Image></ImageView>
                 </graphic>
             </Label>
             <Label fx:id="labPlayNext">
@@ -79,7 +79,7 @@
                     </padding>
                     <children>
                         <ProgressBar fx:id="progressBarSong" progress="0"></ProgressBar>
-                        <Slider fx:id="sliderSong"></Slider>
+                        <Slider fx:id="sliderSong" onMouseReleased="#onReleasedSlider"></Slider>
                     </children>
                 </StackPane>
             </center>

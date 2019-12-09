@@ -3,6 +3,7 @@ package util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Song;
+import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -11,6 +12,7 @@ import org.jaudiotagger.audio.mp3.MP3AudioHeader;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.id3.ID3v1Tag;
+import org.jaudiotagger.tag.wav.WavTag;
 import org.junit.Test;
 import java.io.File;
 import java.io.FilenameFilter;
@@ -38,7 +40,7 @@ public final class SongUtils {
             File[] mp3Files = folder.listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
-                    if (name.endsWith(".mp3")){
+                    if (name.endsWith(".mp3") || name.endsWith(".wav")){
                         return true;
                     }
                     else{
@@ -70,40 +72,53 @@ public final class SongUtils {
             String size = "";
             String resource = "";
             String lyrics = "";
+            AudioFile audioFile = AudioFileIO.read(songFile);    //读取歌曲文件
+            /**mp3文件的处理部分*/
+            if (songFile.getPath().endsWith(".mp3")){
+                MP3File mp3File = (MP3File) audioFile;
+                MP3AudioHeader mp3AudioHeader = (MP3AudioHeader)mp3File.getAudioHeader();
+                totalTime = mp3AudioHeader.getTrackLengthAsString();    //读取总时长，返回字符串类型，如“04：30”
+                if (mp3File.hasID3v2Tag()){
+                    Set<String> keySet = mp3File.getID3v2Tag().frameMap.keySet();
+                    if(keySet.contains("TIT2")){ //读取歌名
+                        name = mp3File.getID3v2Tag().frameMap.get("TIT2").toString();
+                        if(name!=null&&!name.equals("null")) {
+                            name=name.substring(name.indexOf("\"")+1, name.lastIndexOf("\""));
+                        }
+                    }
+                    if(keySet.contains("TPE1")){  //读取歌手
+                        singer = mp3File.getID3v2Tag().frameMap.get("TPE1").toString();
+                        if(singer!=null&&!singer.equals("null")) {
+                            singer=singer.substring(singer.indexOf("\"")+1, singer.lastIndexOf("\""));
+                        }
+                    }
+                    if(keySet.contains("TALB")){  //读取专辑名
+                        album = mp3File.getID3v2Tag().frameMap.get("TALB").toString();
+                        if(album!=null&&!album.equals("null")) {
+                            album=album.substring(album.indexOf("\"")+1, album.lastIndexOf("\""));
+                        }
+                    }
+                }
+                else if(mp3File.hasID3v1Tag()) {
+                    ID3v1Tag id3v1Tag = mp3File.getID3v1Tag();
+                    name = id3v1Tag.getFirst(FieldKey.TITLE);
+                    singer = id3v1Tag.getFirst(FieldKey.ARTIST);
+                    album = id3v1Tag.getFirst(FieldKey.ALBUM);
+                }
+            }
+            /**wav文件的处理部分*/
+            else if (songFile.getPath().endsWith(".wav")){          //
+                WavTag wavTag = (WavTag)audioFile.getTag();
+                name = wavTag.getFirst(FieldKey.TITLE);
+                singer = wavTag.getFirst(FieldKey.ARTIST);
+                album = wavTag.getFirst(FieldKey.ALBUM);
+                totalTime = TimeUtils.toString(audioFile.getAudioHeader().getTrackLength());
+            }
 
-            MP3File mp3File = (MP3File) AudioFileIO.read(songFile);
-            MP3AudioHeader mp3AudioHeader = (MP3AudioHeader)mp3File.getAudioHeader();
-            totalTime = mp3AudioHeader.getTrackLengthAsString();    //读取总时长，返回字符串类型，如“04：30”
-            if (mp3File.hasID3v2Tag()){
-                Set<String> keySet = mp3File.getID3v2Tag().frameMap.keySet();
-                if(keySet.contains("TIT2")){ //读取歌名
-                    name = mp3File.getID3v2Tag().frameMap.get("TIT2").toString();
-                    if(name!=null&&!name.equals("null")) {
-                        name=name.substring(name.indexOf("\"")+1, name.lastIndexOf("\""));
-                    }
-                }
-                if(keySet.contains("TPE1")){  //读取歌手
-                    singer = mp3File.getID3v2Tag().frameMap.get("TPE1").toString();
-                    if(singer!=null&&!singer.equals("null")) {
-                        singer=singer.substring(singer.indexOf("\"")+1, singer.lastIndexOf("\""));
-                    }
-                }
-                if(keySet.contains("TALB")){  //读取专辑名
-                    album = mp3File.getID3v2Tag().frameMap.get("TALB").toString();
-                    if(album!=null&&!album.equals("null")) {
-                        album=album.substring(album.indexOf("\"")+1, album.lastIndexOf("\""));
-                    }
-                }
-            }
-            else if(mp3File.hasID3v1Tag()) {
-                ID3v1Tag id3v1Tag = mp3File.getID3v1Tag();
-                name = id3v1Tag.getFirst(FieldKey.TITLE);
-                singer = id3v1Tag.getFirst(FieldKey.ARTIST);
-                album = id3v1Tag.getFirst(FieldKey.ALBUM);
-            }
             String m =String.valueOf(songFile.length()/1024.0/1024.0);
-            size=m.substring(0, m.indexOf(".")+3)+"MB";
-            Song song = new Song(name,singer,album,totalTime,size,songFile.getPath(),lyrics);
+            size=m.substring(0, m.indexOf(".")+3)+"MB";   //文件大小
+            resource = songFile.getPath();                //资源路径
+            Song song = new Song(name,singer,album,totalTime,size,resource,lyrics);
             observableSongList.add(song);
         }
         return observableSongList;
@@ -112,7 +127,7 @@ public final class SongUtils {
     @Test
     public void Test() throws Exception {
         List<String> folderList = new ArrayList<>();
-        folderList.add("/media/ubuntu/Music/");
+        folderList.add("/media/ubuntu/Music/wav");
         ObservableList<Song> observableList = getObservableSongList(folderList);
         System.out.println(observableList.get(0));
     }

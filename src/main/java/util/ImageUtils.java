@@ -1,6 +1,14 @@
 package util;
 
-import org.junit.Test;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.audio.mp3.MP3File;
+import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.tag.id3.AbstractID3v2Frame;
+import org.jaudiotagger.tag.id3.framebody.FrameBodyAPIC;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -39,4 +47,40 @@ public final class ImageUtils {
         return outStream.toByteArray();   //把outStream里的数据写入内存
     }
 
+    /**根据歌曲资源的路径获取资源的专辑图片
+     * @param resource 资源的路径
+     * @return imgAlbum */
+    public static ImageView getAlbumImage(String resource) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+        ImageView imgAlbum;
+        MP3File mp3File = new MP3File(resource);
+        if (mp3File.hasID3v2Tag()){
+            try {
+                AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");
+                FrameBodyAPIC frameBodyAPIC = (FrameBodyAPIC) abstractID3v2Frame.getBody();
+                byte[] imageData = frameBodyAPIC.getImageData();
+                imgAlbum= new ImageView(new Image(new ByteArrayInputStream(imageData)));
+                imgAlbum.setFitWidth(58);
+                imgAlbum.setFitHeight(58);
+            }catch (NullPointerException e){
+                imgAlbum = createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
+            }
+
+        }
+        else {
+            imgAlbum = createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
+        }
+        return imgAlbum;
+    }
+
+    /**获取一个ImageView的对象
+     * @param resource 资源的路径
+     * @param  fitWidth 图片的宽度
+     * @param  fitHeight 图片的高度
+     * @return ImageView*/
+    public static ImageView createImageView(String resource,double fitWidth,double fitHeight){
+        ImageView imageView = new ImageView(new Image(resource));
+        imageView.setFitHeight(fitHeight);
+        imageView.setFitWidth(fitWidth);
+        return imageView;
+    }
 }
