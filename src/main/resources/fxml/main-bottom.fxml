@@ -33,7 +33,7 @@
             </Label>
             <Label fx:id="labPlay" onMouseClicked="#onClickedPlay">
                 <graphic>
-                    <ImageView fitHeight="32" fitWidth="32"><Image url="@/image/NeteasePause.png"></Image></ImageView>
+                    <ImageView fitHeight="32" fitWidth="32"><Image url="@/image/NeteasePlaying.png"></Image></ImageView>
                 </graphic>
             </Label>
             <Label fx:id="labPlayNext">
@@ -64,7 +64,7 @@
                             <padding>
                                 <Insets top="10"></Insets>
                             </padding>
-                            <Label fx:id="labPlayTime">00:00</Label>
+                            <Label fx:id="labPlayedTime">00:00</Label>
                             <Label style="-fx-font-size: 10px;-fx-font-family: '宋体';-fx-text-fill: #979797;" text=" / "></Label>
                             <Label fx:id="labTotalTime">00:00</Label>
                         </HBox>

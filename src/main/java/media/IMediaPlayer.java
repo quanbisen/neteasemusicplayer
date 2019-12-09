@@ -1,7 +1,14 @@
 package media;
 
 import model.Song;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.text.ParseException;
 
 /**
  * @author super lollipop
@@ -9,6 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public interface IMediaPlayer {
-    void play(Song song);
+    void play(Song song) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException, ParseException;
     void destroy();
+    void pause();
 }

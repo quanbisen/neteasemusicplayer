@@ -14,12 +14,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import org.springframework.beans.factory.annotation.Autowired;
+import media.MyMediaPlayer;
 import org.springframework.stereotype.Controller;
+import javax.annotation.Resource;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class BottomController {
+
+    @FXML
+    public Label labPlay;
 
     @FXML
     private Label labAlbum;
@@ -31,7 +37,7 @@ public class BottomController {
     private Label labMusicSinger;
 
     @FXML
-    private Label labPlayTime;
+    private Label labPlayedTime;
 
     @FXML
     private Label labTotalTime;
@@ -51,11 +57,18 @@ public class BottomController {
     @FXML
     private Slider sliderVolume;
 
-    @Autowired
+    @Resource
     private MainController mainController;
 
     @FXML
     private Label labPlayModeIcon;
+
+    @Resource
+    private MyMediaPlayer myMediaPlayer;
+
+    public Label getLabPlay() {
+        return labPlay;
+    }
 
     public Label getLabAlbum() {
         return labAlbum;
@@ -70,17 +83,38 @@ public class BottomController {
     }
 
     public Label getLabPlayTime() {
-        return labPlayTime;
+        return labPlayedTime;
     }
 
     public Label getLabTotalTime() {
         return labTotalTime;
     }
 
+    public Slider getSliderVolume() {
+        return sliderVolume;
+    }
+
+    public ProgressBar getProgressBarSong() {
+        return progressBarSong;
+    }
+
+    public Slider getSliderSong() {
+        return sliderSong;
+    }
+
     public void initialize(){
         progressBarSong.prefWidthProperty().bind(((StackPane)progressBarSong.getParent()).widthProperty());  //宽度绑定
         sliderSong.prefWidthProperty().bind(((StackPane)sliderSong.getParent()).widthProperty());            //宽度绑定
-        //设置音量滚动条的监听事件，使进度条始终跟随滚动条更新
+        //设置播放进度滑动条的监听事件，使进度条始终跟随滚动条更新
+        sliderSong.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                Date date = new Date((int)newValue.doubleValue()*1000); //乘以一千变成秒数
+                labPlayedTime.setText(new SimpleDateFormat("mm:ss").format(date));
+                progressBarSong.setProgress(newValue.doubleValue()/sliderSong.getMax());
+            }
+        });
+        //设置音量滑动条的监听事件，使进度条始终跟随滚动条更新
         sliderVolume.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {

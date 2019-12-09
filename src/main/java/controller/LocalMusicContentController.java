@@ -273,7 +273,7 @@ public class LocalMusicContentController {
 
     /**单机表格存储歌曲的容器事件处理*/
     @FXML
-    public void onClickedTableView(MouseEvent mouseEvent) {
+    public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){
             mediaPlayer.play(tableViewSong.getSelectionModel().getSelectedItem());
         }
