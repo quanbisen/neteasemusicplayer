@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import media.IMediaPlayer;
+import media.MyMediaPlayer;
 import model.Song;
 import org.dom4j.DocumentException;
 import org.springframework.context.ApplicationContext;
@@ -274,8 +275,14 @@ public class LocalMusicContentController {
     /**单机表格存储歌曲的容器事件处理*/
     @FXML
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
-        if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){
-            mediaPlayer.play(tableViewSong.getSelectionModel().getSelectedItem());
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
+            mediaPlayer.play(tableViewSong.getSelectionModel().getSelectedItem());      //播放选中的歌曲
+            if (((MyMediaPlayer)mediaPlayer).getPlaySongList() == null){
+                ((MyMediaPlayer)mediaPlayer).setPlaySongList(tableViewSong.getItems());     //设置当前播放列表
+                System.out.println(((MyMediaPlayer)mediaPlayer).getPlaySongList());
+                System.out.println(tableViewSong.getItems());
+                System.out.println(((MyMediaPlayer)mediaPlayer).getPlaySongList().size());
+            }
         }
     }
 

@@ -79,7 +79,7 @@
                     </padding>
                     <children>
                         <ProgressBar fx:id="progressBarSong" progress="0"></ProgressBar>
-                        <Slider fx:id="sliderSong" onMouseReleased="#onReleasedSlider"></Slider>
+                        <Slider fx:id="sliderSong" onMouseReleased="#onReleasedSliderSong" onMouseClicked="#onClickedSliderSong"></Slider>
                     </children>
                 </StackPane>
             </center>
@@ -92,7 +92,7 @@
                 <Insets top="10"></Insets>
             </padding>
             <!--音量图标-->
-            <Label fx:id="labSoundIcon" style="-fx-padding: 0 0 0 10px;">
+            <Label fx:id="labSoundIcon" style="-fx-padding: 0 0 0 10px;" onMouseClicked="#onClickedSoundIcon">
                 <graphic><ImageView fitWidth="19" fitHeight="19"><Image url="@/image/NeteaseVolumeIcon.png"></Image></ImageView></graphic>
             </Label>
             <!--下面StackPane是音量条-->
@@ -103,8 +103,8 @@
                 </children>
             </StackPane>
             <!--播放模式图标-->
-            <Label fx:id="labPlayModeIcon">
-                <graphic><ImageView fitWidth="24" fitHeight="24" preserveRatio="true"><Image url="@../image/NeteaseRandomPlayMode.png"></Image></ImageView></graphic>
+            <Label fx:id="labPlayModeIcon" onMouseClicked="#onClickedPlayMode">
+                <graphic><ImageView fitWidth="24" fitHeight="24" preserveRatio="true"><Image url="@../image/NeteaseSequencePlayMode.png"></Image></ImageView></graphic>
             </Label>
             <HBox spacing="3" alignment="CENTER">
                 <Label><graphic><ImageView fitWidth="15" fitHeight="15"><Image url="@../image/NeteasePlayListIcon.png"></Image></ImageView></graphic></Label>

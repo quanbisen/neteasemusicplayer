@@ -16,7 +16,11 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import media.MyMediaPlayer;
+import media.PlayMode;
 import org.springframework.stereotype.Controller;
+import util.ImageUtils;
+import util.WindowUtils;
+
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -66,6 +70,12 @@ public class BottomController {
 
     @Resource
     private MyMediaPlayer myMediaPlayer;
+
+    /**存储音量值变量*/
+    private double sliderVolumeValue;
+
+    @Resource
+    private CenterController centerController;
 
     public Label getLabPlay() {
         return labPlay;
@@ -240,10 +250,66 @@ public class BottomController {
 
     /**歌曲进度滑动条的鼠标释放事件*/
     @FXML
-    public void onReleasedSlider(MouseEvent mouseEvent) {
+    public void onReleasedSliderSong(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击释放
             if (myMediaPlayer.getMediaPlayer()!=null && !sliderSong.isValueChanging()){
                 myMediaPlayer.getMediaPlayer().seek(new Duration(1000 * sliderSong.getValue()));
+            }
+        }
+    }
+
+    /**歌曲进度滑动条的鼠标单击事件*/
+    @FXML
+    public void onClickedSliderSong(MouseEvent mouseEvent) {
+        System.out.println(sliderSong.isPressed());
+        if (myMediaPlayer.getMediaPlayer()!=null && !sliderSong.isValueChanging()){
+            myMediaPlayer.getMediaPlayer().seek(new Duration(1000 * sliderSong.getValue()));
+        }
+    }
+
+
+    /**单击音量图标的时间处理*/
+    @FXML
+    public void onClickedSoundIcon(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
+            if (myMediaPlayer.getMediaPlayer() != null && !myMediaPlayer.getMediaPlayer().isMute()){   //如果mediaPlayer不为空且不是静音，设置静音和一些GUI显示
+                myMediaPlayer.getMediaPlayer().setMute(true);
+                labSoundIcon.setGraphic(ImageUtils.createImageView("image/NeteaseVolumeMuteIcon.png",19,19));
+                sliderVolumeValue = sliderVolume.getValue();   //存储当前的值
+                sliderVolume.setValue(0);
+            }
+            else if (myMediaPlayer.getMediaPlayer() != null && myMediaPlayer.getMediaPlayer().isMute()){
+                myMediaPlayer.getMediaPlayer().setMute(false);
+                labSoundIcon.setGraphic(ImageUtils.createImageView("image/NeteaseVolumeIcon.png",19,19));
+                sliderVolume.setValue(sliderVolumeValue);      //更新为静音之前的值
+            }
+        }
+    }
+
+
+    /**播放播放图标切换的鼠标事件处理*/
+    @FXML
+    public void onClickedPlayMode(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){
+            if (myMediaPlayer.getPlayMode() == PlayMode.SEQUENCE){
+                myMediaPlayer.setPlayMode(PlayMode.SEQUENCE_LOOP);
+                labPlayModeIcon.setGraphic(ImageUtils.createImageView("image/NeteaseSequenceLoopMode.png",24,24));
+                WindowUtils.toastInfo(centerController.getStackPane(),new Label("顺序循环"));
+            }
+            else if (myMediaPlayer.getPlayMode() == PlayMode.SEQUENCE_LOOP){
+                myMediaPlayer.setPlayMode(PlayMode.SINGLE_LOOP);
+                labPlayModeIcon.setGraphic(ImageUtils.createImageView("image/NeteaseSingleRoopIcon.png",24,24));
+                WindowUtils.toastInfo(centerController.getStackPane(),new Label("单曲循环"));
+            }
+            else if (myMediaPlayer.getPlayMode() == PlayMode.SINGLE_LOOP){
+                myMediaPlayer.setPlayMode(PlayMode.SHUFFLE);
+                labPlayModeIcon.setGraphic(ImageUtils.createImageView("image/NeteaseShufflePlayMode.png",24,24));
+                WindowUtils.toastInfo(centerController.getStackPane(),new Label("随机播放"));
+            }
+            else if (myMediaPlayer.getPlayMode() == PlayMode.SHUFFLE){
+                myMediaPlayer.setPlayMode(PlayMode.SEQUENCE);
+                labPlayModeIcon.setGraphic(ImageUtils.createImageView("image/NeteaseSequencePlayMode.png",24,24));
+                WindowUtils.toastInfo(centerController.getStackPane(),new Label("顺序播放"));
             }
         }
     }

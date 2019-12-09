@@ -14,11 +14,11 @@ import org.jaudiotagger.tag.TagException;
 import org.springframework.stereotype.Component;
 import util.ImageUtils;
 import util.TimeUtils;
-
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * @author super lollipop
@@ -29,11 +29,31 @@ public class MyMediaPlayer implements IMediaPlayer {
 
     private MediaPlayer mediaPlayer;
 
+    private PlayMode playMode = PlayMode.SEQUENCE;
+
+    private List<Song> playSongList;
+
     @Resource
     private BottomController bottomController;
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
+    }
+
+    public PlayMode getPlayMode() {
+        return playMode;
+    }
+
+    public List<Song> getPlaySongList() {
+        return playSongList;
+    }
+
+    public void setPlayMode(PlayMode playMode) {
+        this.playMode = playMode;
+    }
+
+    public void setPlaySongList(List<Song> playSongList) {
+        this.playSongList = playSongList;
     }
 
     @Override
@@ -63,6 +83,10 @@ public class MyMediaPlayer implements IMediaPlayer {
                     bottomController.getSliderSong().setValue(newValue.toSeconds());
                 }
             }
+        });
+
+        mediaPlayer.setOnEndOfMedia(()->{
+            System.out.println("end");
         });
     }
 

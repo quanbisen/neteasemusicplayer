@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import media.MyMediaPlayer;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
@@ -23,6 +24,8 @@ public class CenterController {
 
     @Resource
     private MainController mainController;
+
+
 
     public StackPane getStackPane(){
         return stackPane;
