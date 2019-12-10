@@ -2,6 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
-
+<mapper namespace="model.UserMapper">
+    <!--根据用户账号ID查询用户-->
+    <select id="findUserByIdAndPassword" parameterType="User" resultType="User">
+        select * from users where id = #{id} and password=#{password}
+    </select>
+    <!--插入一个用户User到Users表-->
+    <insert id="addUser" parameterType="User">
+        insert into users(id,password) values (#{id},#{password})
+    </insert>
 </mapper>

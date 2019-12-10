@@ -1,8 +1,10 @@
 package application;
 
+import dao.SongDao;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import model.Song;
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -14,17 +16,22 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
 import util.WindowUtils;
+
+import javax.annotation.Resource;
 import java.io.File;
+import java.util.List;
 
 @Component
 public class FXApplication extends Application {
 
+    /**Spring配置文件路径*/
     private String APPLICATION_CONTEXT_PATH = "/config/application-context.xml";
 
+    /**Spring上下文*/
     private ConfigurableApplicationContext applicationContext;
 
     @Override
-    public void init() throws Exception {
+    public void init() {
         applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_PATH);
     }
 
@@ -44,11 +51,10 @@ public class FXApplication extends Application {
             primaryStage.initStyle(StageStyle.UNDECORATED);   //去掉Windows自带的标题栏
         }
         primaryStage.show();  //显示主舞台
-
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         applicationContext.close();
     }
 
@@ -59,4 +65,7 @@ public class FXApplication extends Application {
             mediaPlayer.play();
         });
     }
+
+
+
 }

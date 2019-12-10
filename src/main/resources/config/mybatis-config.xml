@@ -7,6 +7,7 @@
         <package name="model"/>
     </typeAliases>
     <mappers>
-        <mapper resource="config/UserMapper.xml"></mapper>
+        <mapper resource="mapper/user-mapper.xml"></mapper>
+        <mapper resource="mapper/song-mapper.xml"></mapper>
     </mappers>
 </configuration>

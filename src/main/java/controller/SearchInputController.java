@@ -1,8 +1,14 @@
 package controller;
 
+import application.SpringFXMLLoader;
+import dao.SongDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -11,19 +17,26 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import model.Song;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
+import service.SearchSongService;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author super lollipop
  * @date 19-12-10
  */
 @Component
-public class SearchContentController {
+public class SearchInputController {
+
+    /**搜索页面的根容器*/
+    @FXML
+    private BorderPane searchInputContainer;
 
     /**滚动容器存储VBox，然后VBox容器放置一条条搜索记录*/
     @FXML
@@ -41,9 +54,21 @@ public class SearchContentController {
     @FXML
     private TextField tfSearchText;
 
+    /**注入歌曲的数据库操作类*/
     @Resource
-    private MainController mainController;
+    private SongDao songDao;
 
+    /**注入Spring上下文对象*/
+    @Resource
+    private ConfigurableApplicationContext applicationContext;
+
+    public BorderPane getSearchInputContainer() {
+        return searchInputContainer;
+    }
+
+    public TextField getTfSearchText() {
+        return tfSearchText;
+    }
 
     public void initialize(){
         //初始化宽度、高度绑定
@@ -85,10 +110,17 @@ public class SearchContentController {
 
     /**搜索文本框的键盘按下事件处理*/
     @FXML
-    public void onKeyPressedSearchTextField(KeyEvent keyEvent) {
+    public void onKeyPressedSearchTextField(KeyEvent keyEvent) throws IOException {
         if (keyEvent.getCode() == KeyCode.ENTER){  //如果按下的enter回车键才执行
             if (!tfSearchText.getText().trim().equals("")){     //有输入文本内容才执行
-                System.out.println("press enter");
+                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/search-result.fxml");
+                Parent parent = fxmlLoader.load();
+                SearchResultController searchResultController = fxmlLoader.getController();     //获取控制器的引用
+                SearchSongService searchSongService = applicationContext.getBean(SearchSongService.class);  //获取服务对象
+                searchResultController.getTableViewSong().itemsProperty().bind(searchSongService.valueProperty());  //搜搜结果显示表格的内容绑定
+                searchResultController.getProgressIndicator().visibleProperty().bind(searchSongService.runningProperty());  //加载指示器可见性绑定
+                searchSongService.start();  //开始服务
+                searchInputContainer.setCenter(parent);
             }
         }
     }

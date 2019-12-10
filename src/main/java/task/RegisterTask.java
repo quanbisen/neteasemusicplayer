@@ -1,4 +1,4 @@
-package service;
+package task;
 
 import controller.RegisterController;
 import dao.UserDao;

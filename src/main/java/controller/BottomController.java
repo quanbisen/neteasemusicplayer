@@ -1,5 +1,6 @@
 package controller;
 
+import dao.SongDao;
 import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,10 +18,12 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import mediaplayer.MyMediaPlayer;
 import mediaplayer.PlayMode;
+import model.Song;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.junit.Test;
 import org.springframework.stereotype.Controller;
 import util.ImageUtils;
 import util.WindowUtils;
@@ -29,6 +32,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -386,6 +390,8 @@ public class BottomController {
     public void onClickedPlayMode(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){     //鼠标左击才执行
 
+
+
             if (myMediaPlayer.getPlayMode() == PlayMode.SEQUENCE){
                 myMediaPlayer.setPlayMode(PlayMode.SEQUENCE_LOOP);
                 labPlayModeIcon.setGraphic(ImageUtils.createImageView("image/NeteaseSequenceLoopMode.png",24,24));
@@ -408,5 +414,6 @@ public class BottomController {
             }
         }
     }
+
 
 }

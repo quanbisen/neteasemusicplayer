@@ -3,7 +3,7 @@ package service;
 import javafx.concurrent.Task;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-
+import task.RegisterTask;
 import javax.annotation.Resource;
 
 /**

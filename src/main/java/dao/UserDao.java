@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserDao {
-    public User findUserByIdAndPassword(User user);
-    public int addUser(User user);
+    User findUserByIdAndPassword(User user);
+    int addUser(User user);
 }

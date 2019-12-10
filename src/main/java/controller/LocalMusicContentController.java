@@ -46,18 +46,23 @@ public class LocalMusicContentController {
     @FXML
     public BorderPane borderPane;
 
+    /**歌曲名称列组件*/
     @FXML
     private TableColumn<Song,String> nameColumn;
 
+    /**歌曲歌手列组件*/
     @FXML
     private TableColumn<Song,String> singerColumn;
 
+    /**歌曲专辑列组件*/
     @FXML
     private TableColumn<Song,String> albumColumn;
 
+    /**歌曲总时间列组件*/
     @FXML
     private TableColumn<Song,String> totalTimeColumn;
 
+    /**歌曲大小列组件*/
     @FXML
     private TableColumn<Song,String> sizeColumn;
 
@@ -271,7 +276,7 @@ public class LocalMusicContentController {
         selectedTab.getStyleClass().add("selectedHBox");
     }
 
-    /**单机表格存储歌曲的容器事件处理*/
+    /**单击表格存储歌曲的容器事件处理*/
     @FXML
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行

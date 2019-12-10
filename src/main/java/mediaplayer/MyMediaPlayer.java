@@ -11,6 +11,7 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.junit.Test;
 import org.springframework.stereotype.Component;
 import util.ImageUtils;
 import util.TimeUtils;
@@ -85,6 +86,12 @@ public class MyMediaPlayer implements IMediaPlayer {
         this.currentPlayIndex = currentPlayIndex;
     }
 
+    @Test
+    public void T(){
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media("http://localhost:8080/neteasemusicplayerserver_war_exploded/song/林俊杰-可惜没如果.wav"));
+        mediaPlayer.play();
+    }
+
     /**自定义媒体播放器播放新歌曲行为*/
     @Override
     public void play(Song song) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
@@ -92,7 +99,12 @@ public class MyMediaPlayer implements IMediaPlayer {
             this.destroy();
         }
         /**创建MediaPlayer播放*/
-        mediaPlayer = new MediaPlayer(new Media(new File(song.getResource()).toURI().toString()));
+        if (song.getResource().contains("http")){   //设置是否为网络资源,如果包含http,则为网络资源
+            mediaPlayer = new MediaPlayer(new Media(song.getResource()));   //创建网络资源的媒体播放器对象
+        }
+        else {
+            mediaPlayer = new MediaPlayer(new Media(new File(song.getResource()).toURI().toString()));  //创建本地资源的媒体播放器对象
+        }
         mediaPlayer.volumeProperty().bind(bottomController.getSliderVolume().valueProperty());  //设置媒体播放器的音量绑定音量条组件的音量
         mediaPlayer.setOnReady(()->mediaPlayer.play());   //播放
 
