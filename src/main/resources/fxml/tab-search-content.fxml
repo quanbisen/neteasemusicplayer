@@ -1,14 +1,195 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.StackCenter1Search"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/SearchContentStyle.css"
+            style="-fx-background-color: #FAFAFC;"
+            fx:id="searchContentContainer"
+            fx:controller="controller.SearchContentController"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox fx:id="hBoxSearch" alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="580.0" spacing="5.0" style="-fx-border-color: #E4E4E7; -fx-background-color: WHITE;">
+               <children>
+                  <TextField prefHeight="35.0" prefWidth="521.0" promptText="搜索音乐、歌手" style="-fx-background-color: transparent;" />
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/SearchDelete.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/SearchTabIcon.png" />
+                     </image></ImageView>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+      </HBox>
+   </top>
+   <center>
+      <VBox prefHeight="331.0" prefWidth="606.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane prefHeight="45.0" prefWidth="600.0">
+               <left>
+                  <Label text="搜索历史" style="-fx-text-fill: #666666;" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../image/TrashBinIcon.png" />
+                     </image>
+                  </ImageView>
+               </right>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </BorderPane>
+            <ScrollPane fx:id="scrollPaneHistory" hbarPolicy="NEVER" prefHeight="289.0" prefWidth="600.0" style="-fx-background-color: transparent;">
+               <content>
+                  <VBox prefWidth="598.0" style="-fx-background-color: #FAFAFC;">
+                     <children>
+                        <BorderPane prefHeight="40.0" prefWidth="558.0">
+                           <left>
+                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../image/SearchDelete.png" />
+                                 </image>
+                              </ImageView>
+                           </right>
+                        </BorderPane>
+                        <BorderPane prefHeight="40.0" prefWidth="558.0">
+                           <left>
+                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../image/SearchDelete.png" />
+                                 </image>
+                              </ImageView>
+                           </right>
+                        </BorderPane>
+                        <BorderPane prefHeight="40.0" prefWidth="558.0">
+                           <left>
+                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../image/SearchDelete.png" />
+                                 </image>
+                              </ImageView>
+                           </right>
+                        </BorderPane>
+                        <BorderPane prefHeight="40.0" prefWidth="558.0">
+                           <left>
+                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../image/SearchDelete.png" />
+                                 </image>
+                              </ImageView>
+                           </right>
+                        </BorderPane>
+                        <BorderPane prefHeight="40.0" prefWidth="558.0">
+                           <left>
+                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../image/SearchDelete.png" />
+                                 </image>
+                              </ImageView>
+                           </right>
+                        </BorderPane>
+                        <BorderPane prefHeight="40.0" prefWidth="558.0">
+                           <left>
+                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../image/SearchDelete.png" />
+                                 </image>
+                              </ImageView>
+                           </right>
+                        </BorderPane>
+                        <BorderPane prefHeight="40.0" prefWidth="558.0">
+                           <left>
+                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../image/SearchDelete.png" />
+                                 </image>
+                              </ImageView>
+                           </right>
+                        </BorderPane>
+                        <BorderPane prefHeight="40.0" prefWidth="558.0">
+                           <left>
+                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../image/SearchDelete.png" />
+                                 </image>
+                              </ImageView>
+                           </right>
+                        </BorderPane>
+                        <BorderPane prefHeight="40.0" prefWidth="558.0">
+                           <left>
+                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../image/SearchDelete.png" />
+                                 </image>
+                              </ImageView>
+                           </right>
+                        </BorderPane>
+                        <BorderPane prefHeight="40.0" prefWidth="558.0">
+                           <left>
+                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
+                           </left>
+                           <right>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../image/SearchDelete.png" />
+                                 </image>
+                              </ImageView>
+                           </right>
+                        </BorderPane>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

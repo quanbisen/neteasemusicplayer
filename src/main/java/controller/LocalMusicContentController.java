@@ -1,5 +1,6 @@
 package controller;
 
+import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -153,20 +154,20 @@ public class LocalMusicContentController {
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
 
         //关闭表格"头"列的左右拖拽移动重新排列行为
-//        tableViewSong.widthProperty().addListener(new ChangeListener<Number>()
-//        {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> source, Number oldWidth, Number newWidth)
-//            {
-//                TableHeaderRow header = (TableHeaderRow) tableViewSong.lookup("TableHeaderRow");
-//                header.reorderingProperty().addListener(new ChangeListener<Boolean>() {
-//                    @Override
-//                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-//                        header.setReordering(false);
-//                    }
-//                });
-//            }
-//        });
+        tableViewSong.widthProperty().addListener(new ChangeListener<Number>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends Number> source, Number oldWidth, Number newWidth)
+            {
+                TableHeaderRow header = (TableHeaderRow) tableViewSong.lookup("TableHeaderRow");
+                header.reorderingProperty().addListener(new ChangeListener<Boolean>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                        header.setReordering(false);
+                    }
+                });
+            }
+        });
 
         //设置表格列的宽度随这个borderPane的宽度而动态改变
         borderPane.widthProperty().addListener(new ChangeListener<Number>() {

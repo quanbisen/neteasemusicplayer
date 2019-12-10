@@ -143,11 +143,12 @@ public class TabsController {
 
     /**单击“搜索”标签事件处理*/
     @FXML
-    public void onClickedSearchTab(MouseEvent mouseEvent) {
+    public void onClickedSearchTab(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxSearchTab);  //设置当前选择的为“搜索”标签
             if (searchParent == null){
-                searchParent = new Label("搜索");
+                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/tab-search-content.fxml");
+                searchParent = fxmlLoader.load();
             }
             centerController.getBorderPane().setCenter(searchParent);
         }
