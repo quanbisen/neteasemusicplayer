@@ -1,6 +1,9 @@
 package application;
 
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import javafx.application.Application;
@@ -11,6 +14,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
 import util.WindowUtils;
+
+import java.io.File;
 
 @Component
 public class FXApplication extends Application {
@@ -48,4 +53,11 @@ public class FXApplication extends Application {
         applicationContext.close();
     }
 
+    @Test
+    public void test(){
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(new File("/media/ubuntu/Music/wav/林俊杰 - 可惜没如果.wav").toURI().toString()));
+        mediaPlayer.setOnReady(()->{
+            mediaPlayer.play();
+        });
+    }
 }

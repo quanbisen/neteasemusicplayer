@@ -67,6 +67,13 @@ BorderPane
     -fx-padding: 0;
     -fx-font-size: 16;
 }
+/**"播放全部"按钮容器的鼠标按下样式*/
+#hBoxPlayAll:pressed
+{
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-scale-z: 0.98;
+}
 .table-view
 {
     -fx-background-color: transparent;
@@ -125,6 +132,11 @@ BorderPane
 /*表格偶数行样式*/
 .table-view .table-row-cell:odd{
     -fx-background-color:#F4F4F6;
+}
+/*表格行鼠标放置在上面的样式*/
+.table-view .table-row-cell:hover
+{
+    -fx-background-color: #F2F2F3;
 }
 /*选中行的背景颜色*/
 .table-view .table-row-cell:selected{

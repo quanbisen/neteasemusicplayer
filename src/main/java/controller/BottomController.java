@@ -17,6 +17,10 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import media.MyMediaPlayer;
 import media.PlayMode;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 import org.springframework.stereotype.Controller;
 import util.ImageUtils;
 import util.WindowUtils;
@@ -25,12 +29,13 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 @Controller
 public class BottomController {
 
     @FXML
-    public Label labPlay;
+    private Label labPlay;
 
     @FXML
     private Label labAlbum;
@@ -67,6 +72,9 @@ public class BottomController {
 
     @FXML
     private Label labPlayModeIcon;
+
+    @FXML
+    private Label labPlayListCount;
 
     @Resource
     private MyMediaPlayer myMediaPlayer;
@@ -111,6 +119,10 @@ public class BottomController {
 
     public Slider getSliderSong() {
         return sliderSong;
+    }
+
+    public Label getLabPlayListCount() {
+        return labPlayListCount;
     }
 
     public void initialize(){
@@ -234,17 +246,100 @@ public class BottomController {
 
     /**播放上一首单击事件处理*/
     @FXML
-    public void onClickedPlayLast(MouseEvent mouseEvent) {
+    public void onClickedPlayLast(MouseEvent mouseEvent) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && myMediaPlayer.getMediaPlayer()!=null){
+            if (myMediaPlayer.getPlaySongList().size()==1){  //如果播放列表只有一首歌,重新播放第一首歌，即原来的这首歌
+                myMediaPlayer.setCurrentPlayIndex(0);
+                myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(0));
+            }
+            else{  //否则表格的歌曲大于1，播放上一首歌曲
+                if(myMediaPlayer.getPlayMode() == PlayMode.SHUFFLE){   //如果当前播放模式是“随机播放”,随机生成一个非当前正在的播放的索引值执行播放
+                    myMediaPlayer.getNextPlayIndexList().add(myMediaPlayer.getCurrentPlayIndex());  //播放上一首歌曲之前，把当前的索引添加到下一次播放的索引列表
+                    if (myMediaPlayer.getLastPlayIndexList().size()==0){    //如果记录上一首播放的歌曲的列表小于0，证明当前没有上一首歌播放，根据随机播放模式，随机生成一个非当前正在的播放的索引值执行播放
+
+                        while (true){  //直到生成的随机数不是当前播放的索引值，执行播放
+                            int randomIndex=new Random().nextInt(myMediaPlayer.getPlaySongList().size());
+                            if (randomIndex != myMediaPlayer.getCurrentPlayIndex()){  //如果随机索引值不是当前播放的索引值
+                                myMediaPlayer.setCurrentPlayIndex(randomIndex);       //替换当前的播放索引值,退出循环
+                                break;
+                            }
+                        }
+                        myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));  //执行播放刚才生成的索引索引值对应的歌曲
+                    }
+                    else{       //否则,则nextPlayIndexList的大小大于零,存储有索引,取出记录上一首歌列表里的最后一次添加的那一个歌曲播放
+                        int index = myMediaPlayer.getLastPlayIndexList().size()-1;
+                        myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getLastPlayIndexList().get(index));
+                        myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));
+                        myMediaPlayer.getLastPlayIndexList().remove(index);
+                    }
+                }
+                else {      //否则其它的模式在播放列表歌曲大于1时都是执行当前的索引值-1播放
+                    myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getCurrentPlayIndex()-1);   //设置当前播放索引-1
+                    if (myMediaPlayer.getCurrentPlayIndex() == -1){  //判断是否越界,如果越界赋值为播放列表的最后一个
+                        myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlaySongList().size()-1);
+                    }
+                    myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));  //播放当前的索引值对应的歌曲
+                }
+            }
+
+        }
     }
 
     /**播放/暂停单击事件处理*/
     @FXML
     public void onClickedPlayOrPause(MouseEvent mouseEvent) {
-        if (myMediaPlayer.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING){
-            myMediaPlayer.pause();
+        if (myMediaPlayer.getMediaPlayer() != null){
+            if (myMediaPlayer.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING){
+                myMediaPlayer.pause();
+            }
+            else if (myMediaPlayer.getMediaPlayer().getStatus() == MediaPlayer.Status.PAUSED){
+                myMediaPlayer.play();
+            }
         }
-        else if (myMediaPlayer.getMediaPlayer().getStatus() == MediaPlayer.Status.PAUSED){
-            myMediaPlayer.play();
+    }
+
+    /**播放下一首单击事件处理*/
+    @FXML
+    public void onClickedPlayNext(MouseEvent mouseEvent) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && myMediaPlayer.getMediaPlayer()!=null){
+
+            if (myMediaPlayer.getPlaySongList().size()==1){     //表格的歌曲只有一首歌时执行的处理
+                myMediaPlayer.setCurrentPlayIndex(0);     //重新播放第一首歌，即原来的这首歌
+                myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(0)); //播放
+            }
+            else {      //否则表格的歌曲大于1，播放下一首歌曲
+
+                if(myMediaPlayer.getPlayMode() == PlayMode.SHUFFLE){       //如果当前播放模式是“随机播放”，再次判断是否有下一首需要播放的歌曲
+                    myMediaPlayer.getLastPlayIndexList().add(myMediaPlayer.getCurrentPlayIndex());      //播放下一首歌曲之前，把当前的索引添加到上一次播放的索引列表
+                    if(myMediaPlayer.getNextPlayIndexList().size()==0){    //nextPlayIndexList的大小等于0，证明当前没有需要播放下一首歌曲的索引，直接生成随机数播放
+
+                        //生成一个随机数不是当前播放的索引值，执行播放
+                        while (true){
+                            int randomIndex=new Random().nextInt(myMediaPlayer.getPlaySongList().size());
+                            if (randomIndex!= myMediaPlayer.getCurrentPlayIndex()){
+                                myMediaPlayer.setCurrentPlayIndex(randomIndex);
+                                break;
+                            }
+                        }
+                        myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));   //执行播放刚才生成的索引索引值对应的歌曲
+                    }
+                    else{   //否则,则lastPlayIndexList的大小大于零,存储有索引,取出记录下一首歌列表里的最后一次添加的那一个歌曲播放
+                        int index = myMediaPlayer.getNextPlayIndexList().size()-1;
+                        myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getNextPlayIndexList().get(index));
+                        myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));
+                        myMediaPlayer.getNextPlayIndexList().remove(index);
+                    }
+                }
+                //否则其它的模式都是当前的索引值+1执行播放
+                else {
+                    myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getCurrentPlayIndex()+1);  //设置当前播放索引值+1
+                    if(myMediaPlayer.getCurrentPlayIndex() > myMediaPlayer.getPlaySongList().size()-1){  //如果当前索引值越界,重新设置为0,即第一个
+                        myMediaPlayer.setCurrentPlayIndex(0);
+                    }
+                    myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex())); //执行播放当前索引值对应的歌曲
+                }
+            }
+
         }
     }
 
@@ -261,7 +356,6 @@ public class BottomController {
     /**歌曲进度滑动条的鼠标单击事件*/
     @FXML
     public void onClickedSliderSong(MouseEvent mouseEvent) {
-        System.out.println(sliderSong.isPressed());
         if (myMediaPlayer.getMediaPlayer()!=null && !sliderSong.isValueChanging()){
             myMediaPlayer.getMediaPlayer().seek(new Duration(1000 * sliderSong.getValue()));
         }
@@ -290,7 +384,8 @@ public class BottomController {
     /**播放播放图标切换的鼠标事件处理*/
     @FXML
     public void onClickedPlayMode(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY){
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){     //鼠标左击才执行
+
             if (myMediaPlayer.getPlayMode() == PlayMode.SEQUENCE){
                 myMediaPlayer.setPlayMode(PlayMode.SEQUENCE_LOOP);
                 labPlayModeIcon.setGraphic(ImageUtils.createImageView("image/NeteaseSequenceLoopMode.png",24,24));
@@ -313,4 +408,5 @@ public class BottomController {
             }
         }
     }
+
 }

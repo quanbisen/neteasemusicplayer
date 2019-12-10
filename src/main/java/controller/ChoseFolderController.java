@@ -11,11 +11,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import media.MyMediaPlayer;
 import org.dom4j.DocumentException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.LoadingSongService;
 import util.CheckListUtils;
+import util.ImageUtils;
 import util.WindowUtils;
 import util.XMLUtils;
 import javax.annotation.Resource;
@@ -63,9 +65,13 @@ public class ChoseFolderController {
     @Resource
     private ConfigurableApplicationContext applicationContext;
 
-//    public File getCHOSE_FOLDER_FILE() {
-//        return CHOSE_FOLDER_FILE;
-//    }
+    /**注入自定义的播放器对象*/
+    @Resource
+    private MyMediaPlayer myMediaPlayer;
+
+    /**注入底部显示音乐进度的控制器类*/
+    @Resource
+    private BottomController bottomController;
 
     public List<String> getSelectedPaths() {
         return selectedPaths;
@@ -131,6 +137,14 @@ public class ChoseFolderController {
             localMusicContentController.getProgressIndicator().visibleProperty().bind(loadingSongService.runningProperty());
             localMusicContentController.getTableViewSong().itemsProperty().bind(loadingSongService.valueProperty());
             loadingSongService.start();
+
+            //因为需要重新加载歌曲,所以需要判断是否播放器有歌曲正在播放中
+            if (myMediaPlayer.getMediaPlayer()!=null){  //如果媒体播放器对象存在,销毁它
+                myMediaPlayer.destroy();    //销毁
+                myMediaPlayer.getPlaySongList().clear();    //清空播放列表
+                myMediaPlayer.setPlaySongList(null);
+                bottomController.getLabPlayListCount().setText("0");    //并且更新显示播放列表数量的组件
+            }
         }
 
     }

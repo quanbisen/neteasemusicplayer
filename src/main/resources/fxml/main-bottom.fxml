@@ -36,7 +36,7 @@
                     <ImageView fitHeight="32" fitWidth="32"><Image url="@/image/NeteasePause.png"></Image></ImageView>
                 </graphic>
             </Label>
-            <Label fx:id="labPlayNext">
+            <Label fx:id="labPlayNext" onMouseClicked="#onClickedPlayNext">
                 <graphic>
                     <ImageView fitHeight="30" fitWidth="30"><Image url="@/image/NeteaseNext.png"></Image></ImageView>
                 </graphic>
@@ -54,9 +54,9 @@
                             <padding>
                                 <Insets top="10"></Insets>
                             </padding>
-                            <Label fx:id="labMusicName">未知</Label>
+                            <Label fx:id="labMusicName">无</Label>
                             <Label style="-fx-text-fill: #979797;">-</Label>
-                            <Label fx:id="labMusicSinger">未知</Label>
+                            <Label fx:id="labMusicSinger">无</Label>
                         </HBox>
                     </left>
                     <right>
@@ -108,7 +108,7 @@
             </Label>
             <HBox spacing="3" alignment="CENTER">
                 <Label><graphic><ImageView fitWidth="15" fitHeight="15"><Image url="@../image/NeteasePlayListIcon.png"></Image></ImageView></graphic></Label>
-                <Label prefWidth="15" prefHeight="15" fx:id="lab" style="-fx-font-size: 10px;-fx-text-fill: WHITE;-fx-background-color: #BBBCC1;-fx-background-radius: 20;-fx-alignment: center;">0</Label>
+                <Label prefWidth="15" prefHeight="15" fx:id="labPlayListCount" style="-fx-padding: 0; -fx-font-size: 10px;-fx-text-fill: WHITE;-fx-background-color: #BBBCC1;-fx-background-radius: 20;-fx-alignment: center;">0</Label>
             </HBox>
         </HBox>
     </right>

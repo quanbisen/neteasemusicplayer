@@ -1,11 +1,8 @@
 package application;
 
 import javafx.fxml.FXMLLoader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
 import java.io.IOException;
 
@@ -23,5 +20,6 @@ public final class SpringFXMLLoader{
         fxmlLoader.setControllerFactory(applicationContext::getBean);
         return fxmlLoader;
     }
+
 
 }

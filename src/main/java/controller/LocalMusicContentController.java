@@ -1,13 +1,8 @@
 package controller;
 
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -17,28 +12,28 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 import media.IMediaPlayer;
 import media.MyMediaPlayer;
+import media.PlayMode;
 import model.Song;
-import org.dom4j.DocumentException;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
-import service.LoadingSongService;
 import util.SongUtils;
 import util.StageUtils;
 import util.WindowUtils;
 import util.XMLUtils;
-
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class LocalMusicContentController {
@@ -114,11 +109,15 @@ public class LocalMusicContentController {
 
     /**注入“选择目录”舞台的controller*/
     @Resource
-    ChoseFolderController choseFolderController;
+    private ChoseFolderController choseFolderController;
 
     /**注入播放器*/
     @Resource
-    IMediaPlayer mediaPlayer;
+    private MyMediaPlayer myMediaPlayer;
+
+    /**注入窗体底部进度条的控制器*/
+    @Resource
+    private BottomController bottomController;
 
     public TableView<Song> getTableViewSong() {
         return tableViewSong;
@@ -276,12 +275,41 @@ public class LocalMusicContentController {
     @FXML
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
-            mediaPlayer.play(tableViewSong.getSelectionModel().getSelectedItem());      //播放选中的歌曲
-            if (((MyMediaPlayer)mediaPlayer).getPlaySongList() == null){
-                ((MyMediaPlayer)mediaPlayer).setPlaySongList(tableViewSong.getItems());     //设置当前播放列表
-                System.out.println(((MyMediaPlayer)mediaPlayer).getPlaySongList());
-                System.out.println(tableViewSong.getItems());
-                System.out.println(((MyMediaPlayer)mediaPlayer).getPlaySongList().size());
+            myMediaPlayer.play(tableViewSong.getSelectionModel().getSelectedItem());      //播放选中的歌曲
+            myMediaPlayer.setPlaySongList(tableViewSong.getItems());     //设置当前播放列表
+            myMediaPlayer.setCurrentPlayIndex(tableViewSong.getSelectionModel().getFocusedIndex());  //设置当前播放的歌曲在表格中的位置
+            //设置右下角"歌单文本提示"显示数量
+            if (String.valueOf(myMediaPlayer.getPlaySongList().size()).length()>=3){  //如果文本长度大于等于3,直接显示99.控制文本长度为2位数
+                bottomController.getLabPlayListCount().setText("99");
+            }
+            else {  //否则,设置为播放列表的大小
+                bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size()));
+            }
+        }
+    }
+
+    /**"播放全部"按钮的鼠标单击事件处理*/
+    @FXML
+    public void onClickedPlayAll(MouseEvent mouseEvent) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){
+            if (myMediaPlayer.getPlayMode() == PlayMode.SHUFFLE){   //如果当前播放模式为"随机播放"
+                //生成一个随机数，执行播放
+                int randomIndex=new Random().nextInt(tableViewSong.getItems().size());
+                myMediaPlayer.setCurrentPlayIndex(randomIndex);     //设置当前播放的索引为生成的随机索引
+                myMediaPlayer.play(tableViewSong.getItems().get(myMediaPlayer.getCurrentPlayIndex()));      //播放生成的随机索引歌曲
+
+            }
+            else {  //否则,不是"随机播放"模式,这些都是播放表格中的第一首歌曲
+                myMediaPlayer.setCurrentPlayIndex(0);  //设置当前播放的歌曲为表格第一首歌曲
+                myMediaPlayer.play(tableViewSong.getItems().get(0));      //播放表格中第一首歌曲
+            }
+            myMediaPlayer.setPlaySongList(tableViewSong.getItems());     //设置当前播放列表
+            //设置右下角"歌单文本提示"显示数量
+            if (String.valueOf(myMediaPlayer.getPlaySongList().size()).length()>=3){  //如果文本长度大于等于3,直接显示99.控制文本长度为2位数
+                bottomController.getLabPlayListCount().setText("99");
+            }
+            else {  //否则,设置为播放列表的大小
+                bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size()));
             }
         }
     }
