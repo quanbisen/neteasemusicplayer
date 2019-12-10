@@ -1,4 +1,4 @@
-package media;
+package mediaplayer;
 
 import controller.BottomController;
 import javafx.beans.value.ChangeListener;

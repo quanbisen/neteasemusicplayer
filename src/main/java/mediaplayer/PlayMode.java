@@ -1,4 +1,4 @@
-package media;
+package mediaplayer;
 
 public enum PlayMode {
     /**SEQUENCE         顺序播放

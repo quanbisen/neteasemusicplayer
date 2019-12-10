@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
 import util.WindowUtils;
-
 import java.io.File;
 
 @Component
@@ -55,7 +54,7 @@ public class FXApplication extends Application {
 
     @Test
     public void test(){
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(new File("/media/ubuntu/Music/wav/林俊杰 - 可惜没如果.wav").toURI().toString()));
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(new File("/mediaplayer/ubuntu/Music/wav/林俊杰 - 可惜没如果.wav").toURI().toString()));
         mediaPlayer.setOnReady(()->{
             mediaPlayer.play();
         });

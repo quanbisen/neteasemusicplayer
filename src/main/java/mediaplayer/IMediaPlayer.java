@@ -1,6 +1,5 @@
-package media;
+package mediaplayer;
 
-import javafx.scene.media.MediaPlayer;
 import model.Song;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
