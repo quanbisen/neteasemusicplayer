@@ -15,7 +15,7 @@ import mediaplayer.MyMediaPlayer;
 import org.dom4j.DocumentException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
-import service.LoadingSongService;
+import service.LoadSongService;
 import util.CheckListUtils;
 import util.WindowUtils;
 import util.XMLUtils;
@@ -132,10 +132,10 @@ public class ChoseFolderController {
             System.out.println("need to load song");
 //            ObservableList<Song> observableSongList = SongUtils.getObservableSongList(selectedPaths);
 //            localMusicContentController.getTableViewSong().setItems(observableSongList);
-            LoadingSongService loadingSongService = applicationContext.getBean(LoadingSongService.class);
-            localMusicContentController.getProgressIndicator().visibleProperty().bind(loadingSongService.runningProperty());
-            localMusicContentController.getTableViewSong().itemsProperty().bind(loadingSongService.valueProperty());
-            loadingSongService.start();
+            LoadSongService loadSongService = applicationContext.getBean(LoadSongService.class);
+            localMusicContentController.getProgressIndicator().visibleProperty().bind(loadSongService.runningProperty());
+            localMusicContentController.getTableViewSong().itemsProperty().bind(loadSongService.valueProperty());
+            loadSongService.start();
 
             //因为需要重新加载歌曲,所以需要判断是否播放器有歌曲正在播放中
             if (myMediaPlayer.getMediaPlayer()!=null){  //如果媒体播放器对象存在,销毁它

@@ -52,7 +52,7 @@
       </BorderPane>
    </top>
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane fx:id="searchInputCenter" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <top>
             <BorderPane maxHeight="45.0" minHeight="45.0" prefHeight="45.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <left>

@@ -46,7 +46,7 @@
    </top>
 
    <center>
-      <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 0;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 0;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab>
             <content>

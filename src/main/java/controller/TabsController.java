@@ -14,6 +14,8 @@ import model.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
+import service.LoadSongService;
+import service.SearchSongService;
 import util.StageUtils;
 import util.UserUtils;
 import util.WindowUtils;
@@ -93,6 +95,9 @@ public class TabsController {
 
     /**"我喜欢的音乐"标签的内容容器*/
     private Parent myFavorMusicParent;
+
+    @Resource
+    private LocalMusicContentController localMusicContentController;
 
     public VBox getVBoxTabContainer() {
         return vBoxTabContainer;
@@ -174,9 +179,13 @@ public class TabsController {
             if (localMusicParent == null){
                 FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/tab-localmusic-content.fxml");
                 localMusicParent = fxmlLoader.load();
-
+                LoadSongService loadSongService = applicationContext.getBean(LoadSongService.class);  //获取服务对象
+                localMusicContentController.getTableViewSong().itemsProperty().bind(loadSongService.valueProperty());  //搜搜结果显示表格的内容绑定
+                localMusicContentController.getProgressIndicator().visibleProperty().bind(loadSongService.runningProperty());
+                loadSongService.start();  //开始服务
             }
-            centerController.getBorderPane().setCenter(localMusicParent);
+
+            centerController.getBorderPane().setCenter(localMusicParent);   //设置容器的中间容器内容
         }
     }
 

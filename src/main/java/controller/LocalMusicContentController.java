@@ -40,6 +40,10 @@ public class LocalMusicContentController {
 
     /**本地音乐中间面板的根容器*/
     @FXML
+    private TabPane tabPane;
+
+    /**本地音乐中间面板的根容器tabPane的Tab1*/
+    @FXML
     private BorderPane localMusicContentContainer;
 
     /**根容器的中间内容容器*/
@@ -124,6 +128,10 @@ public class LocalMusicContentController {
     @Resource
     private BottomController bottomController;
 
+    public TabPane getTabPane() {
+        return tabPane;
+    }
+
     public TableView<Song> getTableViewSong() {
         return tableViewSong;
     }
@@ -143,6 +151,7 @@ public class LocalMusicContentController {
         tabList.add(hBoxAlbum);
 
         progressIndicator.setVisible(false);   //初始化进度指示器为不可见
+        tabPane.setVisible(false);             //初始化TabPane容器不可见，在LoadSongTask任务中再设置可见
         this.setSelectedTab(hBoxSong);  //设置初始选中为格式标签
         //添加css名称.在CSS文件定制样式
         nameColumn.getStyleClass().add("nameColumn");
@@ -185,33 +194,33 @@ public class LocalMusicContentController {
             }
         });
 
-        File CHOSE_FOLDER_FILE = new File("src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml");
-        if (CHOSE_FOLDER_FILE.exists()){
-            List<String> folderList = XMLUtils.getAllRecord(CHOSE_FOLDER_FILE,"Folder","path");
-            if (folderList.size()>0){
-
-//                Platform.runLater(()->{
-//                    System.out.println("loading");
-//                    LoadingSongService loadingSongService = applicationContext.getBean(LoadingSongService.class);
-//                    progressIndicator.visibleProperty().bind(loadingSongService.runningProperty());
-//                    tableViewSong.itemsProperty().bind(loadingSongService.valueProperty());
-//                    loadingSongService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-//                        @Override
-//                        public void handle(WorkerStateEvent event) {
-//                            System.out.println("success");
-//                        }
-//                    });
-//                    loadingSongService.start();
-//                    loadingSongService.setOnFailed(event -> System.out.println("fail"));
-//                    loadingSongService.setOnCancelled(event -> System.out.println("cancel"));
-//                });
-
-                ObservableList<Song> songObservableList = SongUtils.getObservableSongList(folderList);
-                tableViewSong.setItems(songObservableList);
-                labSongCount.setText(String.valueOf(songObservableList.size()));
-            }
-
-        }
+//        File CHOSE_FOLDER_FILE = new File("src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml");
+//        if (CHOSE_FOLDER_FILE.exists()){
+//            List<String> folderList = XMLUtils.getAllRecord(CHOSE_FOLDER_FILE,"Folder","path");
+//            if (folderList.size()>0){
+//
+////                Platform.runLater(()->{
+////                    System.out.println("loading");
+////                    LoadingSongService loadingSongService = applicationContext.getBean(LoadingSongService.class);
+////                    progressIndicator.visibleProperty().bind(loadingSongService.runningProperty());
+////                    tableViewSong.itemsProperty().bind(loadingSongService.valueProperty());
+////                    loadingSongService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+////                        @Override
+////                        public void handle(WorkerStateEvent event) {
+////                            System.out.println("success");
+////                        }
+////                    });
+////                    loadingSongService.start();
+////                    loadingSongService.setOnFailed(event -> System.out.println("fail"));
+////                    loadingSongService.setOnCancelled(event -> System.out.println("cancel"));
+////                });
+//
+////                ObservableList<Song> songObservableList = SongUtils.getObservableSongList(folderList);
+////                tableViewSong.setItems(songObservableList);
+////                labSongCount.setText(String.valueOf(songObservableList.size()));
+//            }
+//
+//        }
 
 
 

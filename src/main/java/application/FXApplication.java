@@ -51,6 +51,7 @@ public class FXApplication extends Application {
             primaryStage.initStyle(StageStyle.UNDECORATED);   //去掉Windows自带的标题栏
         }
         primaryStage.show();  //显示主舞台
+
     }
 
     @Override

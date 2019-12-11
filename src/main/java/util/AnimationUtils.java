@@ -2,7 +2,10 @@ package util;
 
 import javafx.animation.FadeTransition;
 import javafx.scene.Parent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import org.junit.Test;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -12,5 +15,10 @@ public final class AnimationUtils {
         fadeTransition.setFromValue(0);
         fadeTransition.setToValue(1);
         fadeTransition.play();
+    }
+
+    @Test
+    public void testMediaPlayer(){
+
     }
 }

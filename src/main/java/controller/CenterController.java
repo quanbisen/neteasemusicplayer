@@ -14,7 +14,7 @@ public class CenterController {
     @FXML
     private StackPane stackPane;
 
-    /**中间StackPane第0层的borderPane，我这里定义StackPane层数为0,1,2...*/
+    /**中间StackPane第0层的borderPane，StackPane的层数如 0,1,2...*/
     @FXML
     private BorderPane borderPane;
 

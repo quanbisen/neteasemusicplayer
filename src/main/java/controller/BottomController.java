@@ -1,6 +1,5 @@
 package controller;
 
-import dao.SongDao;
 import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,26 +12,23 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import mediaplayer.MyMediaPlayer;
 import mediaplayer.PlayMode;
-import model.Song;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.junit.Test;
 import org.springframework.stereotype.Controller;
 import util.ImageUtils;
 import util.WindowUtils;
-
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -245,6 +241,12 @@ public class BottomController {
         else if (mouseEvent.getButton()==MouseButton.SECONDARY){
 //            borderPane.setLeft(this.getLeftPane());
 //            borderPane.setCenter(this.getCenterPane());
+
+            System.out.println("play");
+            MediaPlayer mediaPlayer = new MediaPlayer(new Media("http://172.20.10.9:8080/neteasemusicplayerserver_war_exploded/song/linjunjie.wav"));
+            mediaPlayer.setOnReady(()->{
+                mediaPlayer.play();
+            });
         }
     }
 

@@ -30,7 +30,7 @@ size float,
 resource varchar (150),
 lyrics varchar (150)
 );
-drop table songs;
-insert into songs(name,singer,album,total_time,size,resource) values('可惜没如果','林俊杰','可惜没如果','04:58',52.6,'http://localhost:8080/neteasemusicplayerserver_war_exploded/song/林俊杰 - 可惜没如果.wav');
-insert into songs(name,singer,album,total_time,size,resource) values('爱不会绝迹','林俊杰','爱不会绝迹','04:00',42.4,'http://localhost:8080/neteasemusicplayerserver_war_exploded/song/林俊杰 - 爱不会绝迹.wav');
+insert into songs(name,singer,album,total_time,size,resource) values('可惜没如果','林俊杰','可惜没如果','04:58',52.6,'http://localhost:8080/neteasemusicplayerserver_war_exploded/song/林俊杰-可惜没如果.wav');
+insert into songs(name,singer,album,total_time,size,resource) values('爱不会绝迹','林俊杰','爱不会绝迹','04:00',42.4,'http://localhost:8080/neteasemusicplayerserver_war_exploded/song/林俊杰-爱不会绝迹.wav');
 select * from songs;
+drop table songs;

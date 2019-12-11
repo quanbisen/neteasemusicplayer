@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import service.SearchSongService;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,9 +35,14 @@ import java.util.List;
 @Component
 public class SearchInputController {
 
+
     /**搜索页面的根容器*/
     @FXML
     private BorderPane searchInputContainer;
+
+    /**搜索页面的根容器searchInputContainer的Center内容容器*/
+    @FXML
+    public BorderPane searchInputCenter;
 
     /**滚动容器存储VBox，然后VBox容器放置一条条搜索记录*/
     @FXML
@@ -62,6 +68,18 @@ public class SearchInputController {
     @Resource
     private ConfigurableApplicationContext applicationContext;
 
+    /**显示搜索结果的容器*/
+    private Parent parent;
+
+    @Resource
+    private SearchResultController searchResultController;
+
+    /**播放器搜索历史的记录文件存放路径*/
+    private String SEARCH_HISTORY_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "search-history.xml";
+
+    /**播放器搜索历史的记录文件*/
+    private File SEARCH_HISTORY_FILE;
+
     public BorderPane getSearchInputContainer() {
         return searchInputContainer;
     }
@@ -77,6 +95,8 @@ public class SearchInputController {
 
         labClearIcon.setVisible(false);  //初始化不可见
 
+        SEARCH_HISTORY_FILE = new File(SEARCH_HISTORY_PATH);
+
         tfSearchText.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -85,6 +105,7 @@ public class SearchInputController {
                 }
                 else {
                     labClearIcon.setVisible(false);
+                    searchInputContainer.setCenter(searchInputCenter);
                 }
             }
         });
@@ -100,10 +121,10 @@ public class SearchInputController {
 
     /**单击"搜索"图标的事件处理*/
     @FXML
-    public void onClickedSearchIcon(MouseEvent mouseEvent) {
+    public void onClickedSearchIcon(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             if (!tfSearchText.getText().trim().equals("")) {     //有输入文本内容才执行
-                System.out.println("need to search.");
+                this.startSearchService();
             }
         }
     }
@@ -113,15 +134,20 @@ public class SearchInputController {
     public void onKeyPressedSearchTextField(KeyEvent keyEvent) throws IOException {
         if (keyEvent.getCode() == KeyCode.ENTER){  //如果按下的enter回车键才执行
             if (!tfSearchText.getText().trim().equals("")){     //有输入文本内容才执行
-                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/search-result.fxml");
-                Parent parent = fxmlLoader.load();
-                SearchResultController searchResultController = fxmlLoader.getController();     //获取控制器的引用
-                SearchSongService searchSongService = applicationContext.getBean(SearchSongService.class);  //获取服务对象
-                searchResultController.getTableViewSong().itemsProperty().bind(searchSongService.valueProperty());  //搜搜结果显示表格的内容绑定
-                searchResultController.getProgressIndicator().visibleProperty().bind(searchSongService.runningProperty());  //加载指示器可见性绑定
-                searchSongService.start();  //开始服务
-                searchInputContainer.setCenter(parent);
+                this.startSearchService();
             }
         }
+    }
+
+    private void startSearchService() throws IOException {
+        if (parent == null){    //容器对象为空时才加载
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/search-result.fxml");
+            parent = fxmlLoader.load();
+        }
+        SearchSongService searchSongService = applicationContext.getBean(SearchSongService.class);  //获取服务对象
+        searchResultController.getTableViewSong().itemsProperty().bind(searchSongService.valueProperty());  //搜搜结果显示表格的内容绑定
+        searchResultController.getProgressIndicator().visibleProperty().bind(searchSongService.runningProperty());  //加载指示器可见性绑定
+        searchSongService.start();  //开始服务
+        searchInputContainer.setCenter(parent); //设置容器的中间容器内容
     }
 }
