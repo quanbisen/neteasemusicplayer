@@ -5,6 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -85,6 +86,11 @@ public class BottomController {
     @Resource
     private CenterController centerController;
 
+    /**记录保存中间的标签和对应内容，也是StackPane的第0层*/
+    private Parent mainCenterIndex0;
+
+    private VBox vBox;
+
     public Label getLabPlay() {
         return labPlay;
     }
@@ -150,37 +156,43 @@ public class BottomController {
     @FXML
     public void onClickedAlbum(MouseEvent mouseEvent) throws IOException,Throwable {
         //获取main布局的根组件
-        BorderPane borderPane = mainController.getBorderPane();
+        StackPane stackPane = centerController.getStackPane();
         Label label = new Label("Just a test.");
         label.setPrefWidth(128);
         label.setPrefHeight(128);
         label.setBackground(new Background(new BackgroundFill(Color.rgb(221,221,221),null,null)));
         if (mouseEvent.getButton()== MouseButton.PRIMARY){
 
-            borderPane.setLeft(null);
-            VBox vBox = new VBox();
-            HBox hBox = new HBox();
-            hBox.getChildren().add(vBox);
-            hBox.setAlignment(Pos.BOTTOM_LEFT);
-            vBox.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
+            if (stackPane.getChildren().size()==1){
+                vBox = new VBox();
+                HBox hBox = new HBox();
+                hBox.getChildren().add(vBox);
+                hBox.setAlignment(Pos.BOTTOM_LEFT);
+                vBox.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
 
-            vBox.setMaxWidth(0);
-            vBox.setMaxHeight(0);
-            vBox.getChildren().add(new Button("test"));
-            vBox.getChildren().add(new Button("test"));
+                vBox.setMaxWidth(0);
+                vBox.setMaxHeight(0);
+                vBox.getChildren().add(new Button("test"));
+                vBox.getChildren().add(new Button("test"));
 
-            Region region = (Region) borderPane.getCenter();
+                Region region = (Region) stackPane;
 
-            borderPane.setCenter(hBox);
+                stackPane.getChildren().add(vBox);
+                stackPane.setAlignment(Pos.BOTTOM_LEFT);
 
-            /**/
+                Timeline timeline = new Timeline();
+                timeline.getKeyFrames().addAll(
+                        new KeyFrame(Duration.seconds(0.5),new KeyValue(vBox.minHeightProperty(),region.getHeight())),
+                        new KeyFrame(Duration.seconds(0.5),new KeyValue(vBox.minWidthProperty(),region.getWidth()))
+                );
+                timeline.play();
+                timeline.setOnFinished((event -> {
+                    stackPane.setAlignment(Pos.CENTER);
+                    System.out.println(vBox.getWidth());
+                    System.out.println(vBox.getHeight());
+                }));
+            }
 
-            Timeline timeline = new Timeline();
-            timeline.getKeyFrames().addAll(
-                    new KeyFrame(Duration.seconds(1),new KeyValue(vBox.minHeightProperty(),region.getHeight())),
-                    new KeyFrame(Duration.seconds(1),new KeyValue(vBox.minWidthProperty(),region.getWidth()))
-            );
-            timeline.play();
 
 
             /*Fade Animation*/
@@ -194,7 +206,7 @@ public class BottomController {
 //            });
 
             /*Slide Animation*/
-            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),vBox);
+//            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),vBox);
 //            translateTransition.setFromX(-pane.getWidth());
 //            translateTransition.setToX(0);
 //            borderPane1.setTranslateY(50);
@@ -239,14 +251,23 @@ public class BottomController {
 //            timeline1.play();
         }
         else if (mouseEvent.getButton()==MouseButton.SECONDARY){
-//            borderPane.setLeft(this.getLeftPane());
-//            borderPane.setCenter(this.getCenterPane());
+            if (stackPane.getChildren().size()>=2){
 
-            System.out.println("play");
-            MediaPlayer mediaPlayer = new MediaPlayer(new Media("http://172.20.10.9:8080/neteasemusicplayerserver_war_exploded/song/linjunjie.wav"));
-            mediaPlayer.setOnReady(()->{
-                mediaPlayer.play();
-            });
+                Timeline timeline = new Timeline();
+                timeline.getKeyFrames().addAll(
+                        new KeyFrame(Duration.seconds(0.5),new KeyValue(vBox.minHeightProperty(),0)),
+                        new KeyFrame(Duration.seconds(0.5),new KeyValue(vBox.minWidthProperty(),0))
+                );
+                stackPane.setAlignment(Pos.BOTTOM_LEFT);
+                timeline.play();
+                timeline.setOnFinished((event -> {
+                    stackPane.getChildren().remove(1,stackPane.getChildren().size());
+                    stackPane.setAlignment(Pos.CENTER);
+                    System.out.println(vBox.getWidth());
+                    System.out.println(vBox.getHeight());
+                }));
+            }
+
         }
     }
 
@@ -391,9 +412,6 @@ public class BottomController {
     @FXML
     public void onClickedPlayMode(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){     //鼠标左击才执行
-
-
-
             if (myMediaPlayer.getPlayMode() == PlayMode.SEQUENCE){
                 myMediaPlayer.setPlayMode(PlayMode.SEQUENCE_LOOP);
                 labPlayModeIcon.setGraphic(ImageUtils.createImageView("image/NeteaseSequenceLoopMode.png",24,24));

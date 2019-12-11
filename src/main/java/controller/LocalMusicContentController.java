@@ -3,7 +3,6 @@ package controller;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -24,12 +23,9 @@ import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
-import util.SongUtils;
 import util.StageUtils;
 import util.WindowUtils;
-import util.XMLUtils;
 import javax.annotation.Resource;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +101,7 @@ public class LocalMusicContentController {
     @FXML
     private ProgressIndicator progressIndicator;
 
+    /**存放显示歌曲的表格*/
     @FXML
     private TableView<Song> tableViewSong;
 
@@ -240,15 +237,6 @@ public class LocalMusicContentController {
             WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
 
             choseFolderStage.showAndWait();  //显示并且等待
-//            if (choseFolderController.loadProperty().getValue()){  //如果是按下了“确定”按钮
-//                //逻辑乱了的部分，先实现吧。
-//
-////                LoadingSongService loadingSongService = new LoadingSongService();
-////                LoadingSongService loadingSongService = applicationContext.getBean(LoadingSongService.class);
-////                progressIndicator.visibleProperty().bind(loadingSongService.runningProperty());
-////                vBoxSongContainer.visibleProperty().bind(loadingSongService.valueProperty());
-////                loadingSongService.start();
-//            }
         }
     }
 
@@ -293,12 +281,8 @@ public class LocalMusicContentController {
             myMediaPlayer.setPlaySongList(tableViewSong.getItems());     //设置当前播放列表
             myMediaPlayer.setCurrentPlayIndex(tableViewSong.getSelectionModel().getFocusedIndex());  //设置当前播放的歌曲在表格中的位置
             //设置右下角"歌单文本提示"显示数量
-            if (String.valueOf(myMediaPlayer.getPlaySongList().size()).length()>=3){  //如果文本长度大于等于3,直接显示99.控制文本长度为2位数
-                bottomController.getLabPlayListCount().setText("99");
-            }
-            else {  //否则,设置为播放列表的大小
-                bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size()));
-            }
+            bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size()));
+
         }
     }
 

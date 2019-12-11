@@ -75,18 +75,7 @@
                <content>
                   <VBox fx:id="vBoxHistoryContainer" prefWidth="627.0" style="-fx-background-color: #FAFAFC;">
                      <children>
-                        <BorderPane fx:id="oneHistory" prefHeight="40.0" prefWidth="558.0">
-                           <left>
-                              <Label prefHeight="32.0" prefWidth="54.0" text="GEM" BorderPane.alignment="CENTER" />
-                           </left>
-                           <right>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                                 <image>
-                                    <Image url="@../image/SearchDelete.png" />
-                                 </image>
-                              </ImageView>
-                           </right>
-                        </BorderPane>
+
                      </children>
                      <padding>
                         <Insets left="20.0" right="20.0" />

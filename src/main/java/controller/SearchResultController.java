@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -83,6 +82,10 @@ public class SearchResultController {
     @Resource
     private MyMediaPlayer myMediaPlayer;
 
+    /**注入底部显示音乐进度条信息的控制器*/
+    @Resource
+    private BottomController bottomController;
+
     public TableView getTableViewSong() {
         return tableViewSong;
     }
@@ -113,22 +116,6 @@ public class SearchResultController {
         singerColumn.setCellValueFactory(new PropertyValueFactory<>("singer"));
         albumColumn.setCellValueFactory(new PropertyValueFactory<>("album"));
         totalTimeColumn.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
-
-        //关闭表格"头"列的左右拖拽移动重新排列行为
-        borderPane.widthProperty().addListener(new ChangeListener<Number>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends Number> source, Number oldWidth, Number newWidth)
-            {
-                TableHeaderRow header = (TableHeaderRow) tableViewSong.lookup("TableHeaderRow");
-                header.reorderingProperty().addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                        header.setReordering(false);
-                    }
-                });
-            }
-        });
 
         //设置表格列的初始化宽度
         nameColumn.setMinWidth(searchInputController.getSearchInputContainer().getWidth()/5*2);
@@ -189,16 +176,11 @@ public class SearchResultController {
     @FXML
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
-            myMediaPlayer.playNetwork((Song) tableViewSong.getSelectionModel().getSelectedItem());      //播放选中的歌曲
-//            myMediaPlayer.setPlaySongList(tableViewSong.getItems());     //设置当前播放列表
-//            myMediaPlayer.setCurrentPlayIndex(tableViewSong.getSelectionModel().getFocusedIndex());  //设置当前播放的歌曲在表格中的位置
-//            //设置右下角"歌单文本提示"显示数量
-//            if (String.valueOf(myMediaPlayer.getPlaySongList().size()).length()>=3){  //如果文本长度大于等于3,直接显示99.控制文本长度为2位数
-//                bottomController.getLabPlayListCount().setText("99");
-//            }
-//            else {  //否则,设置为播放列表的大小
-//                bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size()));
-//            }
+            Song selectedSong = (Song) tableViewSong.getSelectionModel().getSelectedItem();
+            myMediaPlayer.getPlaySongList().add(selectedSong);  //添加到播放列表后面
+            myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlaySongList().size()-1);    //更新当前播放的索引值
+            myMediaPlayer.playNetwork(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));      //播放选中的歌曲
+            bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size())); //更新右下角歌单数量的显示文本
         }
     }
 }

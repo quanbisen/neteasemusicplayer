@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 @Controller
 public class CenterController {
+
     /**中间的StackPane容器*/
     @FXML
     private StackPane stackPane;
@@ -24,17 +25,10 @@ public class CenterController {
     @Resource
     private MainController mainController;
 
-
-
     public StackPane getStackPane(){
         return stackPane;
     }
 
     public BorderPane getBorderPane(){ return borderPane; }
 
-
-    @FXML
-    public void onClickedBorderPane(MouseEvent mouseEvent) {
-
-    }
 }

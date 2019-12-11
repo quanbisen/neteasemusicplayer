@@ -17,13 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class XMLUtils {
-    public static void createXML(File destination, String rootName) {  //创建带有根节点XML文件
-        // 创建Document对象
-        Document document = DocumentHelper.createDocument();
-        // 创建根节点
-        Element root = document.addElement(rootName);
-        //保存到destination文件中
-        saveToFile(destination, document);
+
+    /**创建带根节点的XML文件
+     * @param xmlFile 文件的路径
+     * @param  rootName 根元素名称*/
+    public static void createXML(File xmlFile, String rootName) {  //创建带有根节点XML文件
+        Document document = DocumentHelper.createDocument();    // 创建Document对象
+        Element root = document.addElement(rootName);   // 创建根节点
+        saveToFile(xmlFile, document);  //保存到destination文件中
     }
 
     /**给根节点添加元素
@@ -40,23 +41,25 @@ public final class XMLUtils {
         saveToFile(xmlFile, dom);
     }
 
+    /**获取XML文件指定的子元素指定的属性对应的属性值
+     * @param xmlFile XML文件
+     * @param subName 子元素名称
+     * @param attributeName 子元素属性*/
     public static List<String> getAllRecord(File xmlFile, String subName, String attributeName) throws DocumentException {
-        List<String> list = new ArrayList<>();
-
         SAXReader reader = new SAXReader();
         Document dom = reader.read(xmlFile);
         Element root = dom.getRootElement();
-        if (root == null)
-            return list;
-
+        if (root == null){
+            return null;
+        }
         List<Element> elementList = root.elements(subName);
-        if (elementList == null || elementList.size() == 0)
-            return list;
-
+        if (elementList == null || elementList.size() == 0){
+            return null;
+        }
+        List<String> list = new ArrayList<>();
         for (Element element : elementList) {
             list.add(element.attributeValue(attributeName));
         }
-
         return list;
     }
 

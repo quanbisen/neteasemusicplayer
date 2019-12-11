@@ -11,7 +11,7 @@
            fx:id="stackPane"
             fx:controller="controller.CenterController">
 
-    <BorderPane fx:id="borderPane" onMouseClicked="#onClickedBorderPane">
+    <BorderPane fx:id="borderPane">
         <left>
             <fx:include source="tabs-container.fxml"></fx:include>
         </left>
