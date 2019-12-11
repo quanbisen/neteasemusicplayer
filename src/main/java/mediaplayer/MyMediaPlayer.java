@@ -18,6 +18,7 @@ import util.TimeUtils;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -94,19 +95,14 @@ public class MyMediaPlayer implements IMediaPlayer {
 
     /**自定义媒体播放器播放新歌曲行为*/
     @Override
-    public void play(Song song) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+    public void playLocal(Song song) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
         if (mediaPlayer != null) {  //如果当前的媒体播放器不为空,销毁它
             this.destroy();
         }
         /**创建MediaPlayer播放*/
-        if (song.getResource().contains("http")){   //设置是否为网络资源,如果包含http,则为网络资源
-            mediaPlayer = new MediaPlayer(new Media(song.getResource()));   //创建网络资源的媒体播放器对象
-        }
-        else {
-            mediaPlayer = new MediaPlayer(new Media(new File(song.getResource()).toURI().toString()));  //创建本地资源的媒体播放器对象
-        }
+        mediaPlayer = new MediaPlayer(new Media(new File(song.getResource()).toURI().toString()));  //创建本地资源的媒体播放器对象
         mediaPlayer.volumeProperty().bind(bottomController.getSliderVolume().valueProperty());  //设置媒体播放器的音量绑定音量条组件的音量
-        mediaPlayer.setOnReady(()->mediaPlayer.play());   //播放
+        mediaPlayer.play();   //播放
 
         /**设置播放时底部的UI组件显示*/
         //1.专辑图片
@@ -144,7 +140,7 @@ public class MyMediaPlayer implements IMediaPlayer {
                         currentPlayIndex = currentPlayIndex + 1;   //当前的播放索引加1
                         if (currentPlayIndex <= playSongList.size() - 1) {   //如果索引还在播放列表中，播放它
                             try {
-                                this.play(playSongList.get(currentPlayIndex));
+                                this.playLocal(playSongList.get(currentPlayIndex));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -177,7 +173,7 @@ public class MyMediaPlayer implements IMediaPlayer {
                             currentPlayIndex = 0;
                         }
                         try {
-                            play(playSongList.get(currentPlayIndex));
+                            playLocal(playSongList.get(currentPlayIndex));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -204,7 +200,7 @@ public class MyMediaPlayer implements IMediaPlayer {
                                 }
                             }
                             try {
-                                this.play(playSongList.get(currentPlayIndex));
+                                this.playLocal(playSongList.get(currentPlayIndex));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -213,7 +209,7 @@ public class MyMediaPlayer implements IMediaPlayer {
                             int index = nextPlayIndexList.size() - 1;
                             currentPlayIndex = nextPlayIndexList.get(index);  //设置当前的播放索引值
                             try {
-                                this.play(playSongList.get(currentPlayIndex));
+                                this.playLocal(playSongList.get(currentPlayIndex));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -224,6 +220,35 @@ public class MyMediaPlayer implements IMediaPlayer {
                     break;
                 }
                 default:
+            }
+        });
+    }
+
+    @Override
+    public void playNetwork(Song song) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException, ParseException {
+        if (mediaPlayer != null){
+            this.destroy();
+        }
+        mediaPlayer = new MediaPlayer(new Media(song.getResource()));
+        mediaPlayer.volumeProperty().bind(bottomController.getSliderVolume().valueProperty());  //设置媒体播放器的音量绑定音量条组件的音量
+        mediaPlayer.setOnReady(()->mediaPlayer.play());
+
+        //1.专辑图片
+        bottomController.getLabAlbum().setGraphic(ImageUtils.createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58));
+        //2."播放、暂停"按钮图片
+        bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePlaying.png", 32, 32));
+        //3.歌曲名称、歌手、歌曲总时间
+        bottomController.getLabMusicName().setText(song.getName());
+        bottomController.getLabMusicSinger().setText(song.getSinger());
+        bottomController.getLabTotalTime().setText(song.getTotalTime());
+        //4.播放进度条设置
+        bottomController.getSliderSong().setMax(TimeUtils.toSeconds(song.getTotalTime()));  //设置歌曲滑动条的最大值为歌曲的秒数
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                if (!bottomController.getSliderSong().isPressed()) {  //没有被鼠标按下时
+                    bottomController.getSliderSong().setValue(newValue.toSeconds());
+                }
             }
         });
     }

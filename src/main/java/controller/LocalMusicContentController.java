@@ -289,7 +289,7 @@ public class LocalMusicContentController {
     @FXML
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
-            myMediaPlayer.play(tableViewSong.getSelectionModel().getSelectedItem());      //播放选中的歌曲
+            myMediaPlayer.playLocal(tableViewSong.getSelectionModel().getSelectedItem());      //播放选中的歌曲
             myMediaPlayer.setPlaySongList(tableViewSong.getItems());     //设置当前播放列表
             myMediaPlayer.setCurrentPlayIndex(tableViewSong.getSelectionModel().getFocusedIndex());  //设置当前播放的歌曲在表格中的位置
             //设置右下角"歌单文本提示"显示数量
@@ -310,12 +310,12 @@ public class LocalMusicContentController {
                 //生成一个随机数，执行播放
                 int randomIndex=new Random().nextInt(tableViewSong.getItems().size());
                 myMediaPlayer.setCurrentPlayIndex(randomIndex);     //设置当前播放的索引为生成的随机索引
-                myMediaPlayer.play(tableViewSong.getItems().get(myMediaPlayer.getCurrentPlayIndex()));      //播放生成的随机索引歌曲
+                myMediaPlayer.playLocal(tableViewSong.getItems().get(myMediaPlayer.getCurrentPlayIndex()));      //播放生成的随机索引歌曲
 
             }
             else {  //否则,不是"随机播放"模式,这些都是播放表格中的第一首歌曲
                 myMediaPlayer.setCurrentPlayIndex(0);  //设置当前播放的歌曲为表格第一首歌曲
-                myMediaPlayer.play(tableViewSong.getItems().get(0));      //播放表格中第一首歌曲
+                myMediaPlayer.playLocal(tableViewSong.getItems().get(0));      //播放表格中第一首歌曲
             }
             myMediaPlayer.setPlaySongList(tableViewSong.getItems());     //设置当前播放列表
             //设置右下角"歌单文本提示"显示数量

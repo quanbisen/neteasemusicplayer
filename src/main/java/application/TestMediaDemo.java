@@ -16,7 +16,7 @@ public class TestMediaDemo extends Application{
 
     @Override
     public void start(Stage primaryStage){
-        String url = "http://www.gov.cn/guoqing/guoge/hc.mp3";
+        String url = "http://localhost:8080/neteasemusicplayerserver_war_exploded/song/林俊杰-可惜没如果.wav";
         Media media = new Media(url);
         MediaPlayer mplayer = new MediaPlayer(media);
         MediaView mView = new MediaView(mplayer);

@@ -189,7 +189,7 @@ public class SearchResultController {
     @FXML
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
-            myMediaPlayer.play((Song) tableViewSong.getSelectionModel().getSelectedItem());      //播放选中的歌曲
+            myMediaPlayer.playNetwork((Song) tableViewSong.getSelectionModel().getSelectedItem());      //播放选中的歌曲
 //            myMediaPlayer.setPlaySongList(tableViewSong.getItems());     //设置当前播放列表
 //            myMediaPlayer.setCurrentPlayIndex(tableViewSong.getSelectionModel().getFocusedIndex());  //设置当前播放的歌曲在表格中的位置
 //            //设置右下角"歌单文本提示"显示数量

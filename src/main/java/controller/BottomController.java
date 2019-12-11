@@ -256,7 +256,7 @@ public class BottomController {
         if (mouseEvent.getButton() == MouseButton.PRIMARY && myMediaPlayer.getMediaPlayer()!=null){
             if (myMediaPlayer.getPlaySongList().size()==1){  //如果播放列表只有一首歌,重新播放第一首歌，即原来的这首歌
                 myMediaPlayer.setCurrentPlayIndex(0);
-                myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(0));
+                myMediaPlayer.playLocal(myMediaPlayer.getPlaySongList().get(0));
             }
             else{  //否则表格的歌曲大于1，播放上一首歌曲
                 if(myMediaPlayer.getPlayMode() == PlayMode.SHUFFLE){   //如果当前播放模式是“随机播放”,随机生成一个非当前正在的播放的索引值执行播放
@@ -270,12 +270,12 @@ public class BottomController {
                                 break;
                             }
                         }
-                        myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));  //执行播放刚才生成的索引索引值对应的歌曲
+                        myMediaPlayer.playLocal(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));  //执行播放刚才生成的索引索引值对应的歌曲
                     }
                     else{       //否则,则nextPlayIndexList的大小大于零,存储有索引,取出记录上一首歌列表里的最后一次添加的那一个歌曲播放
                         int index = myMediaPlayer.getLastPlayIndexList().size()-1;
                         myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getLastPlayIndexList().get(index));
-                        myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));
+                        myMediaPlayer.playLocal(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));
                         myMediaPlayer.getLastPlayIndexList().remove(index);
                     }
                 }
@@ -284,7 +284,7 @@ public class BottomController {
                     if (myMediaPlayer.getCurrentPlayIndex() == -1){  //判断是否越界,如果越界赋值为播放列表的最后一个
                         myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlaySongList().size()-1);
                     }
-                    myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));  //播放当前的索引值对应的歌曲
+                    myMediaPlayer.playLocal(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));  //播放当前的索引值对应的歌曲
                 }
             }
 
@@ -311,7 +311,7 @@ public class BottomController {
 
             if (myMediaPlayer.getPlaySongList().size()==1){     //表格的歌曲只有一首歌时执行的处理
                 myMediaPlayer.setCurrentPlayIndex(0);     //重新播放第一首歌，即原来的这首歌
-                myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(0)); //播放
+                myMediaPlayer.playLocal(myMediaPlayer.getPlaySongList().get(0)); //播放
             }
             else {      //否则表格的歌曲大于1，播放下一首歌曲
 
@@ -327,12 +327,12 @@ public class BottomController {
                                 break;
                             }
                         }
-                        myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));   //执行播放刚才生成的索引索引值对应的歌曲
+                        myMediaPlayer.playLocal(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));   //执行播放刚才生成的索引索引值对应的歌曲
                     }
                     else{   //否则,则lastPlayIndexList的大小大于零,存储有索引,取出记录下一首歌列表里的最后一次添加的那一个歌曲播放
                         int index = myMediaPlayer.getNextPlayIndexList().size()-1;
                         myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getNextPlayIndexList().get(index));
-                        myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));
+                        myMediaPlayer.playLocal(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));
                         myMediaPlayer.getNextPlayIndexList().remove(index);
                     }
                 }
@@ -342,7 +342,7 @@ public class BottomController {
                     if(myMediaPlayer.getCurrentPlayIndex() > myMediaPlayer.getPlaySongList().size()-1){  //如果当前索引值越界,重新设置为0,即第一个
                         myMediaPlayer.setCurrentPlayIndex(0);
                     }
-                    myMediaPlayer.play(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex())); //执行播放当前索引值对应的歌曲
+                    myMediaPlayer.playLocal(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex())); //执行播放当前索引值对应的歌曲
                 }
             }
 
