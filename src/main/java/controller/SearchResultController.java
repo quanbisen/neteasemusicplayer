@@ -176,6 +176,9 @@ public class SearchResultController {
     @FXML
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
+            if (myMediaPlayer.getPlaySongList() == null){
+                myMediaPlayer.setPlaySongList(new ArrayList<>());
+            }
             Song selectedSong = (Song) tableViewSong.getSelectionModel().getSelectedItem();
             myMediaPlayer.getPlaySongList().add(selectedSong);  //添加到播放列表后面
             myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlaySongList().size()-1);    //更新当前播放的索引值
