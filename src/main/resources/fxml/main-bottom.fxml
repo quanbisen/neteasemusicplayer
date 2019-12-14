@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane fx:id="bottomPane" prefHeight="60.0" stylesheets="@../css/BottomStyle.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BottomController">
 
@@ -99,7 +100,10 @@
             </Label>
             <HBox alignment="CENTER" spacing="3">
                 <Label><graphic><ImageView fitHeight="15" fitWidth="15"><Image url="@../image/NeteasePlayListIcon.png" /></ImageView></graphic></Label>
-                <Label fx:id="labPlayListCount" prefHeight="20.0" prefWidth="20.0" style="-fx-padding: 0; -fx-font-size: 10px;-fx-text-fill: WHITE;-fx-background-color: #BBBCC1;-fx-background-radius: 20;-fx-alignment: center;" text="0">0</Label>
+                <Label fx:id="labPlayListCount" prefHeight="18.0" prefWidth="18.0" style="-fx-padding: 0; -fx-font-size: 10px;-fx-text-fill: WHITE;-fx-background-color: #BBBCC1;-fx-background-radius: 20;-fx-alignment: center;" text="0">
+               <font>
+                  <Font size="7.0" />
+               </font></Label>
             </HBox>
         </HBox>
     </right>

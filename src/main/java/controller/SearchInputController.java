@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -28,6 +29,8 @@ import util.XMLUtils;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -75,14 +78,14 @@ public class SearchInputController {
     @Resource
     private SearchResultController searchResultController;
 
-    @Resource
-    private SearchHistoryRecordController searchHistoryRecordController;
 
     /**播放器搜索历史的记录文件存放路径*/
     private String SEARCH_HISTORY_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "search-history.xml";
 
     /**播放器搜索历史的记录文件*/
     private File SEARCH_HISTORY_FILE;
+
+    private List<Node> searchHistoryRecordList;
 
     public BorderPane getSearchInputContainer() {
         return searchInputContainer;
@@ -92,6 +95,14 @@ public class SearchInputController {
         return tfSearchText;
     }
 
+    public VBox getvBoxHistoryContainer() {
+        return vBoxHistoryContainer;
+    }
+
+    public File getSEARCH_HISTORY_FILE() {
+        return SEARCH_HISTORY_FILE;
+    }
+
     public void initialize() throws DocumentException, IOException {
         //初始化宽度、高度绑定
         vBoxHistoryContainer.prefWidthProperty().bind(scrollPane.widthProperty());
@@ -99,16 +110,19 @@ public class SearchInputController {
 
         labClearIcon.setVisible(false);  //初始化不可见
 
-        SEARCH_HISTORY_FILE = new File(SEARCH_HISTORY_PATH);
+        searchHistoryRecordList = FXCollections.observableArrayList();    //初始化
+        SEARCH_HISTORY_FILE = new File(SEARCH_HISTORY_PATH);    //创建搜索存储文件句柄
         if (SEARCH_HISTORY_FILE.exists()){  //如果文件存在，读取记录
-            List<String> searchRecordList = XMLUtils.getAllRecord(SEARCH_HISTORY_FILE,"SearchRecord","text");
-            if (searchRecordList != null && searchRecordList.size()>0){
-                for (String oneRecord:searchRecordList){
-                    FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/search-history-record.fxml");
-                    vBoxHistoryContainer.getChildren().add(fxmlLoader.load());
-                    searchHistoryRecordController.getLabRecordText().setText(oneRecord);
+            List<String> searchRecordList = XMLUtils.getAllRecord(SEARCH_HISTORY_FILE,"SearchRecord","text");   //使用自定义XML工具获取SearchRecord元素下的所有属性为text对应的Value值
+            if (searchRecordList != null && searchRecordList.size()>0){ //如果有记录
+                for (String oneRecord:searchRecordList){    //遍历读取到的所有的记录“字符串类型”
+                    FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/search-history-record.fxml");   //获取fxml文件加载器
+                    searchHistoryRecordList.add(fxmlLoader.load()); //加载容器并添加到集合中去
+                    SearchHistoryRecordController searchHistoryRecordController = fxmlLoader.getController();   //获取控制器
+                    searchHistoryRecordController.getLabRecordText().setText(oneRecord);    //设置文本
                 }
-
+                Collections.reverse(searchHistoryRecordList);  //集合反转
+                vBoxHistoryContainer.getChildren().addAll(searchHistoryRecordList); //添加到容器中去
             }
         }
 
@@ -171,17 +185,43 @@ public class SearchInputController {
     }
 
     /**保存搜索的记录的文件*/
-    private void saveSearchText(String text) throws DocumentException {
-        if (!SEARCH_HISTORY_FILE.exists()){     //如果存储搜索历史的文件不存在
-            XMLUtils.createXML(SEARCH_HISTORY_FILE,"SearchRecordList"); //创建一个新的XML文件
+    private void saveSearchText(String text) throws DocumentException, IOException {
+        //获取已经保存的文本集合，存储在list中
+        List<Node> vBoxChildren = vBoxHistoryContainer.getChildren();
+        List<String> list = new ArrayList<>();
+        for (Node node:vBoxChildren){
+            list.add(((Label)((BorderPane)node).getLeft()).getText());
         }
-        List<String> searchRecordList = XMLUtils.getAllRecord(SEARCH_HISTORY_FILE,"SearchRecord","text");   //获取文件中已经存储的记录
-        if(searchRecordList == null){   //如果searchRecordList为空，证明没有记录，直接添加
+        //先更新GUI的
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/search-history-record.fxml");   //获取fxml文件加载器
+        vBoxHistoryContainer.getChildren().add(0,fxmlLoader.load());  //加载容器并添加到搜索历史的容器vBoxHistoryContainer
+        ((SearchHistoryRecordController)fxmlLoader.getController()).getLabRecordText().setText(text);    //设置文本
+        if (!list.contains(text)){  //如果保存的记录没有包含text文本
+            //后保存记录到存储文件
+            if (!SEARCH_HISTORY_FILE.exists()){     //如果存储搜索历史的文件不存在
+                XMLUtils.createXML(SEARCH_HISTORY_FILE,"SearchRecordList"); //创建一个新的XML文件
+            }
             XMLUtils.addOneRecord(SEARCH_HISTORY_FILE,"SearchRecord","text",text);
         }
-        else {  //否则，还需要进一步判断
-            if (!searchRecordList.contains(text)){  //如果原来存储的记录没有本记录，才添加进去
-                XMLUtils.addOneRecord(SEARCH_HISTORY_FILE,"SearchRecord","text",text);
+        else {  //否则，证明已有，需要把从第2个开始的，包含text文本的记录移除
+            List<Node> recordNodeList = vBoxHistoryContainer.getChildren();
+            for(int i=1;i<recordNodeList.size()-1;i++){
+                if (((Label)((BorderPane)recordNodeList.get(i)).getLeft()).getText().equals(text)){
+                    vBoxHistoryContainer.getChildren().remove(recordNodeList.get(i));
+                    break;
+                }
+            }
+        }
+
+    }
+
+    /**单击“垃圾”图标的事件处理，清除所有的存储记录*/
+    @FXML
+    public void onClickedTrashBin(MouseEvent mouseEvent) {
+        if(mouseEvent.getButton() == MouseButton.PRIMARY){
+            vBoxHistoryContainer.getChildren().remove(0,vBoxHistoryContainer.getChildren().size()); //删除GUI的记录
+            if (SEARCH_HISTORY_FILE.exists()){  //如果保存搜索记录的文件存在
+                SEARCH_HISTORY_FILE.delete();   //删除它
             }
         }
     }

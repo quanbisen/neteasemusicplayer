@@ -1,10 +1,8 @@
 package application;
 
-import dao.SongDao;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import model.Song;
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,10 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
 import util.WindowUtils;
-
-import javax.annotation.Resource;
 import java.io.File;
-import java.util.List;
 
 @Component
 public class FXApplication extends Application {

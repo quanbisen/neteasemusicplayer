@@ -59,7 +59,7 @@
                   <Label style="-fx-text-fill: #666666;" text="搜索历史" BorderPane.alignment="CENTER" />
                </left>
                <right>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" onMouseClicked="#onClickedTrashBin" >
                      <image>
                         <Image url="@../image/TrashBinIcon.png" />
                      </image>

@@ -15,7 +15,7 @@
         <Label fx:id="labRecordText" prefHeight="32.0" prefWidth="54.0" text="RecordText" BorderPane.alignment="CENTER" />
     </left>
     <right>
-        <Label fx:id="labDelete">
+        <Label fx:id="labDelete" onMouseClicked="#onClickedClear">
             <graphic>
                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                     <Image url="@../image/SearchDelete.png"></Image>
