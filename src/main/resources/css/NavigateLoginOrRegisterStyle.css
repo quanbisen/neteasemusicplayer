@@ -1,7 +1,14 @@
+AnchorPane
+{
+    -fx-border-color: RED;
+}
 BorderPane
 {
     -fx-background-image: url("/image/NavigateLoginOrRegisterBackground.png");
     -fx-background-size: 100% 100%;
+    -fx-background-color: #FAFAFC;
+    -fx-padding: 2 2 2 2;
+    -fx-effect: dropshadow(three-pass-box, #C2C2C4, 10, 0, -2, 0);
 }
 .button
 {

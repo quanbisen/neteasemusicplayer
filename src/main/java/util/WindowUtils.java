@@ -163,7 +163,7 @@ public final class WindowUtils {
 	 * 参见StackOverflow的提问：https://stackoverflow.com/questions/26972683/javafx-minimizing-undecorated-stage
 	 * **/
 	public static void addWindowsPlatformTaskBarIconifyBehavior(){
-//		if (WindowUtils.isWindowsPlatform()){  //判断当前os是否为Windows，如果是才执行
+		if (WindowUtils.isWindowsPlatform()){  //判断当前os是否为Windows，如果是才执行
 			long lhwnd = com.sun.glass.ui.Window.getWindows().get(0).getNativeWindow();
 			Pointer lpVoid = new Pointer(lhwnd);
 			WinDef.HWND hwnd = new WinDef.HWND(lpVoid);
@@ -171,7 +171,7 @@ public final class WindowUtils {
 			int oldStyle = user32.GetWindowLong(hwnd, GWL_STYLE);
 			int newStyle = oldStyle | 0x00020000;//WS_MINIMIZEBOX
 			user32.SetWindowLong(hwnd, GWL_STYLE, newStyle);
-//		}
+		}
 	}
 
 	/**判断是否为Windows平台的函数

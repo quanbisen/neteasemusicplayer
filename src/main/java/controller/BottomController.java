@@ -13,7 +13,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -175,7 +174,7 @@ public class BottomController {
                 vBox.getChildren().add(new Button("test"));
                 vBox.getChildren().add(new Button("test"));
 
-                Region region = (Region) stackPane;
+                Region region = stackPane;
 
                 stackPane.getChildren().add(vBox);
                 stackPane.setAlignment(Pos.BOTTOM_LEFT);
