@@ -17,7 +17,7 @@
     </repositories>
     <build>
         <plugins>
-            <!--配置变异插件,制定Java版本为8-->
+            <!--配置编译插件,制定Java版本为8-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

@@ -14,5 +14,6 @@
 }
 #labelTitle
 {
+    -fx-font-size: 13px;
     -fx-padding: 0 0 0 7;
 }

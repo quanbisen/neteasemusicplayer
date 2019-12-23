@@ -4,6 +4,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -32,10 +33,6 @@ public final class WindowUtils {
 	/**记录鼠标按下时需要记录的某个X，Y坐标*/
 	private static double mousePressedForResizeX;
 	private static double mousePressedForResizeY;
-
-	/**记录屏幕的可视化宽度和高度*/
-	private static double ScreenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-	private static double ScreenHeight = Screen.getPrimary().getVisualBounds().getHeight();
 
 	/**
 	 * 设置stage对象能够拖拽边缘的像素实现缩放的静态方法
@@ -79,76 +76,76 @@ public final class WindowUtils {
 			scene.setOnMouseDragged(e -> {
 				if(scene.getCursor()==Cursor.S_RESIZE){
 					if ((stage.getHeight() + (e.getSceneY() - mousePressedForResizeY) >= stageMinHeight
-							&& e.getScreenY() < ScreenHeight-2)) {
+							&& e.getScreenY() < Screen.getPrimary().getVisualBounds().getHeight()-2)) {
 						stage.setHeight(stage.getHeight() + (e.getSceneY() - mousePressedForResizeY));
 						mousePressedForResizeY = e.getSceneY();
 					}
 				}
 				else if(scene.getCursor()==Cursor.E_RESIZE){
 					if (stage.getWidth() + (e.getSceneX() - mousePressedForResizeX) >= stageMinWidth
-							&& e.getScreenX() < ScreenWidth-2) {
+							&& e.getScreenX() < Screen.getPrimary().getVisualBounds().getWidth()-2) {
 						stage.setWidth(stage.getWidth() + (e.getSceneX() - mousePressedForResizeX));
 						mousePressedForResizeX = e.getSceneX();
 					}
 				}
 				else if(scene.getCursor()==Cursor.SE_RESIZE){
 					if ((stage.getHeight() + (e.getSceneY() - mousePressedForResizeY) >= stageMinHeight
-							&& e.getScreenY() < ScreenHeight-2)) {
+							&& e.getScreenY() < Screen.getPrimary().getVisualBounds().getHeight()-2)) {
 						stage.setHeight(stage.getHeight() + (e.getSceneY() - mousePressedForResizeY));
 						mousePressedForResizeY = e.getSceneY();
 					}
 					if (stage.getWidth() + (e.getSceneX() - mousePressedForResizeX) >= stageMinWidth
-							&& e.getScreenX() < ScreenWidth-2) {
+							&& e.getScreenX() < Screen.getPrimary().getVisualBounds().getWidth()-2) {
 						stage.setWidth(stage.getWidth() + (e.getSceneX() - mousePressedForResizeX));
 						mousePressedForResizeX = e.getSceneX();
 					}
 				}
 				else if(scene.getCursor()==Cursor.N_RESIZE){
 					if ((stage.getHeight() + (mousePressedForResizeY-e.getSceneY() ) >= stageMinHeight
-							&& e.getScreenY() < ScreenHeight-2)) {
+							&& e.getScreenY() < Screen.getPrimary().getVisualBounds().getHeight()-2)) {
 						stage.setHeight(stage.getY() - e.getScreenY() + stage.getHeight());
 						stage.setY(e.getScreenY());
 					}
 				}
 				else if(scene.getCursor()==Cursor.W_RESIZE){
 					if ((stage.getWidth() + (mousePressedForResizeX-e.getSceneX() ) >= stageMinWidth
-							&& e.getScreenX() < ScreenWidth-2)) {
+							&& e.getScreenX() < Screen.getPrimary().getVisualBounds().getWidth()-2)) {
 						stage.setWidth(stage.getX() - e.getScreenX() + stage.getWidth());
 						stage.setX(e.getScreenX());
 					}
 				}
 				else if(scene.getCursor()==Cursor.NW_RESIZE){
 					if ((stage.getHeight() + (mousePressedForResizeY-e.getSceneY() ) >= stageMinHeight
-							&& e.getScreenY() < ScreenHeight-2)) {
+							&& e.getScreenY() < Screen.getPrimary().getVisualBounds().getHeight()-2)) {
 						stage.setHeight(stage.getY() - e.getScreenY() + stage.getHeight());
 						stage.setY(e.getScreenY());
 					}
 					if ((stage.getWidth() + (mousePressedForResizeX-e.getSceneX() ) >= stageMinWidth
-							&& e.getScreenX() < ScreenWidth-2)) {
+							&& e.getScreenX() < Screen.getPrimary().getVisualBounds().getWidth()-2)) {
 						stage.setWidth(stage.getX() - e.getScreenX() + stage.getWidth());
 						stage.setX(e.getScreenX());
 					}
 				}
 				else if(scene.getCursor()==Cursor.NE_RESIZE){
 					if ((stage.getHeight() + (mousePressedForResizeY-e.getSceneY() ) >= stageMinHeight
-							&& e.getScreenY() < ScreenHeight-2)) {
+							&& e.getScreenY() < Screen.getPrimary().getVisualBounds().getHeight()-2)) {
 						stage.setHeight(stage.getY() - e.getScreenY() + stage.getHeight());
 						stage.setY(e.getScreenY());
 					}
 					if (stage.getWidth() + (e.getSceneX() - mousePressedForResizeX) >= stageMinWidth
-							&& e.getScreenX() < ScreenWidth-2) {
+							&& e.getScreenX() < Screen.getPrimary().getVisualBounds().getWidth()-2) {
 						stage.setWidth(stage.getWidth() + (e.getSceneX() - mousePressedForResizeX));
 						mousePressedForResizeX = e.getSceneX();
 					}
 				}
 				else if(scene.getCursor()==Cursor.SW_RESIZE){
 					if ((stage.getWidth() + (mousePressedForResizeX-e.getSceneX() ) >= stageMinWidth
-							&& e.getScreenX() < ScreenWidth-2)) {
+							&& e.getScreenX() < Screen.getPrimary().getVisualBounds().getWidth()-2)) {
 						stage.setWidth(stage.getX() - e.getScreenX() + stage.getWidth());
 						stage.setX(e.getScreenX());
 					}
 					if ((stage.getHeight() + (e.getSceneY() - mousePressedForResizeY) >= stageMinHeight
-							&& e.getScreenY() < ScreenHeight-2)) {
+							&& e.getScreenY() < Screen.getPrimary().getVisualBounds().getHeight()-2)) {
 						stage.setHeight(stage.getHeight() + (e.getSceneY() - mousePressedForResizeY));
 						mousePressedForResizeY = e.getSceneY();
 					}
@@ -159,37 +156,14 @@ public final class WindowUtils {
 			return;
 		}
 	}
-	/**为窗体primaryStage添加关于UI的修复代码
-	 * */
-	public static void addFixedCode(Stage primaryStage){
-		// 获取屏幕可视化的宽高（Except TaskBar），把窗体设置在可视化的区域居中
-		primaryStage.setX((Screen.getPrimary().getVisualBounds().getWidth() - primaryStage.getWidth()) / 2.0);
-		primaryStage.setY((Screen.getPrimary().getVisualBounds().getHeight() - primaryStage.getHeight()) / 2.0);
 
-		primaryStage.iconifiedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				//确保窗体在最大化状态下最小化后，单击任务栏图标显示时占据的屏幕大小是可视化的全屏
-				if (primaryStage.isMaximized()){
-					primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-					primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-				}
-				//修复窗体在非最大化状态下单击最小化按钮最小化窗体后再恢复窗体时最小化按钮图片没有更新的问题
-				else {
-
-					ObservableList<Node> labelList = ((HBox)(((BorderPane)(((BorderPane)primaryStage.getScene().getRoot()).getTop())).getRight())).getChildren();
-					((Label)labelList.get(0)).setGraphic(new ImageView(new Image("/image/NeteaseMinimizeDefault.png",46,32,false,false,false)));
-				}
-			}
-		});
-	}
 
 	/**
 	 * 下面这段代码是使Windows平台任务栏图标响应单击事件，当stage的initStyle设置成UNDECORATED时，任务栏图标单击无法最小化窗体
 	 * 参见StackOverflow的提问：https://stackoverflow.com/questions/26972683/javafx-minimizing-undecorated-stage
 	 * **/
 	public static void addWindowsPlatformTaskBarIconifyBehavior(){
-		if (System.getProperties().getProperty("os.name").contains("Windows")){  //判断当前os是否为Windows，如果是才执行
+//		if (WindowUtils.isWindowsPlatform()){  //判断当前os是否为Windows，如果是才执行
 			long lhwnd = com.sun.glass.ui.Window.getWindows().get(0).getNativeWindow();
 			Pointer lpVoid = new Pointer(lhwnd);
 			WinDef.HWND hwnd = new WinDef.HWND(lpVoid);
@@ -197,21 +171,37 @@ public final class WindowUtils {
 			int oldStyle = user32.GetWindowLong(hwnd, GWL_STYLE);
 			int newStyle = oldStyle | 0x00020000;//WS_MINIMIZEBOX
 			user32.SetWindowLong(hwnd, GWL_STYLE, newStyle);
-		}
+//		}
 	}
 
 	/**判断是否为Windows平台的函数
 	 * @return boolean*/
 	public static boolean isWindowsPlatform(){
-		if (System.getProperties().getProperty("os.name").contains("Windows")) {  //判断当前os是否为Windows，如果是才执行
-			return true;
-		}
-		else {
-			return false;
-		}
+		return System.getProperties().getProperty("os.name").contains("Windows") ? true : false;
 	}
-	/**@param borderPane 主窗体根容器borderPane
-	 * 阻止主舞台的borderPane响应鼠标事件和改变不透明度的函数*/
+
+	/**为窗体primaryStage添加放置居中和最大化时图标化恢复时窗口大小为可视化大小
+	 * @param primaryStage 主舞台对象
+	 * */
+	public static void addLocateCenter(Stage primaryStage){
+		Platform.runLater(()->{
+			// 获取屏幕可视化的宽高（Except TaskBar），把窗体设置在可视化的区域居中
+			primaryStage.setX((Screen.getPrimary().getVisualBounds().getWidth() - primaryStage.getWidth()) / 2.0);
+			primaryStage.setY((Screen.getPrimary().getVisualBounds().getHeight() - primaryStage.getHeight()) / 2.0);
+		});
+
+		primaryStage.iconifiedProperty().addListener((observable, oldValue, newValue) -> {
+			//确保窗体在最大化状态下最小化后，单击任务栏图标显示时占据的屏幕大小是可视化的全屏
+			if (primaryStage.isMaximized()){
+				primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+				primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			}
+		});
+	}
+
+	/**阻止主舞台的borderPane响应鼠标事件和改变不透明度的函数
+	 * @param borderPane 主窗体根容器borderPane
+	 * */
 	public static void blockBorderPane(BorderPane borderPane){
 		//设置主舞台界面borderPane除了顶部的titleBar部分外，其它的部分都不响应鼠标事件
 		borderPane.getCenter().setMouseTransparent(true);
@@ -235,7 +225,7 @@ public final class WindowUtils {
 	/**弹出信息提示动画的函数
 	 * @param stackPane 存放labFading组件的容器
 	 * @param labFading 逐渐淡出的Label组件*/
-	public static void toastInfo(StackPane stackPane, Label labFading){
+	public static void toastInfo(StackPane stackPane,Label labFading){
 		//设置显示Label的样式
 		labFading.setStyle("-fx-alignment: center;\n" +
 				"    -fx-text-fill: white;\n" +

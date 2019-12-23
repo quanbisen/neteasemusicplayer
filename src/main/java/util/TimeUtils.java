@@ -16,7 +16,7 @@ public final class TimeUtils {
         return Integer.valueOf(minute) * 60 + Integer.valueOf(subSeconds);
     }
 
-    /**把秒数转换成"04:01"格式的函数
+    /**把秒数转换成"mm:ss"格式的函数
      * @param second 秒数
      * @return String */
     public static String toString(int second) {

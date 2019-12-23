@@ -1,9 +1,6 @@
 package application;
 
 import javafx.scene.image.Image;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import javafx.application.Application;
@@ -14,19 +11,17 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
 import util.WindowUtils;
-import java.io.File;
 
 @Component
 public class FXApplication extends Application {
-
-    /**Spring配置文件路径*/
-    private String APPLICATION_CONTEXT_PATH = "/config/application-context.xml";
 
     /**Spring上下文*/
     private ConfigurableApplicationContext applicationContext;
 
     @Override
     public void init() {
+        /**Spring配置文件路径*/
+        String APPLICATION_CONTEXT_PATH = "/config/application-context.xml";
         applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_PATH);
     }
 
@@ -42,26 +37,18 @@ public class FXApplication extends Application {
         primaryStage.setTitle("音乐"); // 设置标题
         primaryStage.getIcons().add(new Image("/image/NeteaseMusicPlayerIcon.png")); //设置图标
         primaryStage.setScene(scene);
-        if (WindowUtils.isWindowsPlatform()){
+        if (WindowUtils.isWindowsPlatform()){   //如果是Windows平台
             primaryStage.initStyle(StageStyle.UNDECORATED);   //去掉Windows自带的标题栏
+            WindowUtils.addResizable(primaryStage,860,570);  //为primaryStage添加自由缩放
+            WindowUtils.addLocateCenter(primaryStage);  //为primaryStage添加一些GUI的修复代码
+            WindowUtils.addWindowsPlatformTaskBarIconifyBehavior();  //为primaryStage添加Windows平台显示窗体时单击任务栏图标可以最小化
         }
         primaryStage.show();  //显示主舞台
-
     }
 
     @Override
     public void stop() {
         applicationContext.close();
     }
-
-    @Test
-    public void test(){
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(new File("/mediaplayer/ubuntu/Music/wav/林俊杰 - 可惜没如果.wav").toURI().toString()));
-        mediaPlayer.setOnReady(()->{
-            mediaPlayer.play();
-        });
-    }
-
-
 
 }
