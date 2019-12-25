@@ -1,6 +1,7 @@
 package application;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import javafx.application.Application;
@@ -31,14 +32,15 @@ public class FXApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/main.fxml");
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/main-borderpane.fxml");
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
         primaryStage.setTitle("音乐"); // 设置标题
         primaryStage.getIcons().add(new Image("/image/NeteaseMusicPlayerIcon.png")); //设置图标
         primaryStage.setScene(scene);
         if (WindowUtils.isWindowsPlatform()){   //如果是Windows平台
-            primaryStage.initStyle(StageStyle.UNDECORATED);   //去掉Windows自带的标题栏
+            primaryStage.initStyle(StageStyle.TRANSPARENT);   //去掉Windows自带的标题栏
             WindowUtils.addResizable(primaryStage,860,570);  //为primaryStage添加自由缩放
             WindowUtils.addLocateCenter(primaryStage);  //为primaryStage添加一些GUI的修复代码
         }

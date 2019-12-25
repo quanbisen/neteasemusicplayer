@@ -1,0 +1,11 @@
+.shadowPane
+{
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+}
+.borderPane
+{
+    -fx-background-color:WHITE;
+    -fx-border-color: #6E6E6E;
+    -fx-effect: dropshadow(gaussian, rgba(10, 10, 10, 0.4), 10, 0.6, 0,0 );
+}

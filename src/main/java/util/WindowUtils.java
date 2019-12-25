@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -51,22 +52,22 @@ public final class WindowUtils {
 			});
 			scene.setOnMouseMoved(e -> {
 				if (!stage.isMaximized()) {
-					if (e.getSceneX() <= 5 && e.getSceneY() > 5 && stage.getHeight() - e.getSceneY() > 5) {
+					if (e.getSceneX() <= 10 && e.getSceneY() > 10 && stage.getHeight() - e.getSceneY() > 10) {
 						// 改变鼠标的形状
 						scene.setCursor(Cursor.W_RESIZE);
-					} else if (stage.getWidth() - e.getSceneX() <= 5 && e.getSceneY() > 5 && stage.getHeight() - e.getSceneY() > 5) {
+					} else if (stage.getWidth() - e.getSceneX() <= 10 && e.getSceneY() > 10 && stage.getHeight() - e.getSceneY() > 10) {
 						scene.setCursor(Cursor.E_RESIZE);
-					} else if (e.getSceneY() <= 5 && e.getSceneX() > 5 && stage.getWidth() - e.getSceneX() > 5) {
+					} else if (e.getSceneY() <= 10 && e.getSceneX() > 10 && stage.getWidth() - e.getSceneX() > 10) {
 						scene.setCursor(Cursor.N_RESIZE);
-					} else if (stage.getHeight() - e.getSceneY() <= 5 && e.getSceneX() > 5 && stage.getWidth() - e.getSceneX() > 5) {
+					} else if (stage.getHeight() - e.getSceneY() <= 10 && e.getSceneX() > 10 && stage.getWidth() - e.getSceneX() > 10) {
 						scene.setCursor(Cursor.S_RESIZE);
-					} else if (e.getSceneX() <= 5 && e.getSceneY() <= 5) {
+					} else if (e.getSceneX() <= 10 && e.getSceneY() <= 10) {
 						scene.setCursor(Cursor.NW_RESIZE);
-					} else if (stage.getWidth() - e.getSceneX() <= 5 && e.getSceneY() <= 5) {
+					} else if (stage.getWidth() - e.getSceneX() <= 10 && e.getSceneY() <= 10) {
 						scene.setCursor(Cursor.NE_RESIZE);
-					} else if (e.getSceneX() <= 5 && stage.getHeight() - e.getSceneY() <= 5) {
+					} else if (e.getSceneX() <= 10 && stage.getHeight() - e.getSceneY() <= 10) {
 						scene.setCursor(Cursor.SW_RESIZE);
-					} else if (stage.getWidth() - e.getSceneX() <= 5 && stage.getHeight() - e.getSceneY() <= 5) {
+					} else if (stage.getWidth() - e.getSceneX() <= 10 && stage.getHeight() - e.getSceneY() <= 10) {
 						scene.setCursor(Cursor.SE_RESIZE);
 					} else {
 						scene.setCursor(Cursor.DEFAULT);
@@ -195,6 +196,15 @@ public final class WindowUtils {
 			if (primaryStage.isMaximized()){
 				primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
 				primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
+			}
+		});
+
+		primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue){
+				((BorderPane)primaryStage.getScene().getRoot()).setPadding(new Insets(0));
+			}
+			else {
+				((BorderPane)primaryStage.getScene().getRoot()).setPadding(new Insets(10));
 			}
 		});
 	}
