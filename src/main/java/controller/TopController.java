@@ -1,6 +1,11 @@
 package controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -10,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -67,13 +73,20 @@ public class TopController {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //如果按下鼠标左键，最大化/最小化primaryStage
             Stage primaryStage = (Stage) ivMaximize.getParent().getScene().getWindow();  //窗体primaryStage对象
             if (!primaryStage.isMaximized()){  //如果primaryStage是最小化，设置成最大化
-                primaryStage.setMaximized(true);
+
+                ((BorderPane) primaryStage.getScene().getRoot()).setPadding(new Insets(0));
+
                 ivMaximize.setImage(new Image("/image/NeteaseMaximizedDefault.png"));
                 //设置primaryStage高度、宽度为屏幕的可视化高度、宽度（不包括Windows底下的任务栏）
                 primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
                 primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
+                primaryStage.setMaximized(true);
+
             }
             else {  //如果primaryStage不是最小化，设置成最小化
+
+                ((BorderPane) primaryStage.getScene().getRoot()).setPadding(new Insets(10));
+
                 primaryStage.setMaximized(false);
                 ivMaximize.setImage(new Image("/image/NeteaseMaximizeDefault.png"));
             }

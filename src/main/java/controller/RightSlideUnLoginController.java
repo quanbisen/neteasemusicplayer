@@ -37,7 +37,6 @@ public class RightSlideUnLoginController {
     @Resource
     private ConfigurableApplicationContext applicationContext;
 
-
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
     MainController mainController;

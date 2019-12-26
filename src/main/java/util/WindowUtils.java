@@ -199,14 +199,14 @@ public final class WindowUtils {
 			}
 		});
 
-		primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
-			if (newValue){
-				((BorderPane)primaryStage.getScene().getRoot()).setPadding(new Insets(0));
-			}
-			else {
-				((BorderPane)primaryStage.getScene().getRoot()).setPadding(new Insets(10));
-			}
-		});
+//		primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
+//			if (newValue){
+//				((BorderPane)primaryStage.getScene().getRoot()).setPadding(new Insets(0));
+//			}
+//			else {
+//				((BorderPane)primaryStage.getScene().getRoot()).setPadding(new Insets(10));
+//			}
+//		});
 	}
 
 	/**阻止主舞台的borderPane响应鼠标事件和改变不透明度的函数
