@@ -10,17 +10,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="475.0" prefWidth="766.0"
-            stylesheets="@../css/RightSlideUnLoginStyle.css"
-            fx:id="borderPaneRoot"
-            fx:controller="controller.RightSlideUnLoginController"
-            xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1" >
+<BorderPane fx:id="borderPaneRoot" prefHeight="475.0" prefWidth="766.0" stylesheets="@../css/RightSlideUnLoginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RightSlideUnLoginController">
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane style="-fx-background-color: transparent;" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
    <right>
-      <BorderPane prefHeight="400.0" prefWidth="310.0" styleClass="mainContainer" BorderPane.alignment="CENTER">
+      <BorderPane fx:id="borderPaneContent" maxWidth="0.0" minWidth="310.0" prefHeight="400.0" prefWidth="0.0" styleClass="mainContainer" BorderPane.alignment="CENTER">
          <top>
             <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="281.0" BorderPane.alignment="CENTER">
                <children>
@@ -51,14 +46,14 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btnLogin" mnemonicParsing="false" prefHeight="33.0" prefWidth="169.0" text="立即登录" onAction="#onClickedLoginButton"/>
+                        <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#onClickedLoginButton" prefHeight="33.0" prefWidth="169.0" text="立即登录" />
                      </children>
                   </HBox>
                </children>
             </VBox>
          </center>
          <bottom>
-            <HBox prefHeight="278.0" prefWidth="309.0" spacing="10.0" BorderPane.alignment="CENTER" onMouseClicked="#onClickedAbout">
+            <HBox onMouseClicked="#onClickedAbout" prefHeight="278.0" prefWidth="309.0" spacing="10.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>

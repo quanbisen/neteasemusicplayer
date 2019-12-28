@@ -43,6 +43,8 @@ public final class WindowUtils {
 	 */
 	public static void addResizable(Stage stage,double stageMinWidth,double stageMinHeight) {
 		try {
+			//触发缩放的边缘像素大小，这里设置为5个像素点。
+			int resizePixel = 5;
 			//记录stage的scene对象
 			Scene scene=stage.getScene();
 			//记录鼠标按下时的scene坐标
@@ -52,22 +54,22 @@ public final class WindowUtils {
 			});
 			scene.setOnMouseMoved(e -> {
 				if (!stage.isMaximized()) {
-					if (e.getSceneX() <= 10 && e.getSceneY() > 10 && stage.getHeight() - e.getSceneY() > 10) {
+					if (e.getSceneX() <= resizePixel && e.getSceneY() > resizePixel && stage.getHeight() - e.getSceneY() > resizePixel) {
 						// 改变鼠标的形状
 						scene.setCursor(Cursor.W_RESIZE);
-					} else if (stage.getWidth() - e.getSceneX() <= 10 && e.getSceneY() > 10 && stage.getHeight() - e.getSceneY() > 10) {
+					} else if (stage.getWidth() - e.getSceneX() <= resizePixel && e.getSceneY() > resizePixel && stage.getHeight() - e.getSceneY() > resizePixel) {
 						scene.setCursor(Cursor.E_RESIZE);
-					} else if (e.getSceneY() <= 10 && e.getSceneX() > 10 && stage.getWidth() - e.getSceneX() > 10) {
+					} else if (e.getSceneY() <= resizePixel && e.getSceneX() > resizePixel && stage.getWidth() - e.getSceneX() > resizePixel) {
 						scene.setCursor(Cursor.N_RESIZE);
-					} else if (stage.getHeight() - e.getSceneY() <= 10 && e.getSceneX() > 10 && stage.getWidth() - e.getSceneX() > 10) {
+					} else if (stage.getHeight() - e.getSceneY() <= resizePixel && e.getSceneX() > resizePixel && stage.getWidth() - e.getSceneX() > resizePixel) {
 						scene.setCursor(Cursor.S_RESIZE);
-					} else if (e.getSceneX() <= 10 && e.getSceneY() <= 10) {
+					} else if (e.getSceneX() <= resizePixel && e.getSceneY() <= resizePixel) {
 						scene.setCursor(Cursor.NW_RESIZE);
-					} else if (stage.getWidth() - e.getSceneX() <= 10 && e.getSceneY() <= 10) {
+					} else if (stage.getWidth() - e.getSceneX() <= resizePixel && e.getSceneY() <= resizePixel) {
 						scene.setCursor(Cursor.NE_RESIZE);
-					} else if (e.getSceneX() <= 10 && stage.getHeight() - e.getSceneY() <= 10) {
+					} else if (e.getSceneX() <= resizePixel && stage.getHeight() - e.getSceneY() <= resizePixel) {
 						scene.setCursor(Cursor.SW_RESIZE);
-					} else if (stage.getWidth() - e.getSceneX() <= 10 && stage.getHeight() - e.getSceneY() <= 10) {
+					} else if (stage.getWidth() - e.getSceneX() <= resizePixel && stage.getHeight() - e.getSceneY() <= resizePixel) {
 						scene.setCursor(Cursor.SE_RESIZE);
 					} else {
 						scene.setCursor(Cursor.DEFAULT);
@@ -181,10 +183,23 @@ public final class WindowUtils {
 		return System.getProperties().getProperty("os.name").contains("Windows") ? true : false;
 	}
 
-	/**为窗体primaryStage添加放置居中和最大化时图标化恢复时窗口大小为可视化大小
+	/**为窗体primaryStage添加windows平台的样式风格，如聚焦时阴影效果加强，失去焦点时阴影效果减弱、放置居中和最大化时图标化恢复时窗口大小为可视化大小
 	 * @param primaryStage 主舞台对象
 	 * */
-	public static void addLocateCenter(Stage primaryStage){
+	public static void addWindowsStyle(Stage primaryStage){
+
+		primaryStage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (newValue){
+					((BorderPane)((BorderPane)primaryStage.getScene().getRoot()).getCenter()).getStyleClass().add("borderPaneFocused");
+				}
+				else {
+					((BorderPane)((BorderPane)primaryStage.getScene().getRoot()).getCenter()).getStyleClass().remove("borderPaneFocused");
+				}
+			}
+		});
+
 		Platform.runLater(()->{
 			// 获取屏幕可视化的宽高（Except TaskBar），把窗体设置在可视化的区域居中
 			primaryStage.setX((Screen.getPrimary().getVisualBounds().getWidth() - primaryStage.getWidth()) / 2.0);
@@ -199,14 +214,6 @@ public final class WindowUtils {
 			}
 		});
 
-//		primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
-//			if (newValue){
-//				((BorderPane)primaryStage.getScene().getRoot()).setPadding(new Insets(0));
-//			}
-//			else {
-//				((BorderPane)primaryStage.getScene().getRoot()).setPadding(new Insets(10));
-//			}
-//		});
 	}
 
 	/**阻止主舞台的borderPane响应鼠标事件和改变不透明度的函数

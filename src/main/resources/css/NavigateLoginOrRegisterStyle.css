@@ -1,6 +1,7 @@
-AnchorPane
+#shadowPane
 {
-    -fx-border-color: RED;
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
 }
 BorderPane
 {
@@ -8,7 +9,7 @@ BorderPane
     -fx-background-size: 100% 100%;
     -fx-background-color: #FAFAFC;
     -fx-padding: 2 2 2 2;
-    -fx-effect: dropshadow(three-pass-box, #C2C2C4, 10, 0, -2, 0);
+    -fx-effect: dropshadow(three-pass-box, #C2C2C4, 5, 0, 0, 0);
 }
 .button
 {

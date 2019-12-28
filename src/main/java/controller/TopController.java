@@ -50,7 +50,6 @@ public class TopController {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){ //如果按下鼠标左键，最小化primaryStage
             Stage primaryStage = (Stage) ivMinimize.getParent().getScene().getWindow();  //窗体primaryStage对象
             ivMinimize.setImage(new Image("/image/NeteaseMinimizeDefault.png"));
-//            labelMinimize.setGraphic(new ImageView(new Image("/image/NeteaseMinimizeDefault.png",46,32,false,false,false)));
             primaryStage.setIconified(true);
         }
     }
@@ -85,7 +84,7 @@ public class TopController {
             }
             else {  //如果primaryStage不是最小化，设置成最小化
 
-                ((BorderPane) primaryStage.getScene().getRoot()).setPadding(new Insets(10));
+                ((BorderPane) primaryStage.getScene().getRoot()).setPadding(new Insets(5));
 
                 primaryStage.setMaximized(false);
                 ivMaximize.setImage(new Image("/image/NeteaseMaximizeDefault.png"));

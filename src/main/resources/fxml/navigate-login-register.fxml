@@ -11,8 +11,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="430.0" prefWidth="340.0" stylesheets="@../css/NavigateLoginOrRegisterStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NavigateLoginOrRegisterController">
-      <BorderPane>
+<BorderPane fx:id="shadowPane" prefHeight="440.0" prefWidth="350.0"
+            stylesheets="@../css/NavigateLoginOrRegisterStyle.css"
+            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.NavigateLoginOrRegisterController">
+   <center>
+      <BorderPane prefHeight="430.0" prefWidth="340.0">
          <top>
             <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="340.0" BorderPane.alignment="CENTER">
                <children>
@@ -20,12 +24,12 @@
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/CloseIcon.png" />
+                              <Image url="@../image/CloseIcon.png"/>
                            </image>
                         </ImageView>
                      </graphic>
                      <HBox.margin>
-                        <Insets right="8.0" />
+                        <Insets right="8.0"/>
                      </HBox.margin>
                   </Label>
                </children>
@@ -36,7 +40,7 @@
                <children>
                   <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../image/Netease.png" />
+                        <Image url="@../image/Netease.png"/>
                      </image>
                   </ImageView>
                </children>
@@ -45,18 +49,22 @@
          <bottom>
             <AnchorPane prefHeight="241.0" prefWidth="340.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnLoginByPhoneNumber" layoutX="55.0" layoutY="23.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="230.0" text="手机号登录" onAction="#onClickedLoginButton">
+                  <Button fx:id="btnLoginByPhoneNumber" layoutX="55.0" layoutY="23.0" mnemonicParsing="false"
+                          prefHeight="34.0" prefWidth="230.0" text="手机号登录" onAction="#onClickedLoginButton">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="16.0"/>
                      </font>
                   </Button>
-                  <Button layoutX="55.0" layoutY="74.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="230.0" text="注册" onAction="#onClickedRegisterButton">
+                  <Button layoutX="55.0" layoutY="74.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="230.0"
+                          text="注册" onAction="#onClickedRegisterButton">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="16.0"/>
                      </font>
                   </Button>
                </children>
             </AnchorPane>
          </bottom>
       </BorderPane>
-</AnchorPane>
+   </center>
+</BorderPane>
+

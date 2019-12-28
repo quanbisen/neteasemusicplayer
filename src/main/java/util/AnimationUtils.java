@@ -17,8 +17,4 @@ public final class AnimationUtils {
         fadeTransition.play();
     }
 
-    @Test
-    public void testMediaPlayer(){
-
-    }
 }

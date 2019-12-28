@@ -42,7 +42,7 @@ public class FXApplication extends Application {
         if (WindowUtils.isWindowsPlatform()){   //如果是Windows平台
             primaryStage.initStyle(StageStyle.TRANSPARENT);   //去掉Windows自带的标题栏
             WindowUtils.addResizable(primaryStage,860,570);  //为primaryStage添加自由缩放
-            WindowUtils.addLocateCenter(primaryStage);  //为primaryStage添加一些GUI的修复代码
+            WindowUtils.addWindowsStyle(primaryStage);  //为primaryStage添加一些GUI的修复代码
         }
         primaryStage.show();  //显示主舞台
         WindowUtils.addWindowsPlatformTaskBarIconifyBehavior();  //为primaryStage添加Windows平台显示窗体时单击任务栏图标可以最小化

@@ -5,10 +5,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * @author super lollipop
@@ -22,8 +21,10 @@ public final class StageUtils {
     public static Stage getStage(Stage primaryStage, Region root){
         Stage stage = new Stage();
         stage.initOwner(primaryStage);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setScene(new Scene(root));
+        stage.initStyle(StageStyle.TRANSPARENT);
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
         //线程延迟运行，不然无法获取到root容器的宽度、高度
         Platform.runLater(() -> {
             stage.setX((primaryStage.getWidth()-root.getWidth())/2.0 + primaryStage.getX());

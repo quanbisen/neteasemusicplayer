@@ -1,6 +1,9 @@
 package controller;
 
 import application.SpringFXMLLoader;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,9 +25,14 @@ import java.io.IOException;
 @Controller
 public class RightSlideUnLoginController {
 
+
     /**根容器BorderPane，见right-slide-unlogin.fxml文件*/
     @FXML
     private BorderPane borderPaneRoot;
+
+    /**根容器BorderPane的右孩子容器显示内容的BorderPane*/
+    @FXML
+    private BorderPane borderPaneContent;
 
     /**右边显示”音乐”的可视化滑动容器*/
     private BorderPane visualBorderPane;
@@ -61,13 +69,19 @@ public class RightSlideUnLoginController {
         borderPaneRoot.prefWidthProperty().bind(centerController.getBorderPane().widthProperty());
         borderPaneRoot.prefHeightProperty().bind(centerController.getBorderPane().heightProperty());
 
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.2),borderPaneRoot);
         borderPaneRoot.setTranslateX(310);
         translateTransition.setToX(0);
         translateTransition.play();
+
+//        System.out.println(borderPaneContent.getMinWidth());
+//        Timeline timeline = new Timeline();
+//        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPaneContent.minWidthProperty(),310)));
+//        timeline.play();
+
         translateTransition.setOnFinished(event -> {
             ((Pane)borderPaneRoot.getCenter()).setOnMouseClicked(event1 -> {
-                TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
+                TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.2),borderPaneRoot);
                 borderPaneRoot.setTranslateX(0);
                 translateTransitionOut.setToX(310);
                 translateTransitionOut.play();

@@ -4,6 +4,7 @@
 }
 BorderPane
 {
+    -fx-background-color: #F3F3F5;
     -fx-border-width: 0 1px 0 0;
     -fx-border-color: #DDDDE1;
 }
