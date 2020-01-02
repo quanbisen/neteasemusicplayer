@@ -3,6 +3,7 @@ package util;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
+import controller.MainController;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -24,12 +25,15 @@ import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 import static com.sun.jna.platform.win32.WinUser.GWL_STYLE;
 
 /**
  * 使窗体在initStayle为UNDECORATED时能够缩放的类
  * **/
 public final class WindowUtils {
+
 
 	/**记录鼠标按下时需要记录的某个X，Y坐标*/
 	private static double mousePressedForResizeX;
@@ -191,12 +195,12 @@ public final class WindowUtils {
 		primaryStage.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (newValue){
-					((BorderPane)((BorderPane)primaryStage.getScene().getRoot()).getCenter()).getStyleClass().add("borderPaneFocused");
-				}
-				else {
-					((BorderPane)((BorderPane)primaryStage.getScene().getRoot()).getCenter()).getStyleClass().remove("borderPaneFocused");
-				}
+//				if (newValue){
+//					((BorderPane)((BorderPane)primaryStage.getScene().getRoot()).getCenter()).getStyleClass().add("borderPaneFocused");
+//				}
+//				else {
+//					((BorderPane)((BorderPane)primaryStage.getScene().getRoot()).getCenter()).getStyleClass().remove("borderPaneFocused");
+//				}
 			}
 		});
 

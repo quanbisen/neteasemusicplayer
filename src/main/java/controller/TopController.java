@@ -13,10 +13,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.springframework.stereotype.Controller;
+
+import javax.annotation.Resource;
 
 @Controller
 public class TopController {
@@ -36,6 +39,8 @@ public class TopController {
     @FXML
     private BorderPane titleBar;  //包裹标题文字和最小化、最大化、关闭/退出按钮的BorderPane
 
+    @Resource
+    private MainController mainController;
 
     public void initialize(){
         ivMinimize.setCursor(Cursor.DEFAULT);
@@ -73,7 +78,8 @@ public class TopController {
             Stage primaryStage = (Stage) ivMaximize.getParent().getScene().getWindow();  //窗体primaryStage对象
             if (!primaryStage.isMaximized()){  //如果primaryStage是最小化，设置成最大化
 
-                ((BorderPane) primaryStage.getScene().getRoot()).setPadding(new Insets(0));
+//                ((BorderPane) primaryStage.getScene().getRoot()).setPadding(new Insets(0));
+                mainController.getBorderPane().setPadding(new Insets(0));
 
                 ivMaximize.setImage(new Image("/image/NeteaseMaximizedDefault.png"));
                 //设置primaryStage高度、宽度为屏幕的可视化高度、宽度（不包括Windows底下的任务栏）
@@ -84,7 +90,9 @@ public class TopController {
             }
             else {  //如果primaryStage不是最小化，设置成最小化
 
-                ((BorderPane) primaryStage.getScene().getRoot()).setPadding(new Insets(5));
+//                ((BorderPane) primaryStage.getScene().getRoot()).setPadding(new Insets(5));
+                mainController.getBorderPane().setPadding(new Insets(5));
+
 
                 primaryStage.setMaximized(false);
                 ivMaximize.setImage(new Image("/image/NeteaseMaximizeDefault.png"));
