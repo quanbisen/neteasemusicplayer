@@ -1,15 +1,15 @@
-.shadowPane
+StackPane
 {
     -fx-background-color: transparent;
-    -fx-padding: 5;
 }
 .borderPane
 {
-    -fx-background-color:WHITE;
-    -fx-border-color: #6E6E6E;
-    -fx-effect: dropshadow(gaussian, #333333, 6, 0, 0,0 );
+    -fx-background-color:transparent;
+    -fx-padding: 5;
 }
 .borderPaneFocused
 {
     -fx-effect: dropshadow(gaussian, black, 9, 0, 0,0 );
+
+    -fx-border-color: #6E6E6E;
 }

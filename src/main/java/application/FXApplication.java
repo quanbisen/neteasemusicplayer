@@ -32,7 +32,7 @@ public class FXApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/main-borderpane.fxml");
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/main-pane.fxml");
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);

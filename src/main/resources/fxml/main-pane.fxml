@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<StackPane fx:id="stackPane"
+           fx:controller="controller.MainController"
+           stylesheets="@../css/MainBorderPaneStyle.css"
+           xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml">
+    <children>
+        <BorderPane fx:id="borderPane" prefWidth="870.0" prefHeight="580.0">
+            <top>
+                <!--        <fx:include source="main-top.fxml"></fx:include>-->
+            </top>
+
+            <center>
+                <fx:include source="main-center.fxml"></fx:include>
+            </center>
+
+            <bottom>
+                <fx:include source="main-bottom.fxml"></fx:include>
+            </bottom>
+        </BorderPane>
+    </children>
+</StackPane>
+
