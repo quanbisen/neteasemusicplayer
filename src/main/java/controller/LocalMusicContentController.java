@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -310,6 +311,22 @@ public class LocalMusicContentController {
                 bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size()));
             }
         }
+    }
+
+    public void onScrollTableView(ScrollEvent scrollEvent) {
+        System.out.println("scrolling");
+    }
+
+    public void onScrollToColumn(ScrollToEvent<TableColumn<Song,?>> tableColumnScrollToEvent) {
+        System.out.println("scrollToColumn");
+    }
+
+    public void onScrollFinished(ScrollEvent scrollEvent) {
+        System.out.println("scrollFinished");
+    }
+
+    public void onScrollStarted(ScrollEvent scrollEvent) {
+        System.out.println("scrollStarted");
     }
 
 

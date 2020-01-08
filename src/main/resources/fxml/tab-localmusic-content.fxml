@@ -71,7 +71,7 @@
                         </HBox>
                     </top>
                     <center>
-                        <TableView fx:id="tableViewSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;" onMouseClicked="#onClickedTableView" >
+                        <TableView fx:id="tableViewSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;" onScrollStarted="#onScrollStarted" onScrollFinished="#onScrollFinished" onMouseClicked="#onClickedTableView" onScrollToColumn="#onScrollToColumn" onScroll="#onScrollTableView">
                             <columns>
                                 <TableColumn fx:id="nameColumn" editable="false" maxWidth="540.0" minWidth="180.0" prefWidth="-1.0" resizable="false" text="歌名" />
                                 <TableColumn fx:id="singerColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="歌手" />
