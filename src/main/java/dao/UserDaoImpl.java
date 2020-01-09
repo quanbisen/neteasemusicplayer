@@ -21,6 +21,7 @@ public class UserDaoImpl implements UserDao{
     public User findUserByIdAndPassword(User user) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         User validUser = sqlSession.selectOne("model.UserMapper.findUserByIdAndPassword",user);
+        sqlSession.close();
         return validUser;
     }
 
@@ -28,6 +29,7 @@ public class UserDaoImpl implements UserDao{
     public int addUser(User user) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         int row = sqlSession.insert("model.UserMapper.addUser",user);
+        sqlSession.close();
         return row;
     }
 }

@@ -22,6 +22,7 @@ public class SongDaoImpl implements SongDao {
     public List<Song> queryByName(String name) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         List<Song> songList = sqlSession.selectList("model.SongMapper.queryByName",name);
+        sqlSession.close();
         return songList;
     }
 
@@ -30,6 +31,7 @@ public class SongDaoImpl implements SongDao {
     public List<Song> queryBySinger(String singer) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         List<Song> songList = sqlSession.selectList("model.SongMapper.queryBySinger",singer);
+        sqlSession.close();
         return songList;
     }
 
