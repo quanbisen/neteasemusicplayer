@@ -1,0 +1,24 @@
+StackPane
+{
+    -fx-background-color: transparent;
+}
+.shadowPaneFocused
+{
+    -fx-background-color: WHITE;
+    -fx-effect: dropshadow(three-pass-box, #333333, 9, 0, 0, 0 );
+    -fx-background-insets: 9;
+}
+.shadowPaneUnFocused
+{
+    -fx-effect: dropshadow(three-pass-box, #333333, 5, 0, 0, 0 );
+}
+.paddingPane
+{
+    -fx-background-color:WHITE;
+    -fx-padding: 9;
+}
+.paddingPaneMaximized
+{
+    -fx-background-color:WHITE;
+    -fx-padding: 0;
+}

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.StackPane?>
 <StackPane fx:id="stackPane"
            fx:controller="controller.MainController"
-           stylesheets="@../css/MainBorderPaneStyle.css"
+           stylesheets="@../css/MainPaneStyle.css"
            xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml">
     <children>

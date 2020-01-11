@@ -274,12 +274,7 @@ public class LocalMusicContentController {
             }
             myMediaPlayer.setPlaySongList(tableViewSong.getItems());     //设置当前播放列表
             //设置右下角"歌单文本提示"显示数量
-            if (String.valueOf(myMediaPlayer.getPlaySongList().size()).length()>=3){  //如果文本长度大于等于3,直接显示99.控制文本长度为2位数
-                bottomController.getLabPlayListCount().setText("99");
-            }
-            else {  //否则,设置为播放列表的大小
-                bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size()));
-            }
+            bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size()));
         }
     }
 
