@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import util.SongUtils;
 import util.XMLUtils;
-
 import javax.annotation.Resource;
 import java.io.File;
 import java.util.List;

@@ -8,18 +8,22 @@
            xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml">
     <children>
-        <BorderPane fx:id="borderPane" prefWidth="870.0" prefHeight="580.0">
-            <top>
-                <!--        <fx:include source="main-top.fxml"></fx:include>-->
-            </top>
-
+        <BorderPane fx:id="paddingPane" prefWidth="870.0" prefHeight="580.0">
             <center>
-                <fx:include source="main-center.fxml"></fx:include>
-            </center>
+                <BorderPane fx:id="borderPane" style="-fx-border-width: 1;-fx-border-color: #6E6E6E;">
+                    <top>
+                        <!--        <fx:include source="main-top.fxml"></fx:include>-->
+                    </top>
 
-            <bottom>
-                <fx:include source="main-bottom.fxml"></fx:include>
-            </bottom>
+                    <center>
+                        <fx:include source="main-center.fxml"></fx:include>
+                    </center>
+
+                    <bottom>
+                        <fx:include source="main-bottom.fxml"></fx:include>
+                    </bottom>
+                </BorderPane>
+            </center>
         </BorderPane>
     </children>
 </StackPane>

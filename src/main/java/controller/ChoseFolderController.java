@@ -143,6 +143,7 @@ public class ChoseFolderController {
                 myMediaPlayer.getPlaySongList().clear();    //清空播放列表
                 myMediaPlayer.setPlaySongList(null);
                 bottomController.getLabPlayListCount().setText("0");    //并且更新显示播放列表数量的组件
+                localMusicContentController.getLabSongCount().setText("0"); //更新显示歌曲数目的label组件
             }
         }
 

@@ -8,6 +8,11 @@
     <artifactId>neteasemusicplayer</artifactId>
     <version>1.0-SNAPSHOT</version>
     <repositories>
+        <!--阿里的仓库-->
+        <repository>
+            <id>maven-ali</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public//</url>
+        </repository>
         <!--增加github上面提供的jaudiotagger提供的maven下载仓库,详见:https://jitpack.io/#goxr3plus/jaudiotagger-->
         <!--用maven下载jaudiotagger这个jar包,可以完成mp3文件解析歌曲名.歌手等信息-->
         <repository>

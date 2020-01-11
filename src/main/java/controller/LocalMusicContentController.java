@@ -192,36 +192,6 @@ public class LocalMusicContentController {
             }
         });
 
-//        File CHOSE_FOLDER_FILE = new File("src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml");
-//        if (CHOSE_FOLDER_FILE.exists()){
-//            List<String> folderList = XMLUtils.getAllRecord(CHOSE_FOLDER_FILE,"Folder","path");
-//            if (folderList.size()>0){
-//
-////                Platform.runLater(()->{
-////                    System.out.println("loading");
-////                    LoadingSongService loadingSongService = applicationContext.getBean(LoadingSongService.class);
-////                    progressIndicator.visibleProperty().bind(loadingSongService.runningProperty());
-////                    tableViewSong.itemsProperty().bind(loadingSongService.valueProperty());
-////                    loadingSongService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-////                        @Override
-////                        public void handle(WorkerStateEvent event) {
-////                            System.out.println("success");
-////                        }
-////                    });
-////                    loadingSongService.start();
-////                    loadingSongService.setOnFailed(event -> System.out.println("fail"));
-////                    loadingSongService.setOnCancelled(event -> System.out.println("cancel"));
-////                });
-//
-////                ObservableList<Song> songObservableList = SongUtils.getObservableSongList(folderList);
-////                tableViewSong.setItems(songObservableList);
-////                labSongCount.setText(String.valueOf(songObservableList.size()));
-//            }
-//
-//        }
-
-
-
         /*******Fixed some resize bug here.*/
         localMusicContentContainer.setCursor(Cursor.DEFAULT);
         /*******Fixed some resize bug here.*/

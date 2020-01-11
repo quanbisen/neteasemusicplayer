@@ -2,14 +2,23 @@ StackPane
 {
     -fx-background-color: transparent;
 }
-.borderPane
+.shadowPaneFocused
 {
-    -fx-background-color:transparent;
-    -fx-padding: 5;
+    -fx-background-color: WHITE;
+    -fx-effect: dropshadow(three-pass-box, #333333, 9, 0, 0,0 );
+    -fx-background-insets: 9;
 }
-.borderPaneFocused
+.shadowPaneUnFocused
 {
-    -fx-effect: dropshadow(gaussian, black, 9, 0, 0,0 );
-
-    -fx-border-color: #6E6E6E;
+    -fx-effect: dropshadow(three-pass-box, #333333, 5, 0, 0,0 );
+}
+.paddingPane
+{
+    -fx-background-color:WHITE;
+    -fx-padding: 9;
+}
+.paddingPaneMaximized
+{
+    -fx-background-color:WHITE;
+    -fx-padding: 0;
 }
