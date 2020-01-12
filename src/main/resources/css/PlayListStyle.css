@@ -1,3 +1,13 @@
+#anchorPane
+{
+    -fx-background-color: transparent;
+}
+#borderPanePlayList
+{
+    -fx-background-color: white;
+    -fx-border-color: #E8E8EA;
+    -fx-border-width: 1 0 1 1;
+}
 .label
 {
     -fx-font-family: "Microsoft YaHei","SimSun";

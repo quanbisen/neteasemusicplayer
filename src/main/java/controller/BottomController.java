@@ -453,11 +453,12 @@ public class BottomController {
     @FXML
     public void onClickedPlayListIcon(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/playlist-pane.fxml");  //加载添加音乐歌单的fxml文件
-            Stage primaryStage = ((Stage)labPlayListCount.getScene().getWindow());              //获取主窗体的stage对象primaryStage
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/playlist-pane.fxml");  //加载音乐歌单面板容器的fxml文件
+            mainController.getStackPane().getChildren().add(fxmlLoader.load());
+            /*Stage primaryStage = ((Stage)labPlayListCount.getScene().getWindow());              //获取主窗体的stage对象primaryStage
             Stage playListStage = StageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
             StageUtils.synchronizeRightEdge(primaryStage,playListStage,-10 ,-60);
-            playListStage.show();
+            playListStage.show();*/
         }
     }
 }

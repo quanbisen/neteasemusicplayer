@@ -30,6 +30,10 @@ public class MainController{
         return borderPane;
     }
 
+    public StackPane getStackPane() {
+        return stackPane;
+    }
+
     public void initialize() throws IOException {
         if (WindowUtils.isWindowsPlatform()){   //如果是windows平台,加载自定义设计的标题栏、添加阴影效果
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/main-top.fxml");
