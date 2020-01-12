@@ -249,13 +249,13 @@ public final class WindowUtils {
         /**添加最大化最小化的监听器，最大化时移除阴影效果，最小化增加阴影效果*/
         primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                paddingPane.getStyleClass().add("paddingPaneMaximized");
-                paddingPane.getStyleClass().remove("paddingPane");
+                paddingPane.getStyleClass().add("borderPaneMaximized");
+                paddingPane.getStyleClass().remove("borderPaneDefault");
                 stackPane.getChildren().remove(shadowPane);
 
             } else {
-                paddingPane.getStyleClass().add("paddingPane");
-                paddingPane.getStyleClass().remove("paddingPaneMaximized");
+                paddingPane.getStyleClass().add("borderPaneDefault");
+                paddingPane.getStyleClass().remove("borderPaneMaximized");
                 stackPane.getChildren().add(shadowPane);
 
             }

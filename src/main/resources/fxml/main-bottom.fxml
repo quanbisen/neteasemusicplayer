@@ -98,8 +98,8 @@
             <Label fx:id="labPlayModeIcon" onMouseClicked="#onClickedPlayMode">
                 <graphic><ImageView fitHeight="24" fitWidth="24" preserveRatio="true"><Image url="@../image/NeteaseSequencePlayMode.png" /></ImageView></graphic>
             </Label>
-            <HBox alignment="CENTER" spacing="3">
-                <Label><graphic><ImageView fitHeight="15" fitWidth="15"><Image url="@../image/NeteasePlayListIcon.png" /></ImageView></graphic></Label>
+            <HBox alignment="CENTER" spacing="3" onMouseClicked="#onClickedPlayListIcon">
+                <ImageView fitHeight="15" fitWidth="15"><Image url="@../image/NeteasePlayListIcon.png" /></ImageView>
                 <Label fx:id="labPlayListCount" prefHeight="18.0" prefWidth="18.0" style="-fx-padding: 0; -fx-font-size: 10px;-fx-text-fill: WHITE;-fx-background-color: #BBBCC1;-fx-background-radius: 20;-fx-alignment: center;" text="0">
                <font>
                   <Font size="7.0" />

@@ -2,29 +2,24 @@
 
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
-<StackPane fx:id="stackPane"
+
+<StackPane fx:id="stackPane" stylesheets="@../css/MainPaneStyle.css"
            fx:controller="controller.MainController"
-           stylesheets="@../css/MainPaneStyle.css"
-           xmlns="http://javafx.com/javafx"
-           xmlns:fx="http://javafx.com/fxml">
+           xmlns="http://javafx.com/javafx/8.0.171"
+           xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <BorderPane fx:id="paddingPane" prefWidth="870.0" prefHeight="580.0">
+        <BorderPane fx:id="borderPane" prefHeight="580.0" prefWidth="870.0">
+            <top>
+                <!--        <fx:include source="main-top.fxml"></fx:include>-->
+            </top>
+
             <center>
-                <BorderPane fx:id="borderPane" style="-fx-border-width: 1;-fx-border-color: #6E6E6E;">
-                    <top>
-                        <!--        <fx:include source="main-top.fxml"></fx:include>-->
-                    </top>
-
-                    <center>
-                        <fx:include source="main-center.fxml"></fx:include>
-                    </center>
-
-                    <bottom>
-                        <fx:include source="main-bottom.fxml"></fx:include>
-                    </bottom>
-                </BorderPane>
+                <fx:include source="main-center.fxml" />
             </center>
+
+            <bottom>
+                <fx:include source="main-bottom.fxml" />
+            </bottom>
         </BorderPane>
     </children>
 </StackPane>
-

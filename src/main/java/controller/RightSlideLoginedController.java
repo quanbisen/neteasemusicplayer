@@ -128,7 +128,7 @@ public class RightSlideLoginedController {
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/logout-confirm-dialog.fxml");
             Stage primaryStage = ((Stage)hBoxLogout.getScene().getWindow());              //获取主窗体的stage对象primaryStage
             Stage dialogStage = StageUtils.getStage((Stage) hBoxLogout.getScene().getWindow(),fxmlLoader.load());
-            StageUtils.syncCenter(primaryStage,dialogStage);
+            StageUtils.synchronizeCenter(primaryStage,dialogStage);
             WindowUtils.blockBorderPane(mainController.getBorderPane());
             dialogStage.showAndWait();  //显示对话框
         }

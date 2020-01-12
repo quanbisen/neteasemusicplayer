@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.User;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
@@ -72,7 +73,7 @@ public class TabsController {
 
     /**注入Spring上下文工具类*/
     @Resource
-    private ConfigurableApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
     /**播放器登录文件的存放路径*/
     private String Login_CONFIG_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "login-config.properties";
@@ -178,10 +179,10 @@ public class TabsController {
             if (localMusicParent == null){
                 FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/tab-localmusic-content.fxml");
                 localMusicParent = fxmlLoader.load();
-                LoadSongService loadSongService = applicationContext.getBean(LoadSongService.class);  //获取服务对象
+                /*LoadSongService loadSongService = applicationContext.getBean(LoadSongService.class);  //获取服务对象
                 localMusicContentController.getTableViewSong().itemsProperty().bind(loadSongService.valueProperty());  //搜搜结果显示表格的内容绑定
                 localMusicContentController.getProgressIndicator().visibleProperty().bind(loadSongService.runningProperty());
-                loadSongService.start();  //开始服务
+                loadSongService.start();  //开始服务*/
             }
 
             centerController.getBorderPane().setCenter(localMusicParent);   //设置容器的中间容器内容
@@ -233,7 +234,7 @@ public class TabsController {
                 FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/create-musicgroup.fxml");  //加载添加音乐歌单的fxml文件
                 Stage primaryStage = ((Stage)hBoxSearchTab.getScene().getWindow());              //获取主窗体的stage对象primaryStage
                 Stage createMusicGroupStage = StageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
-                StageUtils.syncCenter(primaryStage,createMusicGroupStage);   //设置createMusicGroupStage对象居中到primaryStage
+                StageUtils.synchronizeCenter(primaryStage,createMusicGroupStage);   //设置createMusicGroupStage对象居中到primaryStage
                 WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
                 createMusicGroupStage.showAndWait();  //显示并且等待
             }

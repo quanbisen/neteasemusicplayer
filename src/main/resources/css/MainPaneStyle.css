@@ -14,12 +14,12 @@ StackPane
     -fx-effect: dropshadow(three-pass-box, #333333, 5, 0, 0, 0 );
     -fx-background-insets: 9;
 }
-.paddingPane
+.borderPaneDefault
 {
     -fx-background-color:WHITE;
     -fx-padding: 9;
 }
-.paddingPaneMaximized
+.borderPaneMaximized
 {
     -fx-background-color:WHITE;
     -fx-padding: 0;

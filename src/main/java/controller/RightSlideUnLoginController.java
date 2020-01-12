@@ -99,7 +99,7 @@ public class RightSlideUnLoginController {
         Stage primaryStage = (Stage) borderPaneRoot.getScene().getWindow();
         FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/navigate-login-register.fxml");
         loginOrRegisterStage = StageUtils.getStage(primaryStage,fxmlLoader.load());
-        StageUtils.syncCenter(primaryStage,loginOrRegisterStage);   //设置createMusicGroupStage对象居中到primaryStage
+        StageUtils.synchronizeCenter(primaryStage,loginOrRegisterStage);   //设置createMusicGroupStage对象居中到primaryStage
         WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
         loginOrRegisterStage.show();
 

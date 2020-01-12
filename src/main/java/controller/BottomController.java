@@ -1,9 +1,11 @@
 package controller;
 
+import application.SpringFXMLLoader;
 import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -15,7 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import mediaplayer.MyMediaPlayer;
 import mediaplayer.PlayMode;
@@ -23,8 +25,10 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import util.ImageUtils;
+import util.StageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -86,8 +90,9 @@ public class BottomController {
     @Resource
     private CenterController centerController;
 
-    /**记录保存中间的标签和对应内容，也是StackPane的第0层*/
-    private Parent mainCenterIndex0;
+    /**注入Spring上下文工具类*/
+    @Resource
+    private ApplicationContext applicationContext;
 
     private VBox vBox;
 
@@ -147,7 +152,17 @@ public class BottomController {
         sliderVolume.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                progressBarVolume.setProgress(newValue.doubleValue());
+                progressBarVolume.setProgress(newValue.doubleValue() );
+                if ( newValue.doubleValue() == 0){
+                    System.out.println("===0");
+                    myMediaPlayer.getMediaPlayer().setMute(true);
+                    labSoundIcon.setGraphic(ImageUtils.createImageView("image/NeteaseVolumeMuteIcon.png",19,19));
+                }
+                else if (myMediaPlayer.getMediaPlayer().isMute() && newValue.doubleValue()>0){
+                    System.out.println(">>>0");
+                    myMediaPlayer.getMediaPlayer().setMute(false);
+                    labSoundIcon.setGraphic(ImageUtils.createImageView("image/NeteaseVolumeIcon.png",19,19));
+                }
             }
         });
 
@@ -389,8 +404,7 @@ public class BottomController {
         }
     }
 
-
-    /**单击音量图标的时间处理*/
+    /**音量图标的单击事件*/
     @FXML
     public void onClickedSoundIcon(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
@@ -407,7 +421,6 @@ public class BottomController {
             }
         }
     }
-
 
     /**播放播放图标切换的鼠标事件处理*/
     @FXML
@@ -436,5 +449,15 @@ public class BottomController {
         }
     }
 
-
+    /**“右下角播放列表图标的鼠标单击事件”*/
+    @FXML
+    public void onClickedPlayListIcon(MouseEvent mouseEvent) throws IOException {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/playlist-pane.fxml");  //加载添加音乐歌单的fxml文件
+            Stage primaryStage = ((Stage)labPlayListCount.getScene().getWindow());              //获取主窗体的stage对象primaryStage
+            Stage playListStage = StageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
+            StageUtils.synchronizeRightEdge(primaryStage,playListStage,-10 ,-60);
+            playListStage.show();
+        }
+    }
 }

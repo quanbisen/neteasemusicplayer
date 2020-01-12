@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="480.0" style="-fx-background-color: white; -fx-border-color: #E8E8EA;-fx-border-width: 1 0 1 1;"
+            stylesheets="@../css/PlayListStyle.css"
+            fx:controller="controller.PlayListController"
+            xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <BorderPane prefHeight="45.0" prefWidth="200.0" style="-fx-border-color: #E8E8EA; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
+         <left>
+            <Label style="-fx-font-size: 14px;" prefHeight="45.0" prefWidth="60.0" text="播放列表" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="25.0" />
+               </BorderPane.margin>
+            </Label>
+         </left>
+         <right>
+            <HBox prefHeight="45.0" prefWidth="190.0" spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="70.0" spacing="3.0">
+                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/FavorIcon.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="17.0" prefWidth="52.0" text="收藏全部" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="46.0" spacing="3.0">
+                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/TrashBin.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="清空" />
+                     </children>
+                  </HBox>
+                  <Label prefHeight="45.0" fx:id="labCloseIcon" onMouseClicked="#onClickedCloseIcon">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/CloseIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+            </HBox>
+         </right>
+      </BorderPane>
+   </top>
+
+   <center>
+
+   </center>
+</BorderPane>

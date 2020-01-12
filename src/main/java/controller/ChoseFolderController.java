@@ -130,8 +130,6 @@ public class ChoseFolderController {
 
         if (!CheckListUtils.checkWeatherSame(selectedPaths,folderPathList)){   //如果不一样，证明更改了目录，重新加载目录下的歌曲文件
             System.out.println("need to load song");
-//            ObservableList<Song> observableSongList = SongUtils.getObservableSongList(selectedPaths);
-//            localMusicContentController.getTableViewSong().setItems(observableSongList);
             LoadSongService loadSongService = applicationContext.getBean(LoadSongService.class);
             localMusicContentController.getProgressIndicator().visibleProperty().bind(loadSongService.runningProperty());
             localMusicContentController.getTableViewSong().itemsProperty().bind(loadSongService.valueProperty());

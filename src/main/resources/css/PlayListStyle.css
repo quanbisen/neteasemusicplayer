@@ -1,0 +1,8 @@
+.label
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
+#labCloseIcon:hover
+{
+    -fx-graphic: url("/image/CloseIconHover.png");
+}

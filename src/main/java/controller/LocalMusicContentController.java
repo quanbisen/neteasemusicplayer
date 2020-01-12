@@ -24,6 +24,7 @@ import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
+import service.LoadSongService;
 import util.StageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
@@ -142,6 +143,10 @@ public class LocalMusicContentController {
         return labSongCount;
     }
 
+    public BorderPane getBorderPane() {
+        return borderPane;
+    }
+
     public void initialize() throws Exception {
         tabList = new ArrayList<>();
         tabList.add(hBoxSong);
@@ -149,7 +154,8 @@ public class LocalMusicContentController {
         tabList.add(hBoxAlbum);
 
         progressIndicator.setVisible(false);   //初始化进度指示器为不可见
-        tabPane.setVisible(false);             //初始化TabPane容器不可见，在LoadSongTask任务中再设置可见
+        borderPane.setVisible(false);   //初始化不可见，在service中加载歌曲后控制可见性
+
         this.setSelectedTab(hBoxSong);  //设置初始选中为格式标签
         //添加css名称.在CSS文件定制样式
         nameColumn.getStyleClass().add("nameColumn");
@@ -165,36 +171,29 @@ public class LocalMusicContentController {
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
 
         //关闭表格"头"列的左右拖拽移动重新排列行为
-        tableViewSong.widthProperty().addListener(new ChangeListener<Number>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends Number> source, Number oldWidth, Number newWidth)
-            {
-                TableHeaderRow header = (TableHeaderRow) tableViewSong.lookup("TableHeaderRow");
-                header.reorderingProperty().addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                        header.setReordering(false);
-                    }
-                });
-            }
+        tableViewSong.widthProperty().addListener((source, oldWidth, newWidth) -> {
+            TableHeaderRow header = (TableHeaderRow) tableViewSong.lookup("TableHeaderRow");
+            header.reorderingProperty().addListener((observable, oldValue, newValue) -> header.setReordering(false));
         });
 
         //设置表格列的宽度随这个borderPane的宽度而动态改变
-        borderPane.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                nameColumn.setPrefWidth(newValue.doubleValue()/6.5*2);
-                singerColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
-                albumColumn.setPrefWidth(newValue.doubleValue()/6.5*1.5);
-                totalTimeColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
-                sizeColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
-            }
+        borderPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            nameColumn.setPrefWidth(newValue.doubleValue()/6.5*2);
+            singerColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
+            albumColumn.setPrefWidth(newValue.doubleValue()/6.5*1.5);
+            totalTimeColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
+            sizeColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
         });
 
-        /*******Fixed some resize bug here.*/
-        localMusicContentContainer.setCursor(Cursor.DEFAULT);
-        /*******Fixed some resize bug here.*/
+        /**加载歌曲服务*/
+        LoadSongService loadSongService = applicationContext.getBean(LoadSongService.class);  //获取服务对象
+        tableViewSong.itemsProperty().bind(loadSongService.valueProperty());  //搜搜结果显示表格的内容绑定
+        progressIndicator.visibleProperty().bind(loadSongService.runningProperty());
+        loadSongService.start();  //启动服务
+
+//        /*******Fixed some resize bug here.*/
+//        localMusicContentContainer.setCursor(Cursor.DEFAULT);
+//        /*******Fixed some resize bug here.*/
     }
 
     /**“选择目录”按钮按下事件处理*/
@@ -204,7 +203,7 @@ public class LocalMusicContentController {
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/chose-musicfolder.fxml");  //获取被Spring工厂接管的FXMLLoader对象
             Stage choseFolderStage = StageUtils.getStage((Stage) hBoxChoseFolder.getScene().getWindow(),fxmlLoader.load());
 
-            StageUtils.syncCenter((Stage) hBoxChoseFolder.getScene().getWindow(),choseFolderStage);   //设置addMusicGroupStage对象居中到primaryStage
+            StageUtils.synchronizeCenter((Stage) hBoxChoseFolder.getScene().getWindow(),choseFolderStage);   //设置addMusicGroupStage对象居中到primaryStage
             WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
 
             choseFolderStage.showAndWait();  //显示并且等待
