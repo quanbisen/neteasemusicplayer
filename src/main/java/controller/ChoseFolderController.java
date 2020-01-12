@@ -157,10 +157,11 @@ public class ChoseFolderController {
         if(directory!=null) {  //选择了目录
             String folderPath=directory.getPath();  //提取目录的路径
             ObservableList<Node> observableList = vWrapCheckBox.getChildren();  //获取vWrapCheckBox的所有子组件
-            observableList.remove(labTips);  //移除用作提示的label组件
             for (Node node : observableList){  //如果observableList中已经有选择的folderPath，直接返回，不做处理
-                if (((CheckBox)node).getText().contains(folderPath)){
-                    return;
+                if (node instanceof CheckBox){
+                    if (((CheckBox)node).getText().equals(folderPath)){
+                        return;
+                    }
                 }
             }
             CheckBox checkBox = new CheckBox(folderPath);  //创建CheckBox组件

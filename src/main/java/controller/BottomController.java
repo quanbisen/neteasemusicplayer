@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebView;
 import javafx.util.Duration;
 import mediaplayer.MyMediaPlayer;
 import mediaplayer.PlayMode;
@@ -149,6 +150,7 @@ public class BottomController {
                 progressBarVolume.setProgress(newValue.doubleValue());
             }
         });
+
     }
 
     /**专辑图片单击事件处理*/

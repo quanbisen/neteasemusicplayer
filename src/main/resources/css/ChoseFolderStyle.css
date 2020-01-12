@@ -1,23 +1,35 @@
 #actualPane
 {
-
     -fx-background-color: transparent;
+    -fx-padding: 5;
 }
 #visualPane
 {
     -fx-background-color: WHITE;
-/*    -fx-border-width: 1;
-    -fx-border-color: #c9c9cb;*/
-    -fx-effect: dropshadow(three-pass-box, RED, 5, 5, 0, 0 );
-    -fx-padding: 5;
+    -fx-border-width: 1;
+    -fx-border-color: #c9c9cb;
+    -fx-effect: dropshadow(three-pass-box, #c9c9cb,5,0,0,0);
 }
 #labCloseIcon:hover
 {
     -fx-graphic: url("/image/CloseIconHover.png");
 }
+.table-view
+{
+    -fx-background-color: transparent;
+}
+.table-view .column-header-background
+{
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+}
 .scroll-pane
 {
-    -fx-padding: 0px;
+    /*-fx-background-color: white; */
+    -fx-border-width: 1 0 1 0;
+    -fx-border-color: #E8E8EA;
+    -fx-padding: 0 5 0 5;
     -fx-background-color: transparent;  /*设置背景颜色*/
     -fx-background:#F3F3F5;  /*content（滚动的内容）填充*/
 }

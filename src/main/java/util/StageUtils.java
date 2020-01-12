@@ -19,11 +19,11 @@ public final class StageUtils {
      * @param root 根容器
      * 获取一个stage对象*/
     public static Stage getStage(Stage primaryStage, Region root){
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
         Stage stage = new Stage();
         stage.initOwner(primaryStage);
         stage.initStyle(StageStyle.TRANSPARENT);
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
         //线程延迟运行，不然无法获取到root容器的宽度、高度
         Platform.runLater(() -> {

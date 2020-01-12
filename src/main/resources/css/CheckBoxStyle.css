@@ -2,8 +2,13 @@
 {
     -fx-font-family: "Microsoft YaHei","SimSun";
     -fx-font-size: 14px;
-    -fx-padding: 0 0 0 15;
-    -fx-max-width: 320px;
+    -fx-padding: 0 0 25 15;
+    -fx-min-width: 330px;
+    -fx-min-height: 50px;
+    -fx-pref-width: 330px;
+    -fx-pref-height: 40px;
+    -fx-max-width: 330px;
+    -fx-max-height: 40px;
 }
 .check-box .box
 {

@@ -27,7 +27,7 @@ import java.io.IOException;
 public class CreateMusicGroupController {
 
     /**错误提示信息*/
-    private static String ERROR_MESSAGE = "歌单名不能为空";
+    private String ERROR_MESSAGE = "歌单名不能为空";
 
     /**"输入歌单名词"的TextField组件*/
     @FXML

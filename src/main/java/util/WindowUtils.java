@@ -203,6 +203,7 @@ public final class WindowUtils {
                     shadowPane.getStyleClass().remove("shadowPaneUnFocused");
                     shadowPane.getStyleClass().add("shadowPaneFocused");
                 } else {
+
                     shadowPane.getStyleClass().remove("shadowPaneFocused");
                     shadowPane.getStyleClass().add("shadowPaneUnFocused");
                 }
@@ -248,13 +249,11 @@ public final class WindowUtils {
         /**添加最大化最小化的监听器，最大化时移除阴影效果，最小化增加阴影效果*/
         primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                System.out.println("maximized");
                 paddingPane.getStyleClass().add("paddingPaneMaximized");
                 paddingPane.getStyleClass().remove("paddingPane");
                 stackPane.getChildren().remove(shadowPane);
 
             } else {
-                System.out.println("normal");
                 paddingPane.getStyleClass().add("paddingPane");
                 paddingPane.getStyleClass().remove("paddingPaneMaximized");
                 stackPane.getChildren().add(shadowPane);
@@ -271,7 +270,6 @@ public final class WindowUtils {
         Pane shadowPane = new Pane();
         shadowPane.prefWidthProperty().bind(rootPane.widthProperty());
         shadowPane.prefHeightProperty().bind(rootPane.heightProperty());
-        shadowPane.getStyleClass().add("shadowPaneFocused"); //添加样式名称，应用CSS样式
 
         Rectangle innerBounds = new Rectangle();
         Rectangle outerBounds = new Rectangle();

@@ -1,9 +1,15 @@
 /*添加音乐歌单的容器样式*/
-BorderPane
+#actualPane
+{
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+}
+#visualPane
 {
     -fx-background-color: WHITE;
-    -fx-border-color: #C9C9CB;
-    -fx-border-width: 1px;
+    -fx-border-width: 1;
+    -fx-border-color: #c9c9cb;
+    -fx-effect: dropshadow(three-pass-box, #c9c9cb,5,0,0,0);
 }
 .text-field {
     -fx-background-color:#FFFFFF;

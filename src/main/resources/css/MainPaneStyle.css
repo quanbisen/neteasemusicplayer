@@ -10,7 +10,9 @@ StackPane
 }
 .shadowPaneUnFocused
 {
+    -fx-background-color: WHITE;
     -fx-effect: dropshadow(three-pass-box, #333333, 5, 0, 0, 0 );
+    -fx-background-insets: 9;
 }
 .paddingPane
 {
