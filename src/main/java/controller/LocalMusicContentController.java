@@ -191,9 +191,9 @@ public class LocalMusicContentController {
         progressIndicator.visibleProperty().bind(loadSongService.runningProperty());
         loadSongService.start();  //启动服务
 
-//        /*******Fixed some resize bug here.*/
-//        localMusicContentContainer.setCursor(Cursor.DEFAULT);
-//        /*******Fixed some resize bug here.*/
+        /*******Fixed some resize bug here.********/
+        localMusicContentContainer.setCursor(Cursor.DEFAULT);
+        /*******Fixed some resize bug here.********/
     }
 
     /**“选择目录”按钮按下事件处理*/

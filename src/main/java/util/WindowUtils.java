@@ -203,7 +203,6 @@ public final class WindowUtils {
                     shadowPane.getStyleClass().remove("shadowPaneUnFocused");
                     shadowPane.getStyleClass().add("shadowPaneFocused");
                 } else {
-
                     shadowPane.getStyleClass().remove("shadowPaneFocused");
                     shadowPane.getStyleClass().add("shadowPaneUnFocused");
                 }

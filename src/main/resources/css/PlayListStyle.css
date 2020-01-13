@@ -1,6 +1,6 @@
 #anchorPane
 {
-    -fx-background-color: transparent;
+    -fx-background-color: RED;
 }
 #borderPanePlayList
 {
@@ -15,4 +15,25 @@
 #labCloseIcon:hover
 {
     -fx-graphic: url("/image/CloseIconHover.png");
+}
+#favorAll:pressed
+{
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+#clearAll:pressed
+{
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+/*设置标题栏的显示为0，不显示标题*/
+.table-view .column-header-background
+{
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+}
+.table-view
+{
+    -fx-background-color: transparent;
 }

@@ -81,6 +81,9 @@ public class BottomController {
     @FXML
     private Label labPlayListCount;
 
+    @FXML
+    private HBox hBoxPlayListIcon;
+
     @Resource
     private MyMediaPlayer myMediaPlayer;
 
@@ -134,6 +137,10 @@ public class BottomController {
 
     public Label getLabPlayListCount() {
         return labPlayListCount;
+    }
+
+    public HBox gethBoxPlayListIcon() {
+        return hBoxPlayListIcon;
     }
 
     public void initialize(){
@@ -454,11 +461,7 @@ public class BottomController {
     public void onClickedPlayListIcon(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/playlist-pane.fxml");  //加载音乐歌单面板容器的fxml文件
-            mainController.getStackPane().getChildren().add(fxmlLoader.load());
-            /*Stage primaryStage = ((Stage)labPlayListCount.getScene().getWindow());              //获取主窗体的stage对象primaryStage
-            Stage playListStage = StageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
-            StageUtils.synchronizeRightEdge(primaryStage,playListStage,-10 ,-60);
-            playListStage.show();*/
+            mainController.getStackPane().getChildren().add(fxmlLoader.load()); //加进stackPane中去
         }
     }
 }

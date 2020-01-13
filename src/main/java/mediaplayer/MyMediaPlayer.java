@@ -87,12 +87,6 @@ public class MyMediaPlayer implements IMediaPlayer {
         this.currentPlayIndex = currentPlayIndex;
     }
 
-    @Test
-    public void T(){
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media("http://localhost:8080/neteasemusicplayerserver_war_exploded/song/林俊杰-可惜没如果.wav"));
-        mediaPlayer.play();
-    }
-
     /**自定义媒体播放器播放新歌曲行为*/
     @Override
     public void playLocal(Song song) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
