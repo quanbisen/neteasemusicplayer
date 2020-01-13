@@ -76,3 +76,18 @@
     -fx-max-height: 16;
     -fx-pref-height: 16;
 }
+#labSoundIcon:pressed
+{
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+#labPlayModeIcon:pressed
+{
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+#hBoxPlayListIcon:pressed
+{
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}

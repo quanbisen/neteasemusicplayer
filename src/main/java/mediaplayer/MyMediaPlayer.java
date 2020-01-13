@@ -3,6 +3,7 @@ package mediaplayer;
 import controller.BottomController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -11,7 +12,6 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.junit.Test;
 import org.springframework.stereotype.Component;
 import util.ImageUtils;
 import util.TimeUtils;
@@ -37,7 +37,7 @@ public class MyMediaPlayer implements IMediaPlayer {
     private PlayMode playMode = PlayMode.SEQUENCE;
 
     /**定义播放列表歌曲集合*/
-    private List<Song> playSongList;
+    private ObservableList<Song> playSongList;
 
     /**记录上一首播放的索引记录*/
     private List<Integer> lastPlayIndexList = new ArrayList<>();
@@ -59,7 +59,7 @@ public class MyMediaPlayer implements IMediaPlayer {
         return playMode;
     }
 
-    public List<Song> getPlaySongList() {
+    public ObservableList<Song> getPlaySongList() {
         return playSongList;
     }
 
@@ -79,7 +79,7 @@ public class MyMediaPlayer implements IMediaPlayer {
         this.playMode = playMode;
     }
 
-    public void setPlaySongList(List<Song> playSongList) {
+    public void setPlaySongList(ObservableList<Song> playSongList) {
         this.playSongList = playSongList;
     }
 

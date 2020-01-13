@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -35,6 +37,8 @@ import java.util.Random;
 
 @Controller
 public class LocalMusicContentController {
+
+
 
     /**本地音乐中间面板的根容器*/
     @FXML
@@ -106,6 +110,14 @@ public class LocalMusicContentController {
     /**存放显示歌曲的表格*/
     @FXML
     private TableView<Song> tableViewSong;
+
+    /**搜索框的TextField组件，用作输入文本*/
+    @FXML
+    private TextField tfSearch;
+
+    /**搜索框的图标图片组件*/
+    @FXML
+    private ImageView ivSearchIcon;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
@@ -194,6 +206,14 @@ public class LocalMusicContentController {
         /*******Fixed some resize bug here.********/
         localMusicContentContainer.setCursor(Cursor.DEFAULT);
         /*******Fixed some resize bug here.********/
+
+        tfSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.trim().equals("")){   //如果有内容，设置图标为清除图标
+                ivSearchIcon.setImage(new Image("/image/CloseIcon.png"));
+            } else {  //否则，设置变回搜索图标
+                ivSearchIcon.setImage(new Image("/image/SearchIcon-16.png"));
+            }
+        });
     }
 
     /**“选择目录”按钮按下事件处理*/
@@ -291,6 +311,14 @@ public class LocalMusicContentController {
 
     public void onScrollStarted(ScrollEvent scrollEvent) {
         System.out.println("scrollStarted");
+    }
+
+    /**清除图标的鼠标事件*/
+    @FXML
+    public void onClickedClearIcon(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){ //鼠标左击
+            tfSearch.setText("");   //清空文本
+        }
     }
 
 

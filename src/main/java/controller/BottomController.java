@@ -462,6 +462,9 @@ public class BottomController {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/playlist-pane.fxml");  //加载音乐歌单面板容器的fxml文件
             mainController.getStackPane().getChildren().add(fxmlLoader.load()); //加进stackPane中去
+            FXMLLoader fxmlLoader1 = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/table.fxml");
+            Stage stage = StageUtils.getStage((Stage) labAlbum.getScene().getWindow(),fxmlLoader1.load());
+            stage.show();
         }
     }
 }

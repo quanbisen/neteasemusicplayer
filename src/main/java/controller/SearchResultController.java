@@ -2,6 +2,7 @@ package controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TabPane;
@@ -177,7 +178,7 @@ public class SearchResultController {
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
             if (myMediaPlayer.getPlaySongList() == null){
-                myMediaPlayer.setPlaySongList(new ArrayList<>());
+                myMediaPlayer.setPlaySongList(FXCollections.observableArrayList());
             }
             Song selectedSong = (Song) tableViewSong.getSelectionModel().getSelectedItem();
             myMediaPlayer.getPlaySongList().add(selectedSong);  //添加到播放列表后面

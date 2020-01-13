@@ -1,9 +1,6 @@
 package controller;
 
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -26,8 +23,6 @@ import javax.annotation.Resource;
 
 @Controller
 public class PlayListController {
-
-
 
     @FXML
     private AnchorPane anchorPane;
@@ -130,8 +125,8 @@ public class PlayListController {
             totalTimeColumn.setPrefWidth(newValue.doubleValue()/4*1);
         });
 
-        ObservableList<Song> observableList = FXCollections.observableArrayList(myMediaPlayer.getPlaySongList());
-        tableViewPlayListSong.setItems(observableList);
+
+        tableViewPlayListSong.setItems(myMediaPlayer.getPlaySongList());
 
     }
 
