@@ -1,0 +1,12 @@
+.table-row-cell:first-of-type {
+    -fx-background-color: antiquewhite ;
+}
+.table-row-cell:first-of-type:odd {
+    -fx-background-color: derive(antiquewhite, 20%);
+}
+.table-row-cell .type-cell {
+    visibility: hidden ;
+}
+.table-row-cell:first-of-type .type-cell {
+    visibility: visible ;
+}

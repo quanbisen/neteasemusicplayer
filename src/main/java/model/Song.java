@@ -87,4 +87,10 @@ public class Song {
         this.resource = resource;
         this.lyrics = lyrics;
     }
+
+    /**把歌名、歌手和专辑转换成字符串内容
+     * @return String*/
+    public String toStringContent() {
+        return name + singer + album;
+    }
 }

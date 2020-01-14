@@ -3,6 +3,8 @@ package controller;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -119,6 +121,9 @@ public class LocalMusicContentController {
     @FXML
     private ImageView ivSearchIcon;
 
+    /**表格内容的集合变量*/
+    private ObservableList<Song> observableItems;
+
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
     MainController mainController;
@@ -208,10 +213,24 @@ public class LocalMusicContentController {
         /*******Fixed some resize bug here.********/
 
         tfSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.trim().equals("")){   //如果有内容，设置图标为清除图标
-                ivSearchIcon.setImage(new Image("/image/CloseIcon.png"));
-            } else {  //否则，设置变回搜索图标
+            if (observableItems == null){   //如果存储表格内容的变量为空，才指向表格的内容
+                observableItems = tableViewSong.getItems(); //取出表格的内容东西，指向它
+            }
+            if (tableViewSong.itemsProperty().isBound()){
+                tableViewSong.itemsProperty().unbind(); //解除items绑定
+            }
+            if (!observable.getValue().trim().equals("")){   //如果有内容
+                ivSearchIcon.setImage(new Image("/image/CloseIcon.png"));   //设置图标为清除图标
+                ObservableList<Song> observableResultList = FXCollections.observableArrayList();   //定义匹配关键字的Observable集合
+                for (Song song : observableItems){   //遍历查找包含搜索关键字的行
+                    if (song.toStringContent().contains(observable.getValue())){    //如果歌曲的歌名、歌手和专辑字符串包含搜索的关键字
+                        observableResultList.add(song);     //添加到搜索结果集合
+                    }
+                }
+                tableViewSong.setItems(observableResultList);   //设置表格内容为搜索到的结果集合
+            } else {  //否则，还原搜索图标和表格内容
                 ivSearchIcon.setImage(new Image("/image/SearchIcon-16.png"));
+                tableViewSong.setItems(observableItems);
             }
         });
     }
