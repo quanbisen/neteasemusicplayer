@@ -41,7 +41,7 @@ public final class SongUtils {
             File[] mp3Files = folder.listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
-                    if (name.endsWith(".mp3") || name.endsWith(".wav") ){   //不添加.flac歌曲,MediaPlayer无法播放 || name.endsWith(".flac")
+                    if (name.endsWith(".mp3") || name.endsWith(".wav")){   //不添加.flac歌曲,MediaPlayer无法播放 || name.endsWith(".flac")
                         return true;
                     }
                     else{

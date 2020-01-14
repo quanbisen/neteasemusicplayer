@@ -10,3 +10,11 @@
 .table-row-cell:first-of-type .type-cell {
     visibility: visible ;
 }
+.table-row-cell:empty
+{
+    -fx-background-color: RED;
+}
+.table-row-cell:empty .table-cell
+{
+    -fx-border-width: 0px;
+}

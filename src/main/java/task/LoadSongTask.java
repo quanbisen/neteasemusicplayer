@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import util.SongUtils;
 import util.XMLUtils;
+
 import javax.annotation.Resource;
 import java.io.File;
 import java.util.List;
@@ -22,11 +23,15 @@ import java.util.List;
 @Scope("prototype")
 public class LoadSongTask extends Task<ObservableList<Song>> {
 
-    /**注入选择目录的控制器*/
+    /**
+     * 注入选择目录的控制器
+     */
     @Resource
     private ChoseFolderController choseFolderController;
 
-    /**注入"本地音乐"中间面板的控制器*/
+    /**
+     * 注入"本地音乐"中间面板的控制器
+     */
     @Resource
     private LocalMusicContentController localMusicContentController;
 
@@ -34,19 +39,18 @@ public class LoadSongTask extends Task<ObservableList<Song>> {
     protected ObservableList<Song> call() throws Exception {
 
         File CHOSE_FOLDER_FILE = new File("src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml");
-        if (CHOSE_FOLDER_FILE.exists()){
-            List<String> folderList = XMLUtils.getAllRecord(CHOSE_FOLDER_FILE,"Folder","path");
-            if (folderList.size()>0){   //如果选择的文件目录存在，即记录数大于0，获取目录下的歌曲信息集合
+        if (CHOSE_FOLDER_FILE.exists()) {
+            List<String> folderList = XMLUtils.getAllRecord(CHOSE_FOLDER_FILE, "Folder", "path");
+            if (folderList.size() > 0) {   //如果选择的文件目录存在，即记录数大于0，获取目录下的歌曲信息集合
                 ObservableList<Song> observableSongList = SongUtils.getObservableSongList(folderList);
-//                if (observableSongList.size()>0){   //如果目录下的歌曲信息集合大于0，设置UI更新并返回歌曲信息集合
-                    Platform.runLater(()->{   //设置"显示歌曲"数量的标签为扫描到的歌曲数目
-                        localMusicContentController.getLabSongCount().setText(String.valueOf(observableSongList.size()));
-                        localMusicContentController.getBorderPane().setVisible(true);
-                    });
-                    return observableSongList;
-//                }
+                Platform.runLater(() -> {   //设置"显示歌曲"数量的标签为扫描到的歌曲数目
+                    localMusicContentController.getLabSongCount().setText(String.valueOf(observableSongList.size()));
+                    localMusicContentController.getBorderPane().setVisible(true);
+                });
+//                observableSongList.add(new Song("A",null,null,null,null,null,null));
+                return observableSongList;
             } else {
-                Platform.runLater(()->{
+                Platform.runLater(() -> {
                     localMusicContentController.getLabSongCount().setText("0");
                     localMusicContentController.getBorderPane().setVisible(false);
                 });
