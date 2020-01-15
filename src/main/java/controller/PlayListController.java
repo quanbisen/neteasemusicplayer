@@ -6,6 +6,7 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
@@ -15,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import mediaplayer.MyMediaPlayer;
 import model.Song;
 import org.springframework.stereotype.Controller;
@@ -127,7 +129,24 @@ public class PlayListController {
 
 
         tableViewPlayListSong.setItems(myMediaPlayer.getPlaySongList());
-
+        tableViewPlayListSong.scrollTo(myMediaPlayer.getCurrentPlayIndex());   //滚动到播放的行
+        /**更新表格行Row*/
+        tableViewPlayListSong.setRowFactory(new Callback<TableView<Song>, TableRow<Song>>() {
+            @Override
+            public TableRow call(TableView param) {
+                return new TableRow(){
+                    @Override
+                    protected void updateItem(Object item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (getIndex() == myMediaPlayer.getCurrentPlayIndex()){ //如果当前的为播放的索音，设置一些样式（字体变红），see PlayListStyle.css文件的“.table-view .table-row-cell.highlightedRow .table-cell”
+                            getStyleClass().add("highlightedRow");
+                        } else {    //否则，移除
+                            getStyleClass().remove("highlightedRow");
+                        }
+                    }
+                };
+            }
+        });
     }
 
     /**关闭图标按钮的鼠标事件*/
