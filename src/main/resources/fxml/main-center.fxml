@@ -13,7 +13,7 @@
 
     <BorderPane fx:id="borderPane">
         <left>
-            <fx:include source="tabs-container.fxml"></fx:include>
+            <fx:include source="main-left.fxml"></fx:include>
         </left>
         <center>
             <!--set default center.just use include-->

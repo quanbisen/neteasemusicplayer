@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import util.WindowUtils;
@@ -38,7 +39,7 @@ public class NavigateLoginOrRegisterController {
 
     /**注入Spring上下文工具类*/
     @Resource
-    private ConfigurableApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
     /**"导航登录、注册"的容器*/
     private Parent navigateLoginOrRegister;
@@ -60,7 +61,9 @@ public class NavigateLoginOrRegisterController {
     @FXML
     public void onClickedLoginButton(ActionEvent actionEvent) throws IOException {
         //保存当前的导航容器
-        navigateLoginOrRegister = btnLoginByPhoneNumber.getScene().getRoot();
+        if (navigateLoginOrRegister == null){
+            navigateLoginOrRegister = btnLoginByPhoneNumber.getScene().getRoot();
+        }
         Scene loginScene = btnLoginByPhoneNumber.getScene();
         FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/login.fxml");
         loginScene.setRoot(fxmlLoader.load());
@@ -70,9 +73,11 @@ public class NavigateLoginOrRegisterController {
     @FXML
     public void onClickedRegisterButton(ActionEvent actionEvent) throws IOException {
         //保存当前的导航容器
-        navigateLoginOrRegister = btnLoginByPhoneNumber.getScene().getRoot();
-        Scene loginScene = btnLoginByPhoneNumber.getScene();
+        if (navigateLoginOrRegister == null){
+            navigateLoginOrRegister = btnLoginByPhoneNumber.getScene().getRoot();
+        }
+        Scene registerScene = btnLoginByPhoneNumber.getScene();
         FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/register.fxml");
-        loginScene.setRoot(fxmlLoader.load());
+        registerScene.setRoot(fxmlLoader.load());
     }
 }

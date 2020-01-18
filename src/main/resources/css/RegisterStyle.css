@@ -1,6 +1,13 @@
-BorderPane
+#shadowPane
+{
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+#visualPane
 {
     -fx-background-color: #FAFAFA;
+    -fx-padding: 2 2 2 2;
+    -fx-effect: dropshadow(three-pass-box, #C2C2C4, 5, 0, 0, 0);
 }
 AnchorPane
 {

@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -62,6 +63,9 @@ public class TabsController {
     /**显示用户名称的Label组件*/
     @FXML
     private Label labUserName;
+
+    @FXML
+    private ImageView addMusicGroup;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
@@ -238,6 +242,12 @@ public class TabsController {
                 WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
                 createMusicGroupStage.showAndWait();  //显示并且等待
             }
+        }
+        else if (mouseEvent.getButton() == MouseButton.SECONDARY){
+            ContextMenu contextMenu = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/contextmenu.fxml").load();
+            addMusicGroup.setOnContextMenuRequested(event -> {
+                contextMenu.show(addMusicGroup,event.getScreenX(),event.getScreenY());
+            });
         }
     }
 
