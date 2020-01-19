@@ -65,7 +65,7 @@ public class RightSlideLoginedController {
 
     /**注入标签的控制类*/
     @Resource
-    private TabsController tabsController;
+    private LeftController leftController;
 
     public BorderPane getBorderPaneRoot() {
         return borderPaneRoot;
@@ -98,8 +98,8 @@ public class RightSlideLoginedController {
         });
 
         //读取出配置文件存储的用户信息。
-        if (tabsController.getLOGIN_CONFIG_FILE().exists()){  //如果登录文件存在，解析成用户对象
-            User user = UserUtils.parseUser(tabsController.getLOGIN_CONFIG_FILE());
+        if (leftController.getLOGIN_CONFIG_FILE().exists()){  //如果登录文件存在，解析成用户对象
+            User user = UserUtils.parseUser(leftController.getLOGIN_CONFIG_FILE());
             //设置登录用户的UI组件显示
             Circle circle = new Circle(20,20,20);
             ImageView userImage = new ImageView(new Image(user.getImage()));

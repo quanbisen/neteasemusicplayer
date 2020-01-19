@@ -78,6 +78,10 @@ public class Song {
     public Song() {
     }
 
+    public Song(String name){
+        this.name = name;
+    }
+
     public Song(String name, String singer, String album, String totalTime, String size, String resource, String lyrics) {
         this.name = name;
         this.singer = singer;

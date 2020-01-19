@@ -18,10 +18,7 @@ import org.jaudiotagger.tag.wav.WavTag;
 import org.junit.Test;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,7 +61,8 @@ public final class SongUtils {
         Logger.getLogger("org.jaudiotagger.tag.id3.ID3v23Tag").setLevel(Level.OFF);
 
         List<File> songsFile = getSongsFile(folderList);
-        ObservableList<Song> observableSongList = FXCollections.observableArrayList();
+        ObservableList<Song> observableSongList = FXCollections.observableArrayList();  //获取表格显示内容的集合
+        Map<Character,List<Song>> characterListHashMap = new HashMap<>();   //创建存储歌曲歌名首字的拼音字符映射的map
         for (File songFile:songsFile){
             try {
                 String name = "";
@@ -127,12 +125,56 @@ public final class SongUtils {
                 String m =String.valueOf(songFile.length()/1024.0/1024.0);
                 size=m.substring(0, m.indexOf(".")+3)+"MB";   //文件大小
                 resource = songFile.getPath();                //资源路径
-                Song song = new Song(name,singer,album,totalTime,size,resource,lyrics);
-                observableSongList.add(song);
+
+                char head = Pinyin4jUtils.getFirstPinYinHeadChar(name);
+                if (!characterListHashMap.containsKey(head)){   //如果没有这个字符的map映射，创建集合存储
+                    List<Song> characterList = new ArrayList<>();
+                    characterList.add(new Song(name,singer,album,totalTime,size,resource,lyrics));
+                    characterListHashMap.put(head,characterList);
+                }
+                else {  //否则，就有了这个字符的map映射了，追加到字符对应的value的List集合
+                    List<Song> characterListValue = characterListHashMap.get(head);
+                    characterListValue.add(new Song(name,singer,album,totalTime,size,resource,lyrics));
+                }
             }catch (Exception e){
                 System.out.println(songFile.getPath()+" cause exception.");
             }
         }
+        for (char c:characterListHashMap.keySet()){ //遍历字符集合map，把对应的value集合添加到observableSongList
+            Song song = new Song(String.valueOf(c));    //显示字母的对象，对应表格的一行
+            observableSongList.add(song);
+            observableSongList.addAll(characterListHashMap.get(c));
+        }
+
         return observableSongList;
+    }
+
+    /**获取表格中的集合实际上是歌曲的行记录
+     * @param observableList 表格的item集合
+     * @return int 实际上的歌曲数量*/
+    public static int getSongCount(ObservableList<Song> observableList){
+        int count = 0;
+        for (Song song:observableList){ //遍历集合
+            if (!isCharacterCategory(song.getName())){ //如果歌曲的名称不是类别，count加1
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**判断是否是类别字符的函数
+     * @param name 歌曲名称
+     * @return boolean */
+    public static boolean isCharacterCategory(String name){
+        if (name.length()==1){  //首先判断是否是一个字符
+            char character = name.charAt(0);    //取出第一个字符
+            if ((character >='A' && character <='Z') || character=='#'){    //如果字符是A-Z或者是#，则返回true
+                return true;
+            }else{      //否则返回false
+                return false;
+            }
+        }else { //如果不是一个字符，那么肯定不是类别的字母了，直接返回false
+            return false;
+        }
     }
 }

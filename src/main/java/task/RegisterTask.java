@@ -9,7 +9,6 @@ import model.User;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
 
 /**

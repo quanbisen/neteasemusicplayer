@@ -2,7 +2,7 @@ package task;
 
 import controller.CenterController;
 import controller.LoginController;
-import controller.TabsController;
+import controller.LeftController;
 import dao.UserDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -30,7 +30,7 @@ public class LoginTask extends Task<Boolean> {
 
     /**注入左侧便签的容器页面的控制器*/
     @Resource
-    private TabsController tabsController;
+    private LeftController leftController;
 
     /**注入中间显示的页面的控制器*/
     @Resource
@@ -64,15 +64,15 @@ public class LoginTask extends Task<Boolean> {
                     ImageView userImage = new ImageView(new Image(validUser.getImage()));  //创建用户头像图片对象
                     userImage.setFitHeight(38);  //设置宽度、高度
                     userImage.setFitWidth(38);
-                    tabsController.getLabUserImage().setGraphic(userImage);  //设置用户头像图片
-                    tabsController.getLabUserName().setText(validUser.getName());  //设置用户名称
+                    leftController.getLabUserImage().setGraphic(userImage);  //设置用户头像图片
+                    leftController.getLabUserName().setText(validUser.getName());  //设置用户名称
                     WindowUtils.toastInfo(centerController.getStackPane(),new Label("登录成功"));
 
                     //存储登录成功的用户对象到本地文件
-                    tabsController.getLOGIN_CONFIG_FILE().delete();
+                    leftController.getLOGIN_CONFIG_FILE().delete();
                     try {
-                        tabsController.getLOGIN_CONFIG_FILE().createNewFile();  //创建新的文件
-                        UserUtils.saveUser(validUser,tabsController.getLOGIN_CONFIG_FILE());  //调用存储的函数，写入到文件
+                        leftController.getLOGIN_CONFIG_FILE().createNewFile();  //创建新的文件
+                        UserUtils.saveUser(validUser, leftController.getLOGIN_CONFIG_FILE());  //调用存储的函数，写入到文件
 
                         String urlString = validUser.getImage();
                         String imageName = urlString.substring(urlString.lastIndexOf("/")+1);

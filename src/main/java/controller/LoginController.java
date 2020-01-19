@@ -62,7 +62,7 @@ public class LoginController {
 
     /**注入左侧的标签控制器*/
     @Resource
-    private TabsController tabsController;
+    private LeftController leftController;
 
     /**注入窗体根容器（BorderPane）的中间容器的控制器*/
     @Resource

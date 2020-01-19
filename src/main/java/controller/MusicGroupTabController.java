@@ -19,14 +19,14 @@ public class MusicGroupTabController {
 
     /**注入左边放置标签的容器控制器*/
     @Resource
-    TabsController tabsController;
+    LeftController leftController;
 
 
     @FXML
     public void onClickedMusicGroupTab(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             System.out.println(((Label)hBoxMusicGroup.getChildren().get(1)).getText());
-            tabsController.setSelectedTab(hBoxMusicGroup);
+            leftController.setSelectedTab(hBoxMusicGroup);
         }
     }
 }

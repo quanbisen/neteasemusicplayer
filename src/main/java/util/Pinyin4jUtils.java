@@ -22,38 +22,36 @@ public class Pinyin4jUtils {
      * @param str
      * @return String
      */
-    public static String getFirstPinYinHeadChar(String str) {
+    public static char getFirstPinYinHeadChar(String str) {
 
-        StringBuffer pybf = new StringBuffer();
+        char head;
         char word = str.charAt(0);
         // 提取汉字的首字母
         String[] pinyinArray;
-        // 是否是因为字母
-        if (word > 128) {
+        // 是否是英文字母
+        if (word >= 128) {
             pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
-            // 如果不是汉字，就返回*
+            // 如果不是汉字，就返回#
             if (pinyinArray != null) {
-                pybf.append(pinyinArray[0].charAt(0));
+                head = pinyinArray[0].charAt(0);
             } else {
-                pybf.append("*");
+                head = '#';
             }
         } else {
-
-            // 是字母直接返回，不是返回*
+            // 是字母直接返回，不是返回#
             if (Character.isLetter(word)) {
-                pybf.append(word);
+                head = word;
             } else {
-                pybf.append("*");
+                head = '#';
             }
         }
-
         // 全部返回大写
-        return pybf.toString().toUpperCase();
+        return String.valueOf(head).toUpperCase().charAt(0);
     }
 
     @Test
     public void testGetFirstPinYinHeadChar(){
-        String headCharacter = this.getPinYin("我");
+        Character headCharacter = getFirstPinYinHeadChar("1");
         System.out.println(headCharacter);
     }
     /**
@@ -66,7 +64,7 @@ public class Pinyin4jUtils {
         char[] t1 = null;
         t1 = src.toCharArray();
         // System.out.println(t1.length);
-        String[] t2 = new String[t1.length];
+        String[] t2;
         // System.out.println(t2.length);
         // 设置汉字拼音输出的格式
         HanyuPinyinOutputFormat t3 = new HanyuPinyinOutputFormat();

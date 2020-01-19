@@ -55,7 +55,8 @@ public class CreateMusicGroupController {
     private ConfigurableApplicationContext applicationContext;
 
     /**注入左边放置标签的容器控制器*/
-    @Resource TabsController tabsController;
+    @Resource
+    LeftController leftController;
 
     /**初始化函数，自动调用，以前需要实现接口Initializable,从JavaFX2.0开始就自动会调用了，不需要实现接口*/
     public void initialize(){
@@ -102,8 +103,8 @@ public class CreateMusicGroupController {
         HBox hBoxTabOut = fxmlLoader.load();
         HBox hBoxTab = ((HBox)hBoxTabOut.getChildren().get(0));
         ((Label)(hBoxTab.getChildren().get(1))).setText(groupName);  //拆箱设置里面的Label显示内容为输入的歌单名称
-        tabsController.getVBoxTabContainer().getChildren().add(hBoxTabOut);
-        tabsController.getTabList().add(hBoxTab);
+        leftController.getVBoxTabContainer().getChildren().add(hBoxTabOut);
+        leftController.getTabList().add(hBoxTab);
 
         ((Stage)tfInput.getScene().getWindow()).close();
         WindowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度

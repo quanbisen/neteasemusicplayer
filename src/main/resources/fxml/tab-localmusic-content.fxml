@@ -55,11 +55,11 @@
                     <center>
                         <TableView fx:id="tableViewSong" onMouseClicked="#onClickedTableView" onScroll="#onScrollTableView" onScrollFinished="#onScrollFinished" onScrollStarted="#onScrollStarted" onScrollToColumn="#onScrollToColumn" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;">
                             <columns>
-                                <TableColumn fx:id="nameColumn" editable="false" maxWidth="540.0" minWidth="180.0" prefWidth="-1.0" resizable="false" text="歌名" />
-                                <TableColumn fx:id="singerColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="歌手" />
-                                <TableColumn fx:id="albumColumn" editable="false" maxWidth="405.0" minWidth="135.0" prefWidth="-1.0" resizable="false" text="专辑" />
-                                <TableColumn fx:id="totalTimeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="时长" />
-                                <TableColumn fx:id="sizeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="大小" />
+                                <TableColumn fx:id="nameColumn" editable="false" maxWidth="540.0" minWidth="180.0" prefWidth="-1.0" resizable="false" sortable="false" text="歌名" />
+                                <TableColumn fx:id="singerColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" sortable="false" text="歌手" />
+                                <TableColumn fx:id="albumColumn" editable="false" maxWidth="405.0" minWidth="135.0" prefWidth="-1.0" resizable="false" sortable="false" text="专辑" />
+                                <TableColumn fx:id="totalTimeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" sortable="false" text="时长" />
+                                <TableColumn fx:id="sizeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" sortable="false" text="大小" />
                             </columns>
                             <placeholder>
                                 <Label text="" />
@@ -94,7 +94,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </TextField>
-                                    <ImageView fx:id="ivSearchIcon" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#onClickedClearIcon">
+                                    <ImageView fx:id="ivSearchIcon" fitHeight="16.0" fitWidth="16.0" onMouseClicked="#onClickedClearIcon" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../image/SearchIcon-16.png" />
                                        </image>

@@ -44,10 +44,9 @@ public class LoadSongTask extends Task<ObservableList<Song>> {
             if (folderList.size() > 0) {   //如果选择的文件目录存在，即记录数大于0，获取目录下的歌曲信息集合
                 ObservableList<Song> observableSongList = SongUtils.getObservableSongList(folderList);
                 Platform.runLater(() -> {   //设置"显示歌曲"数量的标签为扫描到的歌曲数目
-                    localMusicContentController.getLabSongCount().setText(String.valueOf(observableSongList.size()));
+                    localMusicContentController.getLabSongCount().setText(String.valueOf(SongUtils.getSongCount(observableSongList)));
                     localMusicContentController.getBorderPane().setVisible(true);
                 });
-//                observableSongList.add(new Song("A",null,null,null,null,null,null));
                 return observableSongList;
             } else {
                 Platform.runLater(() -> {
@@ -60,4 +59,6 @@ public class LoadSongTask extends Task<ObservableList<Song>> {
             return null;
         }
     }
+
+
 }

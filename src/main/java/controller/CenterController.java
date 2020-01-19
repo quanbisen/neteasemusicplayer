@@ -1,7 +1,6 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import org.springframework.stereotype.Controller;
@@ -20,7 +19,7 @@ public class CenterController {
     private BorderPane borderPane;
 
     @Resource
-    private TabsController tabsController;
+    private LeftController leftController;
 
     @Resource
     private MainController mainController;
