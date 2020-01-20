@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<FolderList>
-  <Folder path="D:\test"></Folder>
+<FolderList> 
+  <Folder path="D:\test"></Folder>  
+  <Folder path="/media/ubuntu/Music"></Folder>
 </FolderList>

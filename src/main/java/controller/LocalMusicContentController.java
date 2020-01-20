@@ -18,6 +18,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import mediaplayer.MyMediaPlayer;
 import mediaplayer.PlayMode;
 import model.Song;
@@ -233,6 +234,14 @@ public class LocalMusicContentController {
                 tableViewSong.setItems(observableItems);
             }
         });
+
+        tableViewSong.setRowFactory(new Callback<TableView<Song>, TableRow<Song>>() {
+            @Override
+            public TableRow<Song> call(TableView<Song> param) {
+                if (param.getItems().)
+                return null;
+            }
+        });
     }
 
     /**“选择目录”按钮按下事件处理*/
@@ -340,11 +349,4 @@ public class LocalMusicContentController {
         }
     }
 
-
-//    /**中间面板的鼠标移动事件，修复鼠标形状*/
-//    @FXML
-//    public void onBorderPaneMouseMoved(MouseEvent mouseEvent) {
-//
-////        localMusicContentContainer.setCursor(Cursor.DEFAULT);
-//    }
 }
