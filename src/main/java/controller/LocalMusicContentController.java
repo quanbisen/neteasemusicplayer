@@ -1,6 +1,7 @@
 package controller;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,8 +16,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import mediaplayer.MyMediaPlayer;
@@ -30,6 +34,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
 import service.LoadSongService;
+import util.SongUtils;
 import util.StageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
@@ -127,15 +132,11 @@ public class LocalMusicContentController {
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
-    MainController mainController;
+    private MainController mainController;
 
     /**注入Spring上下文类*/
     @Resource
     private ApplicationContext applicationContext;
-
-    /**注入“选择目录”舞台的controller*/
-    @Resource
-    private ChoseFolderController choseFolderController;
 
     /**注入播放器*/
     @Resource
@@ -209,6 +210,80 @@ public class LocalMusicContentController {
         progressIndicator.visibleProperty().bind(loadSongService.runningProperty());
         loadSongService.start();  //启动服务
 
+        /**加载歌曲信息成功后执行定制的表格样式，使用Java代码设置样式，css设置样式存在更新的不同步的问题
+         * start*/
+        loadSongService.setOnSucceeded(event -> {
+/*            tableViewSong.setRowFactory(new Callback<TableView<Song>, TableRow<Song>>() {
+                int index=0;    //用作字母分类的记录基数偶数行的标记index
+                @Override
+                public TableRow<Song> call(TableView<Song> param) {
+                    return new TableRow<Song>(){
+                        @Override
+                        protected void updateItem(Song item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (!empty){
+                                if (SongUtils.isCharacterCategory(item.getName())){
+                                    index = 0;
+//                                    this.getStyleClass().add("characterRow");
+                                    this.setStyle("-fx-background-color: #FAFAFC;");
+//                                    this.setMouseTransparent(true); //字母分类行不响应鼠标事件
+                                }else {
+//                                    this.getStyleClass().remove("characterRow");
+//                                    this.setStyle("-fx-background-color: #FAFAFC;");
+                                    index++;
+                                    if (index%2!=0){
+                                        this.setStyle("-fx-background-color:#F4F4F6;"); //字母行下的基数行样式
+                                    }else {
+                                        this.setStyle("-fx-background-color: #FAFAFC;");//字母行下的偶数行样式
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void updateSelected(boolean selected) {
+                            super.updateSelected(selected);
+                            if (selected){
+//                                this.setStyle("-fx-background-color: #DEDEE0;");
+                            }
+                            else {
+//                                this.getStyleClass().remove("selectedRow");
+                                System.out.println("selected");
+//                                updateItem(getItem(),isEmpty());
+                            }
+                        }
+                    };
+                }
+            });*/
+            nameColumn.setCellFactory(new Callback<TableColumn<Song, String>, TableCell<Song, String>>() {
+                @Override
+                public TableCell<Song, String> call(TableColumn<Song, String> param) {
+                    return new TableCell<Song,String>(){
+                        @Override
+                        protected void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item==null||empty){ //如果为空的，设置为空
+                                this.setText(null);
+                                this.setStyle("");
+                            }
+                            else {  //否则，单元格存在内容，执行下一步
+                                setText(item);  //设置表格内容为item的字符串
+                                if (SongUtils.isCharacterCategory(item)){   //如果字符串是类别字母，设置添加定制
+                                    setStyle("-fx-text-fill: #999999;" +
+                                            "-fx-font-size: 18px;");
+                                }else {
+                                    setStyle("-fx-text-fill: black;" +
+                                            "-fx-font-size: 12px;");
+                                }
+                            }
+                        }
+                    };
+                }
+            });
+        });
+        /**end*/
+
+
         /*******Fixed some resize bug here.********/
         localMusicContentContainer.setCursor(Cursor.DEFAULT);
         /*******Fixed some resize bug here.********/
@@ -235,13 +310,7 @@ public class LocalMusicContentController {
             }
         });
 
-        tableViewSong.setRowFactory(new Callback<TableView<Song>, TableRow<Song>>() {
-            @Override
-            public TableRow<Song> call(TableView<Song> param) {
-                if (param.getItems().)
-                return null;
-            }
-        });
+
     }
 
     /**“选择目录”按钮按下事件处理*/

@@ -13,10 +13,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.User;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
-import service.LoadSongService;
 import util.StageUtils;
 import util.UserUtils;
 import util.WindowUtils;
@@ -183,10 +181,6 @@ public class LeftController {
             if (localMusicParent == null){
                 FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/tab-localmusic-content.fxml");
                 localMusicParent = fxmlLoader.load();
-                /*LoadSongService loadSongService = applicationContext.getBean(LoadSongService.class);  //获取服务对象
-                localMusicContentController.getTableViewSong().itemsProperty().bind(loadSongService.valueProperty());  //搜搜结果显示表格的内容绑定
-                localMusicContentController.getProgressIndicator().visibleProperty().bind(loadSongService.runningProperty());
-                loadSongService.start();  //开始服务*/
             }
 
             centerController.getBorderPane().setCenter(localMusicParent);   //设置容器的中间容器内容

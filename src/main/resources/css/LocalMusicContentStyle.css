@@ -115,22 +115,24 @@ BorderPane
     -fx-border-color:transparent;
     -fx-alignment: center-left;
     -fx-padding: 5 5 5 5;
-
 }
 
 /*设置表格第一列的样式*/
-#nameColumn.table-cell{
+#nameColumn.table-cell
+{
     -fx-text-fill: #333333;
     -fx-padding:0 0 0 20;
 }
 /*表格行样式*/
-.table-view .table-row-cell{
+.table-view .table-row-cell
+{
     -fx-cell-size: 40px;
     -fx-background-color:#FAFAFC;
     -fx-background-insets: 0;
 }
 /*表格偶数行样式*/
-.table-view .table-row-cell:odd{
+.table-view .table-row-cell:odd
+{
     -fx-background-color:#F4F4F6;
 }
 /*表格行鼠标放置在上面的样式*/
@@ -139,9 +141,15 @@ BorderPane
     -fx-background-color: #F2F2F3;
 }
 /*选中行的背景颜色*/
-.table-view .table-row-cell:selected{
+.table-view .table-row-cell:selected
+{
     -fx-background-color: #DEDEE0;
 }
+/*.table-view .table-row-cell.selectedRow
+{
+    -fx-background-color: RED;
+}*/
+
 /*空行的样式，参见：http://fxexperience.com/2011/11/alternate-row-highlighting-in-empty-tableview-and-listview-rows/*/
 .table-view .table-row-cell:empty
 {
