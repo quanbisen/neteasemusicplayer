@@ -46,15 +46,13 @@ import java.util.Random;
 @Controller
 public class LocalMusicContentController {
 
-
-
     /**本地音乐中间面板的根容器*/
     @FXML
-    private TabPane tabPane;
+    private BorderPane localMusicContentContainer;
 
     /**本地音乐中间面板的根容器tabPane的Tab1*/
     @FXML
-    private BorderPane localMusicContentContainer;
+    private TabPane tabPane;
 
     /**根容器的中间内容容器*/
     @FXML

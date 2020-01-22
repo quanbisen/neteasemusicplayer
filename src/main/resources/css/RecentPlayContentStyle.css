@@ -1,43 +1,100 @@
-#anchorPane
+BorderPane
 {
-    -fx-background-color: RED;
+    -fx-background-color: #FAFAFC;
 }
-#borderPanePlayList
+.tab-pane
 {
-    -fx-background-color: white;
-    -fx-border-color: #E8E8EA;
-    -fx-border-width: 1 0 1 1;
+    -fx-tab-max-height: 40px;
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 5px;
 }
-.label
+.tab
 {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0px;
+    -fx-background-radius: 0px;
+}
+.tab:selected .focus-indicator
+{
+    -fx-border-color: transparent;
+}
+.HBox
+{
+    -fx-background-color: transparent;
+}
+.tab-pane *.tab-header-background
+{
+    -fx-background-color: transparent;
+    -fx-border-insets: 0 15 0 10;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #E4E4E7;
+}
+.labIndicator
+{
+    -fx-font-size: 14px;
     -fx-font-family: "Microsoft YaHei","SimSun";
 }
-#labCloseIcon:hover
+.count
 {
-    -fx-graphic: url("/image/CloseIconHover.png");
+    -fx-font-size: 10px;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-text-fill: #919192;
 }
-#favorAll:pressed
+.progress-indicator
+{
+    -fx-pref-height: 18px;
+    -fx-max-height: 18px;
+    -fx-pref-width: 18px;
+    -fx-max-width: 18px;
+    -fx-progress-color: gray;
+}
+/*"播放全部"和“全部清空”按钮的样式*/
+#btnPlayAll,#btnClearAll
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 16;
+}
+/**"播放全部"按钮容器的鼠标按下样式*/
+#hBoxPlayAll:pressed,#hBoxClearAll:pressed
 {
     -fx-scale-x: 0.98;
     -fx-scale-y: 0.98;
+    -fx-scale-z: 0.98;
 }
-#clearAll:pressed
+.table-view
 {
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.98;
+    -fx-background-color: transparent;
 }
-/*设置标题栏的显示高度为0，不显示标题行*/
+/*设置标题栏的显示为0，不显示标题*/
 .table-view .column-header-background
 {
     -fx-max-height: 0;
     -fx-pref-height: 0;
     -fx-min-height: 0;
 }
-.table-view
+.nameColumn .label  /*歌曲"名称"列的标题label样式*/
+{
+    -fx-padding: 0 0 0 20;
+    -fx-alignment: center-left;
+}
+.singerColumn .label,.albumColumn .label,.totalTimeColumn .label,.sizeColumn .label  /*歌曲"歌手"."专辑","总时长","大小"列的标题label样式*/
+{
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 5;
+}
+.table-view .column-header
 {
     -fx-background-color: transparent;
+    -fx-border-width: 1 1 1 0;
+    -fx-border-color: #E4E4E7;
+    -fx-size: 30;
 }
-
+.table-view .column-header .label
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
 .table-view .table-cell
 {
     -fx-text-fill: #333333;
@@ -45,25 +102,25 @@
     -fx-border-color:transparent;
     -fx-alignment: center-left;
     -fx-padding: 5 5 5 5;
+}
 
-}
-.table-view .table-row-cell.highlightedRow .table-cell
-{
-    -fx-text-fill: #BC2F2E;
-}
 /*设置表格第一列的样式*/
-#nameColumn.table-cell{
-    -fx-padding:0 0 0 22;
+#nameColumn.table-cell
+{
+    -fx-text-fill: #333333;
+    -fx-padding:0 0 0 20;
 }
 /*表格行样式*/
-.table-view .table-row-cell{
+.table-view .table-row-cell
+{
     -fx-cell-size: 40px;
     -fx-background-color:#FAFAFC;
     -fx-background-insets: 0;
 }
 /*表格偶数行样式*/
-.table-view .table-row-cell:odd{
-    -fx-background-color:#FFFFFF;
+.table-view .table-row-cell:odd
+{
+    -fx-background-color:#F4F4F6;
 }
 /*表格行鼠标放置在上面的样式*/
 .table-view .table-row-cell:hover
@@ -71,14 +128,19 @@
     -fx-background-color: #F2F2F3;
 }
 /*选中行的背景颜色*/
-.table-view .table-row-cell:selected{
+.table-view .table-row-cell:selected
+{
     -fx-background-color: #DEDEE0;
 }
+/*.table-view .table-row-cell.selectedRow
+{
+    -fx-background-color: RED;
+}*/
 
 /*空行的样式，参见：http://fxexperience.com/2011/11/alternate-row-highlighting-in-empty-tableview-and-listview-rows/*/
 .table-view .table-row-cell:empty
 {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #FAFAFC;
 }
 /*去除空行的边框*/
 .table-view .table-row-cell:empty .table-cell
@@ -88,7 +150,7 @@
 
 .scroll-bar:vertical
 {
-    -fx-pref-width: 4;
+    -fx-pref-width: 8;
     -fx-background-color: transparent;
 }
 .scroll-bar:vertical .thumb
@@ -155,3 +217,4 @@
     visibility: hidden;
     -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
 }
+
