@@ -36,6 +36,7 @@ public class FXApplication extends Application {
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
+        scene.getStylesheets().add(this.getClass().getResource("/css/ContextMenuStyle.css").toExternalForm());  //添加contextmenu的样式
         primaryStage.setTitle("音乐"); // 设置标题
         primaryStage.getIcons().add(new Image("/image/NeteaseMusicPlayerIcon.png")); //设置图标
         primaryStage.setScene(scene);

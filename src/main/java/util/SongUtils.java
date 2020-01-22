@@ -177,4 +177,17 @@ public final class SongUtils {
             return false;
         }
     }
+
+    /**获取表格items中是可播放的实际歌曲的函数
+     * @param tableItems 表格items
+     * @return ObservableList<Song>*/
+    public static ObservableList<Song> getActualList(List<Song> tableItems){
+        ObservableList<Song> observableList = FXCollections.observableArrayList();
+        tableItems.forEach(item->{
+            if (!isCharacterCategory(item.getName())){
+                observableList.add(item);
+            }
+        });
+        return observableList;
+    }
 }
