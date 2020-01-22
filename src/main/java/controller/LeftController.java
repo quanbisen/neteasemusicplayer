@@ -189,11 +189,12 @@ public class LeftController {
 
     /**单击“最近播放”标签事件处理*/
     @FXML
-    public void onClickedRecentPlayTab(MouseEvent mouseEvent) {
+    public void onClickedRecentPlayTab(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxRecentPlayTab);
             if (recentPlayParent == null){
-                recentPlayParent = new Label("最近播放");
+                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/tab-recentplay-content.fxml");
+                recentPlayParent = fxmlLoader.load();
             }
             centerController.getBorderPane().setCenter(recentPlayParent);
         }

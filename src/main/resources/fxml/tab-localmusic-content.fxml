@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="localMusicContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/LocalMusicContentStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LocalMusicContentController">
+<BorderPane fx:id="localMusicContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/RecentPlayContentStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LocalMusicContentController">
 
    <top>
       <BorderPane prefHeight="45.0" prefWidth="603.0" stylesheets="@../css/TabPaneStyle.css" BorderPane.alignment="CENTER">
