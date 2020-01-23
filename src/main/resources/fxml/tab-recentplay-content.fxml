@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="recentPlayContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/RecentPlayContentStyle.css" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RecentPlayContentController">
+<BorderPane fx:id="recentPlayContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/RecentPlayContentStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RecentPlayContentController">
     <top>
         <BorderPane prefHeight="45.0" prefWidth="603.0" stylesheets="@../css/TabPaneStyle.css" BorderPane.alignment="CENTER">
             <left>
@@ -37,13 +37,14 @@
                     <content>
                         <BorderPane fx:id="borderPane">
                             <center>
-                                <TableView fx:id="tableViewSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;">
+                                <TableView fx:id="tableViewRecentPlaySong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;">
                                     <columns>
-                                        <TableColumn fx:id="nameColumn" editable="false" maxWidth="540.0" minWidth="180.0" prefWidth="-1.0" resizable="false" sortable="false" text="歌名" />
-                                        <TableColumn fx:id="singerColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" sortable="false" text="歌手" />
-                                        <TableColumn fx:id="albumColumn" editable="false" maxWidth="405.0" minWidth="135.0" prefWidth="-1.0" resizable="false" sortable="false" text="专辑" />
-                                        <TableColumn fx:id="totalTimeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" sortable="false" text="时长" />
-                                        <TableColumn fx:id="sizeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" sortable="false" text="大小" />
+                                        <TableColumn fx:id="indexColumn" editable="false" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" resizable="false" sortable="false" text="Id" />
+                                        <TableColumn fx:id="addFavorColumn" editable="false" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" resizable="false" sortable="false" text="喜欢" />
+                                        <TableColumn fx:id="nameColumn" editable="false" resizable="false" sortable="false" text="歌名" />
+                                        <TableColumn fx:id="singerColumn" editable="false" resizable="false" sortable="false" text="歌手" />
+                                        <TableColumn fx:id="albumColumn" editable="false" resizable="false" sortable="false" text="专辑" />
+                                        <TableColumn fx:id="totalTimeColumn" editable="false" resizable="false" sortable="false" text="时长" />
                                     </columns>
                                     <placeholder>
                                         <Label text="" />
@@ -58,7 +59,7 @@
                                     <left>
                                         <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="283.0" spacing="5.0" BorderPane.alignment="BOTTOM_LEFT">
                                             <padding>
-                                                <Insets left="20.0" />
+                                                <Insets left="15.0" />
                                             </padding>
                                             <children>
                                                 <HBox fx:id="hBoxPlayAll" alignment="CENTER" maxWidth="135.0" prefHeight="40.0" prefWidth="100.0">
@@ -68,10 +69,10 @@
                                                                 <Image url="@../image/NeteasePlayAll.png" />
                                                             </image>
                                                         </ImageView>
-                                                        <Button fx:id="btnPlayAll" mnemonicParsing="false" prefHeight="28.0" prefWidth="73.0" text="播放全部" />
+                                                        <Button fx:id="btnPlayAll" mnemonicParsing="false" prefHeight="28.0" prefWidth="70.0" text="播放全部" />
                                                     </children>
                                                 </HBox>
-                                    <Separator maxHeight="30.0" orientation="VERTICAL" />
+                                                <Separator maxHeight="30.0" orientation="VERTICAL" />
                                                 <HBox fx:id="hBoxClearAll" alignment="CENTER" maxWidth="135.0" prefHeight="40.0" prefWidth="100.0">
                                                     <children>
                                                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -79,7 +80,7 @@
                                                                 <Image url="@../image/TrashBinIcon.png" />
                                                             </image>
                                                         </ImageView>
-                                                        <Button fx:id="btnClearAll" mnemonicParsing="false" prefHeight="28.0" prefWidth="73.0" text="全部清空" />
+                                                        <Button fx:id="btnClearAll" mnemonicParsing="false" prefHeight="28.0" prefWidth="70.0" text="全部清空" />
                                                     </children>
                                                 </HBox>
                                             </children>
@@ -94,14 +95,17 @@
                             <children>
                                 <HBox fx:id="hBoxSong" alignment="CENTER_LEFT" maxWidth="50.0" prefHeight="0.0" prefWidth="50.0" spacing="3.0">
                                     <children>
-                                        <Label styleClass="labIndicator" text="歌曲" />
+                                        <Label styleClass="labIndicator" text="歌曲">
+                                 <padding>
+                                    <Insets left="2.0" />
+                                 </padding></Label>
                                         <Label fx:id="labSongCount" styleClass="count" text="0" />
                                     </children>
                                 </HBox>
                             </children>
-                     <padding>
-                        <Insets left="8.0" />
-                     </padding>
+                            <padding>
+                                <Insets left="5.0" />
+                            </padding>
                         </HBox>
                     </graphic>
                 </Tab>

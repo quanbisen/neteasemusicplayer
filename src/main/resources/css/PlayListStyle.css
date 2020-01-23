@@ -12,9 +12,13 @@
 {
     -fx-font-family: "Microsoft YaHei","SimSun";
 }
-#labCloseIcon:hover
+#closeIcon
 {
-    -fx-graphic: url("/image/CloseIconHover.png");
+    -fx-image: url("/image/CloseIcon.png");
+}
+#closeIcon:hover
+{
+    -fx-image: url("/image/CloseIconHover.png");
 }
 #favorAll:pressed
 {

@@ -65,7 +65,7 @@ BorderPane
     -fx-font-family: "Microsoft YaHei","SimSun";
     -fx-background-color: transparent;
     -fx-padding: 0;
-    -fx-font-size: 16;
+    -fx-font-size: 15px;
 }
 /**"播放全部"按钮容器的鼠标按下样式*/
 #hBoxPlayAll:pressed

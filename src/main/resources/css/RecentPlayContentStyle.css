@@ -1,4 +1,4 @@
-BorderPane
+#recentPlayContentContainer
 {
     -fx-background-color: #FAFAFC;
 }
@@ -14,9 +14,10 @@ BorderPane
     -fx-background-insets: 0px;
     -fx-background-radius: 0px;
 }
-.tab:selected .focus-indicator
+#hBoxSong
 {
-    -fx-border-color: transparent;
+    -fx-border-color: #C62E2E;
+    -fx-border-width: 0 0 2 0;
 }
 .HBox
 {
@@ -28,6 +29,7 @@ BorderPane
     -fx-border-insets: 0 15 0 10;
     -fx-border-width: 0 0 1 0;
     -fx-border-color: #E4E4E7;
+
 }
 .labIndicator
 {
@@ -42,9 +44,7 @@ BorderPane
 }
 .progress-indicator
 {
-    -fx-pref-height: 18px;
     -fx-max-height: 18px;
-    -fx-pref-width: 18px;
     -fx-max-width: 18px;
     -fx-progress-color: gray;
 }
@@ -54,7 +54,7 @@ BorderPane
     -fx-font-family: "Microsoft YaHei","SimSun";
     -fx-background-color: transparent;
     -fx-padding: 0;
-    -fx-font-size: 16;
+    -fx-font-size: 15px;
 }
 /**"播放全部"按钮容器的鼠标按下样式*/
 #hBoxPlayAll:pressed,#hBoxClearAll:pressed
@@ -74,16 +74,7 @@ BorderPane
     -fx-pref-height: 0;
     -fx-min-height: 0;
 }
-.nameColumn .label  /*歌曲"名称"列的标题label样式*/
-{
-    -fx-padding: 0 0 0 20;
-    -fx-alignment: center-left;
-}
-.singerColumn .label,.albumColumn .label,.totalTimeColumn .label,.sizeColumn .label  /*歌曲"歌手"."专辑","总时长","大小"列的标题label样式*/
-{
-    -fx-alignment: center-left;
-    -fx-padding: 0 0 0 5;
-}
+
 .table-view .column-header
 {
     -fx-background-color: transparent;
@@ -94,6 +85,7 @@ BorderPane
 .table-view .column-header .label
 {
     -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-alignment: center-left;
 }
 .table-view .table-cell
 {
@@ -105,10 +97,21 @@ BorderPane
 }
 
 /*设置表格第一列的样式*/
-#nameColumn.table-cell
+#indexColumn.table-cell
 {
     -fx-text-fill: #333333;
-    -fx-padding:0 0 0 20;
+    -fx-padding:0 0 0 0;
+    -fx-alignment: center-right;
+}
+#addFavorColumn.table-cell
+{
+    -fx-alignment: center;
+    -fx-padding: 0 0 0 0;
+}
+#nameColumn.table-cell,#singerColumn.table-cell,#albumColumn.table-cell,#totalTimeColumn.table-cell
+{
+    -fx-padding:0 0 0 0;
+    -fx-alignment: center-left;
 }
 /*表格行样式*/
 .table-view .table-row-cell
