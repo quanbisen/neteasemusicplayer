@@ -1,9 +1,6 @@
 package controller;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,16 +13,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import mediaplayer.MyMediaPlayer;
 import mediaplayer.PlayMode;
-import model.Song;
+import model.LocalSong;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -60,23 +54,23 @@ public class LocalMusicContentController {
 
     /**歌曲名称列组件*/
     @FXML
-    private TableColumn<Song,String> nameColumn;
+    private TableColumn<LocalSong,String> nameColumn;
 
     /**歌曲歌手列组件*/
     @FXML
-    private TableColumn<Song,String> singerColumn;
+    private TableColumn<LocalSong,String> singerColumn;
 
     /**歌曲专辑列组件*/
     @FXML
-    private TableColumn<Song,String> albumColumn;
+    private TableColumn<LocalSong,String> albumColumn;
 
     /**歌曲总时间列组件*/
     @FXML
-    private TableColumn<Song,String> totalTimeColumn;
+    private TableColumn<LocalSong,String> totalTimeColumn;
 
     /**歌曲大小列组件*/
     @FXML
-    private TableColumn<Song,String> sizeColumn;
+    private TableColumn<LocalSong,String> sizeColumn;
 
     /**“选择目录”的HBox容器*/
     @FXML
@@ -115,7 +109,7 @@ public class LocalMusicContentController {
 
     /**存放显示歌曲的表格*/
     @FXML
-    private TableView<Song> tableViewSong;
+    private TableView<LocalSong> tableViewSong;
 
     /**搜索框的TextField组件，用作输入文本*/
     @FXML
@@ -126,7 +120,7 @@ public class LocalMusicContentController {
     private ImageView ivSearchIcon;
 
     /**表格内容的集合变量*/
-    private ObservableList<Song> observableItems;
+    private ObservableList<LocalSong> observableItems;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
@@ -148,7 +142,7 @@ public class LocalMusicContentController {
         return tabPane;
     }
 
-    public TableView<Song> getTableViewSong() {
+    public TableView<LocalSong> getTableViewSong() {
         return tableViewSong;
     }
 
@@ -211,13 +205,13 @@ public class LocalMusicContentController {
         /**加载歌曲信息成功后执行定制的表格样式，使用Java代码设置样式，css设置样式存在更新的不同步的问题
          * start*/
         loadSongService.setOnSucceeded(event -> {
-            tableViewSong.setRowFactory(new Callback<TableView<Song>, TableRow<Song>>() {
+            tableViewSong.setRowFactory(new Callback<TableView<LocalSong>, TableRow<LocalSong>>() {
                 int index=0;    //用作字母分类的记录基数偶数行的标记index
                 @Override
-                public TableRow<Song> call(TableView<Song> param) {
-                    return new TableRow<Song>(){
+                public TableRow<LocalSong> call(TableView<LocalSong> param) {
+                    return new TableRow<LocalSong>(){
                         @Override
-                        protected void updateItem(Song item, boolean empty) {
+                        protected void updateItem(LocalSong item, boolean empty) {
                             super.updateItem(item, empty);
                             if (!empty){
                                 /**设置表格行的样式*/
@@ -253,8 +247,8 @@ public class LocalMusicContentController {
                             super.updateSelected(selected);
                             if (selected){  //如果选中了
                                 if (!SongUtils.isCharacterCategory(this.getItem().getName())){  //选择的是实际上的歌曲行才执行
-                                    this.setStyle("-fx-background-color: #DEDEE0;");    //设置背景
                                     this.getTableView().refresh();  //刷新表格
+                                    this.setStyle("-fx-background-color: #DEDEE0;");    //设置背景
                                 }
                             }
                         }
@@ -279,10 +273,10 @@ public class LocalMusicContentController {
                     };
                 }
             });*/
-            nameColumn.setCellFactory(new Callback<TableColumn<Song, String>, TableCell<Song, String>>() {
+            nameColumn.setCellFactory(new Callback<TableColumn<LocalSong, String>, TableCell<LocalSong, String>>() {
                 @Override
-                public TableCell<Song, String> call(TableColumn<Song, String> param) {
-                    return new TableCell<Song,String>(){
+                public TableCell<LocalSong, String> call(TableColumn<LocalSong, String> param) {
+                    return new TableCell<LocalSong,String>(){
                         @Override
                         protected void updateItem(String item, boolean empty) {
                             super.updateItem(item, empty);
@@ -319,17 +313,18 @@ public class LocalMusicContentController {
             if (tableViewSong.itemsProperty().isBound()){
                 tableViewSong.itemsProperty().unbind(); //解除items绑定
             }
+            ObservableList<LocalSong> observableResultList = FXCollections.observableArrayList();   //定义匹配关键字的Observable集合
             if (!observable.getValue().trim().equals("")){   //如果有内容
                 ivSearchIcon.setImage(new Image("/image/CloseIcon.png"));   //设置图标为清除图标
-                ObservableList<Song> observableResultList = FXCollections.observableArrayList();   //定义匹配关键字的Observable集合
-                for (Song song : SongUtils.getActualList(observableItems)){   //遍历可播放歌曲，查找包含搜索关键字的行
-                    if (song.toStringContent().contains(observable.getValue())){    //如果歌曲的歌名、歌手和专辑字符串包含搜索的关键字
-                        observableResultList.add(song);     //添加到搜索结果集合
+                for (LocalSong localSong : SongUtils.getLocalSongList(observableItems)){   //遍历可播放歌曲，查找包含搜索关键字的行
+                    if (localSong.toStringContent().contains(observable.getValue())){    //如果歌曲的歌名、歌手和专辑字符串包含搜索的关键字
+                        observableResultList.add(localSong);     //添加到搜索结果集合
                     }
                 }
                 tableViewSong.setItems(observableResultList);   //设置表格内容为搜索到的结果集合
             } else {  //否则，还原搜索图标和表格内容
                 ivSearchIcon.setImage(new Image("/image/SearchIcon-16.png"));
+                observableResultList.removeAll();   //清除所有的搜索结果
                 tableViewSong.setItems(observableItems);
             }
         });
@@ -389,11 +384,12 @@ public class LocalMusicContentController {
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
             if (!SongUtils.isCharacterCategory(tableViewSong.getSelectionModel().getSelectedItem().getName())){ //如果双击播放的歌曲不是字母分类的行，才执行以下播放
-                myMediaPlayer.playLocal(tableViewSong.getSelectionModel().getSelectedItem());      //播放选中的歌曲
-                myMediaPlayer.setPlaySongList(SongUtils.getActualList(tableViewSong.getItems()));     //设置当前播放列表
-                myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlaySongList().indexOf(tableViewSong.getSelectionModel().getSelectedItem()));  //设置当前播放的歌曲在播放列表playList中的位置
+                myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
+                myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.getPlayListSong(tableViewSong.getSelectionModel().getSelectedItem())));  //设置当前播放的歌曲在播放列表playList中的位置
+                System.out.println(myMediaPlayer.getCurrentPlayIndex());
+                myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));      //播放选中的歌曲
                 //设置右下角"歌单文本提示"显示数量
-                bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size()));
+                bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlayListSongs().size()));
 //                System.out.println(tableViewSong.getSelectionModel().getSelectedIndex());
 //                System.out.println(myMediaPlayer.getCurrentPlayIndex());
             }
@@ -404,21 +400,18 @@ public class LocalMusicContentController {
     @FXML
     public void onClickedPlayAll(MouseEvent mouseEvent) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            myMediaPlayer.setPlaySongList(SongUtils.getActualList(tableViewSong.getItems()));     //设置当前播放列表
+            myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
             //设置右下角"歌单文本提示"显示数量
-            bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlaySongList().size()));
+            bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlayListSongs().size()));
             if (myMediaPlayer.getPlayMode() == PlayMode.SHUFFLE){   //如果当前播放模式为"随机播放"
                 //生成一个随机数，执行播放
-                int randomIndex=new Random().nextInt(myMediaPlayer.getPlaySongList().size());
+                int randomIndex=new Random().nextInt(myMediaPlayer.getPlayListSongs().size());
                 myMediaPlayer.setCurrentPlayIndex(randomIndex);     //设置当前播放的索引为生成的随机索引
-                myMediaPlayer.playLocal(myMediaPlayer.getPlaySongList().get(myMediaPlayer.getCurrentPlayIndex()));      //播放生成的随机索引歌曲
-
             }
             else {  //否则,不是"随机播放"模式,这些都是播放播放列表中的第一首歌曲
                 myMediaPlayer.setCurrentPlayIndex(0);  //设置当前播放的歌曲为播放列表第一首歌曲
-                myMediaPlayer.playLocal(myMediaPlayer.getPlaySongList().get(0));      //播放表格中第一首歌曲
             }
-
+            myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));      //播放当前的索引歌曲
         }
     }
 
@@ -426,7 +419,7 @@ public class LocalMusicContentController {
         System.out.println("scrolling");
     }
 
-    public void onScrollToColumn(ScrollToEvent<TableColumn<Song,?>> tableColumnScrollToEvent) {
+    public void onScrollToColumn(ScrollToEvent<TableColumn<LocalSong,?>> tableColumnScrollToEvent) {
         System.out.println("scrollToColumn");
     }
 

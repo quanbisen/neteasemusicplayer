@@ -1,16 +1,20 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import util.XMLUtils;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 
 @Controller
 @Scope("prototype")
@@ -23,7 +27,7 @@ public class SearchHistoryRecordController {
     private Label labRecordText;
 
     @FXML
-    private Label labDelete;
+    private ImageView ivDelete;
 
     @Resource
     private SearchInputController searchInputController;
@@ -44,22 +48,36 @@ public class SearchHistoryRecordController {
         this.labRecordText = labRecordText;
     }
 
-    public Label getLabDelete() {
-        return labDelete;
+    public ImageView getIvDelete() {
+        return ivDelete;
     }
 
-    public void setLabDelete(Label labDelete) {
-        this.labDelete = labDelete;
+    public void setIvDelete(ImageView ivDelete) {
+        this.ivDelete = ivDelete;
     }
 
+    /**初始化，最先执行这里...*/
+    public void initialize(){
+        labRecordText.prefWidthProperty().bind(oneHistoryContainer.widthProperty());
+    }
+
+    /**单击记录清除图标的事件处理*/
     @FXML
     public void onClickedClear(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            System.out.println(labRecordText.getText());
-            searchInputController.getvBoxHistoryContainer().getChildren().remove(labDelete.getParent());    //GUI更新，移除本容器
+            searchInputController.getvBoxHistoryContainer().getChildren().remove(ivDelete.getParent());    //GUI更新，移除本容器
             if (searchInputController.getSEARCH_HISTORY_FILE().exists()){   //如果存储的文件存在
                 XMLUtils.removeOneRecord(searchInputController.getSEARCH_HISTORY_FILE(),"text",labRecordText.getText());    //移除本条记录
             }
+        }
+    }
+
+    /**单击搜索记录的事件处理*/
+    @FXML
+    public void onClickedRecordSearch(MouseEvent mouseEvent) throws IOException {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){
+            searchInputController.getTfSearchText().setText(labRecordText.getText());
+            searchInputController.startSearchService();
         }
     }
 }

@@ -5,6 +5,7 @@
 
 <StackPane fx:id="stackPane" stylesheets="@../css/MainPaneStyle.css"
            fx:controller="controller.MainController"
+           minWidth="870.0" minHeight="580.0"
            xmlns="http://javafx.com/javafx/8.0.171"
            xmlns:fx="http://javafx.com/fxml/1">
     <children>

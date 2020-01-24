@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<BorderPane fx:id="oneHistoryContainer" prefHeight="40.0" prefWidth="558.0"
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="oneHistoryContainer"
             fx:controller="controller.SearchHistoryRecordController"
-            xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1">
-    <left>
-        <Label fx:id="labRecordText" prefHeight="32.0" prefWidth="54.0" text="RecordText" BorderPane.alignment="CENTER" />
-    </left>
-    <right>
-        <Label fx:id="labDelete" onMouseClicked="#onClickedClear">
-            <graphic>
-                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-                    <Image url="@../image/SearchDelete.png"></Image>
-                </ImageView>
-            </graphic>
-        </Label>
-    </right>
+            prefHeight="40.0" prefWidth="558.0"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" >
+    <center>
+        <Label fx:id="labRecordText" onMouseClicked="#onClickedRecordSearch" prefHeight="32.0" prefWidth="530.0" text="RecordText" BorderPane.alignment="CENTER" />
+    </center>
+   <right>
+          <ImageView fx:id="ivDelete" onMouseClicked="#onClickedClear" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+              <Image url="@../image/SearchDelete.png" />
+          </ImageView>
+   </right>
 </BorderPane>

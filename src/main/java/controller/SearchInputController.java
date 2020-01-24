@@ -5,7 +5,6 @@ import dao.SongDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,13 +18,11 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import model.Song;
 import org.dom4j.DocumentException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 import service.SearchSongService;
 import util.XMLUtils;
-
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
@@ -172,13 +169,13 @@ public class SearchInputController {
     }
 
     /**启动搜索服务的函数*/
-    private void startSearchService() throws IOException {
+    public void startSearchService() throws IOException {
         if (parent == null){    //容器对象为空时才加载
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/search-result.fxml");
             parent = fxmlLoader.load();
         }
         SearchSongService searchSongService = applicationContext.getBean(SearchSongService.class);  //获取服务对象
-        searchResultController.getTableViewSong().itemsProperty().bind(searchSongService.valueProperty());  //搜搜结果显示表格的内容绑定
+        searchResultController.getTableViewSong().itemsProperty().bind(searchSongService.valueProperty());  //搜索结果显示表格的内容绑定
         searchResultController.getProgressIndicator().visibleProperty().bind(searchSongService.runningProperty());  //加载指示器可见性绑定
         searchSongService.start();  //开始服务
         searchInputContainer.setCenter(parent); //设置容器的中间容器内容
@@ -190,7 +187,7 @@ public class SearchInputController {
         List<Node> vBoxChildren = vBoxHistoryContainer.getChildren();
         List<String> list = new ArrayList<>();
         for (Node node:vBoxChildren){
-            list.add(((Label)((BorderPane)node).getLeft()).getText());
+            list.add(((Label)((BorderPane)node).getCenter()).getText());
         }
         //先更新GUI的
         FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/search-history-record.fxml");   //获取fxml文件加载器

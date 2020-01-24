@@ -14,6 +14,10 @@
     -fx-background-insets: 0px;
     -fx-background-radius: 0px;
 }
+.tab:selected .focus-indicator
+{
+    -fx-border-color: transparent;
+}
 #hBoxSong
 {
     -fx-border-color: #C62E2E;

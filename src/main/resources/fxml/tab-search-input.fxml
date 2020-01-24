@@ -10,10 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="searchInputContainer" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FAFAFC;"
-            stylesheets="@../css/SearchInputStyle.css"
-            fx:controller="controller.SearchInputController"
-            xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="searchInputContainer" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FAFAFC;" stylesheets="@../css/SearchInputStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchInputController">
    <top>
       <BorderPane prefHeight="45.0" prefWidth="600.0" style="-fx-border-color: #E4E4E7; -fx-background-color: WHITE;" BorderPane.alignment="CENTER">
          <left>
@@ -54,20 +51,17 @@
    <center>
       <BorderPane fx:id="searchInputCenter" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <top>
-            <BorderPane maxHeight="45.0" minHeight="45.0" prefHeight="45.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <BorderPane maxHeight="45.0" minHeight="45.0" prefHeight="45.0" prefWidth="600.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #E4E4E7; -fx-border-insets: 0 20 0 20;" BorderPane.alignment="CENTER">
                <left>
                   <Label style="-fx-text-fill: #666666;" text="搜索历史" BorderPane.alignment="CENTER" />
                </left>
                <right>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" onMouseClicked="#onClickedTrashBin" >
+                  <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onClickedTrashBin" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                      <image>
                         <Image url="@../image/TrashBinIcon.png" />
                      </image>
                   </ImageView>
                </right>
-               <padding>
-                  <Insets left="20.0" right="20.0" />
-               </padding>
             </BorderPane>
          </top>
          <center>

@@ -6,13 +6,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import model.RecentPlaySong;
+import model.RecentSong;
 import org.springframework.stereotype.Controller;
 import util.ImageUtils;
 
@@ -66,12 +64,12 @@ public class RecentPlayContentController {
         progressIndicator.setVisible(false);    //初始化不可见
 
         /**属性绑定*/
-        indexColumn.setCellValueFactory(new PropertyValueFactory<RecentPlaySong,String>("index"));
-        addFavorColumn.setCellValueFactory(new PropertyValueFactory<RecentPlaySong, ImageView>("ivFavor"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<RecentPlaySong,String>("name"));
-        singerColumn.setCellValueFactory(new PropertyValueFactory<RecentPlaySong,String>("singer"));
-        albumColumn.setCellValueFactory(new PropertyValueFactory<RecentPlaySong,String>("album"));
-        totalTimeColumn.setCellValueFactory(new PropertyValueFactory<RecentPlaySong,String>("totalTime"));
+        indexColumn.setCellValueFactory(new PropertyValueFactory<RecentSong,String>("index"));
+        addFavorColumn.setCellValueFactory(new PropertyValueFactory<RecentSong, Label>("labAddFavor"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<RecentSong,String>("name"));
+        singerColumn.setCellValueFactory(new PropertyValueFactory<RecentSong,String>("singer"));
+        albumColumn.setCellValueFactory(new PropertyValueFactory<RecentSong,String>("album"));
+        totalTimeColumn.setCellValueFactory(new PropertyValueFactory<RecentSong,String>("totalTime"));
 
         borderPane.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -83,8 +81,13 @@ public class RecentPlayContentController {
                 totalTimeColumn.setPrefWidth((observable.getValue().doubleValue() - indexColumn.getMaxWidth() - addFavorColumn.getMaxWidth())/4.5*0.5);
             }
         });
-        ObservableList<RecentPlaySong> observableList = FXCollections.observableArrayList();
-        observableList.add(new RecentPlaySong("01", ImageUtils.createImageView("/image/FavorTabIcon.png",20,20),"1","1","1","1"));
+        ObservableList<RecentSong> observableList = FXCollections.observableArrayList();
+        ImageView imageView = ImageUtils.createImageView("/image/FavorTabIcon.png",20,20);
+        Label label = new Label("",imageView);
+        label.setOnMouseClicked(event -> {
+            System.out.println("clicked ...");
+        });
+        observableList.add(new RecentSong("01", label,"1","1","1","1",null));
         tableViewRecentPlaySong.setItems(observableList);
     }
 }

@@ -1,6 +1,7 @@
 package mediaplayer;
 
-import model.Song;
+import model.LocalSong;
+import model.PlayListSong;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -17,8 +18,7 @@ import java.text.ParseException;
 @Component
 public interface IMediaPlayer {
     void play();
-    void playLocal(Song song) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException, ParseException;
-    void playNetwork(Song song) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException, ParseException;
+    void playSong(PlayListSong playListSong) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException, ParseException;
     void destroy();
     void pause();
 }

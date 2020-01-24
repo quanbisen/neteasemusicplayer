@@ -236,6 +236,15 @@
             <version>1.2.62</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+            <scope>provided</scope>
+        </dependency>
+
+
         <!--jaudiotagger这个jar包,可以解析mp3文件歌曲名.歌手等信息-->
         <dependency>
             <groupId>com.github.goxr3plus</groupId>

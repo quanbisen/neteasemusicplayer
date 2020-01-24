@@ -1,8 +1,7 @@
 package model;
 
 
-public class Song {
-    private int id;
+public class LocalSong {
     private String name;
     private String singer;
     private String album;
@@ -11,12 +10,18 @@ public class Song {
     private String resource;
     private String lyrics;
 
-    public int getId() {
-        return id;
+    public LocalSong(String name) {
+        this.name = name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public LocalSong(String name, String singer, String album, String totalTime, String size, String resource, String lyrics) {
+        this.name = name;
+        this.singer = singer;
+        this.album = album;
+        this.totalTime = totalTime;
+        this.size = size;
+        this.resource = resource;
+        this.lyrics = lyrics;
     }
 
     public String getName() {
@@ -72,23 +77,6 @@ public class Song {
     }
 
     public void setLyrics(String lyrics) {
-        this.lyrics = lyrics;
-    }
-
-    public Song() {
-    }
-
-    public Song(String name){
-        this.name = name;
-    }
-
-    public Song(String name, String singer, String album, String totalTime, String size, String resource, String lyrics) {
-        this.name = name;
-        this.singer = singer;
-        this.album = album;
-        this.totalTime = totalTime;
-        this.size = size;
-        this.resource = resource;
         this.lyrics = lyrics;
     }
 

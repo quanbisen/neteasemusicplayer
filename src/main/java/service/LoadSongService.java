@@ -3,7 +3,7 @@ package service;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import model.Song;
+import model.LocalSong;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import task.LoadSongTask;
@@ -16,13 +16,13 @@ import javax.annotation.Resource;
  */
 @Component
 @Scope("prototype")
-public class LoadSongService extends Service<ObservableList<Song>> {
+public class LoadSongService extends Service<ObservableList<LocalSong>> {
 
     @Resource
     private LoadSongTask loadSongTask;
 
     @Override
-    protected Task<ObservableList<Song>> createTask() {
+    protected Task<ObservableList<LocalSong>> createTask() {
         return loadSongTask;
     }
 }

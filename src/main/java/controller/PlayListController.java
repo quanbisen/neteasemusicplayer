@@ -1,8 +1,6 @@
 package controller;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -18,7 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import mediaplayer.MyMediaPlayer;
-import model.Song;
+import model.LocalSong;
 import org.springframework.stereotype.Controller;
 import util.WindowUtils;
 import javax.annotation.Resource;
@@ -39,13 +37,13 @@ public class PlayListController {
     private TableView tableViewPlayListSong;
 
     @FXML
-    private TableColumn<Song,String> nameColumn;
+    private TableColumn<LocalSong,String> nameColumn;
 
     @FXML
-    private TableColumn<Song,String> singerColumn;
+    private TableColumn<LocalSong,String> singerColumn;
 
     @FXML
-    private TableColumn<Song,String> totalTimeColumn;
+    private TableColumn<LocalSong,String> totalTimeColumn;
 
     @Resource
     private MainController mainController;
@@ -128,10 +126,10 @@ public class PlayListController {
         });
 
 
-        tableViewPlayListSong.setItems(myMediaPlayer.getPlaySongList());
+        tableViewPlayListSong.setItems(myMediaPlayer.getPlayListSongs());   //设置播放列表的表格items
         tableViewPlayListSong.scrollTo(myMediaPlayer.getCurrentPlayIndex());   //滚动到播放的行
         /**更新表格行Row*/
-        tableViewPlayListSong.setRowFactory(new Callback<TableView<Song>, TableRow<Song>>() {
+        tableViewPlayListSong.setRowFactory(new Callback<TableView<LocalSong>, TableRow<LocalSong>>() {
             @Override
             public TableRow call(TableView param) {
                 return new TableRow(){

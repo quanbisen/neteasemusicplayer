@@ -5,13 +5,7 @@ import controller.LocalMusicContentController;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Color;
-import javafx.util.Callback;
-import model.Song;
+import model.LocalSong;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import util.SongUtils;
@@ -27,7 +21,7 @@ import java.util.List;
  */
 @Component
 @Scope("prototype")
-public class LoadSongTask extends Task<ObservableList<Song>> {
+public class LoadSongTask extends Task<ObservableList<LocalSong>> {
 
     /**
      * 注入选择目录的控制器
@@ -42,18 +36,18 @@ public class LoadSongTask extends Task<ObservableList<Song>> {
     private LocalMusicContentController localMusicContentController;
 
     @Override
-    protected ObservableList<Song> call() throws Exception {
+    protected ObservableList<LocalSong> call() throws Exception {
 
         File CHOSE_FOLDER_FILE = new File("src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml");
         if (CHOSE_FOLDER_FILE.exists()) {
             List<String> folderList = XMLUtils.getAllRecord(CHOSE_FOLDER_FILE, "Folder", "path");
             if (folderList.size() > 0) {   //如果选择的文件目录存在，即记录数大于0，获取目录下的歌曲信息集合
-                ObservableList<Song> observableSongList = SongUtils.getObservableSongList(folderList);
+                ObservableList<LocalSong> observableLocalSongList = SongUtils.getObservableSongList(folderList);
                 Platform.runLater(() -> {   //设置"显示歌曲"数量的标签为扫描到的歌曲数目
-                    localMusicContentController.getLabSongCount().setText(String.valueOf(SongUtils.getSongCount(observableSongList)));
+                    localMusicContentController.getLabSongCount().setText(String.valueOf(SongUtils.getSongCount(observableLocalSongList)));
                     localMusicContentController.getBorderPane().setVisible(true);
                 });
-                return observableSongList;
+                return observableLocalSongList;
             } else {
                 Platform.runLater(() -> {
                     localMusicContentController.getLabSongCount().setText("0");

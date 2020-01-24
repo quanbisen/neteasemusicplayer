@@ -2,20 +2,16 @@ package util;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Song;
+import model.LocalSong;
+import model.PlayListSong;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.audio.flac.FlacFileReader;
 import org.jaudiotagger.audio.mp3.MP3AudioHeader;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.id3.ID3v1Tag;
 import org.jaudiotagger.tag.wav.WavTag;
-import org.junit.Test;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.*;
@@ -53,7 +49,7 @@ public final class SongUtils {
         return songsFile;
     }
 
-    public static ObservableList<Song> getObservableSongList(List<String> folderList)  {
+    public static ObservableList<LocalSong> getObservableSongList(List<String> folderList)  {
         //设置日志的输出级别，音乐文件解析时有某些音乐文件会输出警告提示在控制台，关闭它方便调试
         Logger.getLogger("org.jaudiotagger").setLevel(Level.SEVERE);
         Logger.getLogger("org.jaudiotagger.tag").setLevel(Level.OFF);
@@ -61,8 +57,8 @@ public final class SongUtils {
         Logger.getLogger("org.jaudiotagger.tag.id3.ID3v23Tag").setLevel(Level.OFF);
 
         List<File> songsFile = getSongsFile(folderList);
-        ObservableList<Song> observableSongList = FXCollections.observableArrayList();  //获取表格显示内容的集合
-        Map<Character,List<Song>> characterListHashMap = new HashMap<>();   //创建存储歌曲歌名首字的拼音字符映射的map
+        ObservableList<LocalSong> observableLocalSongList = FXCollections.observableArrayList();  //获取表格显示内容的集合
+        Map<Character,List<LocalSong>> characterListHashMap = new HashMap<>();   //创建存储歌曲歌名首字的拼音字符映射的map
         for (File songFile:songsFile){
             try {
                 String name = "";
@@ -128,34 +124,34 @@ public final class SongUtils {
 
                 char head = Pinyin4jUtils.getFirstPinYinHeadChar(name);
                 if (!characterListHashMap.containsKey(head)){   //如果没有这个字符的map映射，创建集合存储
-                    List<Song> characterList = new ArrayList<>();
-                    characterList.add(new Song(name,singer,album,totalTime,size,resource,lyrics));
+                    List<LocalSong> characterList = new ArrayList<>();
+                    characterList.add(new LocalSong(name,singer,album,totalTime,size,resource,lyrics));
                     characterListHashMap.put(head,characterList);
                 }
                 else {  //否则，就有了这个字符的map映射了，追加到字符对应的value的List集合
-                    List<Song> characterListValue = characterListHashMap.get(head);
-                    characterListValue.add(new Song(name,singer,album,totalTime,size,resource,lyrics));
+                    List<LocalSong> characterListValue = characterListHashMap.get(head);
+                    characterListValue.add(new LocalSong(name,singer,album,totalTime,size,resource,lyrics));
                 }
             }catch (Exception e){
                 System.out.println(songFile.getPath()+" cause exception.");
             }
         }
         for (char c:characterListHashMap.keySet()){ //遍历字符集合map，把对应的value集合添加到observableSongList
-            Song song = new Song(String.valueOf(c));    //显示字母的对象，对应表格的一行
-            observableSongList.add(song);
-            observableSongList.addAll(characterListHashMap.get(c));
+            LocalSong localSong = new LocalSong(String.valueOf(c));    //显示字母的对象，对应表格的一行
+            observableLocalSongList.add(localSong);
+            observableLocalSongList.addAll(characterListHashMap.get(c));
         }
 
-        return observableSongList;
+        return observableLocalSongList;
     }
 
     /**获取表格中的集合实际上是歌曲的行记录
      * @param observableList 表格的item集合
      * @return int 实际上的歌曲数量*/
-    public static int getSongCount(ObservableList<Song> observableList){
+    public static int getSongCount(ObservableList<LocalSong> observableList){
         int count = 0;
-        for (Song song:observableList){ //遍历集合
-            if (!isCharacterCategory(song.getName())){ //如果歌曲的名称不是类别，count加1
+        for (LocalSong localSong :observableList){ //遍历集合
+            if (!isCharacterCategory(localSong.getName())){ //如果歌曲的名称不是类别，count加1
                 count++;
             }
         }
@@ -180,14 +176,31 @@ public final class SongUtils {
 
     /**获取表格items中是可播放的实际歌曲的函数
      * @param tableItems 表格items
-     * @return ObservableList<Song>*/
-    public static ObservableList<Song> getActualList(List<Song> tableItems){
-        ObservableList<Song> observableList = FXCollections.observableArrayList();
+     * @return ObservableList<LocalSong>*/
+    public static ObservableList<LocalSong> getLocalSongList(List<LocalSong> tableItems){
+        ObservableList<LocalSong> observableList = FXCollections.observableArrayList();
         tableItems.forEach(item->{
-            if (!isCharacterCategory(item.getName())){
+            if (!SongUtils.isCharacterCategory(item.getName())){
                 observableList.add(item);
             }
         });
         return observableList;
+    }
+
+    /**把表格中的items转换成播放列表集合的函数
+     * @param tableItems 表格items
+     * @return ObservableList<PlayListSong>*/
+    public static ObservableList<PlayListSong> getPlayListSongs(List<LocalSong> tableItems){
+        ObservableList<PlayListSong> observableList = FXCollections.observableArrayList();
+        tableItems.forEach(item->{
+            if (!SongUtils.isCharacterCategory(item.getName())){
+                observableList.add(new PlayListSong(item.getName(),item.getSinger(),item.getTotalTime(),item.getResource()));
+            }
+        });
+        return observableList;
+    }
+
+    public static PlayListSong getPlayListSong(LocalSong localSong){
+        return new PlayListSong(localSong.getName(),localSong.getSinger(),localSong.getTotalTime(),localSong.getResource());
     }
 }

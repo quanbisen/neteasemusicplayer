@@ -1,25 +1,24 @@
 package model;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
 
-public class RecentPlaySong {
+public class RecentSong {
     private String index;
-    private ImageView ivFavor;
+    private Label labAddFavor;
     private String name;
     private String singer;
     private String album;
     private String totalTime;
+    private String resource;
 
-    public RecentPlaySong() {
-    }
-
-    public RecentPlaySong(String index, ImageView ivFavor, String name, String singer, String album, String totalTime) {
+    public RecentSong(String index, Label labAddFavor, String name, String singer, String album, String totalTime, String resource) {
         this.index = index;
-        this.ivFavor = ivFavor;
+        this.labAddFavor = labAddFavor;
         this.name = name;
         this.singer = singer;
         this.album = album;
         this.totalTime = totalTime;
+        this.resource = resource;
     }
 
     public String getIndex() {
@@ -30,12 +29,12 @@ public class RecentPlaySong {
         this.index = index;
     }
 
-    public ImageView getIvFavor() {
-        return ivFavor;
+    public Label getLabAddFavor() {
+        return labAddFavor;
     }
 
-    public void setIvFavor(ImageView ivFavor) {
-        this.ivFavor = ivFavor;
+    public void setLabAddFavor(Label labAddFavor) {
+        this.labAddFavor = labAddFavor;
     }
 
     public String getName() {
@@ -68,5 +67,13 @@ public class RecentPlaySong {
 
     public void setTotalTime(String totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
     }
 }

@@ -2,5 +2,6 @@
 
 <FolderList> 
   <Folder path="D:\Music"></Folder>  
-  <Folder path="C:\Users\flyme\Music"></Folder>
+  <Folder path="C:\Users\flyme\Music"></Folder>  
+  <Folder path="/media/ubuntu/Music"></Folder>
 </FolderList>
