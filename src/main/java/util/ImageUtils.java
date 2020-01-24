@@ -52,26 +52,30 @@ public final class ImageUtils {
      * @return imgAlbum */
     public static ImageView getAlbumImage(String resource) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
         ImageView imgAlbum;
-        try {
-            MP3File mp3File = new MP3File(resource);
-            if (mp3File.hasID3v2Tag()){
-                try {
-                    AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");
-                    FrameBodyAPIC frameBodyAPIC = (FrameBodyAPIC) abstractID3v2Frame.getBody();
-                    byte[] imageData = frameBodyAPIC.getImageData();
-                    imgAlbum= new ImageView(new Image(new ByteArrayInputStream(imageData)));
-                    imgAlbum.setFitWidth(58);
-                    imgAlbum.setFitHeight(58);
-                }catch (NullPointerException e){
+        if (!resource.contains("http:")){
+            try {
+                MP3File mp3File = new MP3File(resource);
+                if (mp3File.hasID3v2Tag()){
+                    try {
+                        AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");
+                        FrameBodyAPIC frameBodyAPIC = (FrameBodyAPIC) abstractID3v2Frame.getBody();
+                        byte[] imageData = frameBodyAPIC.getImageData();
+                        imgAlbum= new ImageView(new Image(new ByteArrayInputStream(imageData)));
+                        imgAlbum.setFitWidth(58);
+                        imgAlbum.setFitHeight(58);
+                    }catch (NullPointerException e){
+                        imgAlbum = createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
+                    }
+
+                }
+                else {
                     imgAlbum = createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
                 }
-
+            }catch (FileNotFoundException e){
+                return createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
             }
-            else {
-                imgAlbum = createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
-            }
-        }catch (FileNotFoundException e){
-            return createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
+        }else { //在线歌曲资源的专辑图，先设置为默认的黑白专辑图，后面再添加。。。
+            imgAlbum = createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
         }
 
         return imgAlbum;

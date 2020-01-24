@@ -16,7 +16,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import mediaplayer.MyMediaPlayer;
 import model.LocalSong;
+import model.OnlineSong;
+import model.PlayListSong;
 import org.springframework.stereotype.Component;
+import util.SongUtils;
+
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,19 +57,19 @@ public class SearchResultController {
 
     /**歌曲名称列组件*/
     @FXML
-    private TableColumn<LocalSong,String> nameColumn;
+    private TableColumn<OnlineSong,String> nameColumn;
 
     /**歌曲歌手列组件*/
     @FXML
-    private TableColumn<LocalSong,String> singerColumn;
+    private TableColumn<OnlineSong,String> singerColumn;
 
     /**歌曲专辑列组件*/
     @FXML
-    private TableColumn<LocalSong,String> albumColumn;
+    private TableColumn<OnlineSong,String> albumColumn;
 
     /**歌曲总时间列组件*/
     @FXML
-    private TableColumn<LocalSong,String> totalTimeColumn;
+    private TableColumn<OnlineSong,String> totalTimeColumn;
 
     /**显示歌曲的表格组件*/
     @FXML
@@ -177,14 +181,14 @@ public class SearchResultController {
     @FXML
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
-     /*       if (myMediaPlayer.getPlayListSongs() == null){
+            if (myMediaPlayer.getPlayListSongs() == null){
                 myMediaPlayer.setPlayListSongs(FXCollections.observableArrayList());
             }
-            LocalSong selectedLocalSong = (LocalSong) tableViewSong.getSelectionModel().getSelectedItem();
-            myMediaPlayer.getPlayLocalSongList().add(selectedLocalSong);  //添加到播放列表后面
-            myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayLocalSongList().size()-1);    //更新当前播放的索引值
-            myMediaPlayer.playNetwork(myMediaPlayer.getPlayLocalSongList().get(myMediaPlayer.getCurrentPlayIndex()));      //播放选中的歌曲
-            bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlayLocalSongList().size())); //更新右下角歌单数量的显示文本*/
+            PlayListSong newPlaySong = SongUtils.getPlayListSong((OnlineSong) tableViewSong.getSelectionModel().getSelectedItem());
+            myMediaPlayer.getPlayListSongs().add(newPlaySong);  //添加到播放列表后面
+            myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(newPlaySong));    //更新当前播放的索引值
+            myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));      //播放选中的歌曲
+            bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlayListSongs().size())); //更新右下角歌单数量的显示文本 林
         }
     }
 }

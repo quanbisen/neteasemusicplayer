@@ -102,7 +102,7 @@ public class RightSlideLoginedController {
             User user = UserUtils.parseUser(leftController.getLOGIN_CONFIG_FILE());
             //设置登录用户的UI组件显示
             Circle circle = new Circle(20,20,20);
-            ImageView userImage = new ImageView(new Image(user.getImage()));
+            ImageView userImage = new ImageView(new Image(user.getImageURL()));
             userImage.setFitWidth(40);
             userImage.setFitHeight(40);
             userImage.setClip(circle);   //设置圆形图片

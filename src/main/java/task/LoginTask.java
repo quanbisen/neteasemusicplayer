@@ -61,7 +61,7 @@ public class LoginTask extends Task<Boolean> {
                     && validUser.getPassword().equals(password)){  //数据库查询到此记录，进行登录成功处理
                 Platform.runLater(()->{
                     loginController.onClickedCloseIcon(loginController.getMouseEvent());   //关闭当前登录窗口
-                    ImageView userImage = new ImageView(new Image(validUser.getImage()));  //创建用户头像图片对象
+                    ImageView userImage = new ImageView(new Image(validUser.getImageURL()));  //创建用户头像图片对象
                     userImage.setFitHeight(38);  //设置宽度、高度
                     userImage.setFitWidth(38);
                     leftController.getLabUserImage().setGraphic(userImage);  //设置用户头像图片
@@ -74,14 +74,14 @@ public class LoginTask extends Task<Boolean> {
                         leftController.getLOGIN_CONFIG_FILE().createNewFile();  //创建新的文件
                         UserUtils.saveUser(validUser, leftController.getLOGIN_CONFIG_FILE());  //调用存储的函数，写入到文件
 
-                        String urlString = validUser.getImage();
+                        String urlString = validUser.getImageURL();
                         String imageName = urlString.substring(urlString.lastIndexOf("/")+1);
                         String USER_IMAGE_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + validUser.getId();
                         File path = new File(USER_IMAGE_PATH);
                         path.mkdirs();              //创建目录
                         System.out.println(USER_IMAGE_PATH);
                         File imageFile = new File(USER_IMAGE_PATH + File.separator + imageName);
-                        ImageUtils.download(validUser.getImage(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
+                        ImageUtils.download(validUser.getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

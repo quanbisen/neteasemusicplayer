@@ -136,7 +136,7 @@ public class LeftController {
 
         if (LOGIN_CONFIG_FILE.exists()){   //如果登录配置文件存在，读取设置，显示登录用户的信息
             User user = UserUtils.parseUser(LOGIN_CONFIG_FILE);  //解析用户对象
-            String urlString = user.getImage();
+            String urlString = user.getImageURL();
             String imageName = urlString.substring(urlString.lastIndexOf("/")+1);
             String USER_IMAGE_PATH = "/config" + File.separator + user.getId() + File.separator + imageName;
             ImageView imageView = new ImageView(new Image(USER_IMAGE_PATH));

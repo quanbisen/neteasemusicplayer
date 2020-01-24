@@ -115,7 +115,12 @@ public class MyMediaPlayer implements IMediaPlayer {
             this.destroy();
         }
         /**创建MediaPlayer播放*/
-        mediaPlayer = new MediaPlayer(new Media(new File(playListSong.getResource()).toURI().toString()));  //创建本地资源的媒体播放器对象
+        String resource = playListSong.getResource();
+        if (resource.contains("http:")){
+            mediaPlayer = new MediaPlayer(new Media(resource)); //创建在线资源的媒体播放器对象
+        }else {
+            mediaPlayer = new MediaPlayer(new Media(new File(playListSong.getResource()).toURI().toString()));  //创建本地资源的媒体播放器对象
+        }
         mediaPlayer.volumeProperty().bind(bottomController.getSliderVolume().valueProperty());  //设置媒体播放器的音量绑定音量条组件的音量
         mediaPlayer.play();   //播放
 
@@ -193,13 +198,16 @@ public class MyMediaPlayer implements IMediaPlayer {
                     break;
                 }
                 case SHUFFLE: {              //"随机播放"
-                    //随机播放模式下，如果歌曲表格只有一首歌，只要把mediaPlayer的当前播放时间重新设置为0秒就可以了
+                    //随机播放模式下，如果播放列表只有一首歌，只要把mediaPlayer的当前播放时间重新设置为0秒就可以了
                     if (playListSongs.size() == 1) {
                         mediaPlayer.seek(new Duration(0));  //定位到0毫秒(0秒)的时间，重新开始播放
                         mediaPlayer.play();
                     }
-                    //否则，歌曲表格大于1，生成一个非当前播放的索引值来播放
+                    //否则，播放列表大于1，生成一个非当前播放的索引值来播放
                     else {
+                        if (lastPlayIndexList == null){
+                            lastPlayIndexList = new ArrayList<>();
+                        }
                         lastPlayIndexList.add(currentPlayIndex);   //先记录当前的索引是上一首需要的索引
 
                         if (nextPlayIndexList.size() == 0) {  //nextPlayIndexList的大小等0，证明当前没有需要播放下一首歌曲的索引，直接生成随机索引数播放

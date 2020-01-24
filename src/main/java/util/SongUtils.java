@@ -3,6 +3,7 @@ package util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.LocalSong;
+import model.OnlineSong;
 import model.PlayListSong;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -200,7 +201,14 @@ public final class SongUtils {
         return observableList;
     }
 
+    /**把本地音乐对象模型转换成播放列表模型函数
+     * @param localSong
+     * @return PlayListSong*/
     public static PlayListSong getPlayListSong(LocalSong localSong){
         return new PlayListSong(localSong.getName(),localSong.getSinger(),localSong.getTotalTime(),localSong.getResource());
+    }
+
+    public static PlayListSong getPlayListSong(OnlineSong onlineSong){
+        return new PlayListSong(onlineSong.getName(),onlineSong.getSinger(),onlineSong.getTotalTime(),onlineSong.getResource());
     }
 }

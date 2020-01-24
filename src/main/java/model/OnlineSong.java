@@ -1,89 +1,28 @@
 package model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 /**
  * @author super lollipop
  * @date 20-1-24
  */
+@Data
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class OnlineSong {
+    @NonNull
     private String name;
+    @NonNull
     private String singer;
+    @NonNull
     private String album;
+    @NonNull
     private String totalTime;
+    @NonNull
     private String resource;
     private String lyrics;
     private String albumURL;
-
-    public OnlineSong(String name, String singer, String album, String totalTime, String resource) {
-        this.name = name;
-        this.singer = singer;
-        this.album = album;
-        this.totalTime = totalTime;
-        this.resource = resource;
-    }
-
-    public OnlineSong(String name, String singer, String album, String totalTime, String resource, String lyrics, String albumURL) {
-        this.name = name;
-        this.singer = singer;
-        this.album = album;
-        this.totalTime = totalTime;
-        this.resource = resource;
-        this.lyrics = lyrics;
-        this.albumURL = albumURL;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSinger() {
-        return singer;
-    }
-
-    public void setSinger(String singer) {
-        this.singer = singer;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    public String getTotalTime() {
-        return totalTime;
-    }
-
-    public void setTotalTime(String totalTime) {
-        this.totalTime = totalTime;
-    }
-
-    public String getResource() {
-        return resource;
-    }
-
-    public void setResource(String resource) {
-        this.resource = resource;
-    }
-
-    public String getLyrics() {
-        return lyrics;
-    }
-
-    public void setLyrics(String lyrics) {
-        this.lyrics = lyrics;
-    }
-
-    public String getAlbumURL() {
-        return albumURL;
-    }
-
-    public void setAlbumURL(String albumURL) {
-        this.albumURL = albumURL;
-    }
 }
