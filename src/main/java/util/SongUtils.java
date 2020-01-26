@@ -13,6 +13,7 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.id3.ID3v1Tag;
 import org.jaudiotagger.tag.wav.WavTag;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.*;
@@ -52,10 +53,11 @@ public final class SongUtils {
 
     public static ObservableList<LocalSong> getObservableSongList(List<String> folderList)  {
         //设置日志的输出级别，音乐文件解析时有某些音乐文件会输出警告提示在控制台，关闭它方便调试
+
         Logger.getLogger("org.jaudiotagger").setLevel(Level.SEVERE);
-        Logger.getLogger("org.jaudiotagger.tag").setLevel(Level.OFF);
-        Logger.getLogger("org.jaudiotagger.audio.mp3.MP3File").setLevel(Level.OFF);
-        Logger.getLogger("org.jaudiotagger.tag.id3.ID3v23Tag").setLevel(Level.OFF);
+//        Logger.getLogger("org.jaudiotagger.tag").setLevel(Level.OFF);
+//        Logger.getLogger("org.jaudiotagger.audio.mp3.MP3File").setLevel(Level.SEVERE);
+//        Logger.getLogger("org.jaudiotagger.tag.id3.ID3v23Tag").setLevel(Level.WARNING);
 
         List<File> songsFile = getSongsFile(folderList);
         ObservableList<LocalSong> observableLocalSongList = FXCollections.observableArrayList();  //获取表格显示内容的集合
@@ -123,6 +125,11 @@ public final class SongUtils {
                 size=m.substring(0, m.indexOf(".")+3)+"MB";   //文件大小
                 resource = songFile.getPath();                //资源路径
 
+                /**trim name,singer,album String*/
+                name = name.trim();
+                singer = singer.trim();
+                album = album.trim();
+
                 char head = Pinyin4jUtils.getFirstPinYinHeadChar(name);
                 if (!characterListHashMap.containsKey(head)){   //如果没有这个字符的map映射，创建集合存储
                     List<LocalSong> characterList = new ArrayList<>();
@@ -145,6 +152,7 @@ public final class SongUtils {
 
         return observableLocalSongList;
     }
+
 
     /**获取表格中的集合实际上是歌曲的行记录
      * @param observableList 表格的item集合

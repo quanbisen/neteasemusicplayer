@@ -180,7 +180,7 @@ public class MyMediaPlayer implements IMediaPlayer {
             add(playListSong.getResource());
         }};
         try {
-            XMLUtils.addOneRecordByAttributeList(recentPlayStoreFile,"PlayedSong",attributeNameList,attributeValueList);
+            XMLUtils.addOneRecord(recentPlayStoreFile,"PlayedSong",attributeNameList,attributeValueList);
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -44,6 +44,9 @@ public class FXApplication extends Application {
             primaryStage.initStyle(StageStyle.TRANSPARENT);   //去掉Windows自带的标题栏
             WindowUtils.addResizable(primaryStage,860,570);  //为primaryStage添加自由缩放
             WindowUtils.addWindowsStyle(primaryStage);  //为primaryStage添加一些GUI的修复代码
+        }else { //minWidth="870.0" minHeight="580.0"
+            primaryStage.setMinWidth(870.0);
+            primaryStage.setMinHeight(580.0);
         }
         
         primaryStage.show();  //显示主舞台
