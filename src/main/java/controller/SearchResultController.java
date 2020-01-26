@@ -185,7 +185,7 @@ public class SearchResultController {
                 myMediaPlayer.setPlayListSongs(FXCollections.observableArrayList());
             }
             PlayListSong newPlaySong = SongUtils.getPlayListSong((OnlineSong) tableViewSong.getSelectionModel().getSelectedItem());
-            myMediaPlayer.getPlayListSongs().add(newPlaySong);  //添加到播放列表后面
+            myMediaPlayer.getPlayListSongs().add(myMediaPlayer.getCurrentPlayIndex()+1,newPlaySong);  //添加到播放列表后面
             myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(newPlaySong));    //更新当前播放的索引值
             myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));      //播放选中的歌曲
             bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlayListSongs().size())); //更新右下角歌单数量的显示文本 林

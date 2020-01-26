@@ -17,6 +17,8 @@ public class PlayListSong {
     @NonNull
     private String singer;
     @NonNull
+    private String album;
+    @NonNull
     private String totalTime;
     @NonNull
     private String resource;

@@ -195,7 +195,7 @@ public final class SongUtils {
         ObservableList<PlayListSong> observableList = FXCollections.observableArrayList();
         tableItems.forEach(item->{
             if (!SongUtils.isCharacterCategory(item.getName())){
-                observableList.add(new PlayListSong(item.getName(),item.getSinger(),item.getTotalTime(),item.getResource()));
+                observableList.add(new PlayListSong(item.getName(),item.getSinger(),item.getAlbum(),item.getTotalTime(),item.getResource()));
             }
         });
         return observableList;
@@ -205,10 +205,13 @@ public final class SongUtils {
      * @param localSong
      * @return PlayListSong*/
     public static PlayListSong getPlayListSong(LocalSong localSong){
-        return new PlayListSong(localSong.getName(),localSong.getSinger(),localSong.getTotalTime(),localSong.getResource());
+        return new PlayListSong(localSong.getName(),localSong.getSinger(),localSong.getAlbum(),localSong.getTotalTime(),localSong.getResource());
     }
 
+    /**把在线音乐对象模型转换成播放列表模型函数
+     * @param onlineSong
+     * @return PlayListSong*/
     public static PlayListSong getPlayListSong(OnlineSong onlineSong){
-        return new PlayListSong(onlineSong.getName(),onlineSong.getSinger(),onlineSong.getTotalTime(),onlineSong.getResource());
+        return new PlayListSong(onlineSong.getName(),onlineSong.getSinger(),onlineSong.getAlbum(),onlineSong.getTotalTime(),onlineSong.getResource());
     }
 }

@@ -15,6 +15,8 @@ import org.jaudiotagger.tag.TagException;
 import org.springframework.stereotype.Component;
 import util.ImageUtils;
 import util.TimeUtils;
+import util.XMLUtils;
+
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
@@ -63,6 +65,12 @@ public class MyMediaPlayer implements IMediaPlayer {
     @Resource
     private BottomController bottomController;
 
+    /**记录最近播放记录文件存储位置*/
+    private String recentPlayFilePath = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "recent-play.xml";
+
+    /**记录最近播放记录文件句柄*/
+    private File recentPlayStoreFile;
+
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
@@ -77,6 +85,10 @@ public class MyMediaPlayer implements IMediaPlayer {
 
     public int getCurrentPlayIndex() {
         return currentPlayIndex;
+    }
+
+    public PlayListSong getCurrentPlaySong(){
+        return playListSongs.get(currentPlayIndex);
     }
 
     public List<Integer> getLastPlayIndexList() {
@@ -144,6 +156,37 @@ public class MyMediaPlayer implements IMediaPlayer {
             }
         });
 
+        /**添加到最近播放的存储文件处理操作
+         * start*/
+        if (recentPlayStoreFile == null){
+            recentPlayStoreFile = new File(recentPlayFilePath);
+        }
+        if (!recentPlayStoreFile.exists()){ //如果文件不存在
+            recentPlayStoreFile.createNewFile();    //创建新文件
+            XMLUtils.createXML(recentPlayStoreFile,"RecentPlaySongs");
+        }
+        List<String> attributeNameList = new ArrayList<String>(){{
+            add("name");
+            add("singer");
+            add("album");
+            add("totalTime");
+            add("resource");
+        }};
+        List<String> attributeValueList = new ArrayList<String>(){{
+            add(playListSong.getName());
+            add(playListSong.getSinger());
+            add(playListSong.getAlbum());
+            add(playListSong.getTotalTime());
+            add(playListSong.getResource());
+        }};
+        try {
+            XMLUtils.addOneRecordByAttributeList(recentPlayStoreFile,"PlayedSong",attributeNameList,attributeValueList);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        /**媒体播放器结束后触发的事件
+         * start*/
         mediaPlayer.setOnEndOfMedia(() -> {   //媒体播放器结束后触发的事件.
             switch (playMode) {
                 case SINGLE_LOOP: {                        //单曲循环模式
@@ -240,6 +283,7 @@ public class MyMediaPlayer implements IMediaPlayer {
                 default:
             }
         });
+        /**end*/
 
     }
 

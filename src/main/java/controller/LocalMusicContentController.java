@@ -1,8 +1,10 @@
 package controller;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -202,11 +204,35 @@ public class LocalMusicContentController {
         progressIndicator.visibleProperty().bind(loadSongService.runningProperty());
         loadSongService.start();  //启动服务
 
-        /**加载歌曲信息成功后执行定制的表格样式，使用Java代码设置样式，css设置样式存在更新的不同步的问题
+
+        /**单击表格歌曲行的事件处理，注意：歌曲行为非字母分类行*/
+        EventHandler<MouseEvent> onClickedTableSongRow = mouseEvent -> {
+            if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
+                LocalSong selectedLocalSong = tableViewSong.getSelectionModel().getSelectedItem();
+                if (myMediaPlayer.getPlayListSongs() == null || myMediaPlayer.getPlayListSongs().size() ==0){
+                    myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
+                    myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.getPlayListSong(selectedLocalSong)));  //设置当前播放的歌曲在播放列表playList中的位置
+                } else if (myMediaPlayer.getCurrentPlaySong().equals(SongUtils.getPlayListSong(selectedLocalSong))) {
+                    return;
+                } else {
+                    myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
+                    myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.getPlayListSong(selectedLocalSong)));  //设置当前播放的歌曲在播放列表playList中的位置
+                }
+                System.out.println(myMediaPlayer.getCurrentPlayIndex());
+                try {
+                    myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));      //播放选中的歌曲
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //设置右下角"歌单文本提示"显示数量
+                bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlayListSongs().size()));
+            }
+        };
+        /**设置表格行的行为
          * start*/
         loadSongService.setOnSucceeded(event -> {
             tableViewSong.setRowFactory(new Callback<TableView<LocalSong>, TableRow<LocalSong>>() {
-                int index=0;    //用作字母分类的记录基数偶数行的标记index
+//                int index=0;    //用作字母分类的记录基数偶数行的标记index
                 @Override
                 public TableRow<LocalSong> call(TableView<LocalSong> param) {
                     return new TableRow<LocalSong>(){
@@ -216,29 +242,19 @@ public class LocalMusicContentController {
                             if (!empty){
                                 /**设置表格行的样式*/
                                 if (SongUtils.isCharacterCategory(item.getName())){
-                                    index = 0;
-                                    this.setStyle("-fx-background-color: #FAFAFC;");
+//                                    index = 0;
+//                                    this.setStyle("-fx-background-color: #FAFAFC;");
+                                    this.setMouseTransparent(true);
+                                    this.removeEventHandler(MouseEvent.MOUSE_CLICKED,onClickedTableSongRow);
                                 }else {
-                                    index++;
-                                    if (index%2 != 0){
-                                        this.setStyle("-fx-background-color:#F4F4F6;"); //字母行下的基数行样式
-                                    }else {
-                                        this.setStyle("-fx-background-color: #FAFAFC;");//字母行下的偶数行样式
-                                    }
-                            /*        this.setOnMouseEntered(event1 -> {
-                                        if (!this.isSelected()){
-                                            this.setStyle("-fx-background-color: #F2F2F3;");
-                                        }
-                                    });
-                                    this.setOnMouseExited(event1 -> {
-                                        getTableView().refresh();
-                                    });*/
-                                    /**设置表格行的右键菜单contextMenu*/
-                                    try {
-                                        this.setContextMenu(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/song-contextmenu.fxml").load());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+//                                    index++;
+//                                    if (index%2 != 0){
+//                                        this.setStyle("-fx-background-color:#F4F4F6;"); //字母行下的基数行样式
+//                                    }else {
+//                                        this.setStyle("-fx-background-color: #FAFAFC;");//字母行下的偶数行样式
+//                                    }
+                                    this.setMouseTransparent(false);
+                                    this.setOnMouseClicked(onClickedTableSongRow);
                                 }
                             }
                         }
@@ -247,9 +263,17 @@ public class LocalMusicContentController {
                             super.updateSelected(selected);
                             if (selected){  //如果选中了
                                 if (!SongUtils.isCharacterCategory(this.getItem().getName())){  //选择的是实际上的歌曲行才执行
-                                    this.getTableView().refresh();  //刷新表格
-                                    this.setStyle("-fx-background-color: #DEDEE0;");    //设置背景
+//                                    this.getTableView().refresh();  //刷新表格
+//                                    this.setStyle("-fx-background-color: #DEDEE0;");    //设置背景
+                                    /**设置表格行的右键菜单contextMenu*/
+                                    try {
+                                        this.setContextMenu(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/song-contextmenu.fxml").load());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
+                            }else {
+                                this.setContextMenu(null);
                             }
                         }
                     };
@@ -280,7 +304,7 @@ public class LocalMusicContentController {
                         @Override
                         protected void updateItem(String item, boolean empty) {
                             super.updateItem(item, empty);
-                            if (item==null||empty){ //如果为空的，设置为空
+                            if (item == null || empty){ //如果为空的，设置为空
                                 this.setText(null);
                                 this.setStyle("");
                             }
@@ -302,9 +326,9 @@ public class LocalMusicContentController {
         /**end*/
 
 
-        /*******Fixed some resize bug here.********/
+        /*******Fixed some resize cursor bug here.********/
         localMusicContentContainer.setCursor(Cursor.DEFAULT);
-        /*******Fixed some resize bug here.********/
+        /*******Fixed some resize cursor bug here.********/
 
         tfSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             if (observableItems == null){   //如果存储表格内容的变量为空，才指向表格的内容
@@ -326,10 +350,13 @@ public class LocalMusicContentController {
                 ivSearchIcon.setImage(new Image("/image/SearchIcon-16.png"));
                 observableResultList.removeAll();   //清除所有的搜索结果
                 tableViewSong.setItems(observableItems);
+                if (tableViewSong.getSelectionModel().getSelectedIndex() != -1){    //如果表格有选择的行，清除
+                    tableViewSong.getSelectionModel().clearSelection();
+                }
             }
         });
 
-//        tableViewSong.setContextMenu(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/song-contextmenu.fxml").load());
+
     }
 
     /**“选择目录”按钮按下事件处理*/
@@ -382,7 +409,7 @@ public class LocalMusicContentController {
     /**单击表格存储歌曲的容器事件处理*/
     @FXML
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
-        if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
+        /*if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
             if (!SongUtils.isCharacterCategory(tableViewSong.getSelectionModel().getSelectedItem().getName())){ //如果双击播放的歌曲不是字母分类的行，才执行以下播放
                 myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
                 myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.getPlayListSong(tableViewSong.getSelectionModel().getSelectedItem())));  //设置当前播放的歌曲在播放列表playList中的位置
@@ -393,7 +420,7 @@ public class LocalMusicContentController {
 //                System.out.println(tableViewSong.getSelectionModel().getSelectedIndex());
 //                System.out.println(myMediaPlayer.getCurrentPlayIndex());
             }
-        }
+        }*/
     }
 
     /**"播放全部"按钮的鼠标单击事件处理*/
@@ -416,7 +443,9 @@ public class LocalMusicContentController {
     }
 
     public void onScrollTableView(ScrollEvent scrollEvent) {
+
         System.out.println("scrolling");
+//        tableViewSong.refresh();
     }
 
     public void onScrollToColumn(ScrollToEvent<TableColumn<LocalSong,?>> tableColumnScrollToEvent) {

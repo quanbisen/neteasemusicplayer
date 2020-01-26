@@ -181,7 +181,7 @@ public class SearchInputController {
         searchInputContainer.setCenter(parent); //设置容器的中间容器内容
     }
 
-    /**保存搜索的记录的文件*/
+    /**保存搜索的记录的函数*/
     private void saveSearchText(String text) throws DocumentException, IOException {
         //获取已经保存的文本集合，存储在list中
         List<Node> vBoxChildren = vBoxHistoryContainer.getChildren();
@@ -189,11 +189,11 @@ public class SearchInputController {
         for (Node node:vBoxChildren){
             list.add(((Label)((BorderPane)node).getCenter()).getText());
         }
-        //先更新GUI的
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/search-history-record.fxml");   //获取fxml文件加载器
-        vBoxHistoryContainer.getChildren().add(0,fxmlLoader.load());  //加载容器并添加到搜索历史的容器vBoxHistoryContainer
-        ((SearchHistoryRecordController)fxmlLoader.getController()).getLabRecordText().setText(text);    //设置文本
         if (!list.contains(text)){  //如果保存的记录没有包含text文本
+            //先更新GUI的
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/search-history-record.fxml");   //获取fxml文件加载器
+            vBoxHistoryContainer.getChildren().add(0,fxmlLoader.load());  //加载容器并添加到搜索历史的容器vBoxHistoryContainer
+            ((SearchHistoryRecordController)fxmlLoader.getController()).getLabRecordText().setText(text);    //设置文本
             //后保存记录到存储文件
             if (!SEARCH_HISTORY_FILE.exists()){     //如果存储搜索历史的文件不存在
                 XMLUtils.createXML(SEARCH_HISTORY_FILE,"SearchRecordList"); //创建一个新的XML文件
@@ -203,7 +203,7 @@ public class SearchInputController {
         else {  //否则，证明已有，需要把从第2个开始的，包含text文本的记录移除
             List<Node> recordNodeList = vBoxHistoryContainer.getChildren();
             for(int i=1;i<recordNodeList.size()-1;i++){
-                if (((Label)((BorderPane)recordNodeList.get(i)).getLeft()).getText().equals(text)){
+                if (((Label)((BorderPane)recordNodeList.get(i)).getCenter()).getText().equals(text)){
                     vBoxHistoryContainer.getChildren().remove(recordNodeList.get(i));
                     break;
                 }

@@ -41,6 +41,20 @@ public final class XMLUtils {
         saveToFile(xmlFile, dom);
     }
 
+    public static void addOneRecordByAttributeList(File xmlFile, String subName, List<String> attributeNameList, List<String> attributeValueList) throws Exception {
+        if (attributeNameList.size() != attributeValueList.size()){
+            throw new Exception("集合属性和属性值的大小不一致");
+        }
+        SAXReader reader = new SAXReader();
+        Document dom = reader.read(xmlFile);
+        Element root = dom.getRootElement();
+        Element subEle = root.addElement(subName);
+        for (int i = 0; i < attributeNameList.size(); i++) {
+            subEle.addAttribute(attributeNameList.get(i), attributeValueList.get(i));
+        }
+        saveToFile(xmlFile,dom);
+    }
+
     /**获取XML文件指定的子元素指定的属性对应的属性值
      * @param xmlFile XML文件
      * @param subName 子元素名称
