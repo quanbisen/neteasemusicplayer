@@ -8,12 +8,14 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import model.PlayListSong;
+import model.RecentSong;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.springframework.stereotype.Component;
 import util.ImageUtils;
+import util.SongUtils;
 import util.TimeUtils;
 import util.XMLUtils;
 
@@ -69,7 +71,7 @@ public class MyMediaPlayer implements IMediaPlayer {
     private String recentPlayFilePath = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "recent-play.xml";
 
     /**记录最近播放记录文件句柄*/
-    private File recentPlayStoreFile;
+    private File recentPlayStorageFile = new File(recentPlayFilePath);;
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
@@ -117,6 +119,10 @@ public class MyMediaPlayer implements IMediaPlayer {
         this.currentPlayIndex = currentPlayIndex;
     }
 
+    public File getRecentPlayStorageFile() {
+        return recentPlayStorageFile;
+    }
+
     /**
      * 自定义媒体播放器播放新歌曲行为
      */
@@ -158,12 +164,9 @@ public class MyMediaPlayer implements IMediaPlayer {
 
         /**添加到最近播放的存储文件处理操作
          * start*/
-        if (recentPlayStoreFile == null){
-            recentPlayStoreFile = new File(recentPlayFilePath);
-        }
-        if (!recentPlayStoreFile.exists()){ //如果文件不存在
-            recentPlayStoreFile.createNewFile();    //创建新文件
-            XMLUtils.createXML(recentPlayStoreFile,"RecentPlaySongs");
+        if (!recentPlayStorageFile.exists()){ //如果文件不存在
+            recentPlayStorageFile.createNewFile();    //创建新文件
+            XMLUtils.createXML(recentPlayStorageFile,"RecentPlaySongs");
         }
         List<String> attributeNameList = new ArrayList<String>(){{
             add("name");
@@ -180,7 +183,11 @@ public class MyMediaPlayer implements IMediaPlayer {
             add(playListSong.getResource());
         }};
         try {
-            XMLUtils.addOneRecord(recentPlayStoreFile,"PlayedSong",attributeNameList,attributeValueList);
+            List<RecentSong> playedSongs = XMLUtils.getRecentPlaySongs(recentPlayStorageFile,"PlayedSong");   //获取存储文件中的所有最近播放歌曲，存储在集合中
+            if (SongUtils.isContains(playedSongs,playListSong)){   //，直接
+                XMLUtils.removeOneRecord(recentPlayStorageFile,playListSong); //删除存储文件中的这条最近播放记录
+            }
+            XMLUtils.addOneRecord(recentPlayStorageFile,"PlayedSong",attributeNameList,attributeValueList);   //添加存储到文件
         }catch (Exception e){
             e.printStackTrace();
         }

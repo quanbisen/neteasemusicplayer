@@ -1,5 +1,6 @@
 package util;
 
+import model.PlayListSong;
 import model.RecentSong;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -109,6 +110,21 @@ public final class XMLUtils {
         return recentSongs;
     }
 
+    /**删除存储最近播放歌曲文件中的一条最近播放歌曲记录的函数
+     * @param xmlFile 存储文件
+     * @param playListSong 最近播放列表的歌曲对象*/
+    public static void removeOneRecord(File xmlFile, PlayListSong playListSong) throws DocumentException {
+        Element root = getRootElement(xmlFile);
+        List<Element> list = root.elements();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).attributeValue("resource").equals(playListSong.getResource())){
+                list.get(i).detach();
+                break;
+            }
+        }
+        saveToFile(xmlFile, root.getDocument());
+
+    }
 
     public static boolean isExist(File xmlFile, String subName, String attributeName,String candidate) throws DocumentException{
         List<String> list = getAllRecord(xmlFile,subName,attributeName);
@@ -139,22 +155,16 @@ public final class XMLUtils {
         }
     }
 
-    public static void removeOneRecord(File destination, String attributeName, String deleteValue)  {
-        try {
-            SAXReader reader = new SAXReader();
-            Document dom = reader.read(destination);
-            Element root = dom.getRootElement();
-            @SuppressWarnings("unchecked")
-            List<Element> list = root.elements();
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).attributeValue(attributeName).equals(deleteValue)) {
-                    list.get(i).detach();
-                }
+    public static void removeOneRecord(File destination, String attributeName, String deleteValue) throws DocumentException {
+        Element root = getRootElement(destination);
+        List<Element> list = root.elements();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).attributeValue(attributeName).equals(deleteValue)) {
+                list.get(i).detach();
+                break;
             }
-            saveToFile(destination, dom);
-        }catch (Exception e){
-            e.printStackTrace();
         }
+        saveToFile(destination, root.getDocument());
     }
 
     //删除ChoseFolder元素下面的所有子元素

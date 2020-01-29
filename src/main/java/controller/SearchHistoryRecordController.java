@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import org.dom4j.DocumentException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import util.XMLUtils;
@@ -63,7 +64,7 @@ public class SearchHistoryRecordController {
 
     /**单击记录清除图标的事件处理*/
     @FXML
-    public void onClickedClear(MouseEvent mouseEvent) {
+    public void onClickedClear(MouseEvent mouseEvent) throws DocumentException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             searchInputController.getvBoxHistoryContainer().getChildren().remove(ivDelete.getParent());    //GUI更新，移除本容器
             if (searchInputController.getSEARCH_HISTORY_FILE().exists()){   //如果存储的文件存在

@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <RecentPlaySongs> 
-  <PlayedSong name="会有那么一天" singer="林俊杰" album="乐行者" totalTime="04:13" resource="/media/ubuntu/Music/林俊杰 - 会有那么一天.mp3"></PlayedSong>  
-  <PlayedSong name="画 (Live Piano Session II)" singer="G.E.M.邓紫棋" album="再见" totalTime="02:48" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 画 (Live Piano Session II).mp3"></PlayedSong>  
-  <PlayedSong name="As I Believe" singer="林俊杰" album="对的时间点" totalTime="04:15" resource="/media/ubuntu/Music/林俊杰 - As I Believe.mp3"></PlayedSong>  
-  <PlayedSong name="As I Believe" singer="林俊杰" album="对的时间点" totalTime="04:15" resource="/media/ubuntu/Music/林俊杰 - As I Believe.mp3"></PlayedSong>  
-  <PlayedSong name="爱不会绝迹" singer="林俊杰" album="100天" totalTime="04:00" resource="/media/ubuntu/Music/林俊杰 - 爱不会绝迹.mp3"></PlayedSong>  
-  <PlayedSong name="All About U" singer="G.E.M. 邓紫棋" album="18" totalTime="04:01" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - All About U.mp3"></PlayedSong>  
-  <PlayedSong name="被风吹过的夏天" singer="林俊杰/金莎" album="不可思议金选" totalTime="04:12" resource="/media/ubuntu/Music/林俊杰 - 被风吹过的夏天.mp3"></PlayedSong>  
-  <PlayedSong name="Beautiful In White (Demo)" singer="Westlife" album="Beautiful In White (Demo)" totalTime="03:52" resource="/media/ubuntu/Music/Westlife - Beautiful In White (Demo).mp3"></PlayedSong>  
-  <PlayedSong name="不潮不用花钱" singer="林俊杰" album="JJ陆" totalTime="03:53" resource="/media/ubuntu/Music/林俊杰 - 不潮不用花钱.mp3"></PlayedSong>  
+  <PlayedSong name="我的秘密" singer="G.E.M.邓紫棋" album="A.I.N.Y. 爱你" totalTime="04:10" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 我的秘密 .mp3"></PlayedSong>  
+  <PlayedSong name="期待爱" singer="林俊杰/金莎" album="JJ陆" totalTime="03:54" resource="/media/ubuntu/Music/林俊杰 - 期待爱.mp3"></PlayedSong>  
+  <PlayedSong name="安琪" singer="许嵩" album="半城烟沙" totalTime="03:39" resource="/media/ubuntu/Music/许嵩 - 安琪.mp3"></PlayedSong>  
+  <PlayedSong name="后会无期" singer="G.E.M.邓紫棋" album="后会无期" totalTime="03:43" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 后会无期.mp3"></PlayedSong>  
+  <PlayedSong name="冻结" singer="林俊杰" album="乐行者" totalTime="04:49" resource="/media/ubuntu/Music/林俊杰 - 冻结.mp3"></PlayedSong>  
   <PlayedSong name="背对背拥抱" singer="林俊杰" album="100天" totalTime="03:58" resource="/media/ubuntu/Music/林俊杰 - 背对背拥抱.mp3"></PlayedSong>  
-  <PlayedSong name="不煽情" singer="许嵩" album="寻雾启示" totalTime="05:16" resource="/media/ubuntu/Music/许嵩 - 不煽情.mp3"></PlayedSong>  
-  <PlayedSong name="查克靠近" singer="G.E.M.邓紫棋" album="新的心跳" totalTime="04:21" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 查克靠近.mp3"></PlayedSong>  
+  <PlayedSong name="说散就散（“前任3：再见前任”电影主题曲）" singer="袁娅维" album="说散就散" totalTime="04:02" resource="/media/ubuntu/Music/袁娅维-说散就散.mp3"></PlayedSong>  
+  <PlayedSong name="As I Believe" singer="林俊杰" album="对的时间点" totalTime="04:15" resource="/media/ubuntu/Music/林俊杰 - As I Believe.mp3"></PlayedSong>  
+  <PlayedSong name="千百度" singer="许嵩" album="苏格拉没有底" totalTime="03:46" resource="/media/ubuntu/Music/许嵩 - 千百度.mp3"></PlayedSong>  
+  <PlayedSong name="会有那么一天" singer="林俊杰" album="乐行者" totalTime="04:13" resource="/media/ubuntu/Music/林俊杰 - 会有那么一天.mp3"></PlayedSong>  
+  <PlayedSong name="医生" singer="许嵩" album="苏格拉没有底" totalTime="04:03" resource="/media/ubuntu/Music/许嵩 - 医生.mp3"></PlayedSong>  
+  <PlayedSong name="I Lay My Love On You" singer="Westlife" album="Unbreakable: The Greatest Hits" totalTime="03:29" resource="/media/ubuntu/Music/Westlife - I Lay My Love On You.mp3"></PlayedSong>  
+  <PlayedSong name="将故事写成我们" singer="林俊杰" album="将故事写成我们" totalTime="05:36" resource="/media/ubuntu/Music/林俊杰 - 将故事写成我们.mp3"></PlayedSong>  
+  <PlayedSong name="握不住的他" singer="林俊杰" album="她说 概念自选辑" totalTime="03:31" resource="/media/ubuntu/Music/林俊杰 - 握不住的他.mp3"></PlayedSong>  
+  <PlayedSong name="Mascara 烟熏妆" singer="G.E.M.邓紫棋" album="18" totalTime="04:04" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - Mascara 烟熏妆.mp3"></PlayedSong>  
+  <PlayedSong name="想太多 (Radio-Edit)" singer="周柏豪" album="想太多 (radio-edit)" totalTime="04:05" resource="/media/ubuntu/Music/周柏豪 - 想太多 (Radio-Edit).mp3"></PlayedSong>  
+  <PlayedSong name="对的时间点" singer="林俊杰" album="对的时间点" totalTime="04:02" resource="/media/ubuntu/Music/林俊杰 - 对的时间点.mp3"></PlayedSong>  
+  <PlayedSong name="多远都要在一起" singer="G.E.M.邓紫棋" album="新的心跳" totalTime="03:37" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 多远都要在一起.mp3"></PlayedSong>  
   <PlayedSong name="传闻" singer="周柏豪" album="Rumors" totalTime="04:08" resource="/media/ubuntu/Music/周柏豪 - 传闻.mp3"></PlayedSong>  
-  <PlayedSong name="曹操" singer="林俊杰" album="曹操" totalTime="04:02" resource="/media/ubuntu/Music/林俊杰 - 曹操.mp3"></PlayedSong>  
-  <PlayedSong name="Cries in a Distance" singer="林俊杰" album="JJ陆" totalTime="03:45" resource="/media/ubuntu/Music/林俊杰 - Cries in a Distance.mp3"></PlayedSong>  
-  <PlayedSong name="翅膀" singer="林俊杰" album="乐行者" totalTime="03:42" resource="/media/ubuntu/Music/林俊杰 - 翅膀.mp3"></PlayedSong>  
-  <PlayedSong name="城府" singer="许嵩" album="自定义" totalTime="03:19" resource="/media/ubuntu/Music/许嵩 - 城府.mp3"></PlayedSong>
+  <PlayedSong name="被风吹过的夏天" singer="林俊杰/金莎" album="不可思议金选" totalTime="04:12" resource="/media/ubuntu/Music/林俊杰 - 被风吹过的夏天.mp3"></PlayedSong>  
+  <PlayedSong name="情人" singer="G.E.M.邓紫棋" album="Get Everybody Moving Concert 2011" totalTime="05:51" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 情人.mp3"></PlayedSong>  
+  <PlayedSong name="Wonderland" singer="林俊杰" album="Wonderland" totalTime="04:02" resource="/media/ubuntu/Music/林俊杰 - Wonderland.mp3"></PlayedSong>
 </RecentPlaySongs>

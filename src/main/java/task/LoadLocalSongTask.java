@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Component
 @Scope("prototype")
-public class LoadSongTask extends Task<ObservableList<LocalSong>> {
+public class LoadLocalSongTask extends Task<ObservableList<LocalSong>> {
 
     /**
      * 注入选择目录的控制器

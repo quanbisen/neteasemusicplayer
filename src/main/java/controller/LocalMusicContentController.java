@@ -1,7 +1,6 @@
 package controller;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -29,7 +28,7 @@ import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
-import service.LoadSongService;
+import service.LoadLocalSongService;
 import util.SongUtils;
 import util.StageUtils;
 import util.WindowUtils;
@@ -199,10 +198,10 @@ public class LocalMusicContentController {
         });
 
         /**加载歌曲服务*/
-        LoadSongService loadSongService = applicationContext.getBean(LoadSongService.class);  //获取服务对象
-        tableViewSong.itemsProperty().bind(loadSongService.valueProperty());  //搜搜结果显示表格的内容绑定
-        progressIndicator.visibleProperty().bind(loadSongService.runningProperty());
-        loadSongService.start();  //启动服务
+        LoadLocalSongService loadLocalSongService = applicationContext.getBean(LoadLocalSongService.class);  //获取服务对象
+        tableViewSong.itemsProperty().bind(loadLocalSongService.valueProperty());  //搜搜结果显示表格的内容绑定
+        progressIndicator.visibleProperty().bind(loadLocalSongService.runningProperty());
+        loadLocalSongService.start();  //启动服务
 
 
         /**单击表格歌曲行的事件处理，注意：歌曲行为非字母分类行*/
@@ -230,7 +229,7 @@ public class LocalMusicContentController {
         };
         /**设置表格行的行为
          * start*/
-        loadSongService.setOnSucceeded(event -> {
+        loadLocalSongService.setOnSucceeded(event -> {
             tableViewSong.setRowFactory(new Callback<TableView<LocalSong>, TableRow<LocalSong>>() {
 //                int index=0;    //用作字母分类的记录基数偶数行的标记index
                 @Override

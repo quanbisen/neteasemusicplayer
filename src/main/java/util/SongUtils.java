@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import model.LocalSong;
 import model.OnlineSong;
 import model.PlayListSong;
+import model.RecentSong;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.mp3.MP3AudioHeader;
@@ -221,5 +222,18 @@ public final class SongUtils {
      * @return PlayListSong*/
     public static PlayListSong getPlayListSong(OnlineSong onlineSong){
         return new PlayListSong(onlineSong.getName(),onlineSong.getSinger(),onlineSong.getAlbum(),onlineSong.getTotalTime(),onlineSong.getResource());
+    }
+
+    /**判断集合playedSongs中的资源字符和参数playListSong中的资源字符是否相等
+     * @param playedSongs
+     * @param playListSong
+     * @return boolean*/
+    public static boolean isContains(List<RecentSong> playedSongs,PlayListSong playListSong){
+        for (int i = 0; i < playedSongs.size(); i++) {
+            if (playedSongs.get(i).getResource().equals(playListSong.getResource())){
+                return true;
+            }
+        }
+        return false;
     }
 }

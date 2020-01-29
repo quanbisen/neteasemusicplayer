@@ -11,8 +11,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import model.RecentSong;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import service.LoadLocalSongService;
+import service.LoadRecentSongService;
 import util.ImageUtils;
+
+import javax.annotation.Resource;
 
 @Controller
 public class RecentPlayContentController {
@@ -59,8 +64,23 @@ public class RecentPlayContentController {
     @FXML
     private BorderPane borderPane;
 
+    /**显示当前列表的歌曲数量的label组件*/
+    @FXML
+    private Label labSongCount;
+
+    /**注入Spring上下文类*/
+    @Resource
+    private ApplicationContext applicationContext;
+
+    public Label getLabSongCount() {
+        return labSongCount;
+    }
+
     public void initialize(){
+        /*******Fixed some resize cursor bug here.********/
         recentPlayContentContainer.setCursor(Cursor.DEFAULT);
+        /*******Fixed some resize cursor bug here.********/
+
         progressIndicator.setVisible(false);    //初始化不可见
 
         /**属性绑定*/
@@ -71,23 +91,16 @@ public class RecentPlayContentController {
         albumColumn.setCellValueFactory(new PropertyValueFactory<RecentSong,String>("album"));
         totalTimeColumn.setCellValueFactory(new PropertyValueFactory<RecentSong,String>("totalTime"));
 
-        borderPane.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("change");
-                nameColumn.setPrefWidth((observable.getValue().doubleValue() - indexColumn.getMaxWidth() - addFavorColumn.getMaxWidth())/4.5*2);
-                singerColumn.setPrefWidth((observable.getValue().doubleValue() - indexColumn.getMaxWidth() - addFavorColumn.getMaxWidth())/4.5*1);
-                albumColumn.setPrefWidth((observable.getValue().doubleValue() - indexColumn.getMaxWidth() - addFavorColumn.getMaxWidth())/4.5*1);
-                totalTimeColumn.setPrefWidth((observable.getValue().doubleValue() - indexColumn.getMaxWidth() - addFavorColumn.getMaxWidth())/4.5*0.5);
-            }
+        borderPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            nameColumn.setPrefWidth((observable.getValue().doubleValue() - indexColumn.getMaxWidth() - addFavorColumn.getMaxWidth())/4.5*2);
+            singerColumn.setPrefWidth((observable.getValue().doubleValue() - indexColumn.getMaxWidth() - addFavorColumn.getMaxWidth())/4.5*1);
+            albumColumn.setPrefWidth((observable.getValue().doubleValue() - indexColumn.getMaxWidth() - addFavorColumn.getMaxWidth())/4.5*1);
+            totalTimeColumn.setPrefWidth((observable.getValue().doubleValue() - indexColumn.getMaxWidth() - addFavorColumn.getMaxWidth())/4.5*0.5);
         });
-        ObservableList<RecentSong> observableList = FXCollections.observableArrayList();
-        ImageView imageView = ImageUtils.createImageView("/image/FavorTabIcon.png",20,20);
-        Label label = new Label("",imageView);
-        label.setOnMouseClicked(event -> {
-            System.out.println("clicked ...");
-        });
-        observableList.add(new RecentSong("01", label,"1","1","1","1",null));
-        tableViewRecentPlaySong.setItems(observableList);
+
+        LoadRecentSongService loadRecentSongService = applicationContext.getBean(LoadRecentSongService.class);  //获取服务对象
+        tableViewRecentPlaySong.itemsProperty().bind(loadRecentSongService.valueProperty());
+        progressIndicator.visibleProperty().bind(loadRecentSongService.runningProperty());
+        loadRecentSongService.start();
     }
 }
