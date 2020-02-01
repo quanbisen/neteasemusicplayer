@@ -11,6 +11,6 @@
     <SeparatorMenuItem></SeparatorMenuItem>
     <MenuItem mnemonicParsing="false" text="收藏" />
     <SeparatorMenuItem></SeparatorMenuItem>
-    <MenuItem mnemonicParsing="false" text="删除本地文件" />
+    <MenuItem mnemonicParsing="false" text="删除本地文件" onAction="#onClickedDelete"/>
   </items>
 </ContextMenu>

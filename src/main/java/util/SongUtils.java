@@ -213,14 +213,14 @@ public final class SongUtils {
     /**把本地音乐对象模型转换成播放列表模型函数
      * @param localSong
      * @return PlayListSong*/
-    public static PlayListSong getPlayListSong(LocalSong localSong){
+    public static PlayListSong toPlayListSong(LocalSong localSong){
         return new PlayListSong(localSong.getName(),localSong.getSinger(),localSong.getAlbum(),localSong.getTotalTime(),localSong.getResource());
     }
 
     /**把在线音乐对象模型转换成播放列表模型函数
      * @param onlineSong
      * @return PlayListSong*/
-    public static PlayListSong getPlayListSong(OnlineSong onlineSong){
+    public static PlayListSong toPlayListSong(OnlineSong onlineSong){
         return new PlayListSong(onlineSong.getName(),onlineSong.getSinger(),onlineSong.getAlbum(),onlineSong.getTotalTime(),onlineSong.getResource());
     }
 

@@ -210,12 +210,12 @@ public class LocalMusicContentController {
                 LocalSong selectedLocalSong = tableViewSong.getSelectionModel().getSelectedItem();
                 if (myMediaPlayer.getPlayListSongs() == null || myMediaPlayer.getPlayListSongs().size() ==0){
                     myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
-                    myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.getPlayListSong(selectedLocalSong)));  //设置当前播放的歌曲在播放列表playList中的位置
-                } else if (myMediaPlayer.getCurrentPlaySong().equals(SongUtils.getPlayListSong(selectedLocalSong))) {
+                    myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.toPlayListSong(selectedLocalSong)));  //设置当前播放的歌曲在播放列表playList中的位置
+                } else if (myMediaPlayer.getCurrentPlaySong().equals(SongUtils.toPlayListSong(selectedLocalSong))) {
                     return;
                 } else {
                     myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
-                    myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.getPlayListSong(selectedLocalSong)));  //设置当前播放的歌曲在播放列表playList中的位置
+                    myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.toPlayListSong(selectedLocalSong)));  //设置当前播放的歌曲在播放列表playList中的位置
                 }
                 System.out.println(myMediaPlayer.getCurrentPlayIndex());
                 try {
@@ -411,7 +411,7 @@ public class LocalMusicContentController {
         /*if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
             if (!SongUtils.isCharacterCategory(tableViewSong.getSelectionModel().getSelectedItem().getName())){ //如果双击播放的歌曲不是字母分类的行，才执行以下播放
                 myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
-                myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.getPlayListSong(tableViewSong.getSelectionModel().getSelectedItem())));  //设置当前播放的歌曲在播放列表playList中的位置
+                myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.toPlayListSong(tableViewSong.getSelectionModel().getSelectedItem())));  //设置当前播放的歌曲在播放列表playList中的位置
                 System.out.println(myMediaPlayer.getCurrentPlayIndex());
                 myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));      //播放选中的歌曲
                 //设置右下角"歌单文本提示"显示数量
