@@ -73,8 +73,9 @@ public class SongContextMenuController {
             }
         }
 
-        nextPlayIndexList.forEach(integer -> System.out.println(integer));
-        WindowUtils.toastInfo(mainController.getStackPane(),new Label("已添加到播放列表"));
+//        System.out.println("nextPlayList ContextMenu:");
+//        nextPlayIndexList.forEach(integer -> System.out.println(playListSongs.get(integer)));
+//        WindowUtils.toastInfo(mainController.getStackPane(),new Label("已添加到播放列表"));
     }
 
     /**“删除文件”contextmenu事件处理*/

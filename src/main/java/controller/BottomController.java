@@ -381,8 +381,8 @@ public class BottomController {
                 else{       //否则,则nextPlayIndexList的大小大于零,存储有索引,取出记录下一首歌列表里的最后一次添加的那一个歌曲播放
                     int index = myMediaPlayer.getNextPlayIndexList().size()-1;
                     myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getNextPlayIndexList().get(index));
-                    myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));
                     myMediaPlayer.getNextPlayIndexList().remove(index);
+                    myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));
                 }
             }
 
@@ -441,6 +441,8 @@ public class BottomController {
             }
             else if (myMediaPlayer.getPlayMode() == PlayMode.SINGLE_LOOP){
                 myMediaPlayer.setPlayMode(PlayMode.SHUFFLE);
+                myMediaPlayer.setLastPlayIndexList(null);   //设置记录上一首播放索引为空
+//                myMediaPlayer.setNextPlayIndexList(null);   //设置记录下一首播放索引为空
                 labPlayModeIcon.setGraphic(ImageUtils.createImageView("image/NeteaseShufflePlayMode.png",24,24));
                 WindowUtils.toastInfo(centerController.getStackPane(),new Label("随机播放"));
             }

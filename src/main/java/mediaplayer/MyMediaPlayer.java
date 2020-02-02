@@ -111,6 +111,9 @@ public class MyMediaPlayer implements IMediaPlayer {
         }
         return nextPlayIndexList;
     }
+    public File getRecentPlayStorageFile() {
+        return recentPlayStorageFile;
+    }
 
     public void setPlayMode(PlayMode playMode) {
         this.playMode = playMode;
@@ -124,8 +127,12 @@ public class MyMediaPlayer implements IMediaPlayer {
         this.currentPlayIndex = currentPlayIndex;
     }
 
-    public File getRecentPlayStorageFile() {
-        return recentPlayStorageFile;
+    public void setLastPlayIndexList(List<Integer> lastPlayIndexList) {
+        this.lastPlayIndexList = lastPlayIndexList;
+    }
+
+    public void setNextPlayIndexList(List<Integer> nextPlayIndexList) {
+        this.nextPlayIndexList = nextPlayIndexList;
     }
 
     /**
@@ -207,13 +214,14 @@ public class MyMediaPlayer implements IMediaPlayer {
                     break;
                 }
                 case SEQUENCE: {                             //顺序播放模式
+                    if (lastPlayIndexList == null){ //如果记录下一首播放的索引记录等于null，则初始化
+                        lastPlayIndexList = new LinkedList<>();
+                    }else if (lastPlayIndexList.contains(currentPlayIndex)){    //否则，判断是否包含了当前的播放索引
+                        lastPlayIndexList.remove((Object)currentPlayIndex); //包含就移除
+                    }
+                    lastPlayIndexList.add(currentPlayIndex);    //添加到下一首播放的索引记录
+
                     if (nextPlayIndexList != null && nextPlayIndexList.size() > 0) {              //顺序播放模式下，如果记录下一首播放的索引记录大于0
-                        if (lastPlayIndexList == null){ //如果记录下一首播放的索引记录等于null，则初始化
-                            lastPlayIndexList = new LinkedList<>();
-                        }else if (lastPlayIndexList.contains(currentPlayIndex)){    //否则，判断是否包含了当前的播放索引
-                            lastPlayIndexList.remove((Object)currentPlayIndex); //包含就移除
-                        }
-                        lastPlayIndexList.add(currentPlayIndex);    //添加到下一首播放的索引记录
                         currentPlayIndex = nextPlayIndexList.get(nextPlayIndexList.size()-1);   //取出最后一次添加的“下一首”记录
                         nextPlayIndexList.remove(nextPlayIndexList.size()-1);   //移除
                         if (nextPlayIndexList.size() == 0){ //如果大小为0，赋值为null
@@ -221,24 +229,17 @@ public class MyMediaPlayer implements IMediaPlayer {
                         }
                     } else {            //否则，顺序播放，当前播放索引+1，如果是最后一首歌播放结束后，释放媒体播放器资源
                         currentPlayIndex = currentPlayIndex + 1;   //当前的播放索引加1
-                        if (currentPlayIndex > playListSongs.size() - 1) {   //如果索引还在播放列表中，播放它
-                            this.destroy();
+                        if (currentPlayIndex > playListSongs.size() - 1) {   //如果索引不在播放列表中，播放第一首歌，然后暂停
+                            currentPlayIndex = 0;   //当前播放索引设置为0
+                            lastPlayIndexList = null;   //清空记录上一首播放的索引
+                            nextPlayIndexList = null;
                             try {
-                                bottomController.getLabAlbum().setGraphic(ImageUtils.getAlbumImage(playListSongs.get(0).getResource()));
-                            } catch (Exception e) {
+                                this.playSong(playListSongs.get(currentPlayIndex));
+                                this.pause();
+                                return;
+                            }catch (Exception e){
                                 e.printStackTrace();
                             }
-                            bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePause.png", 32, 32));  //设置暂停状态的图标
-                            bottomController.getLabMusicName().setText(playListSongs.get(0).getName());
-                            bottomController.getLabMusicSinger().setText(playListSongs.get(0).getSinger());
-                            bottomController.getSliderSong().setMax(TimeUtils.toSeconds(playListSongs.get(0).getTotalTime()));
-                            bottomController.getSliderSong().setValue(0);
-                            bottomController.getLabTotalTime().setText(playListSongs.get(0).getTotalTime());
-                            currentPlayIndex = 0;
-                            mediaPlayer = new MediaPlayer(new Media((new File(playListSongs.get(0).getResource())).toURI().toString()));
-                            mediaPlayer.setVolume(bottomController.getSliderVolume().getValue());
-                            System.out.println(mediaPlayer.getStatus());
-                            return;
                         }
                     }
                     try {
@@ -249,22 +250,33 @@ public class MyMediaPlayer implements IMediaPlayer {
                     break;
                 }
                 case SEQUENCE_LOOP: {       //列表循环模式
-                    //列表循环模式下，如果歌曲表格只有一首歌，只要把mediaPlayer的当前播放时间重新设置为0秒就可以了
-                    if (playListSongs.size() == 1) {
+                    if (playListSongs.size() == 1) {    //列表循环模式下，如果歌曲表格只有一首歌，只要把mediaPlayer的当前播放时间重新设置为0秒就可以了
                         mediaPlayer.seek(new Duration(0));  //定位到0毫秒(0秒)的时间，重新开始播放
-                        mediaPlayer.play();
+                        return;
                     }
-                    //否则，执行下一首歌曲播放，形成循环列表
-                    else {
+                    if (lastPlayIndexList == null) { //如果记录下一首播放的索引记录等于null，则初始化它
+                        lastPlayIndexList = new LinkedList<Integer>();
+                    } else if (lastPlayIndexList.contains(currentPlayIndex)) {    //否则，lastPlayIndexList不等于null,需判断是否包含了当前的播放索引
+                        lastPlayIndexList.remove((Object) currentPlayIndex); //包含就移除
+                    }
+                    lastPlayIndexList.add(currentPlayIndex);    //添加到下一首播放的索引记录
+
+                    if (nextPlayIndexList != null && nextPlayIndexList.size() > 0) { //列表循环模式下，如果记录下一首播放不等于null且大于0，执行索引下一首播放
+                        currentPlayIndex = nextPlayIndexList.get(nextPlayIndexList.size() - 1);   //取出最后一次添加的“下一首”记录
+                        nextPlayIndexList.remove(nextPlayIndexList.size() - 1);   //移除
+                        if (nextPlayIndexList.size() == 0) { //如果大小为0，赋值为null
+                            nextPlayIndexList = null;
+                        }
+                    } else { //否则，执行当前播放索引+1播放
                         currentPlayIndex = currentPlayIndex + 1;
                         if (currentPlayIndex > playListSongs.size() - 1) {  //如果当前索引越界，值为0，形成一个循环
                             currentPlayIndex = 0;
                         }
-                        try {
-                            playSong(playListSongs.get(currentPlayIndex));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                    }
+                    try {
+                        playSong(playListSongs.get(currentPlayIndex));  //播放歌曲
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     break;
                 }
@@ -272,12 +284,13 @@ public class MyMediaPlayer implements IMediaPlayer {
                     //随机播放模式下，如果播放列表只有一首歌，只要把mediaPlayer的当前播放时间重新设置为0秒就可以了
                     if (playListSongs.size() == 1) {
                         mediaPlayer.seek(new Duration(0));  //定位到0毫秒(0秒)的时间，重新开始播放
-//                        mediaPlayer.play();
                     }
                     //否则，播放列表大于1，生成一个非当前播放的索引值来播放
                     else {
                         if (lastPlayIndexList == null){
                             lastPlayIndexList = new LinkedList<>();
+                        }else if (lastPlayIndexList.contains(currentPlayIndex)) {    //否则，lastPlayIndexList不等于null,需判断是否包含了当前的播放索引
+                            lastPlayIndexList.remove((Object) currentPlayIndex); //包含就移除
                         }
                         lastPlayIndexList.add(currentPlayIndex);   //先记录当前的索引是上一首需要的索引
 
@@ -287,7 +300,7 @@ public class MyMediaPlayer implements IMediaPlayer {
                                 int randomIndex = new Random().nextInt(playListSongs.size());
                                 if (randomIndex != currentPlayIndex) {  //如果随机数不是当前播放的索引值
                                     currentPlayIndex = randomIndex;    //当前的播放索引替换成生成的随机索引
-                                    break;                           //退出循环
+                                    break;                           //跳出循环
                                 }
                             }
                             try {
@@ -298,14 +311,14 @@ public class MyMediaPlayer implements IMediaPlayer {
                         } else {   //否则,则nextPlayIndexList的大小大于零,存储有索引,取出记录上一首歌列表里的最后一次添加的那一个歌曲播放
                             int index = nextPlayIndexList.size() - 1;
                             currentPlayIndex = nextPlayIndexList.get(index);  //设置当前的播放索引值
+                            nextPlayIndexList.remove(index);  //移除本条索引值,因为已经播放了.
+                            if (nextPlayIndexList.size() ==0){
+                                nextPlayIndexList = null;
+                            }
                             try {
                                 this.playSong(playListSongs.get(currentPlayIndex));
                             } catch (Exception e) {
                                 e.printStackTrace();
-                            }
-                            nextPlayIndexList.remove(index);  //移除本条索引值,因为已经播放了.
-                            if (nextPlayIndexList.size() ==0){
-                                nextPlayIndexList = null;
                             }
                         }
                     }
@@ -314,8 +327,14 @@ public class MyMediaPlayer implements IMediaPlayer {
                 default:
             }
 
-
-
+//            if (nextPlayIndexList != null){
+//                System.out.println("nextPlayList:");
+//                nextPlayIndexList.forEach(integer -> System.out.println(playListSongs.get(integer)));
+//            }
+//            if (lastPlayIndexList != null){
+//                System.out.println("lastPlayList");
+//                lastPlayIndexList.forEach(integer -> System.out.println(playListSongs.get(integer)));
+//            }
         });
         /**end*/
 
