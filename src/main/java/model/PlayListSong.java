@@ -1,6 +1,6 @@
 package model;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
 import lombok.*;
 
 /**
@@ -11,7 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class PlayListSong {
-    private ImageView ivPlayFlag;
     @NonNull
     private String name;
     @NonNull
@@ -20,6 +19,7 @@ public class PlayListSong {
     private String album;
     @NonNull
     private String totalTime;
+    private Label labRemoveIcon;
     @NonNull
     private String resource;
     private String lyrics;

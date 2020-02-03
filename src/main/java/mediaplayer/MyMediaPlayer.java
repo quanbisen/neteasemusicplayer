@@ -142,7 +142,8 @@ public class MyMediaPlayer implements IMediaPlayer {
     public void playSong(PlayListSong playListSong) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
 
         if (mediaPlayer != null) {  //如果当前的媒体播放器不为空,销毁它
-            this.destroy();
+            this.mediaPlayer.dispose();
+            this.mediaPlayer = null;
         }
         /**创建MediaPlayer播放*/
         String resource = playListSong.getResource();
@@ -164,6 +165,7 @@ public class MyMediaPlayer implements IMediaPlayer {
         bottomController.getLabMusicSinger().setText(playListSong.getSinger());
         bottomController.getLabTotalTime().setText(playListSong.getTotalTime());
         //4.播放进度条设置
+        bottomController.getSliderSong().setValue(0);
         bottomController.getSliderSong().setMax(TimeUtils.toSeconds(playListSong.getTotalTime()));  //设置歌曲滑动条的最大值为歌曲的秒数
         mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
             @Override
@@ -347,6 +349,20 @@ public class MyMediaPlayer implements IMediaPlayer {
     public void destroy() {
         this.mediaPlayer.dispose();
         this.mediaPlayer = null;
+        this.currentPlayIndex = 0;
+        if (lastPlayIndexList != null){
+            this.lastPlayIndexList.clear();
+            this.lastPlayIndexList = null;
+        }
+        if (nextPlayIndexList != null){
+            this.nextPlayIndexList.clear();
+            this.nextPlayIndexList = null;
+        }
+        if (playListSongs != null){
+            this.playListSongs.clear(); //清空播放列表
+            this.playListSongs = null;
+        }
+
         //还需要更新底部显示音乐进度的GUI显示
         bottomController.getLabAlbum().setGraphic(ImageUtils.createImageView("image/NeteaseDefaultAlbumWhiteBackground.png", 58, 58));    //设置默认的图片专辑图
         bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePause.png", 32, 32));           //设置为暂停的图片
@@ -355,6 +371,8 @@ public class MyMediaPlayer implements IMediaPlayer {
         bottomController.getLabPlayTime().setText("00:00"); //设置播放时间为"00:00"
         bottomController.getLabTotalTime().setText("00:00");
         bottomController.getSliderSong().setValue(0);
+        bottomController.getLabPlayListCount().setText("0");
+        bottomController.getLabPlayListCount().setText("0");    //并且更新显示播放列表数量的组件
         System.gc();
     }
 

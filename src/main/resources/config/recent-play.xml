@@ -6,19 +6,9 @@
   <PlayedSong name="有何不可" singer="许嵩" album="自定义" totalTime="04:01" resource="/media/ubuntu/Music/许嵩 - 有何不可.mp3"></PlayedSong>  
   <PlayedSong name="再见" singer="G.E.M.邓紫棋" album="新的心跳" totalTime="03:26" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 再见.mp3"></PlayedSong>  
   <PlayedSong name="只对你说 (莎朗嘿唷)" singer="林俊杰" album="曹操" totalTime="03:50" resource="/media/ubuntu/Music/林俊杰 - 只对你说 (莎朗嘿唷).mp3"></PlayedSong>  
-  <PlayedSong name="安琪" singer="许嵩" album="半城烟沙" totalTime="03:39" resource="/media/ubuntu/Music/许嵩 - 安琪.mp3"></PlayedSong>  
-  <PlayedSong name="A.I.N.Y. 爱你" singer="G.E.M.邓紫棋" album="18" totalTime="03:46" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - A.I.N.Y. 爱你.mp3"></PlayedSong>  
-  <PlayedSong name="爱笑的眼睛" singer="林俊杰" album="她说" totalTime="04:11" resource="/media/ubuntu/Music/林俊杰 - 爱笑的眼睛.mp3"></PlayedSong>  
-  <PlayedSong name="爱转角" singer="罗志祥" album="Best Show" totalTime="04:55" resource="/media/ubuntu/Music/罗志祥 - 爱转角.mp3"></PlayedSong>  
-  <PlayedSong name="As I Believe" singer="林俊杰" album="对的时间点" totalTime="04:15" resource="/media/ubuntu/Music/林俊杰 - As I Believe.mp3"></PlayedSong>  
-  <PlayedSong name="爱不会绝迹" singer="林俊杰" album="100天" totalTime="04:00" resource="/media/ubuntu/Music/林俊杰 - 爱不会绝迹.mp3"></PlayedSong>  
-  <PlayedSong name="被风吹过的夏天" singer="林俊杰/金莎" album="不可思议金选" totalTime="04:12" resource="/media/ubuntu/Music/林俊杰 - 被风吹过的夏天.mp3"></PlayedSong>  
   <PlayedSong name="不潮不用花钱" singer="林俊杰" album="JJ陆" totalTime="03:53" resource="/media/ubuntu/Music/林俊杰 - 不潮不用花钱.mp3"></PlayedSong>  
-  <PlayedSong name="不煽情" singer="许嵩" album="寻雾启示" totalTime="05:16" resource="/media/ubuntu/Music/许嵩 - 不煽情.mp3"></PlayedSong>  
-  <PlayedSong name="查克靠近" singer="G.E.M.邓紫棋" album="新的心跳" totalTime="04:21" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 查克靠近.mp3"></PlayedSong>  
   <PlayedSong name="传闻" singer="周柏豪" album="Rumors" totalTime="04:08" resource="/media/ubuntu/Music/周柏豪 - 传闻.mp3"></PlayedSong>  
   <PlayedSong name="曹操" singer="林俊杰" album="曹操" totalTime="04:02" resource="/media/ubuntu/Music/林俊杰 - 曹操.mp3"></PlayedSong>  
-  <PlayedSong name="Cries in a Distance" singer="林俊杰" album="JJ陆" totalTime="03:45" resource="/media/ubuntu/Music/林俊杰 - Cries in a Distance.mp3"></PlayedSong>  
   <PlayedSong name="翅膀" singer="林俊杰" album="乐行者" totalTime="03:42" resource="/media/ubuntu/Music/林俊杰 - 翅膀.mp3"></PlayedSong>  
   <PlayedSong name="城府" singer="许嵩" album="自定义" totalTime="03:19" resource="/media/ubuntu/Music/许嵩 - 城府.mp3"></PlayedSong>  
   <PlayedSong name="第几个一百天" singer="林俊杰" album="100天" totalTime="04:40" resource="/media/ubuntu/Music/林俊杰 - 第几个一百天.mp3"></PlayedSong>  
@@ -89,7 +79,6 @@
   <PlayedSong name="千古" singer="许嵩" album="千古" totalTime="03:41" resource="/media/ubuntu/Music/许嵩 - 千古.mp3"></PlayedSong>  
   <PlayedSong name="豆浆油条" singer="林俊杰" album="第二天堂" totalTime="04:16" resource="/media/ubuntu/Music/林俊杰 - 豆浆油条.mp3"></PlayedSong>  
   <PlayedSong name="千百度" singer="许嵩" album="苏格拉没有底" totalTime="03:46" resource="/media/ubuntu/Music/许嵩 - 千百度.mp3"></PlayedSong>  
-  <PlayedSong name="All About U" singer="G.E.M. 邓紫棋" album="18" totalTime="04:01" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - All About U.mp3"></PlayedSong>  
   <PlayedSong name="小酒窝" singer="林俊杰/蔡卓妍" album="JJ陆" totalTime="03:38" resource="/media/ubuntu/Music/林俊杰 - 小酒窝.mp3"></PlayedSong>  
   <PlayedSong name="我的秘密" singer="G.E.M.邓紫棋" album="My Secret" totalTime="04:10" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 我的秘密.mp3"></PlayedSong>  
   <PlayedSong name="七友" singer="梁汉文" album="The Big Four World Tour 2013" totalTime="04:17" resource="/media/ubuntu/Music/梁汉文 - 七友.mp3"></PlayedSong>  
@@ -98,8 +87,19 @@
   <PlayedSong name="句号" singer="G.E.M.邓紫棋" album="句号" totalTime="03:55" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 句号.mp3"></PlayedSong>  
   <PlayedSong name="叹服" singer="许嵩" album="单曲 - 叹服" totalTime="04:21" resource="/media/ubuntu/Music/许嵩 - 叹服.mp3"></PlayedSong>  
   <PlayedSong name="加油！" singer="MC Hotdog/林俊杰" album="100天" totalTime="03:47" resource="/media/ubuntu/Music/MC Hotdog - 加油！.mp3"></PlayedSong>  
-  <PlayedSong name="背对背拥抱" singer="林俊杰" album="100天" totalTime="03:58" resource="/media/ubuntu/Music/林俊杰 - 背对背拥抱.mp3"></PlayedSong>  
   <PlayedSong name="江南" singer="林俊杰" album="江南" totalTime="04:27" resource="/media/ubuntu/Music/林俊杰 - 江南.mp3"></PlayedSong>  
+  <PlayedSong name="失真" singer="G.E.M.邓紫棋" album="Xposed" totalTime="03:57" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 失真.mp3"></PlayedSong>  
+  <PlayedSong name="Cries in a Distance" singer="林俊杰" album="JJ陆" totalTime="03:45" resource="/media/ubuntu/Music/林俊杰 - Cries in a Distance.mp3"></PlayedSong>  
+  <PlayedSong name="A.I.N.Y. 爱你" singer="G.E.M.邓紫棋" album="18" totalTime="03:46" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - A.I.N.Y. 爱你.mp3"></PlayedSong>  
+  <PlayedSong name="安琪" singer="许嵩" album="半城烟沙" totalTime="03:39" resource="/media/ubuntu/Music/许嵩 - 安琪.mp3"></PlayedSong>  
+  <PlayedSong name="背对背拥抱" singer="林俊杰" album="100天" totalTime="03:58" resource="/media/ubuntu/Music/林俊杰 - 背对背拥抱.mp3"></PlayedSong>  
+  <PlayedSong name="爱笑的眼睛" singer="林俊杰" album="她说" totalTime="04:11" resource="/media/ubuntu/Music/林俊杰 - 爱笑的眼睛.mp3"></PlayedSong>  
+  <PlayedSong name="爱转角" singer="罗志祥" album="Best Show" totalTime="04:55" resource="/media/ubuntu/Music/罗志祥 - 爱转角.mp3"></PlayedSong>  
+  <PlayedSong name="不煽情" singer="许嵩" album="寻雾启示" totalTime="05:16" resource="/media/ubuntu/Music/许嵩 - 不煽情.mp3"></PlayedSong>  
   <PlayedSong name="Beautiful In White (Demo)" singer="Westlife" album="Beautiful In White (Demo)" totalTime="03:52" resource="/media/ubuntu/Music/Westlife - Beautiful In White (Demo).mp3"></PlayedSong>  
-  <PlayedSong name="失真" singer="G.E.M.邓紫棋" album="Xposed" totalTime="03:57" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 失真.mp3"></PlayedSong>
+  <PlayedSong name="被风吹过的夏天" singer="林俊杰/金莎" album="不可思议金选" totalTime="04:12" resource="/media/ubuntu/Music/林俊杰 - 被风吹过的夏天.mp3"></PlayedSong>  
+  <PlayedSong name="All About U" singer="G.E.M. 邓紫棋" album="18" totalTime="04:01" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - All About U.mp3"></PlayedSong>  
+  <PlayedSong name="爱不会绝迹" singer="林俊杰" album="100天" totalTime="04:00" resource="/media/ubuntu/Music/林俊杰 - 爱不会绝迹.mp3"></PlayedSong>  
+  <PlayedSong name="As I Believe" singer="林俊杰" album="对的时间点" totalTime="04:15" resource="/media/ubuntu/Music/林俊杰 - As I Believe.mp3"></PlayedSong>  
+  <PlayedSong name="查克靠近" singer="G.E.M.邓紫棋" album="新的心跳" totalTime="04:21" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 查克靠近.mp3"></PlayedSong>
 </RecentPlaySongs>

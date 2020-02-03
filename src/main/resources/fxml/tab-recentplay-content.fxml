@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="recentPlayContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/RecentPlayContentStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RecentPlayContentController">
+<BorderPane fx:id="recentPlayContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/RecentPlayContentStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RecentPlayContentController">
     <top>
         <BorderPane prefHeight="45.0" prefWidth="603.0" stylesheets="@../css/TabPaneStyle.css" BorderPane.alignment="CENTER">
             <left>
@@ -93,13 +93,13 @@
                     <graphic>
                         <HBox alignment="CENTER" prefHeight="35.0" prefWidth="55.0" spacing="3.0">
                             <children>
-                                <HBox fx:id="hBoxSong" alignment="CENTER_LEFT" maxWidth="50.0" prefHeight="0.0" prefWidth="50.0" spacing="3.0">
+                                <HBox fx:id="hBoxSong" alignment="CENTER_LEFT" maxWidth="50.0" prefHeight="0.0" prefWidth="52.0" spacing="1.0">
                                     <children>
                                         <Label styleClass="labIndicator" text="歌曲">
                                  <padding>
                                     <Insets left="2.0" />
                                  </padding></Label>
-                                        <Label fx:id="labSongCount" styleClass="count" text="0" />
+                                        <Label fx:id="labSongCount" styleClass="count" text="000" />
                                     </children>
                                 </HBox>
                             </children>

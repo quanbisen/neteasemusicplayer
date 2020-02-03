@@ -59,6 +59,16 @@
 #nameColumn.table-cell{
     -fx-padding:0 0 0 22;
 }
+/*设置表格移除歌曲图标的样式 start*/
+#labRemoveIcon.table-cell{
+    -fx-alignment: center;
+    -fx-padding: 0 5 0 0;
+}
+.labRemoveIcon:hover{
+    -fx-graphic: url("/image/RemovePlayListSongIconHover.png");
+}
+/*设置表格移除歌曲图标的样式 end*/
+
 /*表格行样式*/
 .table-view .table-row-cell{
     -fx-cell-size: 40px;

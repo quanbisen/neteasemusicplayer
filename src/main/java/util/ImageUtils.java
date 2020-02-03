@@ -88,6 +88,7 @@ public final class ImageUtils {
      * @return ImageView*/
     public static ImageView createImageView(String resource,double fitWidth,double fitHeight){
         ImageView imageView = new ImageView(new Image(resource));
+        imageView.setPreserveRatio(true);
         imageView.setFitHeight(fitHeight);
         imageView.setFitWidth(fitWidth);
         return imageView;
