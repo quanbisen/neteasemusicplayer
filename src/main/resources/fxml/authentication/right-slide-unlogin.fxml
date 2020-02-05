@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="borderPaneRoot" prefHeight="475.0" prefWidth="766.0" stylesheets="@../../css/RightSlideUnLoginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authentication.RightSlideUnLoginController">
+   <center>
+      <Pane style="-fx-background-color: transparent;" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <right>
+      <BorderPane fx:id="borderPaneContent" maxWidth="0.0" minWidth="310.0" prefHeight="400.0" prefWidth="0.0" styleClass="mainContainer" BorderPane.alignment="CENTER">
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="281.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="账号">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <VBox prefHeight="218.0" prefWidth="309.0" style="-fx-border-width: 1 0 1 0; -fx-border-color: #C2C2C4;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="15.0" prefWidth="308.0">
+                     <children>
+                        <Label text="登录音乐播放器">
+                           <HBox.margin>
+                              <Insets top="30.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="15.0" prefWidth="308.0">
+                     <children>
+                        <Label text="享受歌单同步功能" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#onClickedLoginButton" prefHeight="33.0" prefWidth="169.0" text="立即登录" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </center>
+         <bottom>
+            <HBox onMouseClicked="#onClickedAbout" prefHeight="278.0" prefWidth="309.0" spacing="10.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../image/AboutIcon.png" />
+                     </image></ImageView>
+                  <Label text="关于音乐" />
+                  <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="160.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../../image/PointToRight.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="20.0" top="30.0" />
+               </padding>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </right>
+</BorderPane>

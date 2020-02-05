@@ -1,10 +1,12 @@
 package model;
 
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import util.ImageUtils;
 
 @Data
 @AllArgsConstructor
@@ -22,4 +24,5 @@ public class RecentSong {
     private String totalTime;
     @NonNull
     private String resource;
+
 }

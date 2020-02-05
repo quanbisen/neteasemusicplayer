@@ -224,16 +224,44 @@ public final class SongUtils {
         return new PlayListSong(onlineSong.getName(),onlineSong.getSinger(),onlineSong.getAlbum(),onlineSong.getTotalTime(),onlineSong.getResource());
     }
 
+    /**把播放列表模型歌曲转变成最近播放歌曲模型
+     * @param playListSong
+     * @return RecentSong*/
+    public static RecentSong toRecentSong(PlayListSong playListSong){
+        return new RecentSong(playListSong.getName(),playListSong.getSinger(),playListSong.getAlbum(),playListSong.getTotalTime(),playListSong.getResource());
+    }
+
     /**判断集合playedSongs中的资源字符和参数playListSong中的资源字符是否相等
      * @param playedSongs
      * @param playListSong
      * @return boolean*/
     public static boolean isContains(List<RecentSong> playedSongs,PlayListSong playListSong){
         for (int i = 0; i < playedSongs.size(); i++) {
-            if (playedSongs.get(i).getResource().equals(playListSong.getResource())){
+            if (playedSongs.get(i).getResource().equals(playListSong.getResource()) &&
+                    playedSongs.get(i).getName().equals(playListSong.getName()) &&
+                            playedSongs.get(i).getSinger().equals(playListSong.getSinger())&&
+                            playedSongs.get(i).getAlbum().equals(playListSong.getAlbum())){
                 return true;
             }
         }
         return false;
+    }
+
+    /**获取播放列表歌曲在最近播放表格items中的位置
+     * @param recentSongs
+     * @param playListSong
+     * @return int */
+    public static int getIndex(List<RecentSong> recentSongs,PlayListSong playListSong){
+        int index = -1;
+        for (int i = 0; i < recentSongs.size(); i++) {
+            if (recentSongs.get(i).getResource().equals(playListSong.getResource()) &&
+                    recentSongs.get(i).getName().equals(playListSong.getName()) &&
+                    recentSongs.get(i).getSinger().equals(playListSong.getSinger())&&
+                    recentSongs.get(i).getAlbum().equals(playListSong.getAlbum())){
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 }

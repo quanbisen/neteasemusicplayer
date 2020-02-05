@@ -1,6 +1,7 @@
 package mediaplayer;
 
-import controller.BottomController;
+import controller.main.BottomController;
+import controller.content.RecentPlayContentController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -68,6 +69,9 @@ public class MyMediaPlayer implements IMediaPlayer {
      */
     @Resource
     private BottomController bottomController;
+
+    @Resource
+    RecentPlayContentController recentPlayContentController;
 
     /**记录最近播放记录文件存储位置*/
     private String recentPlayFilePath = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "recent-play.xml";
@@ -173,8 +177,10 @@ public class MyMediaPlayer implements IMediaPlayer {
                 if (!bottomController.getSliderSong().isPressed()) {  //没有被鼠标按下时
                     bottomController.getSliderSong().setValue(observable.getValue().toSeconds());
                 }
+                System.out.println(mediaPlayer.getBufferProgressTime().toSeconds());
             }
         });
+
 
         /**添加到最近播放的存储文件处理操作
          * start*/
@@ -204,6 +210,17 @@ public class MyMediaPlayer implements IMediaPlayer {
             XMLUtils.addOneRecord(recentPlayStorageFile,"PlayedSong",attributeNameList,attributeValueList);   //添加存储到文件
         }catch (Exception e){
             e.printStackTrace();
+        }
+        /**“最近播放”tab的GUI更新处理操作
+         * start*/
+        if (recentPlayContentController.getTableViewRecentPlaySong()!=null){
+            System.out.println("not null");
+            ObservableList<RecentSong> tableItems = recentPlayContentController.getTableViewRecentPlaySong().getItems();
+            if (SongUtils.isContains(tableItems,playListSong)){
+                tableItems.remove(SongUtils.getIndex(tableItems,playListSong));
+            }
+            recentPlayContentController.getTableViewRecentPlaySong().getItems().add(0,SongUtils.toRecentSong(playListSong));
+            recentPlayContentController.updateRecentPlayPane(); //更新最近播放面板的GUI
         }
 
         /**媒体播放器结束后触发的事件

@@ -1,6 +1,6 @@
 package task;
 
-import controller.SearchInputController;
+import controller.content.SearchInputContentController;
 import dao.SongDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,14 +24,14 @@ public class SearchSongTask extends Task<ObservableList<OnlineSong>> {
     private SongDao songDao;
 
     @Resource
-    private SearchInputController searchInputController;
+    private SearchInputContentController searchInputContentController;
 
     @Override
     protected ObservableList<OnlineSong> call() {
         System.out.println(songDao);
-        List<OnlineSong> byNameLocalSongs = songDao.queryByName(searchInputController.getTfSearchText().getText());    //查询歌名匹配的记录
+        List<OnlineSong> byNameLocalSongs = songDao.queryByName(searchInputContentController.getTfSearchText().getText());    //查询歌名匹配的记录
         System.out.println(byNameLocalSongs.size());
-        List<OnlineSong> bySingerLocalSongs = songDao.queryBySinger(searchInputController.getTfSearchText().getText());//查询歌手匹配的记录
+        List<OnlineSong> bySingerLocalSongs = songDao.queryBySinger(searchInputContentController.getTfSearchText().getText());//查询歌手匹配的记录
         ObservableList<OnlineSong> localSongObservableList = FXCollections.observableArrayList();  //获取FX可视化化集合对象
         localSongObservableList.addAll(byNameLocalSongs);
         localSongObservableList.addAll(bySingerLocalSongs);

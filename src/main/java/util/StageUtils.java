@@ -27,11 +27,8 @@ public final class StageUtils {
         stage.initOwner(primaryStage);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
-        //线程延迟运行，不然无法获取到root容器的宽度、高度
-        Platform.runLater(() -> {
-            stage.setX((primaryStage.getWidth()-root.getWidth())/2.0 + primaryStage.getX());
-            stage.setY((primaryStage.getHeight()-root.getHeight())/2.0 + primaryStage.getY());
-        });
+        stage.setX((primaryStage.getWidth()-root.getMaxWidth())/2.0 + primaryStage.getX());
+        stage.setY((primaryStage.getHeight()-root.getMaxHeight())/2.0 + primaryStage.getY());
         return stage;
     }
     
@@ -40,10 +37,10 @@ public final class StageUtils {
      * */
     public static void synchronizeCenter(Stage primaryStage,Stage centerStage){
         //主窗体坐标和宽度改变时需要触发的监听器，更新子窗体的位置，让子窗体一直居中显示
-        primaryStage.xProperty().addListener((observable, oldValue, newValue) -> centerStage.setX((primaryStage.getWidth()-centerStage.getWidth())/2.0+newValue.doubleValue()));
-        primaryStage.yProperty().addListener((observable, oldValue, newValue) -> centerStage.setY((primaryStage.getHeight()-centerStage.getHeight())/2.0+newValue.doubleValue()));
-        primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> centerStage.setX((newValue.doubleValue()-centerStage.getWidth())/2.0+primaryStage.getX()));
-        primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> centerStage.setY((newValue.doubleValue()-centerStage.getHeight())/2.0+primaryStage.getY()));
+        primaryStage.xProperty().addListener((observable, oldValue, newValue) -> centerStage.setX((primaryStage.getWidth()-centerStage.getWidth())/2.0+observable.getValue().doubleValue()));
+        primaryStage.yProperty().addListener((observable, oldValue, newValue) -> centerStage.setY((primaryStage.getHeight()-centerStage.getHeight())/2.0+observable.getValue().doubleValue()));
+        primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> centerStage.setX((observable.getValue().doubleValue()-centerStage.getWidth())/2.0+primaryStage.getX()));
+        primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> centerStage.setY((observable.getValue().doubleValue()-centerStage.getHeight())/2.0+primaryStage.getY()));
     }
 
     public static void synchronizeRightEdge(Stage primaryStage,Stage stage,double offSetX,double offSetY){

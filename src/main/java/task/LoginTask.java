@@ -1,8 +1,8 @@
 package task;
 
-import controller.CenterController;
-import controller.LoginController;
-import controller.LeftController;
+import controller.main.CenterController;
+import controller.authentication.LoginController;
+import controller.main.LeftController;
 import dao.UserDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;

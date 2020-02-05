@@ -1,6 +1,6 @@
 package task;
 
-import controller.RegisterController;
+import controller.authentication.RegisterController;
 import dao.UserDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;

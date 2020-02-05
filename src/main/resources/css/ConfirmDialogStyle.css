@@ -1,0 +1,35 @@
+#actualPane
+{
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+}
+#visualPane
+{
+    -fx-background-color: WHITE;
+    -fx-border-width: 1;
+    -fx-border-color: #c9c9cb;
+    -fx-effect: dropshadow(three-pass-box, #c9c9cb,5,0,0,0);
+}
+.label
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 16px;
+}
+#btnConfirm
+{
+    -fx-background-color: #BC2F2D;
+    -fx-text-fill: WHITE;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+#btnCancel
+{
+    -fx-background-color: WHITE;
+    -fx-text-fill: #BC2F2D;
+    -fx-border-color: #BC2F2D;
+    -fx-border-width: 1;
+}
+#btnConfirm:hover,#btnCancel:hover
+{
+    -fx-opacity: 0.8;
+}

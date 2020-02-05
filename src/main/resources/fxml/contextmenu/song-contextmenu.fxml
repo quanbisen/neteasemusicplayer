@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+
+<?import javafx.scene.control.SeparatorMenuItem?>
+<ContextMenu fx:controller="controller.contextmenu.SongContextMenuController"
+             xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <MenuItem mnemonicParsing="false" text="下一首播放" onAction="#onClickedNextPlay"/>
+    <SeparatorMenuItem></SeparatorMenuItem>
+    <MenuItem mnemonicParsing="false" text="收藏" />
+    <SeparatorMenuItem></SeparatorMenuItem>
+    <MenuItem mnemonicParsing="false" text="删除本地文件" onAction="#onClickedDelete"/>
+  </items>
+</ContextMenu>

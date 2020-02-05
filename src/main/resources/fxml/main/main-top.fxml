@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.main.TopController"
+            fx:id="titleBar" onMousePressed="#onTitleBarPressed" onMouseDragged="#onTitleBarDragged"
+            onMouseClicked="#onTitleBarDoubleClicked"
+            stylesheets="@../../css/TitleBarStyle.css">
+    <left>
+        <HBox fx:id="left_HBox">
+            <Label fx:id="labelTitle">音乐</Label>
+        </HBox>
+    </left>
+    <right>
+        <HBox fx:id="right_HBox">
+            <!--最小化图片-->
+            <ImageView fx:id="ivMinimize" fitHeight="32" fitWidth="46" onMouseClicked="#onClickedMinimize" onMouseEntered="#onEnteredMinimize"
+                       onMouseExited="#onExitedMinimize">
+                <Image url="@../../image/NeteaseMinimizeDefault.png"></Image>
+            </ImageView>
+            <!--最大化图片-->
+            <ImageView fx:id="ivMaximize" fitHeight="32" fitWidth="46" onMouseClicked="#onClickedMaximize" onMouseEntered="#onEnteredMaximize"
+                       onMouseExited="#onExitedMaximize">
+                <Image url="@../../image/NeteaseMaximizeDefault.png"></Image>
+            </ImageView>
+            <!--退出图片-->
+            <ImageView fx:id="ivExit" fitHeight="32" fitWidth="46" onMouseClicked="#onClickedExit" onMouseEntered="#onEnteredExit"
+                       onMouseExited="#onExitedExit">
+                <Image url="@../../image/NeteaseExitDefault.png"></Image>
+            </ImageView>
+        </HBox>
+    </right>
+</BorderPane>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="searchInputContainer" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FAFAFC;" stylesheets="@../../css/SearchInputStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.SearchInputContentController">
+   <top>
+      <BorderPane prefHeight="45.0" prefWidth="600.0" style="-fx-border-color: #E4E4E7; -fx-background-color: WHITE;" BorderPane.alignment="CENTER">
+         <left>
+            <TextField fx:id="tfSearchText" onKeyPressed="#onKeyPressedSearchTextField" prefHeight="35.0" prefWidth="521.0" promptText="搜索音乐、歌手" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <HBox fx:id="hBoxSearch" alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="50.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="labClearIcon" onMouseClicked="#onClickedClearIcon">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/SearchDelete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label onMouseClicked="#onClickedSearchIcon">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/SearchTabIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+         </right>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </BorderPane>
+   </top>
+   <center>
+      <BorderPane fx:id="searchInputCenter" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <BorderPane maxHeight="45.0" minHeight="45.0" prefHeight="45.0" prefWidth="600.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #E4E4E7; -fx-border-insets: 0 20 0 20;" BorderPane.alignment="CENTER">
+               <left>
+                  <Label style="-fx-text-fill: #666666;" text="搜索历史" BorderPane.alignment="CENTER" />
+               </left>
+               <right>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onClickedTrashBin" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../../image/TrashBinIcon.png" />
+                     </image>
+                  </ImageView>
+               </right>
+            </BorderPane>
+         </top>
+         <center>
+            <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" prefHeight="289.0" prefWidth="600.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+               <content>
+                  <VBox fx:id="vBoxHistoryContainer" prefWidth="627.0" style="-fx-background-color: #FAFAFC;">
+                     <children>
+
+                     </children>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>

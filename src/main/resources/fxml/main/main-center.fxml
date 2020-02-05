@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+           fx:id="stackPane"
+            fx:controller="controller.main.CenterController">
+
+    <BorderPane fx:id="borderPane">
+        <left>
+            <fx:include source="main-left.fxml"></fx:include>
+        </left>
+        <center>
+            <!--set default center.just use include-->
+            <fx:include source="../content/tab-exploremusic-content.fxml"></fx:include>
+        </center>
+    </BorderPane>
+</StackPane>

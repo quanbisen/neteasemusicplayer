@@ -1,7 +1,7 @@
 package task;
 
-import controller.ChoseFolderController;
-import controller.LocalMusicContentController;
+import controller.popup.ChoseFolderController;
+import controller.content.LocalMusicContentController;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -43,11 +43,16 @@ public class LoadLocalSongTask extends Task<ObservableList<LocalSong>> {
             List<String> folderList = XMLUtils.getAllRecord(CHOSE_FOLDER_FILE, "Folder", "path");
             if (folderList.size() > 0) {   //如果选择的文件目录存在，即记录数大于0，获取目录下的歌曲信息集合
                 ObservableList<LocalSong> observableLocalSongList = SongUtils.getObservableSongList(folderList);
-                Platform.runLater(() -> {   //设置"显示歌曲"数量的标签为扫描到的歌曲数目
-                    localMusicContentController.getLabSongCount().setText(String.valueOf(SongUtils.getSongCount(observableLocalSongList)));
-                    localMusicContentController.getBorderPane().setVisible(true);
-                });
-                return observableLocalSongList;
+                if (observableLocalSongList.size()>0){
+                    Platform.runLater(() -> {   //设置"显示歌曲"数量的标签为扫描到的歌曲数目
+                        localMusicContentController.getLabSongCount().setText(String.valueOf(SongUtils.getSongCount(observableLocalSongList)));
+                        localMusicContentController.getBorderPane().setVisible(true);
+                    });
+                    return observableLocalSongList;
+                }else {
+                    return null;
+                }
+
             } else {
                 Platform.runLater(() -> {
                     localMusicContentController.getLabSongCount().setText("0");
