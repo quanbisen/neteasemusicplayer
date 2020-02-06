@@ -18,7 +18,7 @@
 <BorderPane fx:id="localMusicContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/LocalMusicContentStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.LocalMusicContentController">
 
    <top>
-      <BorderPane prefHeight="45.0" prefWidth="603.0" stylesheets="@../../css/TabPaneStyle.css" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="45.0" prefWidth="603.0" BorderPane.alignment="CENTER">
          <left>
             <Label style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;" text="本地音乐" textFill="#999999" BorderPane.alignment="CENTER">
                <padding>
@@ -47,11 +47,11 @@
    </top>
 
    <center>
-      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 0;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="600.0" style="-fx-padding: 0;" stylesheets="@../../css/TabPaneStyle.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab>
+            <Tab text="00">
             <content>
-                <BorderPane fx:id="borderPane">
+                <BorderPane fx:id="tabSongContent">
                     <center>
                         <TableView fx:id="tableViewSong" onScroll="#onScrollTableView" onScrollFinished="#onScrollFinished" onScrollStarted="#onScrollStarted" onScrollToColumn="#onScrollToColumn" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;">
                             <columns>
@@ -113,43 +113,27 @@
                 </BorderPane>
             </content>
                <graphic>
-                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="55.0" spacing="3.0">
-                     <children>
-                        <HBox fx:id="hBoxSong" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxSong" prefHeight="0.0" prefWidth="50.0" spacing="3.0">
-                           <children>
-                              <Label styleClass="labIndicator" text="歌曲" />
-                              <Label fx:id="labSongCount" styleClass="count" text="0" />
-                           </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets left="5.0" />
-                     </padding>
-                  </HBox>
+                  <Label prefHeight="20.0" prefWidth="28.0" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 14px;" text="歌曲" />
                </graphic>
           </Tab>
-          <Tab>
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="272.0" layoutY="148.0" text="暂无内容" />
-                     </children>
-              </AnchorPane>
-            </content>
+            <Tab text="00">
+               <content>
+                  <BorderPane fx:id="tabSingerContent" prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn fx:id="singerInformationColumn" prefWidth="480.0" />
+                            <TableColumn fx:id="songCountColumn" minWidth="0.0" prefWidth="119.0" />
+                          </columns>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+               </content>
                <graphic>
-                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
-                     <children>
-                        <HBox fx:id="hBoxSinger" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxSinger" prefHeight="0.0" prefWidth="50.0" spacing="3.0">
-                           <children>
-                              <Label styleClass="labIndicator" text="歌手" />
-                              <Label fx:id="labSingerCount" styleClass="count" text="0" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
+                  <Label prefHeight="20.0" prefWidth="28.0" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 14px;" text="歌手" />
                </graphic>
           </Tab>
-            <Tab>
+            <Tab text="00">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -157,16 +141,7 @@
                      </children></AnchorPane>
               </content>
                <graphic>
-                  <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
-                     <children>
-                        <HBox fx:id="hBoxAlbum" alignment="CENTER" maxWidth="50.0" onMouseClicked="#onClickedHBoxAlbum" prefHeight="0.0" prefWidth="50.0" spacing="3.0">
-                           <children>
-                              <Label styleClass="labIndicator" text="专辑" />
-                              <Label fx:id="labAlbumCount" styleClass="count" text="0" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </HBox>
+                  <Label prefHeight="20.0" prefWidth="28.0" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 14px;" text="专辑" />
                </graphic>
             </Tab>
         </tabs>

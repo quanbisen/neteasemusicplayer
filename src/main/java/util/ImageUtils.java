@@ -87,7 +87,17 @@ public final class ImageUtils {
      * @param  fitHeight 图片的高度
      * @return ImageView*/
     public static ImageView createImageView(String resource,double fitWidth,double fitHeight){
-        ImageView imageView = new ImageView(new Image(resource));
+        Image image = new Image(resource);
+        return createImageView(image,fitWidth,fitHeight);
+    }
+
+    /**获取一个ImageView的对象
+     * @param image 图片对象
+     * @param  fitWidth 图片的宽度
+     * @param  fitHeight 图片的高度
+     * @return ImageView*/
+    public static ImageView createImageView(Image image,double fitWidth,double fitHeight){
+        ImageView imageView = new ImageView(image);
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(fitHeight);
         imageView.setFitWidth(fitWidth);

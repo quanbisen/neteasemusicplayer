@@ -3,12 +3,15 @@ package controller.content;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import controller.main.BottomController;
 import controller.main.MainController;
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -20,8 +23,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import mediaplayer.MyMediaPlayer;
-import mediaplayer.PlayMode;
 import model.LocalSong;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -36,9 +39,6 @@ import util.StageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 @Controller
 public class LocalMusicContentController {
@@ -51,9 +51,9 @@ public class LocalMusicContentController {
     @FXML
     private TabPane tabPane;
 
-    /**根容器的中间内容容器*/
+    /**“歌曲”标签的内容容器*/
     @FXML
-    public BorderPane borderPane;
+    public BorderPane tabSongContent;
 
     /**歌曲名称列组件*/
     @FXML
@@ -79,33 +79,6 @@ public class LocalMusicContentController {
     @FXML
     private HBox hBoxChoseFolder;
 
-    /**"歌曲"的HBox容器*/
-    @FXML
-    private HBox hBoxSong;
-
-    /**"歌手"的HBox容器*/
-    @FXML
-    private HBox hBoxSinger;
-
-    /**"专辑"的HBox容器*/
-    @FXML
-    private HBox hBoxAlbum;
-
-    /**"歌曲"的计数Label*/
-    @FXML
-    private Label labSongCount;
-
-    /**"歌曲"的计数Label容器*/
-    @FXML
-    private Label labSingerCount;
-
-    /**"歌曲"的计数Label容器*/
-    @FXML
-    private Label labAlbumCount;
-
-    /**装标签的集合tabList*/
-    private List<HBox> tabList;
-
     /**显示进度的指示器*/
     @FXML
     private ProgressIndicator progressIndicator;
@@ -122,8 +95,15 @@ public class LocalMusicContentController {
     @FXML
     private ImageView ivSearchIcon;
 
-    /**表格内容的集合变量*/
+    /**歌曲表格内容的集合变量*/
     private ObservableList<LocalSong> observableItems;
+
+    /**歌手图片姓名表格列组件*/
+    @FXML
+    private TableColumn singerInformationColumn;
+    /**歌手对应的歌曲数目表格列组件*/
+    @FXML
+    private TableColumn songCountColumn;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
@@ -153,24 +133,19 @@ public class LocalMusicContentController {
         return progressIndicator;
     }
 
-    public Label getLabSongCount() {
-        return labSongCount;
-    }
-
     public BorderPane getBorderPane() {
-        return borderPane;
+        return tabSongContent;
     }
 
     public void initialize() throws Exception {
-        tabList = new ArrayList<>();
-        tabList.add(hBoxSong);
-        tabList.add(hBoxSinger);
-        tabList.add(hBoxAlbum);
 
         progressIndicator.setVisible(false);   //初始化进度指示器为不可见
-        borderPane.setVisible(false);   //初始化不可见，在service中加载歌曲后控制可见性
+        tabSongContent.setVisible(false);   //初始化不可见，在service中加载歌曲后控制可见性
 
-        this.setSelectedTab(hBoxSong);  //设置初始选中为格式标签
+
+        /******************/
+        /**“歌曲”tab start*/
+        /******************/
         //添加css名称.在CSS文件定制样式
         nameColumn.getStyleClass().add("nameColumn");
         singerColumn.getStyleClass().add("singerColumn");
@@ -191,7 +166,7 @@ public class LocalMusicContentController {
         });
 
         //设置表格列的宽度随这个borderPane的宽度而动态改变
-        borderPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+        tabSongContent.widthProperty().addListener((observable, oldValue, newValue) -> {
             nameColumn.setPrefWidth(newValue.doubleValue()/6.5*2);
             singerColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
             albumColumn.setPrefWidth(newValue.doubleValue()/6.5*1.5);
@@ -331,6 +306,7 @@ public class LocalMusicContentController {
         localMusicContentContainer.setCursor(Cursor.DEFAULT);
         /*******Fixed some resize cursor bug here.********/
 
+        /**为搜索本地歌曲的文本输入框添加text文本事件监听器*/
         tfSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             if (observableItems == null){   //如果存储表格内容的变量为空，才指向表格的内容
                 observableItems = tableViewSong.getItems(); //取出表格的内容东西，指向它
@@ -357,7 +333,42 @@ public class LocalMusicContentController {
             }
         });
 
+        tabPane.getSelectionModel().getSelectedItem().setText("120");
+        /******************/
+        /**“歌曲”tab end*/
+        /******************/
 
+        /******************/
+        /**“歌手”tab start*/
+        /******************/
+        singerInformationColumn.setCellValueFactory(new PropertyValueFactory<>("labSinger"));
+        songCountColumn.setCellValueFactory(new PropertyValueFactory<>("songCount"));
+        /******************/
+        /**“歌手”tab end*/
+        /******************/
+
+        /******************/
+        /**“专辑”tab start*/
+        /******************/
+        /******************/
+        /**“专辑”tab end*/
+        /******************/
+
+        /**为TabPane切换内容添加淡入淡出动画*/
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            Node oldContent = oldValue.getContent();
+            Node newContent = newValue.getContent();
+            newValue.setContent(oldContent);
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.25),oldContent);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.25),newContent);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeOut.setOnFinished(event -> newValue.setContent(newContent));
+            SequentialTransition sequentialTransition = new SequentialTransition(fadeOut,fadeIn);
+            sequentialTransition.play();
+        });
     }
 
     /**“选择目录”按钮按下事件处理*/
@@ -374,55 +385,11 @@ public class LocalMusicContentController {
         }
     }
 
-    /**单击"歌曲"标签的事件处理*/
-    public void onClickedHBoxSong(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            this.setSelectedTab(hBoxSong);
-        }
-    }
-
-
-
-    /**单击"歌手"标签的事件处理*/
-    public void onClickedHBoxSinger(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            this.setSelectedTab(hBoxSinger);
-        }
-    }
-
-    /**单击"专辑"标签的事件处理*/
-    public void onClickedHBoxAlbum(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            this.setSelectedTab(hBoxAlbum);
-        }
-    }
-
-    /**设置选择的标签背景颜色的函数*/
-    private void setSelectedTab(HBox selectedTab){
-        //首先重置所有的标签的背景颜色，我这里的HBox标签背景颜色是由另外一个HBox包裹做背景颜色显示的，所以需要getParent，设置parent的样式
-        for (HBox hBoxTab:tabList){
-            hBoxTab.getStyleClass().remove("selectedHBox");  //移除parent的css类名
-        }
-        //然后给当前选中的标签的parent容器添加css类名
-        selectedTab.getStyleClass().add("selectedHBox");
-    }
-
     /**"播放全部"按钮的鼠标单击事件处理*/
     @FXML
     public void onClickedPlayAll(MouseEvent mouseEvent) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
-            //设置右下角"歌单文本提示"显示数量
-            bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlayListSongs().size()));
-            if (myMediaPlayer.getPlayMode() == PlayMode.SHUFFLE){   //如果当前播放模式为"随机播放"
-                //生成一个随机数，执行播放
-                int randomIndex=new Random().nextInt(myMediaPlayer.getPlayListSongs().size());
-                myMediaPlayer.setCurrentPlayIndex(randomIndex);     //设置当前播放的索引为生成的随机索引
-            }
-            else {  //否则,不是"随机播放"模式,这些都是播放播放列表中的第一首歌曲
-                myMediaPlayer.setCurrentPlayIndex(0);  //设置当前播放的歌曲为播放列表第一首歌曲
-            }
-            myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));      //播放当前的索引歌曲
+            myMediaPlayer.playAll(tableViewSong.getItems());  //执行媒体播放其播放全部操作
         }
     }
 

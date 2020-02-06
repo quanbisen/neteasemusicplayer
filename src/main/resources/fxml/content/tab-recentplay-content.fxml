@@ -62,14 +62,14 @@
                                                 <Insets left="15.0" />
                                             </padding>
                                             <children>
-                                                <HBox fx:id="hBoxPlayAll" alignment="CENTER" maxWidth="135.0" prefHeight="40.0" prefWidth="100.0">
+                                                <HBox fx:id="hBoxPlayAll" alignment="CENTER" maxWidth="135.0" prefHeight="40.0" prefWidth="100.0" onMouseClicked="#onClickedPlayAll">
                                                     <children>
                                                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
                                                                 <Image url="@../../image/NeteasePlayAll.png" />
                                                             </image>
                                                         </ImageView>
-                                                        <Button fx:id="btnPlayAll" mnemonicParsing="false" prefHeight="28.0" prefWidth="70.0" text="播放全部" />
+                                                        <Button fx:id="btnPlayAll" mnemonicParsing="false" prefHeight="28.0" prefWidth="70.0" text="播放全部" onMouseClicked="#onClickedPlayAll"/>
                                                     </children>
                                                 </HBox>
                                                 <Separator maxHeight="30.0" orientation="VERTICAL" />

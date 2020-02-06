@@ -141,7 +141,7 @@ public class ChoseFolderController {
             //因为需要重新加载歌曲,所以需要判断是否播放器有歌曲正在播放中
             if (myMediaPlayer.getMediaPlayer()!=null){  //如果媒体播放器对象存在,销毁它
                 myMediaPlayer.destroy();    //销毁
-                localMusicContentController.getLabSongCount().setText("0"); //更新显示歌曲数目的label组件
+                localMusicContentController.getTabPane().getTabs().get(0).setText("0"); //更新显示歌曲数目的label组件
             }
         }
 

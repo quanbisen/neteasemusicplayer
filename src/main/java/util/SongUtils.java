@@ -200,13 +200,20 @@ public final class SongUtils {
     /**把表格中的items转换成播放列表集合的函数
      * @param tableItems 表格items
      * @return ObservableList<PlayListSong>*/
-    public static ObservableList<PlayListSong> getPlayListSongs(List<LocalSong> tableItems){
+    public static ObservableList<PlayListSong> getPlayListSongs(List tableItems){
         ObservableList<PlayListSong> observableList = FXCollections.observableArrayList();
-        tableItems.forEach(item->{
-            if (!SongUtils.isCharacterCategory(item.getName())){
+        for (int i = 0; i < tableItems.size(); i++) {
+            Object tableItem = tableItems.get(i);
+            if (tableItem instanceof LocalSong){    //如果是LocalSong模型
+                LocalSong item = (LocalSong) tableItem; //拆箱
+                if (!SongUtils.isCharacterCategory(item.getName())){
+                    observableList.add(new PlayListSong(item.getName(),item.getSinger(),item.getAlbum(),item.getTotalTime(),item.getResource()));
+                }
+            }else if (tableItem instanceof RecentSong){
+                RecentSong item = (RecentSong) tableItem;
                 observableList.add(new PlayListSong(item.getName(),item.getSinger(),item.getAlbum(),item.getTotalTime(),item.getResource()));
             }
-        });
+        }
         return observableList;
     }
 
@@ -222,6 +229,13 @@ public final class SongUtils {
      * @return PlayListSong*/
     public static PlayListSong toPlayListSong(OnlineSong onlineSong){
         return new PlayListSong(onlineSong.getName(),onlineSong.getSinger(),onlineSong.getAlbum(),onlineSong.getTotalTime(),onlineSong.getResource());
+    }
+
+    /**把在线音乐对象模型转换成播放列表模型函数
+     * @param recentSong
+     * @return PlayListSong*/
+    public static PlayListSong toPlayListSong(RecentSong recentSong){
+        return new PlayListSong(recentSong.getName(),recentSong.getSinger(),recentSong.getAlbum(),recentSong.getTotalTime(),recentSong.getResource());
     }
 
     /**把播放列表模型歌曲转变成最近播放歌曲模型

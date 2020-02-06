@@ -99,7 +99,13 @@
     -fx-alignment: center-left;
     -fx-padding: 5 5 5 5;
 }
-
+/*表格行按压的缩放样式*/
+.table-view .table-row-cell:pressed
+{
+    -fx-scale-x: 0.995;
+    -fx-scale-y: 0.995;
+    -fx-background-insets: 0 -3em 0 -3em;
+}
 /*设置表格第一列的样式*/
 #indexColumn.table-cell
 {

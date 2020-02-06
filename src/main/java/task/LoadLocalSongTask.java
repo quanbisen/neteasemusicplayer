@@ -45,7 +45,7 @@ public class LoadLocalSongTask extends Task<ObservableList<LocalSong>> {
                 ObservableList<LocalSong> observableLocalSongList = SongUtils.getObservableSongList(folderList);
                 if (observableLocalSongList.size()>0){
                     Platform.runLater(() -> {   //设置"显示歌曲"数量的标签为扫描到的歌曲数目
-                        localMusicContentController.getLabSongCount().setText(String.valueOf(SongUtils.getSongCount(observableLocalSongList)));
+                        localMusicContentController.getTabPane().getTabs().get(0).setText(String.valueOf(SongUtils.getSongCount(observableLocalSongList)));
                         localMusicContentController.getBorderPane().setVisible(true);
                     });
                     return observableLocalSongList;
@@ -55,7 +55,7 @@ public class LoadLocalSongTask extends Task<ObservableList<LocalSong>> {
 
             } else {
                 Platform.runLater(() -> {
-                    localMusicContentController.getLabSongCount().setText("0");
+                    localMusicContentController.getTabPane().getTabs().get(0).setText("0");
                     localMusicContentController.getBorderPane().setVisible(false);
                 });
                 return null;

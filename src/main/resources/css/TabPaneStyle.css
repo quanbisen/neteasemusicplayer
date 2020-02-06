@@ -1,90 +1,30 @@
 #tabPane
 {
-    -fx-tab-min-height: 100px;
-    -fx-tab-max-height: 100px;
-    -fx-tab-min-width: 30px;
-    -fx-tab-max-width: 30px;
-    -fx-border-color: gray;
-    -fx-border-width: 1px;
+    -fx-tab-min-width: 4.5em;
+    -fx-tab-max-width: 4.5em;
+    -fx-tab-min-height: 2.8em;
+    -fx-tab-max-height: 2.8em;
 }
 .tab .tab-label
 {
-    -fx-background-color: transparent;
-    -fx-alignment: center;
-    -fx-text-fill: transparent;
-    -fx-background-insets: 0px;
-    -fx-background-radius: 0px;
-    -fx-padding: 0px;
+    -fx-font-size: 0.83em;
+    -fx-text-fill: #999999;
 }
 .tab
 {
-    -fx-background-color: transparent;
-    -fx-background-insets: 0px;
-    -fx-background-radius: 0px;
-    -fx-padding: 0px;
+    -fx-background-insets: 0 0 0 0;
+    -fx-padding: 0 0 0 0;
 }
-.tab:selected
-{
-    -fx-background-color: WHITE;
-    -fx-background-radius: 0;
-    -fx-background-insets: 0;
-    -fx-border-width: 2px 0 0 0;
-    -fx-border-color: RED;
-}
+
 .tab:selected .focus-indicator
 {
-    -fx-focus-color:transparent;
-    -fx-border-color: transparent;
+    -fx-border-width: 0 0 2 0, 0 0 2 0;
+    -fx-border-color: #C62E2E;
+    -fx-border-insets: 0 0 -2 0, 0 0 -2 0;
+    -fx-border-radius: 2, 1; /* looks sharper if outer border has a tighter radius (2 instead of 3) */
 }
-.tab:focused
+.tab-pane > .tab-header-area
 {
-    -fx-focus-color:transparent;
-}
-.tab-pane *.tab-header-background
-{
-    -fx-background-color: transparent;
-}
-.tab-pane:left *.tab-header-area
-{
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-}
-.control-buttons-tab {
-    visibility: hidden;
-    -fx-min-width: 0;
-    -fx-pref-width: 0;
-    -fx-max-width: 0;
-    -fx-padding: 0;
+    -fx-padding: 0 0 0 1.05em;
 }
 
-.control-buttons-tab>.container {
-    visibility: hidden;
-    -fx-min-width: 0;
-    -fx-pref-width: 0;
-    -fx-max-width: 0;
-    -fx-padding: 0;
-}
-
-.container>.arrow {
-    visibility: hidden;
-    -fx-min-width: 0;
-    -fx-pref-width: 0;
-    -fx-max-width: 0;
-    -fx-padding: 0;
-}
-.tab-pane.floating > .tab-header-area > .tab-header-background {
-    -fx-background-color: RED;
-    -fx-border-width: 2px;
-    -fx-border-color: RED;
-}
-.tab-pane.floating > .tab-header-area {
-    -fx-background-color: RED;
-    -fx-border-width: 2px;
-    -fx-border-color: RED;
-}
-.tab-pane.floating > .tab-content-area {
-    -fx-background-color: -fx-outer-border, -fx-background;
-    -fx-background-insets: 0, 1;
-    -fx-background-radius: 2, 0;
-    -fx-padding: 2;
-}

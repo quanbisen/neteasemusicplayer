@@ -92,6 +92,7 @@ BorderPane
     -fx-padding: 0 0 0 20;
     -fx-alignment: center-left;
 }
+
 .singerColumn .label,.albumColumn .label,.totalTimeColumn .label,.sizeColumn .label  /*歌曲"歌手"."专辑","总时长","大小"列的标题label样式*/
 {
     -fx-alignment: center-left;
@@ -122,6 +123,13 @@ BorderPane
 {
     -fx-text-fill: #333333;
     -fx-padding:0 0 0 20;
+}
+/*表格行按压的缩放样式*/
+.table-view .table-row-cell:pressed
+{
+    -fx-scale-x: 0.995;
+    -fx-scale-y: 0.995;
+    -fx-background-insets: 0 -3em 0 -3em;
 }
 /*表格行样式*/
 .table-view .table-row-cell

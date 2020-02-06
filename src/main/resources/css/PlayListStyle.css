@@ -51,6 +51,13 @@
     -fx-padding: 5 5 5 5;
 
 }
+/*表格行按压的缩放样式*/
+.table-view .table-row-cell:pressed
+{
+    -fx-scale-x: 0.995;
+    -fx-scale-y: 0.995;
+    -fx-background-insets: 0 -3em 0 -3em;
+}
 .table-view .table-row-cell.highlightedRow .table-cell
 {
     -fx-text-fill: #BC2F2E;

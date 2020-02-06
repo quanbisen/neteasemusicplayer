@@ -359,6 +359,32 @@ public class MyMediaPlayer implements IMediaPlayer {
 
     }
 
+    /**自定义媒体播放器“播放全部”行为
+     * @param tableItems 需要播放的表格集合*/
+    @Override
+    public void playAll(ObservableList tableItems) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
+        if (nextPlayIndexList != null && nextPlayIndexList.size() > 0){
+            nextPlayIndexList.clear();
+            nextPlayIndexList = null;
+        }
+        if (lastPlayIndexList != null && lastPlayIndexList.size() > 0){
+            lastPlayIndexList.clear();
+            lastPlayIndexList = null;
+        }
+        playListSongs = SongUtils.getPlayListSongs(tableItems);     //设置当前播放列表
+        //设置右下角"歌单文本提示"显示数量
+        bottomController.getLabPlayListCount().setText(String.valueOf(playListSongs.size()));
+        if (playMode == PlayMode.SHUFFLE){   //如果当前播放模式为"随机播放"
+            //生成一个随机数，执行播放
+            int randomIndex=new Random().nextInt(playListSongs.size());
+            currentPlayIndex = randomIndex;     //设置当前播放的索引为生成的随机索引
+        }
+        else {  //否则,不是"随机播放"模式,这些都是播放播放列表中的第一首歌曲
+            currentPlayIndex = 0;  //设置当前播放的歌曲为播放列表第一首歌曲
+        }
+        this.playSong(playListSongs.get(currentPlayIndex));      //播放当前的索引歌曲
+    }
+
     /**
      * 自定义媒体播放器销毁行为
      */

@@ -61,10 +61,10 @@ public class DeleteLocalMusicConfirmDialog {
             }
             /**判断是否需要移除字母的分类行 end*/
             if (tableViewItems.size() == 0){    //如果表格已经没有内容行，设置tabPane面板不可见，隐藏
-                localMusicContentController.getLabSongCount().setText("0");
+                localMusicContentController.getTabPane().getTabs().get(0).setText("0");
                 localMusicContentController.getBorderPane().setVisible(false);
             }else { //否则，可以更新歌曲数目的显示
-                localMusicContentController.getLabSongCount().setText(String.valueOf(SongUtils.getSongCount(tableViewItems)));  //更新歌曲数目统计
+                localMusicContentController.getTabPane().getTabs().get(0).setText(String.valueOf(SongUtils.getSongCount(tableViewItems)));  //更新歌曲数目统计
             }
             this.onClickedCancel(actionEvent);  //隐藏dialog
             WindowUtils.toastInfo(mainController.getStackPane(),new Label("删除歌曲成功"));

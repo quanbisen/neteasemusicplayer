@@ -1,19 +1,26 @@
 package controller.content;
 
 import application.SpringFXMLLoader;
+import controller.main.BottomController;
 import controller.main.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import mediaplayer.MyMediaPlayer;
 import model.RecentSong;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.LoadRecentSongService;
@@ -83,6 +90,12 @@ public class RecentPlayContentController {
     @Resource
     private MainController mainController;
 
+    @Resource
+    private MyMediaPlayer myMediaPlayer;
+
+    @Resource
+    private BottomController bottomController;
+
     public Label getLabSongCount() {
         return labSongCount;
     }
@@ -135,14 +148,23 @@ public class RecentPlayContentController {
         }
     }
 
+    /**“播放全部“按钮的事件处理*/
+    @FXML
+    public void onClickedPlayAll(MouseEvent mouseEvent) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){ //鼠标左击
+            myMediaPlayer.playAll(tableViewRecentPlaySong.getItems());  //执行媒体播放其播放全部操作
+        }
+    }
+
     /**更新最近播放面板的GUI的函数
      * */
     public void updateRecentPlayPane(){
         List<RecentSong> tableItems = tableViewRecentPlaySong.getItems();
         labSongCount.setText(String.valueOf(tableItems.size()));    //更新歌曲数目显示
+        Image imageFavor = new Image("/image/FavorTabIcon.png");
         for (int i = 0; i < tableItems.size(); i++) {
             if (tableItems.get(i).getLabAddFavor() == null){
-                ImageView imageView = ImageUtils.createImageView("/image/FavorTabIcon.png",20,20);
+                ImageView imageView = ImageUtils.createImageView(imageFavor,20,20);
                 Label labAddFavor = new Label("",imageView);
                 labAddFavor.setOnMouseClicked(event -> {
                     System.out.println("clicked ...");
@@ -158,6 +180,7 @@ public class RecentPlayContentController {
             tableItems.get(i).setIndex(index);
         }
     }
+
 
 
 }
