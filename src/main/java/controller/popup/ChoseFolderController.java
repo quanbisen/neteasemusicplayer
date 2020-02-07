@@ -87,11 +87,13 @@ public class ChoseFolderController {
         }
         else {   //文件存在，读取记录
             folderPathList =  XMLUtils.getAllRecord(CHOSE_FOLDER_FILE,"Folder","path");
-            for (String folderPath:folderPathList){
-                CheckBox checkBox = new CheckBox(folderPath);  //创建CheckBox组件
-                checkBox.getStylesheets().add("css/CheckBoxStyle.css"); //添加样式
-                checkBox.setSelected(true);
-                vWrapCheckBox.getChildren().add(checkBox);     //添加组件
+            if (folderPathList != null && folderPathList.size() > 0){
+                for (String folderPath:folderPathList){
+                    CheckBox checkBox = new CheckBox(folderPath);  //创建CheckBox组件
+                    checkBox.getStylesheets().add("css/CheckBoxStyle.css"); //添加样式
+                    checkBox.setSelected(true);
+                    vWrapCheckBox.getChildren().add(checkBox);     //添加组件
+                }
             }
         }
 

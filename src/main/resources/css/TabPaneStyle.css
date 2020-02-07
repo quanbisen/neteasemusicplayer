@@ -4,6 +4,8 @@
     -fx-tab-max-width: 4.5em;
     -fx-tab-min-height: 2.8em;
     -fx-tab-max-height: 2.8em;
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 5px;
 }
 .tab .tab-label
 {
@@ -14,6 +16,8 @@
 {
     -fx-background-insets: 0 0 0 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: transparent;
+    -fx-background-radius: 0 0 0 0;
 }
 
 .tab:selected .focus-indicator
@@ -25,6 +29,13 @@
 }
 .tab-pane > .tab-header-area
 {
-    -fx-padding: 0 0 0 1.05em;
+    -fx-padding: 0 0 0 1.0em;
+}
+.tab-pane *.tab-header-background
+{
+    -fx-background-color: transparent;
+    -fx-border-insets: 0 15 0 10;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #E4E4E7;
 }
 

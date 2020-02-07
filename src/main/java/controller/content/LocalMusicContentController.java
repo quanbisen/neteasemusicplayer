@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import mediaplayer.MyMediaPlayer;
+import model.LocalSinger;
 import model.LocalSong;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -34,6 +35,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
 import service.LoadLocalSongService;
+import util.ImageUtils;
 import util.SongUtils;
 import util.StageUtils;
 import util.WindowUtils;
@@ -98,12 +100,21 @@ public class LocalMusicContentController {
     /**歌曲表格内容的集合变量*/
     private ObservableList<LocalSong> observableItems;
 
+    /**歌手表格的BorderPane容器*/
+    @FXML
+    private BorderPane tabSingerContent;
+
     /**歌手图片姓名表格列组件*/
     @FXML
     private TableColumn singerInformationColumn;
+
     /**歌手对应的歌曲数目表格列组件*/
     @FXML
     private TableColumn songCountColumn;
+
+    /**歌手表格组件*/
+    @FXML
+    private TableView tableViewSinger;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
@@ -167,11 +178,11 @@ public class LocalMusicContentController {
 
         //设置表格列的宽度随这个borderPane的宽度而动态改变
         tabSongContent.widthProperty().addListener((observable, oldValue, newValue) -> {
-            nameColumn.setPrefWidth(newValue.doubleValue()/6.5*2);
-            singerColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
-            albumColumn.setPrefWidth(newValue.doubleValue()/6.5*1.5);
-            totalTimeColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
-            sizeColumn.setPrefWidth(newValue.doubleValue()/6.5*1);
+            nameColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*2);
+            singerColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1);
+            albumColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1.5);
+            totalTimeColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1);
+            sizeColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1);
         });
 
         /**加载歌曲服务*/
@@ -343,6 +354,19 @@ public class LocalMusicContentController {
         /******************/
         singerInformationColumn.setCellValueFactory(new PropertyValueFactory<>("labSinger"));
         songCountColumn.setCellValueFactory(new PropertyValueFactory<>("songCount"));
+        songCountColumn.getStyleClass().add("songCountColumn");
+  /*      Label label = new Label("林俊杰", ImageUtils.createImageView("/image/林俊杰.png",48,48));
+        label.setGraphicTextGap(15);
+        tableViewSinger.getItems().addAll(new LocalSinger(label,"2首"),
+                new LocalSinger(new Label("singer"),"2首"),
+                new LocalSinger(new Label("singer"),"2首"),
+                new LocalSinger(new Label("singer"),"2首"),
+                new LocalSinger(new Label("singer"),"2首"));*/
+        //设置表格列的宽度随这个borderPane的宽度而动态改变
+        tabSingerContent.widthProperty().addListener((observable, oldValue, newValue) -> {
+            singerInformationColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*5.5);
+            songCountColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1);
+        });
         /******************/
         /**“歌手”tab end*/
         /******************/
@@ -368,6 +392,10 @@ public class LocalMusicContentController {
             fadeOut.setOnFinished(event -> newValue.setContent(newContent));
             SequentialTransition sequentialTransition = new SequentialTransition(fadeOut,fadeIn);
             sequentialTransition.play();
+
+            if (newValue == tabPane.getTabs().get(1)){
+                tableViewSinger.getItems().addAll(SongUtils.getObservableLocalSingerList(tableViewSong.getItems()));
+            }
         });
     }
 

@@ -57,16 +57,18 @@ public final class XMLUtils {
      * @param subName 子元素名称
      * @param attributeName 子元素属性*/
     public static List<String> getAllRecord(File xmlFile, String subName, String attributeName) throws DocumentException {
-        List<String> list = new ArrayList<>();
+        List<String> list = null;
         Element root = getRootElement(xmlFile);
         if (root == null){
-            return list;
+            return null;
         }
         List<Element> elementList = root.elements(subName);
         if (elementList == null || elementList.size() == 0){
-            return list;
+            return null;
         }
-
+        if (list == null){
+            list = new ArrayList<>();
+        }
         for (Element element : elementList) {
             list.add(element.attributeValue(attributeName));
         }

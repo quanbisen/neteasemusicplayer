@@ -2,55 +2,7 @@ BorderPane
 {
     -fx-background-color: #FAFAFC;
 }
-.tab-pane
-{
-    -fx-tab-max-height: 40px;
-    -fx-background-color: transparent;
-    -fx-padding: 0 0 0 5px;
-}
-.tab
-{
-    -fx-background-color: transparent;
-    -fx-background-insets: 0px;
-    -fx-background-radius: 0px;
-}
-.tab:selected
-{
-    -fx-border-insets: 0;
-}
-/*被选中的HBox样式*/
-.selectedHBox
-{
-    -fx-background-color: transparent;
-    -fx-border-color: #C62E2E;
-    -fx-border-width: 0 0 2px 0;
-}
-.tab:selected .focus-indicator
-{
-    -fx-border-color: transparent;
-}
-.HBox
-{
-    -fx-background-color: transparent;
-}
-.tab-pane *.tab-header-background
-{
-    -fx-background-color: transparent;
-    -fx-border-insets: 0 15 0 10;
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: #E4E4E7;
-}
-.labIndicator
-{
-    -fx-font-size: 14px;
-    -fx-font-family: "Microsoft YaHei","SimSun";
-}
-.count
-{
-    -fx-font-size: 10px;
-    -fx-font-family: "Microsoft YaHei","SimSun";
-    -fx-text-fill: #919192;
-}
+
 .progress-indicator
 {
     -fx-pref-height: 18px;
@@ -78,38 +30,37 @@ BorderPane
 {
     -fx-background-color: transparent;
 }
-.table-view .column-header-background
+
+/*****************
+歌曲表格的样式 start
+*****************/
+/*表格头行的背景*/
+#tableViewSong.table-view .column-header-background
 {
     -fx-background-color: transparent;
 }
-/*.table-view .column-header-background .label*/
-/*{*/
-/*    -fx-alignment: center-left;*/
-/*    -fx-padding: 0 0 0 5;*/
-/*}*/
-.nameColumn .label  /*歌曲"名称"列的标题label样式*/
+#tableViewSong.table-view .nameColumn .label  /*歌曲"名称"列的标题label样式*/
 {
     -fx-padding: 0 0 0 20;
     -fx-alignment: center-left;
 }
-
-.singerColumn .label,.albumColumn .label,.totalTimeColumn .label,.sizeColumn .label  /*歌曲"歌手"."专辑","总时长","大小"列的标题label样式*/
+#tableViewSong.table-view .singerColumn .label,#tableViewSong.table-view .albumColumn .label,#tableViewSong.table-view .totalTimeColumn .label,#tableViewSong.table-view .sizeColumn .label  /*歌曲"歌手"."专辑","总时长","大小"列的标题label样式*/
 {
     -fx-alignment: center-left;
     -fx-padding: 0 0 0 5;
 }
-.table-view .column-header
+#tableViewSong.table-view .column-header
 {
     -fx-background-color: transparent;
     -fx-border-width: 1 1 1 0;
     -fx-border-color: #E4E4E7;
     -fx-size: 30;
 }
-.table-view .column-header .label
+#tableViewSong.table-view .column-header .label
 {
     -fx-font-family: "Microsoft YaHei","SimSun";
 }
-.table-view .table-cell
+#tableViewSong.table-view .table-cell
 {
     -fx-text-fill: #333333;
     -fx-font-family: "Microsoft YaHei","SimSun";
@@ -117,58 +68,127 @@ BorderPane
     -fx-alignment: center-left;
     -fx-padding: 5 5 5 5;
 }
-
 /*设置表格第一列的样式*/
-#nameColumn.table-cell
+#tableViewSong.table-view #nameColumn.table-cell
 {
     -fx-text-fill: #333333;
     -fx-padding:0 0 0 20;
 }
-/*表格行按压的缩放样式*/
-.table-view .table-row-cell:pressed
-{
-    -fx-scale-x: 0.995;
-    -fx-scale-y: 0.995;
-    -fx-background-insets: 0 -3em 0 -3em;
-}
 /*表格行样式*/
-.table-view .table-row-cell
+#tableViewSong.table-view .table-row-cell
 {
     -fx-cell-size: 40px;
     -fx-background-color:#FAFAFC;
     -fx-background-insets: 0;
 }
+/*表格行按压的缩放样式*/
+#tableViewSong.table-view .table-row-cell:pressed
+{
+    -fx-scale-x: 0.995;
+    -fx-scale-y: 0.995;
+    -fx-background-insets: 0 -3em 0 -3em;
+}
 /*表格偶数行样式*/
-.table-view .table-row-cell:odd
+#tableViewSong.table-view .table-row-cell:odd
 {
     -fx-background-color:#F4F4F6;
 }
 /*表格行鼠标放置在上面的样式*/
-.table-view .table-row-cell:hover
+#tableViewSong.table-view .table-row-cell:hover
 {
     -fx-background-color: #F2F2F3;
 }
 /*选中行的背景颜色*/
-.table-view .table-row-cell:selected
+#tableViewSong.table-view .table-row-cell:selected
 {
     -fx-background-color: #DEDEE0;
 }
-/*.table-view .table-row-cell.selectedRow
-{
-    -fx-background-color: RED;
-}*/
-
 /*空行的样式，参见：http://fxexperience.com/2011/11/alternate-row-highlighting-in-empty-tableview-and-listview-rows/*/
-.table-view .table-row-cell:empty
+#tableViewSong.table-view .table-row-cell:empty
 {
     -fx-background-color: #FAFAFC;
 }
 /*去除空行的边框*/
-.table-view .table-row-cell:empty .table-cell
+#tableViewSong.table-view .table-row-cell:empty .table-cell
 {
     -fx-border-width: 0px;
 }
+/*****************
+歌曲表格的样式 end
+*****************/
 
+/*****************
+歌手表格的样式 start
+*****************/
+/*去除标题栏*/
+#tableViewSinger.table-view .column-header-background
+{
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+}
+/*”歌手“表格行样式*/
+#tableViewSinger.table-view .table-row-cell
+{
+    -fx-cell-size: 68px;
+    -fx-background-color:#FAFAFC;
+    -fx-background-insets: 0;
+}
+/*”歌手“表格下的单元格样式*/
+#tableViewSinger.table-view .table-cell
+{
+    -fx-text-fill: #333333;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-border-color:transparent;
+    -fx-alignment: center-left;
+    -fx-padding: 5 5 5 5;
+}
+/*”歌手“表格下的单元格下的label样式*/
+#tableViewSinger.table-view .table-cell .label
+{
+    -fx-text-fill: #333333;
+}
+/*表格行按压的缩放样式*/
+#tableViewSinger.table-view .table-row-cell:pressed
+{
+    -fx-scale-x: 0.995;
+    -fx-scale-y: 0.995;
+    -fx-background-insets: 0 -3em 0 -3em;
+}
+/*表格偶数行样式*/
+#tableViewSinger.table-view .table-row-cell:odd
+{
+    -fx-background-color:#F4F4F6;
+}
+/*表格行鼠标放置在上面的样式*/
+#tableViewSinger.table-view .table-row-cell:hover
+{
+    -fx-background-color: #F2F2F3;
+}
+/*“歌手”表格的歌手信息列的样式*/
+#tableViewSinger.table-view #singerInformationColumn.table-cell
+{
+    -fx-padding: 0 0 0 1.25em; /*0 0 0 15*/
+}
+/*“歌手”表格的数目列的样式*/
+#tableViewSinger.table-view #songCountColumn.table-cell
+{
+    -fx-alignment: center-right;
+    -fx-padding: 0 2.5em 0 0;
+}
+/*空行的样式*/
+#tableViewSinger.table-view .table-row-cell:empty
+{
+    -fx-background-color: #FAFAFC;
+}
+/*去除空行的边框*/
+#tableViewSinger.table-view .table-row-cell:empty .table-cell
+{
+    -fx-border-width: 0px;
+}
+/*****************
+歌手表格的样式 end
+*****************/
 .scroll-bar:vertical
 {
     -fx-pref-width: 8;
@@ -237,12 +257,4 @@ BorderPane
 {
     visibility: hidden;
     -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
-}
-.table-view .table-row-cell.context-menu {
-    -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
-    -fx-background-color: black;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
-    /*    -fx-padding: 0.666667em 0.083333em 0.666667em 0.083333em;  8 1 8 1 */
-    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
 }

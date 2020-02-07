@@ -49,7 +49,7 @@
    <center>
       <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="600.0" style="-fx-padding: 0;" stylesheets="@../../css/TabPaneStyle.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-            <Tab text="00">
+            <Tab text="0">
             <content>
                 <BorderPane fx:id="tabSongContent">
                     <center>
@@ -116,14 +116,14 @@
                   <Label prefHeight="20.0" prefWidth="28.0" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 14px;" text="歌曲" />
                </graphic>
           </Tab>
-            <Tab text="00">
+            <Tab text="0">
                <content>
                   <BorderPane fx:id="tabSingerContent" prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="tableViewSinger" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <columns>
-                            <TableColumn fx:id="singerInformationColumn" prefWidth="480.0" />
-                            <TableColumn fx:id="songCountColumn" minWidth="0.0" prefWidth="119.0" />
+                            <TableColumn fx:id="singerInformationColumn" minWidth="0.0" prefWidth="456.0" />
+                            <TableColumn fx:id="songCountColumn" minWidth="0.0" prefWidth="143.0" />
                           </columns>
                         </TableView>
                      </center>
@@ -133,7 +133,7 @@
                   <Label prefHeight="20.0" prefWidth="28.0" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 14px;" text="歌手" />
                </graphic>
           </Tab>
-            <Tab text="00">
+            <Tab text="0">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
