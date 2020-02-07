@@ -60,9 +60,8 @@ public final class ImageUtils {
                         AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");
                         FrameBodyAPIC frameBodyAPIC = (FrameBodyAPIC) abstractID3v2Frame.getBody();
                         byte[] imageData = frameBodyAPIC.getImageData();
-                        imgAlbum= new ImageView(new Image(new ByteArrayInputStream(imageData)));
-                        imgAlbum.setFitWidth(58);
-                        imgAlbum.setFitHeight(58);
+                        Image image = new Image(new ByteArrayInputStream(imageData),58,58,false,true);
+                        imgAlbum= createImageView(image,58,58);
                     }catch (NullPointerException e){
                         imgAlbum = createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
                     }
@@ -87,7 +86,7 @@ public final class ImageUtils {
      * @param  fitHeight 图片的高度
      * @return ImageView*/
     public static ImageView createImageView(String resource,double fitWidth,double fitHeight){
-        Image image = new Image(resource);
+        Image image = new Image(resource,fitWidth,fitHeight,false,true);
         return createImageView(image,fitWidth,fitHeight);
     }
 

@@ -192,7 +192,7 @@ public class LocalMusicContentController {
         loadLocalSongService.start();  //启动服务
 
 
-        /**单击表格歌曲行的事件处理，注意：歌曲行为非字母分类行*/
+        /**单击“歌曲”表格歌曲行的事件处理，注意：歌曲行为非字母分类行*/
         EventHandler<MouseEvent> onClickedTableSongRow = mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
                 LocalSong selectedLocalSong = tableViewSong.getSelectionModel().getSelectedItem();
@@ -219,7 +219,6 @@ public class LocalMusicContentController {
          * start*/
         loadLocalSongService.setOnSucceeded(event -> {
             tableViewSong.setRowFactory(new Callback<TableView<LocalSong>, TableRow<LocalSong>>() {
-//                int index=0;    //用作字母分类的记录基数偶数行的标记index
                 @Override
                 public TableRow<LocalSong> call(TableView<LocalSong> param) {
                     return new TableRow<LocalSong>(){
@@ -229,17 +228,9 @@ public class LocalMusicContentController {
                             if (!empty){
                                 /**设置表格行的样式*/
                                 if (SongUtils.isCharacterCategory(item.getName())){
-//                                    index = 0;
-//                                    this.setStyle("-fx-background-color: #FAFAFC;");
                                     this.setMouseTransparent(true);
                                     this.removeEventHandler(MouseEvent.MOUSE_CLICKED,onClickedTableSongRow);
                                 }else {
-//                                    index++;
-//                                    if (index%2 != 0){
-//                                        this.setStyle("-fx-background-color:#F4F4F6;"); //字母行下的基数行样式
-//                                    }else {
-//                                        this.setStyle("-fx-background-color: #FAFAFC;");//字母行下的偶数行样式
-//                                    }
                                     this.setMouseTransparent(false);
                                     this.setOnMouseClicked(onClickedTableSongRow);
                                 }
@@ -250,8 +241,6 @@ public class LocalMusicContentController {
                             super.updateSelected(selected);
                             if (selected){  //如果选中了
                                 if (!SongUtils.isCharacterCategory(this.getItem().getName())){  //选择的是实际上的歌曲行才执行
-//                                    this.getTableView().refresh();  //刷新表格
-//                                    this.setStyle("-fx-background-color: #DEDEE0;");    //设置背景
                                     /**设置表格行的右键菜单contextMenu*/
                                     try {
                                         this.setContextMenu(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/contextmenu/song-contextmenu.fxml").load());
@@ -266,24 +255,6 @@ public class LocalMusicContentController {
                     };
                 }
             });
-            /*tableViewSong.setRowFactory(new Callback<TableView<Song>, TableRow<Song>>() {
-                @Override
-                public TableRow<Song> call(TableView<Song> param) {
-                    return new TableRow<Song>(){
-                        @Override
-                        protected void updateItem(Song item, boolean empty) {
-                            if (!empty && !SongUtils.isCharacterCategory(item.getName())){
-                                try {
-                                    getStylesheets().add("/css/LocalMusicContentStyle.css");
-                                    setContextMenu(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/song-contextmenu.fxml").load());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    };
-                }
-            });*/
             nameColumn.setCellFactory(new Callback<TableColumn<LocalSong, String>, TableCell<LocalSong, String>>() {
                 @Override
                 public TableCell<LocalSong, String> call(TableColumn<LocalSong, String> param) {
@@ -362,6 +333,41 @@ public class LocalMusicContentController {
                 new LocalSinger(new Label("singer"),"2首"),
                 new LocalSinger(new Label("singer"),"2首"),
                 new LocalSinger(new Label("singer"),"2首"));*/
+
+        tableViewSinger.setRowFactory(new Callback<TableView<LocalSinger>, TableRow<LocalSinger>>() {
+            @Override
+            public TableRow<LocalSinger> call(TableView<LocalSinger> param) {
+                return new TableRow<LocalSinger>(){
+                    @Override
+                    protected void updateItem(LocalSinger item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty){    //不为空行
+                            Label labSinger = item.getLabSinger();  //取出TableRow的Label组件
+                            if (SongUtils.isCharacterCategory(labSinger.getText())){    //如果是字符分类行
+                                item.getLabSinger().setStyle("-fx-text-fill: #999999;-fx-font-size: 1.5em;");   //设置样式
+                                setPrefHeight(44);  //高度
+                                setMouseTransparent(true);  //不响应鼠标事件
+                            }else { //否则，则不是字符分类行了
+                                setPrefHeight(68);  //高度
+                                setMouseTransparent(false); //响应鼠标事件
+                                /**歌手图片*/
+                                if (labSinger.getGraphic() == null){    //如果显示歌手信息的Label组件图片等于null，设置图片
+                                    if (labSinger.getText().equals("林俊杰")){
+                                        labSinger.setGraphic(ImageUtils.createImageView("/image/林俊杰.png",48,48));
+                                    }else {
+                                        labSinger.setGraphic(ImageUtils.createImageView("/image/DefaultSinger.png",48,48));
+                                    }
+                                }
+                                /**歌手歌曲数目*/
+                                item.setSongCount(SongUtils.getSongCountBySinger(tableViewSong.getItems(), labSinger.getText()) +" 首");
+                            }
+                        }
+                    }
+                };
+            }
+        });
+
+
         //设置表格列的宽度随这个borderPane的宽度而动态改变
         tabSingerContent.widthProperty().addListener((observable, oldValue, newValue) -> {
             singerInformationColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*5.5);
@@ -393,8 +399,10 @@ public class LocalMusicContentController {
             SequentialTransition sequentialTransition = new SequentialTransition(fadeOut,fadeIn);
             sequentialTransition.play();
 
-            if (newValue == tabPane.getTabs().get(1)){
+            if (newValue == tabPane.getTabs().get(1)){  //设置“歌手”tag标签对应的歌手表格内容
                 tableViewSinger.getItems().addAll(SongUtils.getObservableLocalSingerList(tableViewSong.getItems()));
+            } else if (newValue == tabPane.getTabs().get(0)){   //切换到“歌曲标签”，清除歌手表格内容
+                tableViewSinger.getItems().clear();
             }
         });
     }

@@ -5,7 +5,9 @@ import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -321,7 +323,7 @@ public final class WindowUtils {
         stackPane.getChildren().add(labFading);
         //动画完成后移除label组件
         fadeTransition.setOnFinished(fade -> {
-            stackPane.getChildren().remove(1);
+            stackPane.getChildren().remove(labFading);
         });
         //开始播放渐变动画提示
         fadeTransition.play();

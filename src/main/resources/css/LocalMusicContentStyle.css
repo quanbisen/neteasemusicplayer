@@ -168,7 +168,7 @@ BorderPane
 /*“歌手”表格的歌手信息列的样式*/
 #tableViewSinger.table-view #singerInformationColumn.table-cell
 {
-    -fx-padding: 0 0 0 1.25em; /*0 0 0 15*/
+    -fx-padding: 0 0 0 1.6em;
 }
 /*“歌手”表格的数目列的样式*/
 #tableViewSinger.table-view #songCountColumn.table-cell
