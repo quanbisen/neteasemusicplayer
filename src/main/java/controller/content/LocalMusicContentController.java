@@ -3,6 +3,7 @@ package controller.content;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import controller.main.BottomController;
 import controller.main.MainController;
+import dao.SingerDao;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.collections.FXCollections;
@@ -27,6 +28,7 @@ import javafx.util.Duration;
 import mediaplayer.MyMediaPlayer;
 import model.LocalSinger;
 import model.LocalSong;
+import model.Singer;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -205,7 +207,6 @@ public class LocalMusicContentController {
                     myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
                     myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.toPlayListSong(selectedLocalSong)));  //设置当前播放的歌曲在播放列表playList中的位置
                 }
-                System.out.println(myMediaPlayer.getCurrentPlayIndex());
                 try {
                     myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));      //播放选中的歌曲
                 } catch (Exception e) {
@@ -229,10 +230,14 @@ public class LocalMusicContentController {
                                 /**设置表格行的样式*/
                                 if (SongUtils.isCharacterCategory(item.getName())){
                                     this.setMouseTransparent(true);
-                                    this.removeEventHandler(MouseEvent.MOUSE_CLICKED,onClickedTableSongRow);
+                                    if (getOnMouseClicked() != null){
+                                        this.removeEventHandler(MouseEvent.MOUSE_CLICKED,onClickedTableSongRow);
+                                    }
                                 }else {
                                     this.setMouseTransparent(false);
-                                    this.setOnMouseClicked(onClickedTableSongRow);
+                                    if (getOnMouseClicked() == null){
+                                        this.setOnMouseClicked(onClickedTableSongRow);
+                                    }
                                 }
                             }
                         }
@@ -315,7 +320,6 @@ public class LocalMusicContentController {
             }
         });
 
-        tabPane.getSelectionModel().getSelectedItem().setText("120");
         /******************/
         /**“歌曲”tab end*/
         /******************/
@@ -326,13 +330,18 @@ public class LocalMusicContentController {
         singerInformationColumn.setCellValueFactory(new PropertyValueFactory<>("labSinger"));
         songCountColumn.setCellValueFactory(new PropertyValueFactory<>("songCount"));
         songCountColumn.getStyleClass().add("songCountColumn");
-  /*      Label label = new Label("林俊杰", ImageUtils.createImageView("/image/林俊杰.png",48,48));
-        label.setGraphicTextGap(15);
-        tableViewSinger.getItems().addAll(new LocalSinger(label,"2首"),
-                new LocalSinger(new Label("singer"),"2首"),
-                new LocalSinger(new Label("singer"),"2首"),
-                new LocalSinger(new Label("singer"),"2首"),
-                new LocalSinger(new Label("singer"),"2首"));*/
+
+        EventHandler<MouseEvent> onClickedTableSingerRow = mouseEvent -> {
+          if (mouseEvent.getButton() == MouseButton.PRIMARY){
+              FXMLLoader loader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/localmusic-singer.fxml");
+              try {
+                  ((BorderPane)localMusicContentContainer.getParent()).setCenter(loader.load());
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
+          }
+        };
+
 
         tableViewSinger.setRowFactory(new Callback<TableView<LocalSinger>, TableRow<LocalSinger>>() {
             @Override
@@ -347,19 +356,33 @@ public class LocalMusicContentController {
                                 item.getLabSinger().setStyle("-fx-text-fill: #999999;-fx-font-size: 1.5em;");   //设置样式
                                 setPrefHeight(44);  //高度
                                 setMouseTransparent(true);  //不响应鼠标事件
+                                if (getOnMouseClicked() != null){
+                                    removeEventHandler(MouseEvent.MOUSE_CLICKED,onClickedTableSingerRow);
+                                }
                             }else { //否则，则不是字符分类行了
                                 setPrefHeight(68);  //高度
                                 setMouseTransparent(false); //响应鼠标事件
                                 /**歌手图片*/
                                 if (labSinger.getGraphic() == null){    //如果显示歌手信息的Label组件图片等于null，设置图片
-                                    if (labSinger.getText().equals("林俊杰")){
-                                        labSinger.setGraphic(ImageUtils.createImageView("/image/林俊杰.png",48,48));
+                                    Singer singer = applicationContext.getBean("singerDao", SingerDao.class).querySinger(labSinger.getText()); //数据库查询歌手图片url
+                                    Image imageSinger;
+                                    if (singer == null || singer.getImageURL() == null){    //如果没有查到或者查到的url为null，设置默认的歌手图片
+                                        imageSinger = new Image("/image/DefaultSinger.png",48,48,false,true);
                                     }else {
-                                        labSinger.setGraphic(ImageUtils.createImageView("/image/DefaultSinger.png",48,48));
+                                        imageSinger = new Image(singer.getImageURL(),48,48,false,true); //根据查询得到的url创建图片对象
+                                        if (imageSinger.isError()){ //如果错误，设置默认的歌手图片
+                                            imageSinger = new Image("/image/DefaultSinger.png",48,48,false,true);
+                                        }
                                     }
+                                    labSinger.setGraphic(ImageUtils.createImageView(imageSinger,48,48));    //设置Label显示图片
                                 }
                                 /**歌手歌曲数目*/
-                                item.setSongCount(SongUtils.getSongCountBySinger(tableViewSong.getItems(), labSinger.getText()) +" 首");
+                                if (item.getSongCount() == null){   //如果为null，才设置更新数目
+                                    item.setSongCount(SongUtils.getSongCountBySinger(tableViewSong.getItems(), labSinger.getText()) +" 首");
+                                }
+                                if (getOnMouseClicked() == null){
+                                    setOnMouseClicked(onClickedTableSingerRow);
+                                }
                             }
                         }
                     }
@@ -400,7 +423,9 @@ public class LocalMusicContentController {
             sequentialTransition.play();
 
             if (newValue == tabPane.getTabs().get(1)){  //设置“歌手”tag标签对应的歌手表格内容
-                tableViewSinger.getItems().addAll(SongUtils.getObservableLocalSingerList(tableViewSong.getItems()));
+                if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0){
+                    tableViewSinger.getItems().addAll(SongUtils.getObservableLocalSingerList(tableViewSong.getItems()));
+                }
             } else if (newValue == tabPane.getTabs().get(0)){   //切换到“歌曲标签”，清除歌手表格内容
                 tableViewSinger.getItems().clear();
             }

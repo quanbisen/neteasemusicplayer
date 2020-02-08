@@ -4,7 +4,7 @@ import model.OnlineSong;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
-@Repository
+@Repository(value = "songDao")
 public interface SongDao {
 
     List<OnlineSong> queryByName(String name);

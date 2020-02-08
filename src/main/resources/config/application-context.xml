@@ -11,6 +11,7 @@
     <context:component-scan base-package="task"></context:component-scan>
     <context:component-scan base-package="service"></context:component-scan>
     <context:component-scan base-package="mediaplayer"></context:component-scan>
+
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
     <!--配置数据连接配置文件路径-->
     <context:property-placeholder location="classpath:config/db.properties"></context:property-placeholder>

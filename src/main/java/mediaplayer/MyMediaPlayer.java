@@ -161,6 +161,7 @@ public class MyMediaPlayer implements IMediaPlayer {
 
         /**设置播放时底部的UI组件显示*/
         //1.专辑图片
+        bottomController.getLabAlbum().setGraphic(null);
         bottomController.getLabAlbum().setGraphic(ImageUtils.getAlbumImage(playListSong.getResource()));
         //2."播放、暂停"按钮图片
         bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePlaying.png", 32, 32));
@@ -177,10 +178,9 @@ public class MyMediaPlayer implements IMediaPlayer {
                 if (!bottomController.getSliderSong().isPressed()) {  //没有被鼠标按下时
                     bottomController.getSliderSong().setValue(observable.getValue().toSeconds());
                 }
-                System.out.println(mediaPlayer.getBufferProgressTime().toSeconds());
             }
         });
-
+        System.gc();
 
         /**添加到最近播放的存储文件处理操作
          * start*/

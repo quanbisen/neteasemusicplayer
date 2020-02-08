@@ -10,7 +10,7 @@ import javax.annotation.Resource;
  * @author super lollipop
  * @date 19-12-6
  */
-@Repository
+@Repository(value = "userDao")
 public class UserDaoImpl implements UserDao{
 
     /**注入MyBatis的SqlSessionFactory对象*/

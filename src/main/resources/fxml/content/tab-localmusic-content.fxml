@@ -120,12 +120,16 @@
                <content>
                   <BorderPane fx:id="tabSingerContent" prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView fx:id="tableViewSinger" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                          <columns>
-                            <TableColumn fx:id="singerInformationColumn" minWidth="0.0" prefWidth="456.0" />
-                            <TableColumn fx:id="songCountColumn" minWidth="0.0" prefWidth="143.0" />
-                          </columns>
-                        </TableView>
+                         <TableView fx:id="tableViewSinger" prefHeight="200.0" prefWidth="200.0"
+                                    BorderPane.alignment="CENTER">
+                             <columns>
+                                 <TableColumn fx:id="singerInformationColumn" minWidth="0.0" prefWidth="456.0"/>
+                                 <TableColumn fx:id="songCountColumn" minWidth="0.0" prefWidth="143.0"/>
+                             </columns>
+                             <placeholder>
+                                 <Label text=""/>
+                             </placeholder>
+                         </TableView>
                      </center>
                   </BorderPane>
                </content>

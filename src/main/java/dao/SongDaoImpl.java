@@ -12,7 +12,7 @@ import java.util.List;
  * @author super lollipop
  * @date 19-12-10
  */
-@Repository
+@Repository(value = "songDao")
 public class SongDaoImpl implements SongDao {
 
     /**注入MyBatis的SqlSessionFactory对象*/
@@ -22,7 +22,6 @@ public class SongDaoImpl implements SongDao {
     @Override
     public List<OnlineSong> queryByName(String name) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        System.out.println(sqlSession);
         List<OnlineSong> onlineSongList = sqlSession.selectList("model.OnlineSongMapper.queryByName",name);
         sqlSession.close();
         return onlineSongList;

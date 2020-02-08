@@ -9,5 +9,6 @@
     <mappers>
         <mapper resource="mapper/user-mapper.xml"></mapper>
         <mapper resource="mapper/onlinesong-mapper.xml"></mapper>
+        <mapper resource="mapper/singer-mapper.xml"></mapper>
     </mappers>
 </configuration>

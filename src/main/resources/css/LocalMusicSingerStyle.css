@@ -1,0 +1,99 @@
+BorderPane
+{
+    -fx-background-color: #FAFAFC;
+}
+#labBackIcon:hover
+{
+    -fx-graphic: url("/image/BackToMainHover.png");
+}
+/*"播放全部"按钮的样式*/
+#btnPlayAll
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 15px;
+}
+/**"播放全部"按钮容器的鼠标按下样式*/
+#hBoxPlayAll:pressed
+{
+    -fx-scale-x: 0.998;
+    -fx-scale-y: 0.998;
+}
+.table-view
+{
+    -fx-background-color: transparent;
+}
+#tableViewSong.table-view .nameColumn .label  /*歌曲"名称"列的标题label样式*/
+{
+    -fx-padding: 0 0 0 20;
+    -fx-alignment: center-left;
+}
+#tableViewSong.table-view .singerColumn .label,#tableViewSong.table-view .albumColumn .label,#tableViewSong.table-view .totalTimeColumn .label,#tableViewSong.table-view .sizeColumn .label  /*歌曲"歌手"."专辑","总时长","大小"列的标题label样式*/
+{
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 5;
+}
+#tableViewSong.table-view .column-header .label
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
+#tableViewSong.table-view .column-header-background
+{
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+}
+#tableViewSong.table-view .table-cell
+{
+    -fx-text-fill: #333333;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-border-color:transparent;
+    -fx-alignment: center-left;
+    -fx-padding: 5 5 5 5;
+}
+/*设置表格第一列的样式*/
+#tableViewSong.table-view #nameColumn.table-cell
+{
+    -fx-text-fill: #333333;
+    -fx-padding:0 0 0 20;
+}
+/*表格行样式*/
+#tableViewSong.table-view .table-row-cell
+{
+    -fx-cell-size: 40px;
+    -fx-background-color:#FAFAFC;
+    -fx-background-insets: 0;
+}
+/*表格行按压的缩放样式*/
+#tableViewSong.table-view .table-row-cell:pressed
+{
+    -fx-scale-x: 0.995;
+    -fx-scale-y: 0.995;
+    -fx-background-insets: 0 -3em 0 -3em;
+}
+/*表格偶数行样式*/
+#tableViewSong.table-view .table-row-cell:odd
+{
+    -fx-background-color:#F4F4F6;
+}
+/*表格行鼠标放置在上面的样式*/
+#tableViewSong.table-view .table-row-cell:hover
+{
+    -fx-background-color: #F2F2F3;
+}
+/*选中行的背景颜色*/
+#tableViewSong.table-view .table-row-cell:selected
+{
+    -fx-background-color: #DEDEE0;
+}
+/*空行的样式，参见：http://fxexperience.com/2011/11/alternate-row-highlighting-in-empty-tableview-and-listview-rows/*/
+#tableViewSong.table-view .table-row-cell:empty
+{
+    -fx-background-color: #FAFAFC;
+}
+/*去除空行的边框*/
+#tableViewSong.table-view .table-row-cell:empty .table-cell
+{
+    -fx-border-width: 0px;
+}
