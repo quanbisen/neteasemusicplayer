@@ -363,17 +363,7 @@ public class MyMediaPlayer implements IMediaPlayer {
      * @param tableItems 需要播放的表格集合*/
     @Override
     public void playAll(ObservableList tableItems) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
-        if (nextPlayIndexList != null && nextPlayIndexList.size() > 0){
-            nextPlayIndexList.clear();
-            nextPlayIndexList = null;
-        }
-        if (lastPlayIndexList != null && lastPlayIndexList.size() > 0){
-            lastPlayIndexList.clear();
-            lastPlayIndexList = null;
-        }
-        playListSongs = SongUtils.getPlayListSongs(tableItems);     //设置当前播放列表
-        //设置右下角"歌单文本提示"显示数量
-        bottomController.getLabPlayListCount().setText(String.valueOf(playListSongs.size()));
+        this.initializePlayList(tableItems);
         if (playMode == PlayMode.SHUFFLE){   //如果当前播放模式为"随机播放"
             //生成一个随机数，执行播放
             int randomIndex=new Random().nextInt(playListSongs.size());
@@ -385,6 +375,31 @@ public class MyMediaPlayer implements IMediaPlayer {
         this.playSong(playListSongs.get(currentPlayIndex));      //播放当前的索引歌曲
     }
 
+    /**自定义媒体播放器“播放全部”行为
+     * @param tableItems 需要播放的表格集合
+     * @param index 播放索引*/
+    @Override
+    public void playAll(ObservableList tableItems,int index) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
+        this.initializePlayList(tableItems);
+        currentPlayIndex = index;
+        this.playSong(playListSongs.get(currentPlayIndex));      //播放当前的索引歌曲
+    }
+
+    /**初始化播放列表
+     * @param tableItems 需要播放的表格集合*/
+    private void initializePlayList(ObservableList tableItems){
+        if (nextPlayIndexList != null && nextPlayIndexList.size() > 0){
+            nextPlayIndexList.clear();
+            nextPlayIndexList = null;
+        }
+        if (lastPlayIndexList != null && lastPlayIndexList.size() > 0){
+            lastPlayIndexList.clear();
+            lastPlayIndexList = null;
+        }
+        playListSongs = SongUtils.getPlayListSongs(tableItems);     //设置当前播放列表
+        //设置右下角"歌单文本提示"显示数量
+        bottomController.getLabPlayListCount().setText(String.valueOf(playListSongs.size()));
+    }
     /**
      * 自定义媒体播放器销毁行为
      */

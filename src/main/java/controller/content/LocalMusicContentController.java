@@ -2,6 +2,7 @@ package controller.content;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import controller.main.BottomController;
+import controller.main.CenterController;
 import controller.main.MainController;
 import dao.SingerDao;
 import javafx.animation.FadeTransition;
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -134,12 +136,19 @@ public class LocalMusicContentController {
     @Resource
     private BottomController bottomController;
 
+    @Resource
+    private CenterController centerController;
+
     public TabPane getTabPane() {
         return tabPane;
     }
 
     public TableView<LocalSong> getTableViewSong() {
         return tableViewSong;
+    }
+
+    public TableView getTableViewSinger() {
+        return tableViewSinger;
     }
 
     public ProgressIndicator getProgressIndicator() {
@@ -331,18 +340,23 @@ public class LocalMusicContentController {
         songCountColumn.setCellValueFactory(new PropertyValueFactory<>("songCount"));
         songCountColumn.getStyleClass().add("songCountColumn");
 
+        /**歌手表格的行被单击时的事件*/
         EventHandler<MouseEvent> onClickedTableSingerRow = mouseEvent -> {
           if (mouseEvent.getButton() == MouseButton.PRIMARY){
-              FXMLLoader loader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/localmusic-singer.fxml");
               try {
-                  ((BorderPane)localMusicContentContainer.getParent()).setCenter(loader.load());
+                  Parent singerSongsPane = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/singer-songs.fxml").load();
+                  FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.2),singerSongsPane);    //创建淡入动画
+                  fadeIn.setFromValue(0);
+                  fadeIn.setToValue(1);
+                  fadeIn.setOnFinished(event -> {   //播放完毕设置容器
+                      centerController.getBorderPane().setCenter(singerSongsPane);
+                  });
+                  fadeIn.play();
               } catch (IOException e) {
                   e.printStackTrace();
               }
           }
         };
-
-
         tableViewSinger.setRowFactory(new Callback<TableView<LocalSinger>, TableRow<LocalSinger>>() {
             @Override
             public TableRow<LocalSinger> call(TableView<LocalSinger> param) {

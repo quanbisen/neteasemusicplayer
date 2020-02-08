@@ -155,6 +155,7 @@ BorderPane
     -fx-scale-y: 0.995;
     -fx-background-insets: 0 -3em 0 -3em;
 }
+
 /*表格偶数行样式*/
 #tableViewSinger.table-view .table-row-cell:odd
 {
@@ -164,6 +165,10 @@ BorderPane
 #tableViewSinger.table-view .table-row-cell:hover
 {
     -fx-background-color: #F2F2F3;
+}
+#tableViewSinger.table-view .table-row-cell:selected
+{
+    -fx-background-color: #DEDEE0;
 }
 /*“歌手”表格的歌手信息列的样式*/
 #tableViewSinger.table-view #singerInformationColumn.table-cell

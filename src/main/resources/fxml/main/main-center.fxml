@@ -11,7 +11,7 @@
            fx:id="stackPane"
             fx:controller="controller.main.CenterController">
 
-    <BorderPane fx:id="borderPane">
+    <BorderPane fx:id="borderPane" style="-fx-background-color: #FAFAFC;">
         <left>
             <fx:include source="main-left.fxml"></fx:include>
         </left>

@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/LocalMusicSingerStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.LocalMusicSingerController">
+<BorderPane fx:id="root" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/SingerSongsStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.SingerSongsController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="600.0" spacing="10.0" style="-fx-border-color: #E4E4E7; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="labBackIcon">
+            <Label fx:id="labBackIcon" onMouseClicked="#onClickedBack">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -23,7 +23,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Label style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 1.34em;" text="林俊杰" />
+            <Label fx:id="labSingerName" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 1.34em;" text="未知歌手" />
          </children>
          <BorderPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -33,7 +33,7 @@
    <center>
       <BorderPane fx:id="tableViewContainer" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <top>
-            <HBox fx:id="hBoxPlayAll" alignment="CENTER_LEFT" onMouseClicked="#onClickedPlayAll" prefHeight="42.0" prefWidth="580.0" spacing="3.0" BorderPane.alignment="CENTER">
+            <HBox fx:id="hBoxPlayAll" alignment="CENTER_LEFT" style="-fx-border-color: #E4E4E7; -fx-border-width: 0 0 1 0;" onMouseClicked="#onClickedPlayAll" prefHeight="42.0" prefWidth="580.0" spacing="3.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -48,7 +48,7 @@
             </HBox>
          </top>
          <center>
-            <TableView fx:id="tableViewSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;">
+            <TableView fx:id="tableViewSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;" onMouseClicked="#onClickedTableViewSong">
                <columns>
                   <TableColumn fx:id="nameColumn" editable="false" maxWidth="540.0" minWidth="180.0" prefWidth="-1.0" resizable="false" sortable="false" text="歌名" />
                   <TableColumn fx:id="singerColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" sortable="false" text="歌手" />

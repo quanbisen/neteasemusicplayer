@@ -68,11 +68,11 @@ public class LeftController {
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
-    MainController mainController;
+    private MainController mainController;
 
     /**注入窗体根容器（BorderPane）的中间容器的控制器*/
     @Resource
-    CenterController centerController;
+    private CenterController centerController;
 
     /**注入Spring上下文工具类*/
     @Resource
@@ -120,6 +120,10 @@ public class LeftController {
 
     public File getLOGIN_CONFIG_FILE() {
         return LOGIN_CONFIG_FILE;
+    }
+
+    public Parent getLocalMusicParent() {
+        return localMusicParent;
     }
 
     public void initialize() throws IOException {

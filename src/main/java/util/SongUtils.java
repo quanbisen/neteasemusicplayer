@@ -157,6 +157,19 @@ public final class SongUtils {
         return observableLocalSongList;
     }
 
+    /**根据"歌曲"tag下的表格内容获取符合参数歌手名称的集合
+     * @param observableList "歌曲"tag下的表格内容
+     * @param singer 歌手名称
+     * @return ObservableList<LocalSinger>*/
+    public static ObservableList<LocalSong> getObservableLocalSongListBySinger(ObservableList<LocalSong> observableList,String singer){
+        ObservableList<LocalSong> observableLocalSongList = FXCollections.observableArrayList();
+        observableList.forEach(localSong -> {
+            if (!isCharacterCategory(localSong.getName()) && localSong.getSinger().equals(singer)){
+                observableLocalSongList.add(localSong);
+            }
+        });
+        return observableLocalSongList;
+    }
 
     /**根据"歌曲"tag下的表格内容获取本地音乐“歌手”tag下的表格内容
      * @param observableLocalSongList "歌曲"tag下的表格内容
