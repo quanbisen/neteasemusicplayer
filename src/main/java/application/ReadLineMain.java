@@ -26,10 +26,15 @@ public class ReadLineMain {
     private static void readLine(File file) throws IOException {
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-        while (bufferedReader.readLine()!=null){
-            countLine ++;
-        }
-        System.out.println(countLine);
+        String str;
+        do{
+            str = bufferedReader.readLine();
+            if (str != null && !str.equals("")){
+                countLine++;
+            }
+        }while (str != null);
+
+//        System.out.println(countLine);
     }
 
     private static void getFile(File targetFile){

@@ -4,7 +4,6 @@ import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import controller.main.BottomController;
 import controller.main.CenterController;
 import controller.main.MainController;
-import dao.SingerDao;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.collections.FXCollections;
@@ -28,9 +27,9 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import mediaplayer.MyMediaPlayer;
+import model.LocalAlbum;
 import model.LocalSinger;
 import model.LocalSong;
-import model.Singer;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -38,8 +37,8 @@ import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
+import service.LoadLocalSingerImageService;
 import service.LoadLocalSongService;
-import util.ImageUtils;
 import util.SongUtils;
 import util.StageUtils;
 import util.WindowUtils;
@@ -81,6 +80,10 @@ public class LocalMusicContentController {
     @FXML
     private TableColumn<LocalSong,String> sizeColumn;
 
+    /**存放显示歌曲的表格*/
+    @FXML
+    private TableView<LocalSong> tableViewSong;
+
     /**“选择目录”的HBox容器*/
     @FXML
     private HBox hBoxChoseFolder;
@@ -88,10 +91,6 @@ public class LocalMusicContentController {
     /**显示进度的指示器*/
     @FXML
     private ProgressIndicator progressIndicator;
-
-    /**存放显示歌曲的表格*/
-    @FXML
-    private TableView<LocalSong> tableViewSong;
 
     /**搜索框的TextField组件，用作输入文本*/
     @FXML
@@ -110,15 +109,35 @@ public class LocalMusicContentController {
 
     /**歌手图片姓名表格列组件*/
     @FXML
-    private TableColumn singerInformationColumn;
+    private TableColumn<LocalSinger,Label> singerInformationColumn;
 
     /**歌手对应的歌曲数目表格列组件*/
     @FXML
-    private TableColumn songCountColumn;
+    private TableColumn<LocalSinger,String> singerSongCountColumn;
 
     /**歌手表格组件*/
     @FXML
-    private TableView tableViewSinger;
+    private TableView<LocalSinger> tableViewSinger;
+
+    /**专辑表格的BorderPane容器*/
+    @FXML
+    private BorderPane tabAlbumContent;
+
+    /**专辑图片姓名表格列组件*/
+    @FXML
+    private TableColumn<LocalAlbum,Label> albumInformationColumn;
+
+    /**专辑所属歌手表格列组件*/
+    @FXML
+    private TableColumn<LocalAlbum,String> albumSingerColumn;
+
+    /**专辑对应的歌曲数目表格列组件*/
+    @FXML
+    private TableColumn<LocalAlbum,String> albumSongCountColumn;
+
+    /**专辑表格组件*/
+    @FXML
+    private TableView<LocalAlbum> tableViewAlbum;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
@@ -147,8 +166,12 @@ public class LocalMusicContentController {
         return tableViewSong;
     }
 
-    public TableView getTableViewSinger() {
+    public TableView<LocalSinger> getTableViewSinger() {
         return tableViewSinger;
+    }
+
+    public TableView<LocalAlbum> getTableViewAlbum() {
+        return tableViewAlbum;
     }
 
     public ProgressIndicator getProgressIndicator() {
@@ -337,14 +360,13 @@ public class LocalMusicContentController {
         /**“歌手”tab start*/
         /******************/
         singerInformationColumn.setCellValueFactory(new PropertyValueFactory<>("labSinger"));
-        songCountColumn.setCellValueFactory(new PropertyValueFactory<>("songCount"));
-        songCountColumn.getStyleClass().add("songCountColumn");
+        singerSongCountColumn.setCellValueFactory(new PropertyValueFactory<>("songCount"));
 
-        /**歌手表格的行被单击时的事件*/
-        EventHandler<MouseEvent> onClickedTableSingerRow = mouseEvent -> {
+        /**"歌手"或“专辑”表格的行被单击时的事件*/
+        EventHandler<MouseEvent> onClickedTableSingerOrAlbumRow = mouseEvent -> {
           if (mouseEvent.getButton() == MouseButton.PRIMARY){
               try {
-                  Parent singerSongsPane = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/singer-songs.fxml").load();
+                  Parent singerSongsPane = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/singer-or-album-songs.fxml").load();
                   FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.2),singerSongsPane);    //创建淡入动画
                   fadeIn.setFromValue(0);
                   fadeIn.setToValue(1);
@@ -371,31 +393,13 @@ public class LocalMusicContentController {
                                 setPrefHeight(44);  //高度
                                 setMouseTransparent(true);  //不响应鼠标事件
                                 if (getOnMouseClicked() != null){
-                                    removeEventHandler(MouseEvent.MOUSE_CLICKED,onClickedTableSingerRow);
+                                    removeEventHandler(MouseEvent.MOUSE_CLICKED,onClickedTableSingerOrAlbumRow);
                                 }
                             }else { //否则，则不是字符分类行了
                                 setPrefHeight(68);  //高度
                                 setMouseTransparent(false); //响应鼠标事件
-                                /**歌手图片*/
-                                if (labSinger.getGraphic() == null){    //如果显示歌手信息的Label组件图片等于null，设置图片
-                                    Singer singer = applicationContext.getBean("singerDao", SingerDao.class).querySinger(labSinger.getText()); //数据库查询歌手图片url
-                                    Image imageSinger;
-                                    if (singer == null || singer.getImageURL() == null){    //如果没有查到或者查到的url为null，设置默认的歌手图片
-                                        imageSinger = new Image("/image/DefaultSinger.png",48,48,false,true);
-                                    }else {
-                                        imageSinger = new Image(singer.getImageURL(),48,48,false,true); //根据查询得到的url创建图片对象
-                                        if (imageSinger.isError()){ //如果错误，设置默认的歌手图片
-                                            imageSinger = new Image("/image/DefaultSinger.png",48,48,false,true);
-                                        }
-                                    }
-                                    labSinger.setGraphic(ImageUtils.createImageView(imageSinger,48,48));    //设置Label显示图片
-                                }
-                                /**歌手歌曲数目*/
-                                if (item.getSongCount() == null){   //如果为null，才设置更新数目
-                                    item.setSongCount(SongUtils.getSongCountBySinger(tableViewSong.getItems(), labSinger.getText()) +" 首");
-                                }
                                 if (getOnMouseClicked() == null){
-                                    setOnMouseClicked(onClickedTableSingerRow);
+                                    setOnMouseClicked(onClickedTableSingerOrAlbumRow);
                                 }
                             }
                         }
@@ -408,7 +412,7 @@ public class LocalMusicContentController {
         //设置表格列的宽度随这个borderPane的宽度而动态改变
         tabSingerContent.widthProperty().addListener((observable, oldValue, newValue) -> {
             singerInformationColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*5.5);
-            songCountColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1);
+            singerSongCountColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1);
         });
         /******************/
         /**“歌手”tab end*/
@@ -417,6 +421,44 @@ public class LocalMusicContentController {
         /******************/
         /**“专辑”tab start*/
         /******************/
+        //列属性绑定
+        albumInformationColumn.setCellValueFactory(new PropertyValueFactory<>("labAlbum"));
+        albumSingerColumn.setCellValueFactory(new PropertyValueFactory<>("singer"));
+        albumSongCountColumn.setCellValueFactory(new PropertyValueFactory<>("songCount"));
+        //设置表格列的宽度随这个borderPane的宽度而动态改变
+        tabAlbumContent.widthProperty().addListener(((observable, oldValue, newValue) -> {
+            albumInformationColumn.setPrefWidth(observable.getValue().doubleValue()/4*2);
+            albumSingerColumn.setPrefWidth(observable.getValue().doubleValue()/4*1);
+            albumSongCountColumn.setPrefWidth(observable.getValue().doubleValue()/4*1);
+        }));
+        tableViewAlbum.setRowFactory(new Callback<TableView<LocalAlbum>, TableRow<LocalAlbum>>() {
+            @Override
+            public TableRow<LocalAlbum> call(TableView<LocalAlbum> param) {
+                return new TableRow<LocalAlbum>(){
+                    @Override
+                    protected void updateItem(LocalAlbum item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty){    //不为空行
+                            Label labAlbum = item.getLabAlbum();  //取出TableRow的Label组件
+                            if (SongUtils.isCharacterCategory(labAlbum.getText())){    //如果是字符分类行
+                                item.getLabAlbum().setStyle("-fx-text-fill: #999999;-fx-font-size: 1.5em;");   //设置样式
+                                setPrefHeight(44);  //高度
+                                setMouseTransparent(true);  //不响应鼠标事件
+                                if (getOnMouseClicked() != null){
+                                    removeEventHandler(MouseEvent.MOUSE_CLICKED,onClickedTableSingerOrAlbumRow);
+                                }
+                            }else { //否则，则不是字符分类行了
+                                setPrefHeight(68);  //高度
+                                setMouseTransparent(false); //响应鼠标事件
+                                if (getOnMouseClicked() == null){
+                                    setOnMouseClicked(onClickedTableSingerOrAlbumRow);
+                                }
+                            }
+                        }
+                    }
+                };
+            }
+        });
         /******************/
         /**“专辑”tab end*/
         /******************/
@@ -437,12 +479,20 @@ public class LocalMusicContentController {
             sequentialTransition.play();
 
             if (newValue == tabPane.getTabs().get(1)){  //设置“歌手”tag标签对应的歌手表格内容
-                if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0){
-                    tableViewSinger.getItems().addAll(SongUtils.getObservableLocalSingerList(tableViewSong.getItems()));
+                if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0 &&
+                        (tableViewSinger.getItems() == null || tableViewSinger.getItems().size() == 0)){
+                    tableViewSinger.setItems(SongUtils.getObservableLocalSingerList(tableViewSong.getItems())); //设置歌手表格的内容
+                    LoadLocalSingerImageService loadLocalSingerImageService = applicationContext.getBean(LoadLocalSingerImageService.class);   //获取加载歌手图片的服务bean
+                    progressIndicator.visibleProperty().bind(loadLocalSingerImageService.runningProperty());
+                    loadLocalSingerImageService.start();
                 }
-            } else if (newValue == tabPane.getTabs().get(0)){   //切换到“歌曲标签”，清除歌手表格内容
-                tableViewSinger.getItems().clear();
+            } else if (newValue == tabPane.getTabs().get(2)){   //切换到“专辑”tag标签对应的表格内容
+                if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0 &&
+                        (tableViewAlbum.getItems() == null || tableViewAlbum.getItems().size() == 0)){
+                    tableViewAlbum.setItems(SongUtils.getObservableLocalAlbumList(tableViewSong.getItems()));
+                }
             }
+
         });
     }
 

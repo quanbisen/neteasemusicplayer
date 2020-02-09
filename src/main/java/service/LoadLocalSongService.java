@@ -1,22 +1,20 @@
 package service;
 
 import javafx.collections.ObservableList;
-import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import model.LocalSong;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import task.LoadLocalSongTask;
-
 import javax.annotation.Resource;
 
 /**
  * @author super lollipop
  * @date 19-12-2
  */
-@Component
+@Service
 @Scope("prototype")
-public class LoadLocalSongService extends Service<ObservableList<LocalSong>> {
+public class LoadLocalSongService extends javafx.concurrent.Service<ObservableList<LocalSong>>{
 
     @Resource
     private LoadLocalSongTask loadLocalSongTask;

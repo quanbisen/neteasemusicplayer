@@ -124,7 +124,7 @@
                                     BorderPane.alignment="CENTER">
                              <columns>
                                  <TableColumn fx:id="singerInformationColumn" minWidth="0.0" prefWidth="456.0"/>
-                                 <TableColumn fx:id="songCountColumn" minWidth="0.0" prefWidth="143.0"/>
+                                 <TableColumn fx:id="singerSongCountColumn" minWidth="0.0" prefWidth="143.0"/>
                              </columns>
                              <placeholder>
                                  <Label text=""/>
@@ -139,10 +139,21 @@
           </Tab>
             <Tab text="0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="272.0" layoutY="148.0" text="暂无内容" />
-                     </children></AnchorPane>
+                  <BorderPane fx:id="tabAlbumContent" prefHeight="200.0" prefWidth="200.0">
+                      <center>
+                          <TableView fx:id="tableViewAlbum" prefHeight="200.0" prefWidth="200.0"
+                                     BorderPane.alignment="CENTER">
+                              <columns>
+                                  <TableColumn fx:id="albumInformationColumn" minWidth="0.0" prefWidth="456.0"/>
+                                  <TableColumn fx:id="albumSingerColumn" minWidth="0.0" prefWidth="150.0"></TableColumn>
+                                  <TableColumn fx:id="albumSongCountColumn" minWidth="0.0" prefWidth="143.0"/>
+                              </columns>
+                              <placeholder>
+                                  <Label text=""/>
+                              </placeholder>
+                          </TableView>
+                      </center>
+                  </BorderPane>
               </content>
                <graphic>
                   <Label prefHeight="20.0" prefWidth="28.0" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 14px;" text="专辑" />

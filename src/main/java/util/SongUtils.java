@@ -4,6 +4,8 @@ import com.sun.org.apache.xerces.internal.xs.StringList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.*;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -159,17 +161,26 @@ public final class SongUtils {
 
     /**根据"歌曲"tag下的表格内容获取符合参数歌手名称的集合
      * @param observableList "歌曲"tag下的表格内容
-     * @param singer 歌手名称
+     * @param object 行对象
      * @return ObservableList<LocalSinger>*/
-    public static ObservableList<LocalSong> getObservableLocalSongListBySinger(ObservableList<LocalSong> observableList,String singer){
+    public static ObservableList<LocalSong> getObservableLocalSongListBySingerOrAlbum(ObservableList<LocalSong> observableList,Object object){
         ObservableList<LocalSong> observableLocalSongList = FXCollections.observableArrayList();
-        observableList.forEach(localSong -> {
-            if (!isCharacterCategory(localSong.getName()) && localSong.getSinger().equals(singer)){
-                observableLocalSongList.add(localSong);
-            }
-        });
+        if (object instanceof LocalSinger){
+            observableList.forEach(localSong -> {   //“歌手”tag
+                if (!isCharacterCategory(localSong.getName()) && localSong.getSinger().equals(((LocalSinger) object).getLabSinger().getText())){
+                    observableLocalSongList.add(localSong);
+                }
+            });
+        } else if (object instanceof LocalAlbum) {  //“专辑”tag
+            observableList.forEach(localSong -> {   //“歌手”tag
+                if (!isCharacterCategory(localSong.getName()) && localSong.getAlbum().equals(((LocalAlbum) object).getLabAlbum().getText())){
+                    observableLocalSongList.add(localSong);
+                }
+            });
+        }
         return observableLocalSongList;
     }
+
 
     /**根据"歌曲"tag下的表格内容获取本地音乐“歌手”tag下的表格内容
      * @param observableLocalSongList "歌曲"tag下的表格内容
@@ -177,17 +188,18 @@ public final class SongUtils {
     public static ObservableList<LocalSinger> getObservableLocalSingerList(ObservableList<LocalSong> observableLocalSongList){
         ObservableList<LocalSinger> observableLocalSingerList = FXCollections.observableArrayList();
         Map<Character,List<LocalSinger>> characterLocalSingerListMap = new HashMap<>();
+        Image singerImage = new Image("/image/DefaultSinger.png",48,48,false,true); //歌手的默认图片资源
         observableLocalSongList.forEach(localSong -> {  //遍历“歌手”tag下的表格内容
             if (localSong.getSinger() != null && !localSong.getSinger().equals("")){    //判断不为空的
                 char singerHead = Pinyin4jUtils.getFirstPinYinHeadChar(localSong.getSinger());  //取出歌手字符串的对应的字母分类
                 if (!characterLocalSingerListMap.keySet().contains(singerHead)){    //如果map中没有这个字母分类
                     List<LocalSinger> localSingerList = new LinkedList<>(); //实列化双链表结构集合
-                    localSingerList.add(toLocalSinger(localSong));  //添加
+                    localSingerList.add(toLocalSinger(observableLocalSongList,localSong,singerImage));  //添加
                     characterLocalSingerListMap.put(singerHead,localSingerList);    //存放到map中
                 }else { //否则，则已有这个字母分类
                     List<LocalSinger> localSingerList = characterLocalSingerListMap.get(singerHead);    //去除字母分类对应的集合
                     if (!isContains(localSingerList,localSong)){    //如果分类集合的没有包含
-                        localSingerList.add(toLocalSinger(localSong));
+                        localSingerList.add(toLocalSinger(observableLocalSongList,localSong,singerImage));
                     }
                 }
             }
@@ -202,15 +214,58 @@ public final class SongUtils {
         return observableLocalSingerList;
     }
 
-    /**把LocalSong模型转变成LocalSinger模型
-     * @param localSong
-     * @return LocalSinger*/
-    public static LocalSinger toLocalSinger(LocalSong localSong){
-        String singer = localSong.getSinger();
-        Label labSingerInformation = new Label(singer);
-        labSingerInformation.setGraphicTextGap(15);
+    /**根据"歌曲"tag下的表格内容获取本地音乐“歌手”tag下的表格内容
+     * @param observableLocalSongList "歌曲"tag下的表格内容
+     * @return ObservableList<LocalSinger>*/
+    public static ObservableList<LocalAlbum> getObservableLocalAlbumList(ObservableList<LocalSong> observableLocalSongList){
+        ObservableList<LocalAlbum> observableLocalAlbumList = FXCollections.observableArrayList();
+        Map<Character,List<LocalAlbum>> characterLocalAlbumListMap = new HashMap<>();
+        Image albumImage = new Image("/image/DefaultAlbum.png",48,48,false,true); //歌手的默认图片资源
+        observableLocalSongList.forEach(localSong -> {  //遍历“歌手”tag下的表格内容
+            if (localSong.getAlbum() != null && !localSong.getAlbum().equals("")){    //判断不为空的
+                char singerHead = Pinyin4jUtils.getFirstPinYinHeadChar(localSong.getAlbum());  //取出歌手字符串的对应的字母分类
+                if (!characterLocalAlbumListMap.keySet().contains(singerHead)){    //如果map中没有这个字母分类
+                    List<LocalAlbum> localAlbumList = new LinkedList<>(); //实列化双链表结构集合
+                    localAlbumList.add(toLocalAlbum(observableLocalSongList,localSong,albumImage));  //添加
+                    characterLocalAlbumListMap.put(singerHead,localAlbumList);    //存放到map中
+                }else { //否则，则已有这个字母分类
+                    List<LocalAlbum> localAlbumList = characterLocalAlbumListMap.get(singerHead);    //去除字母分类对应的集合
+                    if (!isContains(localAlbumList,localSong)){    //如果分类集合的没有包含
+                        localAlbumList.add(toLocalAlbum(observableLocalSongList,localSong,albumImage));
+                    }
+                }
+            }
+        });
+        Set set = characterLocalAlbumListMap.keySet(); //获取字母分类关键字set
+        Object[] arrSet = set.toArray();
+        Arrays.sort(arrSet);    //排序
+        for (int i = 0; i < arrSet.length; i++) {
+            observableLocalAlbumList.add(new LocalAlbum(new Label(String.valueOf(arrSet[i])),null,null));
+            observableLocalAlbumList.addAll(characterLocalAlbumListMap.get(arrSet[i]));
+        }
+        return observableLocalAlbumList;
+    }
 
-        return new LocalSinger(labSingerInformation,null);
+    /**把LocalSong模型转变成LocalSinger模型
+     * @param observableLocalSongList
+     * @param localSong
+     * @param image
+     * @return LocalSinger*/
+    public static LocalSinger toLocalSinger(ObservableList<LocalSong> observableLocalSongList,LocalSong localSong,Image image){
+        Label labSingerInformation = new Label(localSong.getSinger(),ImageUtils.createImageView(image,48,48));
+        labSingerInformation.setGraphicTextGap(15);
+        return new LocalSinger(labSingerInformation,String.valueOf(getSongCountBySinger(observableLocalSongList,localSong.getSinger())));
+    }
+
+    /**把LocalSong模型转变成LocalAlbum模型
+     * @param observableLocalSongList
+     * @param localSong
+     * @param image
+     * @return LocalSinger*/
+    public static LocalAlbum toLocalAlbum(ObservableList<LocalSong> observableLocalSongList,LocalSong localSong,Image image){
+        Label labAlbumInformation = new Label(localSong.getAlbum(),ImageUtils.createImageView(image,48,48));
+        labAlbumInformation.setGraphicTextGap(20);
+        return new LocalAlbum(labAlbumInformation,localSong.getSinger(), getSongCountByAlbum(observableLocalSongList, localSong.getAlbum()) +"首");
     }
 
     /**根据歌手名称获取表格中的符合歌手名称歌曲数目
@@ -222,6 +277,21 @@ public final class SongUtils {
         for (int i = 0; i < observableLocalSongList.size(); i++) {
             if (observableLocalSongList.get(i).getSinger() != null &&
                     observableLocalSongList.get(i).getSinger().equals(singer)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**根据歌手名称获取表格中的符合专辑名称歌曲数目
+     * @param observableLocalSongList 歌曲表格的item集合
+     * @param album 歌手名称
+     * @return int 歌曲数目*/
+    public static int getSongCountByAlbum(ObservableList<LocalSong> observableLocalSongList,String album){
+        int count = 0;
+        for (int i = 0; i < observableLocalSongList.size(); i++) {
+            if (observableLocalSongList.get(i).getAlbum() != null &&
+                    observableLocalSongList.get(i).getAlbum().equals(album)){
                 count++;
             }
         }
@@ -366,14 +436,22 @@ public final class SongUtils {
         return false;
     }
 
-    /**判断localSingerList集合的歌手是否已经包含了localSong的歌手
-     * @param localSingerList “歌手”tag的表格内容集合
+    /**判断List集合的歌手或专辑是否已经包含了localSong的歌手
+     * @param list “歌手”或“专辑”tag的表格内容集合
      * @param localSong ”歌曲“模型
      * @return boolean */
-    public static boolean isContains(List<LocalSinger> localSingerList,LocalSong localSong){
-        for (int i = 0; i < localSingerList.size(); i++) {
-            if (localSingerList.get(i).getLabSinger().getText().equals(localSong.getSinger())){
-                return true;
+    public static boolean isContains(List list,LocalSong localSong){
+        if (list.get(0) instanceof LocalSinger){    //LocalSinger 针对“歌手”tag的判断
+            for (int i = 0; i < list.size(); i++) {
+                if (((LocalSinger)list.get(i)).getLabSinger().getText().equals(localSong.getSinger())){
+                    return true;
+                }
+            }
+        }else if (list.get(0) instanceof LocalAlbum){   //LocalAlbum 针对“专辑”tag的判断
+            for (int i = 0; i < list.size(); i++) {
+                if (((LocalAlbum)list.get(i)).getLabAlbum().getText().equals(localSong.getAlbum())){
+                    return true;
+                }
             }
         }
         return false;

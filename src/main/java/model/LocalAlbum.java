@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class LocalAlbum {
-    private Label labAlbumInformation;
+    private Label labAlbum;
     private String singer;
     private String songCount;
 }

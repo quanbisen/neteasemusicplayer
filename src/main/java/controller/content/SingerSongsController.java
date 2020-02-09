@@ -2,7 +2,6 @@ package controller.content;
 
 import controller.main.CenterController;
 import controller.main.LeftController;
-import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,8 +12,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.util.Duration;
 import mediaplayer.MyMediaPlayer;
+import model.LocalAlbum;
 import model.LocalSinger;
 import model.LocalSong;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -26,7 +25,6 @@ import util.SongUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author super lollipop
@@ -40,7 +38,7 @@ public class SingerSongsController {
     private BorderPane root;
 
     @FXML
-    private Label labSingerName;
+    private Label labSingerOrAlbumName;
 
     @FXML
     private HBox hBoxPlayAll;
@@ -107,9 +105,16 @@ public class SingerSongsController {
             albumColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1.5);
         });
 
-        String singer = ((LocalSinger)localMusicContentController.getTableViewSinger().getSelectionModel().getSelectedItem()).getLabSinger().getText();
-        labSingerName.setText(singer);  //设置显示歌手名称
-        tableViewSong.setItems(SongUtils.getObservableLocalSongListBySinger(localMusicContentController.getTableViewSong().getItems(),singer));
+        if (((Label)localMusicContentController.getTabPane().getSelectionModel().getSelectedItem().getGraphic()).getText().equals("歌手")){ //如果是”歌手“tag
+            LocalSinger selectedLocalSinger = localMusicContentController.getTableViewSinger().getSelectionModel().getSelectedItem();
+            labSingerOrAlbumName.setText(selectedLocalSinger.getLabSinger().getText());  //设置显示歌手名称
+            tableViewSong.setItems(SongUtils.getObservableLocalSongListBySingerOrAlbum(localMusicContentController.getTableViewSong().getItems(),selectedLocalSinger));
+        }else if (((Label)localMusicContentController.getTabPane().getSelectionModel().getSelectedItem().getGraphic()).getText().equals("专辑")){   //如果是"专辑"tag
+            LocalAlbum selectedLocalAlbum = localMusicContentController.getTableViewAlbum().getSelectionModel().getSelectedItem();
+            labSingerOrAlbumName.setText(selectedLocalAlbum.getLabAlbum().getText());  //设置显示歌手名称
+            tableViewSong.setItems(SongUtils.getObservableLocalSongListBySingerOrAlbum(localMusicContentController.getTableViewSong().getItems(),selectedLocalAlbum));
+        }
+
     }
 
 

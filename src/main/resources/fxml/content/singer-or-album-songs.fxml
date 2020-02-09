@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="root" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/SingerSongsStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.SingerSongsController">
+<BorderPane fx:id="root" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/SingerOrAlbumSongsStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.SingerSongsController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="600.0" spacing="10.0" style="-fx-border-color: #E4E4E7; -fx-border-width: 0 0 1 0;" BorderPane.alignment="CENTER">
          <children>
@@ -23,7 +23,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Label fx:id="labSingerName" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 1.34em;" text="未知歌手" />
+            <Label fx:id="labSingerOrAlbumName" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 1.34em;" text="未知" />
          </children>
          <BorderPane.margin>
             <Insets left="20.0" right="20.0" />

@@ -2,26 +2,26 @@ package service;
 
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import model.RecentSong;
+import model.LocalSinger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import task.LoadRecentSongTask;
+import task.LoadLocalSingerImageTask;
 
 import javax.annotation.Resource;
 
 /**
  * @author super lollipop
- * @date 20-1-29
+ * @date 20-2-9
  */
 @Service
 @Scope("prototype")
-public class LoadRecentSongService extends javafx.concurrent.Service<ObservableList<RecentSong>> {
+public class LoadLocalSingerImageService extends javafx.concurrent.Service<Boolean> {
 
     @Resource
-    private LoadRecentSongTask loadRecentSongTask;
+    private LoadLocalSingerImageTask loadLocalSingerImageTask;
 
     @Override
-    protected Task<ObservableList<RecentSong>> createTask() {
-        return loadRecentSongTask;
+    protected Task<Boolean> createTask() {
+        return loadLocalSingerImageTask;
     }
 }

@@ -101,7 +101,7 @@ BorderPane
 /*选中行的背景颜色*/
 #tableViewSong.table-view .table-row-cell:selected
 {
-    -fx-background-color: #DEDEE0;
+    -fx-background-color: #E8E8E8;
 }
 /*空行的样式，参见：http://fxexperience.com/2011/11/alternate-row-highlighting-in-empty-tableview-and-listview-rows/*/
 #tableViewSong.table-view .table-row-cell:empty
@@ -168,7 +168,7 @@ BorderPane
 }
 #tableViewSinger.table-view .table-row-cell:selected
 {
-    -fx-background-color: #DEDEE0;
+    -fx-background-color: #E8E8E8;
 }
 /*“歌手”表格的歌手信息列的样式*/
 #tableViewSinger.table-view #singerInformationColumn.table-cell
@@ -176,7 +176,7 @@ BorderPane
     -fx-padding: 0 0 0 1.6em;
 }
 /*“歌手”表格的数目列的样式*/
-#tableViewSinger.table-view #songCountColumn.table-cell
+#tableViewSinger.table-view #singerSongCountColumn.table-cell
 {
     -fx-alignment: center-right;
     -fx-padding: 0 2.5em 0 0;
@@ -193,6 +193,84 @@ BorderPane
 }
 /*****************
 歌手表格的样式 end
+*****************/
+
+/*****************
+专辑表格的样式 start
+*****************/
+/*去除标题栏*/
+#tableViewAlbum.table-view .column-header-background
+{
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+}
+/*”专辑“表格行样式*/
+#tableViewAlbum.table-view .table-row-cell
+{
+    -fx-cell-size: 68px;
+    -fx-background-color:#FAFAFC;
+    -fx-background-insets: 0;
+}
+/*”专辑“表格下的单元格样式*/
+#tableViewAlbum.table-view .table-cell
+{
+    -fx-text-fill: #333333;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-border-color:transparent;
+    -fx-alignment: center-left;
+    -fx-padding: 5 5 5 5;
+}
+/*”专辑“表格下的单元格下的label样式*/
+#tableViewAlbum.table-view .table-cell .label
+{
+    -fx-text-fill: #333333;
+}
+/*表格行按压的缩放样式*/
+#tableViewAlbum.table-view .table-row-cell:pressed
+{
+    -fx-scale-x: 0.995;
+    -fx-scale-y: 0.995;
+    -fx-background-insets: 0 -3em 0 -3em;
+}
+
+/*表格偶数行样式*/
+#tableViewAlbum.table-view .table-row-cell:odd
+{
+    -fx-background-color:#F4F4F6;
+}
+/*表格行鼠标放置在上面的样式*/
+#tableViewAlbum.table-view .table-row-cell:hover
+{
+    -fx-background-color: #F2F2F3;
+}
+#tableViewAlbum.table-view .table-row-cell:selected
+{
+    -fx-background-color: #E8E8E8;
+}
+/*“专辑”表格的歌手信息列的样式*/
+#tableViewAlbum.table-view #albumInformationColumn.table-cell
+{
+    -fx-padding: 0 0 0 1.6em;
+}
+/*“专辑”表格的数目列的样式*/
+#tableViewAlbum.table-view #albumSongCountColumn.table-cell
+{
+    -fx-alignment: center-right;
+    -fx-padding: 0 2.5em 0 0;
+}
+/*空行的样式*/
+#tableViewAlbum.table-view .table-row-cell:empty
+{
+    -fx-background-color: #FAFAFC;
+}
+/*去除空行的边框*/
+#tableViewAlbum.table-view .table-row-cell:empty .table-cell
+{
+    -fx-border-width: 0px;
+}
+/*****************
+专辑表格的样式 end
 *****************/
 .scroll-bar:vertical
 {

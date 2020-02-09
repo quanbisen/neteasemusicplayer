@@ -8,7 +8,7 @@ name varchar (30) default '空',
 image_url varchar(100) default 'http://localhost:8080/neteasemusicplayerserver_war_exploded/image/UserDefaultImage.png'
 );
 drop table users;
-update users set image='http://localhost:8080/neteasemusicplayerserver_war_exploded/image/UserDefaultImage.png' where id=13025583130;
+update users set image_url='http://localhost:8080/neteasemusicplayerserver_war_exploded/image/UserDefaultImage.png' where id=13025583130;
 insert into users(id,password) values('13025583130','10010');
 select * from users;
 update users set name='lollipop' where id='13025583130';
@@ -44,7 +44,7 @@ image_url varchar(100)
 drop table singers;
 insert into singers(name,image_url) values('Westlife','http://localhost:8080/neteasemusicplayerserver_war_exploded/image/singer/Westlife.png');
 insert into singers(name,image_url) values('周杰伦','http://localhost:8080/neteasemusicplayerserver_war_exploded/image/singer/zhoujielun.png');
-insert into singers(name,image_url) values('周柏豪','http://localhost:8080/neteasemusicplayerserver_war_exploded/image/singer/zhoujielun.png');
+insert into singers(name,image_url) values('周柏豪','http://localhost:8080/neteasemusicplayerserver_war_exploded/image/singer/zhoubaihao.png');
 insert into singers(name,image_url) values('罗志祥','http://localhost:8080/neteasemusicplayerserver_war_exploded/image/singer/luozhixiang.png');
 insert into singers(name,image_url) values('许嵩','http://localhost:8080/neteasemusicplayerserver_war_exploded/image/singer/xusong.png');
 insert into singers(name,image_url) values('G.E.M.邓紫棋','http://localhost:8080/neteasemusicplayerserver_war_exploded/image/singer/G.E.M.png');

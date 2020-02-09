@@ -63,18 +63,18 @@ public final class ImageUtils {
                         Image image = new Image(new ByteArrayInputStream(imageData),58,58,false,true);
                         imgAlbum= createImageView(image,58,58);
                     }catch (NullPointerException e){
-                        imgAlbum = createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
+                        imgAlbum = createImageView("image/DefaultAlbum_58.png",58,58);
                     }
 
                 }
                 else {
-                    imgAlbum = createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
+                    imgAlbum = createImageView("image/DefaultAlbum_58.png",58,58);
                 }
             }catch (FileNotFoundException e){
-                return createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
+                return createImageView("image/DefaultAlbum_58.png",58,58);
             }
         }else { //在线歌曲资源的专辑图，先设置为默认的黑白专辑图，后面再添加。。。
-            imgAlbum = createImageView("image/NeteaseDefaultAlbumWhiteBackground.png",58,58);
+            imgAlbum = createImageView("image/DefaultAlbum_58.png",58,58);
         }
 
         return imgAlbum;
