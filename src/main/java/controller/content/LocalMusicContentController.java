@@ -490,6 +490,9 @@ public class LocalMusicContentController {
                 if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0 &&
                         (tableViewAlbum.getItems() == null || tableViewAlbum.getItems().size() == 0)){
                     tableViewAlbum.setItems(SongUtils.getObservableLocalAlbumList(tableViewSong.getItems()));
+                    tableViewAlbum.getItems().forEach(localAlbum -> {
+                        System.out.println(localAlbum.getLabAlbum().getText()+ " "+localAlbum.getSinger());
+                    });
                 }
             }
 
