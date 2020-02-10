@@ -37,8 +37,10 @@ import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
+import service.LoadLocalAlbumImageService;
 import service.LoadLocalSingerImageService;
 import service.LoadLocalSongService;
+import task.LoadLocalAlbumImageTask;
 import util.SongUtils;
 import util.StageUtils;
 import util.WindowUtils;
@@ -490,9 +492,9 @@ public class LocalMusicContentController {
                 if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0 &&
                         (tableViewAlbum.getItems() == null || tableViewAlbum.getItems().size() == 0)){
                     tableViewAlbum.setItems(SongUtils.getObservableLocalAlbumList(tableViewSong.getItems()));
-                    tableViewAlbum.getItems().forEach(localAlbum -> {
-                        System.out.println(localAlbum.getLabAlbum().getText()+ " "+localAlbum.getSinger());
-                    });
+                    LoadLocalAlbumImageService loadLocalAlbumImageService = applicationContext.getBean(LoadLocalAlbumImageService.class);   //获取加载专辑图片的服务bean
+                    progressIndicator.visibleProperty().bind(loadLocalAlbumImageService.runningProperty());
+                    loadLocalAlbumImageService.start();
                 }
             }
 

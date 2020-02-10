@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="model.AlbumMapper">
+    <insert id="insertAlbum" parameterType="Album">
+        insert into albums(name,image_url_210,image_url_58) values (#{name},#{imageURL210},#{imageURL58});
+    </insert>
+
+    <select id="findAlbumByName" parameterType="String" resultMap="albumResultMap">
+        select name,image_url_58 from albums where name=#{value};
+    </select>
+    <resultMap id="albumResultMap" type="Album">
+        <result property="name" column="name"></result>
+        <result property="imageURL58" column="image_url_58"></result>
+    </resultMap>
+</mapper>

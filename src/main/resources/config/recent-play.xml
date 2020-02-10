@@ -8,23 +8,17 @@
   <PlayedSong name="Just The Way You Are" singer="G.E.M.邓紫棋" album="Get Everybody Moving Concert 2011" totalTime="04:01" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - Just The Way You Are.mp3"></PlayedSong>  
   <PlayedSong name="微微一笑很倾城" singer="杨洋" album="微微一笑很倾城" totalTime="03:24" resource="/media/ubuntu/Music/杨洋 - 微微一笑很倾城.mp3"></PlayedSong>  
   <PlayedSong name="握不住的他" singer="林俊杰" album="她说 概念自选辑" totalTime="03:31" resource="/media/ubuntu/Music/林俊杰 - 握不住的他.mp3"></PlayedSong>  
-  <PlayedSong name="第几个一百天" singer="林俊杰" album="100天" totalTime="04:40" resource="/media/ubuntu/Music/林俊杰 - 第几个一百天.mp3"></PlayedSong>  
   <PlayedSong name="豆浆油条" singer="林俊杰" album="第二天堂" totalTime="04:16" resource="/media/ubuntu/Music/林俊杰 - 豆浆油条.mp3"></PlayedSong>  
   <PlayedSong name="A.I.N.Y. 爱你" singer="G.E.M.邓紫棋" album="18" totalTime="03:46" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - A.I.N.Y. 爱你.mp3"></PlayedSong>  
-  <PlayedSong name="爱笑的眼睛" singer="林俊杰" album="她说" totalTime="04:11" resource="/media/ubuntu/Music/林俊杰 - 爱笑的眼睛.mp3"></PlayedSong>  
   <PlayedSong name="手心的蔷薇" singer="林俊杰" album="新地球" totalTime="04:40" resource="/media/ubuntu/Music/林俊杰 - 手心的蔷薇.mp3"></PlayedSong>  
   <PlayedSong name="修炼爱情" singer="林俊杰" album="因你而在" totalTime="04:47" resource="/media/ubuntu/Music/林俊杰-修炼爱情.mp3"></PlayedSong>  
-  <PlayedSong name="背对背拥抱" singer="林俊杰" album="100天" totalTime="03:58" resource="/media/ubuntu/Music/林俊杰 - 背对背拥抱.mp3"></PlayedSong>  
-  <PlayedSong name="As I Believe" singer="林俊杰" album="对的时间点" totalTime="04:15" resource="/media/ubuntu/Music/林俊杰 - As I Believe.mp3"></PlayedSong>  
   <PlayedSong name="就是我" singer="林俊杰" album="乐行者" totalTime="03:15" resource="/media/ubuntu/Music/林俊杰 - 就是我.mp3"></PlayedSong>  
-  <PlayedSong name="Cries in a Distance" singer="林俊杰" album="JJ陆" totalTime="03:45" resource="/media/ubuntu/Music/林俊杰 - Cries in a Distance.mp3"></PlayedSong>  
   <PlayedSong name="一千年以后(Live)" singer="林俊杰" album="音乐进化全过程" totalTime="03:47" resource="/media/ubuntu/Music/林俊杰 - 一千年以后.mp3"></PlayedSong>  
   <PlayedSong name="江南(粤语版)" singer="林俊杰" album="西界" totalTime="04:20" resource="/media/ubuntu/Music/林俊杰 - 江南 - 粤语版.mp3"></PlayedSong>  
   <PlayedSong name="记得" singer="林俊杰" album="她说 概念自选辑" totalTime="04:47" resource="/media/ubuntu/Music/林俊杰 - 记得.mp3"></PlayedSong>  
   <PlayedSong name="你要的不是我" singer="林俊杰" album="曹操" totalTime="04:11" resource="/media/ubuntu/Music/林俊杰 - 你要的不是我.mp3"></PlayedSong>  
   <PlayedSong name="她说" singer="林俊杰" album="她说 概念自选辑" totalTime="05:20" resource="/media/ubuntu/Music/林俊杰 - 她说.mp3"></PlayedSong>  
   <PlayedSong name="杀手" singer="林俊杰" album="西界" totalTime="04:53" resource="/media/ubuntu/Music/林俊杰 - 杀手.mp3"></PlayedSong>  
-  <PlayedSong name="曹操" singer="林俊杰" album="曹操" totalTime="04:02" resource="/media/ubuntu/Music/林俊杰 - 曹操.mp3"></PlayedSong>  
   <PlayedSong name="将故事写成我们" singer="林俊杰" album="将故事写成我们" totalTime="05:36" resource="/media/ubuntu/Music/林俊杰 - 将故事写成我们.mp3"></PlayedSong>  
   <PlayedSong name="会有那么一天" singer="林俊杰" album="乐行者" totalTime="04:13" resource="/media/ubuntu/Music/林俊杰 - 会有那么一天.mp3"></PlayedSong>  
   <PlayedSong name="不煽情" singer="许嵩" album="寻雾启示" totalTime="05:16" resource="/media/ubuntu/Music/许嵩 - 不煽情.mp3"></PlayedSong>  
@@ -43,5 +37,16 @@
   <PlayedSong name="Victoria" singer="G.E.M.邓紫棋" album="Victoria" totalTime="03:36" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - Victoria.mp3"></PlayedSong>  
   <PlayedSong name="失真" singer="G.E.M.邓紫棋" album="Xposed" totalTime="03:57" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 失真.mp3"></PlayedSong>  
   <PlayedSong name="修炼爱情" singer="林俊杰" album="因你而在" totalTime="04:47" resource="http://114.116.240.232:8080/neteasemusicplayerserver/song/林俊杰-修炼爱情.mp3"></PlayedSong>  
-  <PlayedSong name="Wonderland" singer="林俊杰" album="Wonderland" totalTime="04:02" resource="http://114.116.240.232:8080/neteasemusicplayerserver/song/林俊杰-Wonderland.mp3"></PlayedSong>
+  <PlayedSong name="Wonderland" singer="林俊杰" album="Wonderland" totalTime="04:02" resource="http://114.116.240.232:8080/neteasemusicplayerserver/song/林俊杰-Wonderland.mp3"></PlayedSong>  
+  <PlayedSong name="All About U" singer="G.E.M.邓紫棋" album="18" totalTime="04:01" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - All About U.mp3"></PlayedSong>  
+  <PlayedSong name="爱笑的眼睛" singer="林俊杰" album="她说" totalTime="04:11" resource="/media/ubuntu/Music/林俊杰 - 爱笑的眼睛.mp3"></PlayedSong>  
+  <PlayedSong name="As I Believe" singer="林俊杰" album="对的时间点" totalTime="04:15" resource="/media/ubuntu/Music/林俊杰 - As I Believe.mp3"></PlayedSong>  
+  <PlayedSong name="爱不会绝迹" singer="林俊杰" album="100天" totalTime="04:00" resource="/media/ubuntu/Music/林俊杰 - 爱不会绝迹.mp3"></PlayedSong>  
+  <PlayedSong name="不潮不用花钱" singer="林俊杰" album="JJ陆" totalTime="03:53" resource="/media/ubuntu/Music/林俊杰 - 不潮不用花钱.mp3"></PlayedSong>  
+  <PlayedSong name="背对背拥抱" singer="林俊杰" album="100天" totalTime="03:58" resource="/media/ubuntu/Music/林俊杰 - 背对背拥抱.mp3"></PlayedSong>  
+  <PlayedSong name="曹操" singer="林俊杰" album="曹操" totalTime="04:02" resource="/media/ubuntu/Music/林俊杰 - 曹操.mp3"></PlayedSong>  
+  <PlayedSong name="Cries in a Distance" singer="林俊杰" album="JJ陆" totalTime="03:45" resource="/media/ubuntu/Music/林俊杰 - Cries in a Distance.mp3"></PlayedSong>  
+  <PlayedSong name="翅膀" singer="林俊杰" album="乐行者" totalTime="03:42" resource="/media/ubuntu/Music/林俊杰 - 翅膀.mp3"></PlayedSong>  
+  <PlayedSong name="第几个一百天" singer="林俊杰" album="100天" totalTime="04:40" resource="/media/ubuntu/Music/林俊杰 - 第几个一百天.mp3"></PlayedSong>  
+  <PlayedSong name="对的时间点" singer="林俊杰" album="对的时间点" totalTime="04:02" resource="/media/ubuntu/Music/林俊杰 - 对的时间点.mp3"></PlayedSong>
 </RecentPlaySongs>
