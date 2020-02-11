@@ -1,9 +1,8 @@
 package dao;
 
-import model.OnlineSong;
+import pojo.Song;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.junit.Test;
 import org.springframework.stereotype.Repository;
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,23 +19,23 @@ public class SongDaoImpl implements SongDao {
     private SqlSessionFactory sqlSessionFactory;
 
     @Override
-    public List<OnlineSong> queryByName(String name) {
+    public List<Song> queryByName(String name) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        List<OnlineSong> onlineSongList = sqlSession.selectList("model.OnlineSongMapper.queryByName",name);
+        List<Song> songList = sqlSession.selectList("model.OnlineSongMapper.queryByName",name);
         sqlSession.close();
-        return onlineSongList;
+        return songList;
     }
 
     @Override
-    public List<OnlineSong> queryBySinger(String singer) {
+    public List<Song> queryBySinger(String singer) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        List<OnlineSong> localSongList = sqlSession.selectList("model.OnlineSongMapper.queryBySinger",singer);
+        List<Song> localSongList = sqlSession.selectList("model.OnlineSongMapper.queryBySinger",singer);
         sqlSession.close();
         return localSongList;
     }
 
     @Override
-    public void insert(OnlineSong localSong) {
+    public void insert(Song localSong) {
 
     }
 

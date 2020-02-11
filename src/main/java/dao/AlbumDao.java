@@ -1,6 +1,6 @@
 package dao;
 
-import model.Album;
+import pojo.Album;
 import org.springframework.stereotype.Repository;
 
 /**

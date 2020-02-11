@@ -53,6 +53,9 @@ public class SingerSongsController {
     private TableView<LocalSong> tableViewSong;
 
     @FXML
+    private TableColumn<LocalSong, String> indexColumn;
+
+    @FXML
     private TableColumn<LocalSong, String> nameColumn;
 
     @FXML
@@ -83,6 +86,7 @@ public class SingerSongsController {
 
     public void initialize(){
         //添加css名称.在CSS文件定制样式
+        indexColumn.getStyleClass().add("indexColumn");
         totalTimeColumn.getStyleClass().add("totalTimeColumn");
         sizeColumn.getStyleClass().add("sizeColumn");
         nameColumn.getStyleClass().add("nameColumn");
@@ -90,6 +94,7 @@ public class SingerSongsController {
         albumColumn.getStyleClass().add("albumColumn");
 
         //列属性绑定
+        indexColumn.setCellValueFactory(new PropertyValueFactory<>("index"));
         totalTimeColumn.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
         sizeColumn.setCellValueFactory(new PropertyValueFactory<>("size"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -98,11 +103,11 @@ public class SingerSongsController {
 
         //设置表格列的宽度随这个borderPane的宽度而动态改变
         tableViewContainer.widthProperty().addListener((observable, oldValue, newValue) -> {
-            totalTimeColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1);
-            sizeColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1);
-            nameColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*2);
-            singerColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1);
-            albumColumn.setPrefWidth(observable.getValue().doubleValue()/6.5*1.5);
+            totalTimeColumn.setPrefWidth((observable.getValue().doubleValue()-indexColumn.getMaxWidth())/6.5*1);
+            sizeColumn.setPrefWidth((observable.getValue().doubleValue()-indexColumn.getMaxWidth())/6.5*1);
+            nameColumn.setPrefWidth((observable.getValue().doubleValue()-indexColumn.getMaxWidth())/6.5*2);
+            singerColumn.setPrefWidth((observable.getValue().doubleValue()-indexColumn.getMaxWidth())/6.5*1);
+            albumColumn.setPrefWidth((observable.getValue().doubleValue()-indexColumn.getMaxWidth())/6.5*1.5);
         });
 
         if (((Label)localMusicContentController.getTabPane().getSelectionModel().getSelectedItem().getGraphic()).getText().equals("歌手")){ //如果是”歌手“tag

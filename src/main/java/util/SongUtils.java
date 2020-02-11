@@ -1,11 +1,9 @@
 package util;
 
-import com.sun.org.apache.xerces.internal.xs.StringList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import model.*;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -15,7 +13,7 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.id3.ID3v1Tag;
 import org.jaudiotagger.tag.wav.WavTag;
-import org.junit.Test;
+import pojo.Song;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -140,12 +138,12 @@ public final class SongUtils {
                 char head = Pinyin4jUtils.getFirstPinYinHeadChar(name);
                 if (!characterLocalSongListMap.containsKey(head)){   //如果没有这个字符的map映射，创建集合存储
                     List<LocalSong> characterList = new ArrayList<>();
-                    characterList.add(new LocalSong(name,singer,album,totalTime,size,resource,lyrics));
+                    characterList.add(new LocalSong(null,name,singer,album,totalTime,size,resource,lyrics));
                     characterLocalSongListMap.put(head,characterList);
                 }
                 else {  //否则，就有了这个字符的map映射了，追加到字符对应的value的List集合
                     List<LocalSong> characterListValue = characterLocalSongListMap.get(head);
-                    characterListValue.add(new LocalSong(name,singer,album,totalTime,size,resource,lyrics));
+                    characterListValue.add(new LocalSong(null,name,singer,album,totalTime,size,resource,lyrics));
                 }
             }catch (Exception e){
                 System.out.println(songFile.getPath()+" cause exception.");
@@ -165,18 +163,44 @@ public final class SongUtils {
      * @return ObservableList<LocalSinger>*/
     public static ObservableList<LocalSong> getObservableLocalSongListBySingerOrAlbum(ObservableList<LocalSong> observableList,Object object){
         ObservableList<LocalSong> observableLocalSongList = FXCollections.observableArrayList();
-        if (object instanceof LocalSinger){
-            observableList.forEach(localSong -> {   //“歌手”tag
+        int count = 0;
+        String index;
+        if (object instanceof LocalSinger){ //“歌手”tag
+            for (int i = 0; i < observableList.size(); i++) {
+                if (!isCharacterCategory(observableList.get(i).getName()) && observableList.get(i).getSinger().equals(((LocalSinger) object).getLabSinger().getText())){
+                    count++;
+                    if (count < 10){
+                        index = "0" + count;
+                    }else {
+                        index = String.valueOf(count);
+                    }
+                    observableList.get(i).setIndex(index);
+                    observableLocalSongList.add(observableList.get(i));
+                }
+            }
+            /*observableList.forEach(observableList.get(i) -> {
                 if (!isCharacterCategory(localSong.getName()) && localSong.getSinger().equals(((LocalSinger) object).getLabSinger().getText())){
                     observableLocalSongList.add(localSong);
                 }
-            });
-        } else if (object instanceof LocalAlbum) {  //“专辑”tag
-            observableList.forEach(localSong -> {   //“歌手”tag
+            });*/
+        } else if (object instanceof LocalAlbum) { //“专辑”tag
+            for (int i = 0; i < observableList.size(); i++) {
+                if (!isCharacterCategory(observableList.get(i).getName()) && observableList.get(i).getAlbum().equals(((LocalAlbum) object).getLabAlbum().getText())){
+                    count++;
+                    if (count < 10){
+                        index = "0" + count;
+                    }else {
+                        index = String.valueOf(count);
+                    }
+                    observableList.get(i).setIndex(index);
+                    observableLocalSongList.add(observableList.get(i));
+                }
+            }
+          /*  observableList.forEach(localSong -> {
                 if (!isCharacterCategory(localSong.getName()) && localSong.getAlbum().equals(((LocalAlbum) object).getLabAlbum().getText())){
                     observableLocalSongList.add(localSong);
                 }
-            });
+            });*/
         }
         return observableLocalSongList;
     }
@@ -400,10 +424,10 @@ public final class SongUtils {
     }
 
     /**把在线音乐对象模型转换成播放列表模型函数
-     * @param onlineSong
+     * @param song
      * @return PlayListSong*/
-    public static PlayListSong toPlayListSong(OnlineSong onlineSong){
-        return new PlayListSong(onlineSong.getName(),onlineSong.getSinger(),onlineSong.getAlbum(),onlineSong.getTotalTime(),onlineSong.getResource());
+    public static PlayListSong toPlayListSong(Song song){
+        return new PlayListSong(song.getName(), song.getSinger(), song.getAlbum(), song.getTotalTime(), song.getResource());
     }
 
     /**把在线音乐对象模型转换成播放列表模型函数

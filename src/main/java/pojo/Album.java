@@ -1,4 +1,4 @@
-package model;
+package pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +14,5 @@ import lombok.RequiredArgsConstructor;
 public class Album {
     private Integer id;
     private String name;
-    private String imageURL210;
-    private String imageURL58;
+    private String imageURL;
 }

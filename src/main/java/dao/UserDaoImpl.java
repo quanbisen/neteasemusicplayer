@@ -1,6 +1,6 @@
 package dao;
 
-import model.User;
+import pojo.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
@@ -21,6 +21,14 @@ public class UserDaoImpl implements UserDao{
     public User findUserByIdAndPassword(User user) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         User validUser = sqlSession.selectOne("model.UserMapper.findUserByIdAndPassword",user);
+        sqlSession.close();
+        return validUser;
+    }
+
+    @Override
+    public User queryUserByIdToken(User user) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        User validUser = sqlSession.selectOne("model.UserMapper.findUserByIdToken",user);
         sqlSession.close();
         return validUser;
     }

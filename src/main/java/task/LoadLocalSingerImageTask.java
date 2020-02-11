@@ -8,7 +8,7 @@ import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import model.LocalSinger;
-import model.Singer;
+import pojo.Singer;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import util.ImageUtils;

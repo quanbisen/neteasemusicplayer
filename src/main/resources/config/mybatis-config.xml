@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <package name="model"/>
+        <package name="pojo"/>
     </typeAliases>
     <mappers>
         <mapper resource="mapper/user-mapper.xml"></mapper>
-        <mapper resource="mapper/onlinesong-mapper.xml"></mapper>
+        <mapper resource="mapper/song-mapper.xml"></mapper>
         <mapper resource="mapper/singer-mapper.xml"></mapper>
         <mapper resource="mapper/album-mapper.xml"></mapper>
     </mappers>

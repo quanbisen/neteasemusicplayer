@@ -6,6 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class LocalSong {
+    private String index;
     @NonNull
     private String name;
     private String singer;

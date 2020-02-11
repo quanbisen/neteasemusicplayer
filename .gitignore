@@ -10,8 +10,11 @@ neteasemusicplayer.iml
 # Log file
 *.log
 
-MacOS file
+#MacOS file
 *.DS_Store
+
+#Test folder
+src/test
 
 # BlueJ files
 *.ctxt

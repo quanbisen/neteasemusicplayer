@@ -18,9 +18,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.User;
+import mediaplayer.Config;
+import pojo.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
+import util.ImageUtils;
 import util.StageUtils;
 import util.UserUtils;
 import util.WindowUtils;
@@ -100,18 +102,14 @@ public class RightSlideLoginedController {
             });
         });
 
-        //读取出配置文件存储的用户信息。
-        if (leftController.getLOGIN_CONFIG_FILE().exists()){  //如果登录文件存在，解析成用户对象
-            User user = UserUtils.parseUser(leftController.getLOGIN_CONFIG_FILE());
-            //设置登录用户的UI组件显示
-            Circle circle = new Circle(20,20,20);
-            ImageView userImage = new ImageView(new Image(user.getImageURL()));
-            userImage.setFitWidth(40);
-            userImage.setFitHeight(40);
-            userImage.setClip(circle);   //设置圆形图片
-            labUserImage.setGraphic(userImage);
-            labUserName.setText(user.getName());
-        }
+        //设置登录用户的UI组件显示
+        Circle circle = new Circle(20,20,20);
+        User user = applicationContext.getBean(Config.class).getUser();
+        ImageView userImage = ImageUtils.createImageView(new Image(user.getImageURL()),40,40);
+        userImage.setClip(circle);   //设置圆形图片
+        labUserImage.setGraphic(userImage);
+        labUserName.setText(user.getName());
+
     }
 
     /**"关于"HBox的鼠标点击事件处理*/

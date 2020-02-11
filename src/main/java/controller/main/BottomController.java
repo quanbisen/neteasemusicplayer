@@ -13,6 +13,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -402,22 +403,36 @@ public class BottomController {
     /**歌曲进度滑动条的鼠标单击事件*/
     @FXML
     public void onClickedSliderSong(MouseEvent mouseEvent) {
-        if (myMediaPlayer.getMediaPlayer()!=null && !sliderSong.isValueChanging()){
-            myMediaPlayer.getMediaPlayer().seek(new Duration(1000 * sliderSong.getValue()));
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){
+            if (myMediaPlayer.getMediaPlayer()!=null && !sliderSong.isValueChanging()){
+                myMediaPlayer.getMediaPlayer().seek(new Duration(1000 * sliderSong.getValue()));
+            }
+        }else {
+            System.out.println("clicked");
+        }
+    }
+
+    @FXML
+    public void onPressedSliderSong(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY){
+
+        }else {
+            System.out.println("pressed");
+//            sliderSong.setMouseTransparent(true);
         }
     }
 
     /**音量图标的单击事件*/
     @FXML
     public void onClickedSoundIcon(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
-            if (myMediaPlayer.getMediaPlayer() != null && !myMediaPlayer.getMediaPlayer().isMute()){   //如果mediaPlayer不为空且不是静音，设置静音和一些GUI显示
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && myMediaPlayer.getMediaPlayer() != null){  //鼠标左击
+            if (!myMediaPlayer.getMediaPlayer().isMute()){   //如果mediaPlayer不为空且不是静音，设置静音和一些GUI显示
                 myMediaPlayer.getMediaPlayer().setMute(true);
                 labSoundIcon.setGraphic(ImageUtils.createImageView("image/NeteaseVolumeMuteIcon.png",19,19));
                 sliderVolumeValue = sliderVolume.getValue();   //存储当前的值
                 sliderVolume.setValue(0);
             }
-            else if (myMediaPlayer.getMediaPlayer() != null && myMediaPlayer.getMediaPlayer().isMute()){
+            else if (myMediaPlayer.getMediaPlayer().isMute()){
                 myMediaPlayer.getMediaPlayer().setMute(false);
                 labSoundIcon.setGraphic(ImageUtils.createImageView("image/NeteaseVolumeIcon.png",19,19));
                 sliderVolume.setValue(sliderVolumeValue);      //更新为静音之前的值
@@ -467,4 +482,5 @@ public class BottomController {
     public void updatePlayListIcon(){
         labPlayListCount.setText(String.valueOf(myMediaPlayer.getPlayListSongs().size()));
     }
+
 }

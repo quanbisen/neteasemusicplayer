@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import util.WindowUtils;
@@ -35,7 +36,7 @@ public class NavigateLoginOrRegisterController {
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
-    MainController mainController;
+    private MainController mainController;
 
     /**注入Spring上下文工具类*/
     @Resource
@@ -53,7 +54,7 @@ public class NavigateLoginOrRegisterController {
     public void onClickedCloseIcon(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
             WindowUtils.releaseBorderPane(mainController.getBorderPane());  //调用释放borderPane的函数，改变不透明度为正常的。
-            labCloseIcon.getScene().getWindow().hide();  //把当前窗口隐藏
+            ((Stage)labCloseIcon.getScene().getWindow()).close();  //把当前窗口关闭
         }
     }
 

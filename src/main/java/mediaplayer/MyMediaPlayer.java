@@ -2,6 +2,7 @@ package mediaplayer;
 
 import controller.main.BottomController;
 import controller.content.RecentPlayContentController;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -71,7 +72,7 @@ public class MyMediaPlayer implements IMediaPlayer {
     private BottomController bottomController;
 
     @Resource
-    RecentPlayContentController recentPlayContentController;
+    private RecentPlayContentController recentPlayContentController;
 
     /**记录最近播放记录文件存储位置*/
     private String recentPlayFilePath = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "recent-play.xml";
@@ -144,8 +145,9 @@ public class MyMediaPlayer implements IMediaPlayer {
      */
     @Override
     public void playSong(PlayListSong playListSong) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
-
+        boolean isMute = false;
         if (mediaPlayer != null) {  //如果当前的媒体播放器不为空,销毁它
+            isMute = mediaPlayer.isMute();
             this.mediaPlayer.dispose();
             this.mediaPlayer = null;
         }
@@ -156,6 +158,7 @@ public class MyMediaPlayer implements IMediaPlayer {
         }else {
             mediaPlayer = new MediaPlayer(new Media(new File(playListSong.getResource()).toURI().toString()));  //创建本地资源的媒体播放器对象
         }
+        mediaPlayer.setMute(isMute);
         mediaPlayer.volumeProperty().bind(bottomController.getSliderVolume().valueProperty());  //设置媒体播放器的音量绑定音量条组件的音量
         mediaPlayer.play();   //播放
 

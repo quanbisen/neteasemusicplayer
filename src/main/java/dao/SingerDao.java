@@ -1,6 +1,6 @@
 package dao;
 
-import model.Singer;
+import pojo.Singer;
 import org.springframework.stereotype.Repository;
 
 /**

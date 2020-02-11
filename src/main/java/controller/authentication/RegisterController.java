@@ -3,6 +3,8 @@ package controller.authentication;
 import application.SpringFXMLLoader;
 import controller.main.MainController;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.RegisterService;
@@ -73,7 +77,7 @@ public class RegisterController {
      * 注入窗体根容器（BorderPane）的控制类
      */
     @Resource
-    MainController mainController;
+    private MainController mainController;
 
     /**注入“导航去登录、注册”面板的控制器Controller*/
     @Resource
@@ -115,7 +119,7 @@ public class RegisterController {
 
         //"清除"账号的图标的显示时机
         tfAccountID.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!tfAccountID.getText().equals("")) {
+            if (!observable.getValue().equals("")) {
                 labClearIcon.setVisible(true);
                 if (!pfPassword.getText().equals("")) {
                     btnRegister.setMouseTransparent(false);
@@ -164,7 +168,7 @@ public class RegisterController {
     @FXML
     public void onClickedCloseIcon(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {  //鼠标左击
-            labCloseIcon.getScene().getWindow().hide();      //关闭窗口
+            ((Stage)labCloseIcon.getScene().getWindow()).close();      //关闭窗口
             WindowUtils.releaseBorderPane(mainController.getBorderPane());  //释放中间的面板，可以接受鼠标事件和改变透明度
         }
 
@@ -192,15 +196,19 @@ public class RegisterController {
             RegisterService registerService = applicationContext.getBean(RegisterService.class);
             registerProgressIndicator.visibleProperty().bind(registerService.runningProperty());
             registerService.start();
-
-//            User user1 = new User();         //创建用户对象，设置属性为输入的TextField文本内容
-//            user1.setId(tfAccountID.getText());
-//            user1.setPassword(pfPassword.getText());
-//            int row = userDao.addUser(user1);
-//            if (row==1){
-//                labRegisterInformation.setText("注册成功");
-//                btnRegister.setText("转到登录页面");
-//            }
+            registerService.valueProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    if (observable.getValue()){
+                        labRegisterInformation.setTextFill(Color.BLACK);
+                        labRegisterInformation.setText("注册成功");
+                        btnRegister.setText("转到登录页面");
+                    }else {
+                        labRegisterInformation.setTextFill(Color.rgb(181,44,46));
+                        labRegisterInformation.setText("注册失败");
+                    }
+                }
+            });
         }
         else {  //否则,则注册成功了,按钮可以转到登录页面。
             Scene registerScene = btnRegister.getScene();

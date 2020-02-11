@@ -1,15 +1,15 @@
 package dao;
 
-import model.OnlineSong;
+import pojo.Song;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository(value = "songDao")
 public interface SongDao {
 
-    List<OnlineSong> queryByName(String name);
-    List<OnlineSong> queryBySinger(String singer);
-    void insert(OnlineSong onlineSong);
+    List<Song> queryByName(String name);
+    List<Song> queryBySinger(String singer);
+    void insert(Song song);
     void delete(int id);
 
 }

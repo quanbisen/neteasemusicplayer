@@ -1,6 +1,6 @@
 package dao;
 
-import model.Album;
+import pojo.Album;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
@@ -51,12 +51,9 @@ public class AlbumDaoImpl implements AlbumDao{
             String path = files[i].getPath();
             path = path.substring(path.lastIndexOf("/"));
             String albumName = path.substring(path.lastIndexOf("/")+1,path.indexOf("."));
-            String imageURL210 = "http://114.116.240.232:8080/neteasemusicplayerserver/image/album" + path;
-            String imageURL58 = "http://114.116.240.232:8080/neteasemusicplayerserver/image/album/58px" + path.substring(0,path.indexOf(".")) + "_58" + path.substring(path.indexOf("."));
+            String imageURL = "http://114.116.240.232:8080/neteasemusicplayerserver/image/album" + path;
             System.out.println(albumName);
-            System.out.println(imageURL210);
-            System.out.println(imageURL58);
-            Album album = new Album(null,albumName,imageURL210,imageURL58);
+            Album album = new Album(null,albumName,imageURL);
             applicationContext.getBean(AlbumDao.class).insert(album);
         }
     }
@@ -65,6 +62,6 @@ public class AlbumDaoImpl implements AlbumDao{
     public void findAlbumByNameTest(){
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/application-context.xml");
         Album album = applicationContext.getBean(AlbumDao.class).queryAlbumByName("18");
-        System.out.println(album.getImageURL58());
+        System.out.println(album.getImageURL());
     }
 }

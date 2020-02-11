@@ -55,6 +55,6 @@ public class ReadLineMain {
                 fileList.add(file);
             }
         }
-
     }
+
 }

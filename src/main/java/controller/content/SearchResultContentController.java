@@ -1,6 +1,5 @@
 package controller.content;
 
-import controller.content.SearchInputContentController;
 import controller.main.BottomController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,7 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import mediaplayer.MyMediaPlayer;
-import model.OnlineSong;
+import pojo.Song;
 import model.PlayListSong;
 import org.springframework.stereotype.Component;
 import util.SongUtils;
@@ -59,19 +58,19 @@ public class SearchResultContentController {
 
     /**歌曲名称列组件*/
     @FXML
-    private TableColumn<OnlineSong,String> nameColumn;
+    private TableColumn<Song,String> nameColumn;
 
     /**歌曲歌手列组件*/
     @FXML
-    private TableColumn<OnlineSong,String> singerColumn;
+    private TableColumn<Song,String> singerColumn;
 
     /**歌曲专辑列组件*/
     @FXML
-    private TableColumn<OnlineSong,String> albumColumn;
+    private TableColumn<Song,String> albumColumn;
 
     /**歌曲总时间列组件*/
     @FXML
-    private TableColumn<OnlineSong,String> totalTimeColumn;
+    private TableColumn<Song,String> totalTimeColumn;
 
     /**显示歌曲的表格组件*/
     @FXML
@@ -186,7 +185,7 @@ public class SearchResultContentController {
             if (myMediaPlayer.getPlayListSongs() == null){
                 myMediaPlayer.setPlayListSongs(FXCollections.observableArrayList());
             }
-            PlayListSong newPlaySong = SongUtils.toPlayListSong((OnlineSong) tableViewSong.getSelectionModel().getSelectedItem());
+            PlayListSong newPlaySong = SongUtils.toPlayListSong((Song) tableViewSong.getSelectionModel().getSelectedItem());
             ObservableList<PlayListSong> playListSongs = myMediaPlayer.getPlayListSongs();
             if (playListSongs.size() == 0){
                 playListSongs.add(newPlaySong);

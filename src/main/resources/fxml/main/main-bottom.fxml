@@ -76,7 +76,7 @@
                     </padding>
                     <children>
                         <ProgressBar fx:id="progressBarSong" progress="0" />
-                        <Slider fx:id="sliderSong" onMouseClicked="#onClickedSliderSong" onMouseReleased="#onReleasedSliderSong" />
+                        <Slider fx:id="sliderSong" onMouseClicked="#onClickedSliderSong" onMouseReleased="#onReleasedSliderSong" onMousePressed="#onPressedSliderSong"/>
                     </children>
                 </StackPane>
             </center>

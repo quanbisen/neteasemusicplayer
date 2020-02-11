@@ -1,6 +1,6 @@
 package dao;
 
-import model.User;
+import pojo.User;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository(value = "userDao")
 public interface UserDao {
     User findUserByIdAndPassword(User user);
+    User queryUserByIdToken(User user);
     int addUser(User user);
 }

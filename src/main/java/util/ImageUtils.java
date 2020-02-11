@@ -24,11 +24,15 @@ public final class ImageUtils {
      * @param resource 图片的URL字符串
      * @param file 文件的存储位置*/
     public static void download(String resource,File file) throws IOException {
+        if (file.exists()){
+            file.delete();
+        }
         HttpURLConnection connection = (HttpURLConnection)new URL(resource).openConnection();  //创建连接
         connection.setRequestMethod("GET");  //设置请求方式为"GET"
         connection.setConnectTimeout(5 * 1000);  //超时响应时间为5秒
         InputStream inputStream = connection.getInputStream();  //通过输入流获取图片数据
         byte[] bytes = readInputStream(inputStream);
+
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         fileOutputStream.write(bytes);
         fileOutputStream.close();

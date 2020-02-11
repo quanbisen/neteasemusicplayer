@@ -5,16 +5,21 @@
 <mapper namespace="model.UserMapper">
     <!--根据用户账号ID查询用户-->
     <select id="findUserByIdAndPassword" parameterType="User" resultMap="userResultMap">
-        select * from users where id = #{id} and password=#{password}
+        select id,name,token,image_url from users where id = #{id} and password=#{password}
+    </select>
+    <!--根据用户账号ID、Token查询用户-->
+    <select id="findUserByIdToken" parameterType="User" resultMap="userResultMap">
+        select * from users where id=#{id} and token=#{token}
     </select>
     <!--插入一个用户User到Users表-->
     <insert id="addUser" parameterType="User">
-        insert into users(id,password) values (#{id},#{password})
+        insert into users(id,password,name,token) values (#{id},#{password},#{name},#{token})
     </insert>
     <resultMap id="userResultMap" type="User">
         <id property="id" column="id"></id>
         <result property="password" column="password"></result>
         <result property="name" column="name"></result>
+        <result property="token" column="token"></result>
         <result property="imageURL" column="image_url"></result>
     </resultMap>
 </mapper>

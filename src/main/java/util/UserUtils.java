@@ -1,7 +1,7 @@
 package util;
 
 import com.alibaba.fastjson.JSON;
-import model.User;
+import pojo.User;
 import java.io.*;
 
 /**

@@ -52,11 +52,17 @@ BorderPane
     -fx-alignment: center-left;
     -fx-padding: 5 5 5 5;
 }
-/*设置表格第一列的样式*/
+#tableViewSong.table-view #indexColumn.table-cell
+{
+    -fx-text-fill: #333333;
+    -fx-padding:0 0 0 5;
+    -fx-alignment: center-right;
+}
+/*设置表格第歌名列的样式*/
 #tableViewSong.table-view #nameColumn.table-cell
 {
     -fx-text-fill: #333333;
-    -fx-padding:0 0 0 20;
+    -fx-padding:0 0 0 8;
 }
 /*表格行样式*/
 #tableViewSong.table-view .table-row-cell

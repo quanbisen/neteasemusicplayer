@@ -1,12 +1,8 @@
 package dao;
 
-import model.Singer;
+import pojo.Singer;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.junit.Test;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;

@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
+import service.LoadUserService;
 import util.WindowUtils;
 
 @Component
@@ -24,6 +25,7 @@ public class FXApplication extends Application {
         /**Spring配置文件路径*/
         String APPLICATION_CONTEXT_PATH = "/config/application-context.xml";
         applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_PATH);
+        applicationContext.getBean(LoadUserService.class).start();  //启动加载用户的服务
     }
 
     public static void main(String[] args) {

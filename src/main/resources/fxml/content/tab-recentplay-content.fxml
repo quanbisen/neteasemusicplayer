@@ -39,7 +39,7 @@
                             <center>
                                 <TableView fx:id="tableViewRecentPlaySong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;">
                                     <columns>
-                                        <TableColumn fx:id="indexColumn" editable="false" maxWidth="37.0" minWidth="37.0" prefWidth="37.0" resizable="false" sortable="false" text="Id" />
+                                        <TableColumn fx:id="indexColumn" editable="false" maxWidth="37.0" minWidth="37.0" prefWidth="37.0" resizable="false" sortable="false" text="序号" />
                                         <TableColumn fx:id="addFavorColumn" editable="false" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" resizable="false" sortable="false" text="喜欢" />
                                         <TableColumn fx:id="nameColumn" editable="false" resizable="false" sortable="false" text="歌名" />
                                         <TableColumn fx:id="singerColumn" editable="false" resizable="false" sortable="false" text="歌手" />

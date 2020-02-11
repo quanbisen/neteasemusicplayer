@@ -6,16 +6,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import model.User;
+import mediaplayer.Config;
+import pojo.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
+import service.LoadUserService;
+import util.ImageUtils;
 import util.StageUtils;
 import util.UserUtils;
 import util.WindowUtils;
@@ -78,12 +82,6 @@ public class LeftController {
     @Resource
     private ApplicationContext applicationContext;
 
-    /**播放器登录文件的存放路径*/
-    private String Login_CONFIG_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "login-config.properties";
-
-    /**播放器登录配置文件*/
-    private File LOGIN_CONFIG_FILE;
-
     /**"搜索"标签的内容容器*/
     private Parent searchParent;
 
@@ -98,9 +96,6 @@ public class LeftController {
 
     /**"我喜欢的音乐"标签的内容容器*/
     private Parent myFavorMusicParent;
-
-    @Resource
-    private LocalMusicContentController localMusicContentController;
 
     public VBox getVBoxTabContainer() {
         return vBoxTabContainer;
@@ -118,9 +113,6 @@ public class LeftController {
         return labUserName;
     }
 
-    public File getLOGIN_CONFIG_FILE() {
-        return LOGIN_CONFIG_FILE;
-    }
 
     public Parent getLocalMusicParent() {
         return localMusicParent;
@@ -137,20 +129,6 @@ public class LeftController {
 
         this.setSelectedTab(hBoxExploreMusicTab);   //初始化“发现音乐”为选择的标签
 
-        LOGIN_CONFIG_FILE = new File(Login_CONFIG_PATH);  //初始化播放器登录文件
-
-        if (LOGIN_CONFIG_FILE.exists()){   //如果登录配置文件存在，读取设置，显示登录用户的信息
-            User user = UserUtils.parseUser(LOGIN_CONFIG_FILE);  //解析用户对象
-            String urlString = user.getImageURL();
-            String imageName = urlString.substring(urlString.lastIndexOf("/")+1);
-            String USER_IMAGE_PATH = "/config" + File.separator + user.getId() + File.separator + imageName;
-            ImageView imageView = new ImageView(new Image(USER_IMAGE_PATH));
-            imageView.setFitWidth(38);
-            imageView.setFitHeight(38);
-            labUserImage.setGraphic(imageView);   //设置用户头像
-            labUserName.setText(user.getName());  //设置用户名称
-
-        }
     }
 
     /**单击“搜索”标签事件处理*/
@@ -174,7 +152,13 @@ public class LeftController {
             if (exploreMusicParent == null){
                 exploreMusicParent = new Label("发现音乐");
             }
-            centerController.getBorderPane().setCenter(exploreMusicParent);
+            Slider slider = new Slider(0, 1, 0.5);
+            slider.setShowTickMarks(true);
+            slider.setShowTickLabels(true);
+            slider.setMajorTickUnit(0.2f);
+            slider.setContextMenu(null);
+            slider.setBlockIncrement(0.1f);
+            centerController.getBorderPane().setCenter(slider);
         }
     }
 
@@ -231,7 +215,7 @@ public class LeftController {
     @FXML
     public void onClickedCreateMusicGroup(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton()==MouseButton.PRIMARY){  //鼠标左击
-            if (!LOGIN_CONFIG_FILE.exists()){   //判断用户是否登录过了。
+            if (applicationContext.getBean(Config.class).getUser() == null){   //判断用户是否登录过了。
                 WindowUtils.toastInfo(centerController.getStackPane(),new Label("请先登录！"));
             }
             else{
@@ -256,14 +240,14 @@ public class LeftController {
     public void onClickedHBoxUserInfo(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             if (centerController.getStackPane().getChildren().size()==1){
-                if (!LOGIN_CONFIG_FILE.exists()){  //如果登录配置文件不存在，则没有登录
+                if (applicationContext.getBean(Config.class).getUser() == null){  //如果登录配置文件不存在，则没有登录
                     FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/right-slide-unlogin.fxml");
                     BorderPane borderPaneRoot = fxmlLoader.load();
 
                     StackPane stackPane = centerController.getStackPane();
                     stackPane.getChildren().add(borderPaneRoot);  //添加进stackPane
                 }
-                else {  //如果登录配置文件存在，则已经登录过了。
+                else {  //如果登录对象存在，则已经登录过了。
                     FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/right-slide-logined.fxml");
                     BorderPane borderPaneRoot = fxmlLoader.load();
 

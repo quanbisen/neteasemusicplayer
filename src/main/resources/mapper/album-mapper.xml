@@ -8,10 +8,10 @@
     </insert>
 
     <select id="findAlbumByName" parameterType="String" resultMap="albumResultMap">
-        select name,image_url_58 from albums where name=#{value};
+        select name,image_url_210 from albums where name=#{value};
     </select>
     <resultMap id="albumResultMap" type="Album">
         <result property="name" column="name"></result>
-        <result property="imageURL58" column="image_url_58"></result>
+        <result property="imageURL" column="image_url_210"></result>
     </resultMap>
 </mapper>
