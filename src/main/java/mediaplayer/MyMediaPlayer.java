@@ -2,11 +2,11 @@ package mediaplayer;
 
 import controller.main.BottomController;
 import controller.content.RecentPlayContentController;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -21,7 +21,6 @@ import util.ImageUtils;
 import util.SongUtils;
 import util.TimeUtils;
 import util.XMLUtils;
-
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
@@ -216,8 +215,8 @@ public class MyMediaPlayer implements IMediaPlayer {
         }
         /**“最近播放”tab的GUI更新处理操作
          * start*/
-        if (recentPlayContentController.getTableViewRecentPlaySong()!=null){
-            System.out.println("not null");
+        TableView tableViewRecentSongs = recentPlayContentController.getTableViewRecentPlaySong();
+        if (tableViewRecentSongs != null && tableViewRecentSongs.getItems() != null && tableViewRecentSongs.getItems().size() > 0){
             ObservableList<RecentSong> tableItems = recentPlayContentController.getTableViewRecentPlaySong().getItems();
             if (SongUtils.isContains(tableItems,playListSong)){
                 tableItems.remove(SongUtils.getIndex(tableItems,playListSong));
@@ -348,15 +347,6 @@ public class MyMediaPlayer implements IMediaPlayer {
                 }
                 default:
             }
-
-//            if (nextPlayIndexList != null){
-//                System.out.println("nextPlayList:");
-//                nextPlayIndexList.forEach(integer -> System.out.println(playListSongs.get(integer)));
-//            }
-//            if (lastPlayIndexList != null){
-//                System.out.println("lastPlayList");
-//                lastPlayIndexList.forEach(integer -> System.out.println(playListSongs.get(integer)));
-//            }
         });
         /**end*/
 

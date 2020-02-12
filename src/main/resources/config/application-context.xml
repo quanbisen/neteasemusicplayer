@@ -16,7 +16,7 @@
     <!--配置数据连接配置文件路径-->
     <context:property-placeholder location="classpath:config/db.properties"></context:property-placeholder>
     <!--配置数据库连接的用户、密码等-->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" >
         <property name="driverClassName" value="${jdbc.driver}"></property>
         <property name="url" value="${jdbc.url}"></property>
         <property name="username" value="${jdbc.username}"></property>

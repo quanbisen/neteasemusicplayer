@@ -1,33 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <RecentPlaySongs> 
-  <PlayedSong name="Wonderland" singer="林俊杰" album="Wonderland" totalTime="04:02" resource="http://114.116.240.232:8080/neteasemusicplayerserver/song/林俊杰-Wonderland.mp3"></PlayedSong>  
-  <PlayedSong name="贰叁" singer="吴亦凡" album="贰叁" totalTime="05:20" resource="/media/ubuntu/Test/吴亦凡 - 贰叁.mp3"></PlayedSong>  
-  <PlayedSong name="A Little Love" singer="冯曦妤" album="A Little Love" totalTime="03:11" resource="/media/ubuntu/Test/冯曦妤 - A Little Love.mp3"></PlayedSong>  
-  <PlayedSong name="Walk On Water" singer="G.E.M.邓紫棋" album="摩天动物园" totalTime="03:31" resource="/media/ubuntu/Test/G.E.M.邓紫棋 - Walk On Water.mp3"></PlayedSong>  
-  <PlayedSong name="大碗宽面" singer="吴亦凡" album="大碗宽面" totalTime="03:41" resource="/media/ubuntu/Test/吴亦凡 - 大碗宽面.mp3"></PlayedSong>  
-  <PlayedSong name="逍遥叹" singer="胡歌" album="仙剑奇侠传 电视原声带" totalTime="05:13" resource="/media/ubuntu/Test/胡歌 - 逍遥叹.mp3"></PlayedSong>  
   <PlayedSong name="Hey KONG" singer="刘聪KEY.L/$CC731" album="Hey KONG" totalTime="04:37" resource="/media/ubuntu/Test/刘聪KEY.L - Hey KONG.mp3"></PlayedSong>  
-  <PlayedSong name="偶尔" singer="G.E.M.邓紫棋" album="Live Piano Session" totalTime="03:23" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 偶尔.mp3"></PlayedSong>  
-  <PlayedSong name="男人背后" singer="周柏豪" album="男人背后" totalTime="04:14" resource="/media/ubuntu/Music/周柏豪-男人背后.mp3"></PlayedSong>  
-  <PlayedSong name="Someday I'll Fly" singer="G.E.M.邓紫棋" album="Xposed" totalTime="03:51" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - Someday I'll Fly.mp3"></PlayedSong>  
-  <PlayedSong name="查克靠近" singer="G.E.M.邓紫棋" album="新的心跳" totalTime="04:21" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 查克靠近.mp3"></PlayedSong>  
-  <PlayedSong name="多远都要在一起" singer="G.E.M.邓紫棋" album="新的心跳" totalTime="03:37" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 多远都要在一起.mp3"></PlayedSong>  
-  <PlayedSong name="光年之外" singer="G.E.M.邓紫棋" album="光年之外" totalTime="03:55" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 光年之外.mp3"></PlayedSong>  
-  <PlayedSong name="后会无期" singer="G.E.M.邓紫棋" album="后会无期" totalTime="03:43" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 后会无期.mp3"></PlayedSong>  
-  <PlayedSong name="爱笑的眼睛" singer="林俊杰" album="她说" totalTime="04:11" resource="/media/ubuntu/Music/林俊杰 - 爱笑的眼睛.mp3"></PlayedSong>  
-  <PlayedSong name="爱转角" singer="罗志祥" album="Best Show" totalTime="04:55" resource="/media/ubuntu/Music/罗志祥 - 爱转角.mp3"></PlayedSong>  
-  <PlayedSong name="As I Believe" singer="林俊杰" album="对的时间点" totalTime="04:15" resource="/media/ubuntu/Music/林俊杰 - As I Believe.mp3"></PlayedSong>  
-  <PlayedSong name="爱不会绝迹" singer="林俊杰" album="100天" totalTime="04:00" resource="/media/ubuntu/Music/林俊杰 - 爱不会绝迹.mp3"></PlayedSong>  
-  <PlayedSong name="被风吹过的夏天" singer="林俊杰/金莎" album="不可思议金选" totalTime="04:12" resource="/media/ubuntu/Music/林俊杰 - 被风吹过的夏天.mp3"></PlayedSong>  
-  <PlayedSong name="Beautiful In White (Demo)" singer="Westlife" album="Beautiful In White (Demo)" totalTime="03:52" resource="/media/ubuntu/Music/Westlife - Beautiful In White (Demo).mp3"></PlayedSong>  
-  <PlayedSong name="宏愿" singer="周柏豪" album="Imperfect Collection" totalTime="03:59" resource="/media/ubuntu/Music/周柏豪 - 宏愿.mp3"></PlayedSong>  
-  <PlayedSong name="安琪" singer="许嵩" album="半城烟沙" totalTime="03:39" resource="/media/ubuntu/Music/许嵩 - 安琪.mp3"></PlayedSong>  
-  <PlayedSong name="All About U" singer="G.E.M.邓紫棋" album="18" totalTime="04:01" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - All About U.mp3"></PlayedSong>  
-  <PlayedSong name="句号" singer="G.E.M.邓紫棋" album="句号" totalTime="03:55" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 句号.mp3"></PlayedSong>  
-  <PlayedSong name="Just The Way You Are" singer="G.E.M.邓紫棋" album="Get Everybody Moving Concert 2011" totalTime="04:01" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - Just The Way You Are.mp3"></PlayedSong>  
-  <PlayedSong name="来自天堂的魔鬼" singer="G.E.M.邓紫棋" album="新的心跳" totalTime="04:05" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 来自天堂的魔鬼.mp3"></PlayedSong>  
-  <PlayedSong name="Mascara 烟熏妆" singer="G.E.M.邓紫棋" album="18" totalTime="04:04" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - Mascara 烟熏妆.mp3"></PlayedSong>  
-  <PlayedSong name="你把我灌醉" singer="G.E.M.邓紫棋" album="你把我灌醉" totalTime="04:45" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 你把我灌醉.mp3"></PlayedSong>  
-  <PlayedSong name="你不是真正的快乐" singer="G.E.M.邓紫棋" album="女也" totalTime="05:20" resource="/media/ubuntu/Music/G.E.M.邓紫棋 - 你不是真正的快乐 - 2014我是歌手第二季半决赛现场.mp3"></PlayedSong>
+  <PlayedSong name="A Little Love" singer="冯曦妤" album="A Little Love" totalTime="03:11" resource="/media/ubuntu/Test/冯曦妤 - A Little Love.mp3"></PlayedSong>  
+  <PlayedSong name="这,就是爱" singer="张杰" album="这,就是爱" totalTime="04:54" resource="/media/ubuntu/Test/张杰 - 这,就是爱.mp3"></PlayedSong>  
+  <PlayedSong name="Walk On Water" singer="G.E.M.邓紫棋" album="摩天动物园" totalTime="03:31" resource="/media/ubuntu/Test/G.E.M.邓紫棋 - Walk On Water.mp3"></PlayedSong>  
+  <PlayedSong name="贰叁" singer="吴亦凡" album="贰叁" totalTime="05:20" resource="/media/ubuntu/Test/吴亦凡 - 贰叁.mp3"></PlayedSong>  
+  <PlayedSong name="逍遥叹" singer="胡歌" album="仙剑奇侠传 电视原声带" totalTime="05:13" resource="/media/ubuntu/Test/胡歌 - 逍遥叹.mp3"></PlayedSong>  
+  <PlayedSong name="于是" singer="G.E.M.邓紫棋" album="新的心跳" totalTime="03:49" resource="/media/ubuntu/Test/G.E.M.邓紫棋 - 于是.mp3"></PlayedSong>
 </RecentPlaySongs>

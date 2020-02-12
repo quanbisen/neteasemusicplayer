@@ -40,10 +40,6 @@ public class LoadUserTask extends Task<Boolean> {
         if (loginConfigFile.exists()){
             try {
                 applicationContext.getBean(Config.class).setUser(UserUtils.parseUser(loginConfigFile));  //设置文件读取到的用户信息
-                Platform.runLater(()->{
-                    leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(File.separator + "cache"+File.separator+applicationContext.getBean(Config.class).getUser().getCache(),38,38));
-                    leftController.getLabUserName().setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称
-                });
                 User user = userDao.queryUserByIdToken(applicationContext.getBean(Config.class).getUser());
                 if (user != null){ //不为null，证明有合法用户
                     applicationContext.getBean(Config.class).setUser(user); //存储合法用户对象

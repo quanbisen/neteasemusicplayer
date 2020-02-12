@@ -10,7 +10,7 @@
         <HBox fx:id="hBoxMusicGroup" alignment="CENTER_LEFT" spacing="12.0" styleClass="scalableHBox" onMouseClicked="#onClickedMusicGroupTab">
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@../../image/MusicGroupListIcon.png" />
+                    <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/MusicGroupListIcon.png" />
                 </image>
             </ImageView>
             <Label text="GroupName" />

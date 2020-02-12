@@ -43,6 +43,9 @@ public class RecentPlayContentController {
     @FXML
     private ProgressIndicator progressIndicator;
 
+    @FXML
+    private TabPane tabPane;
+
     /**“全部清空”的HBox容器*/
     @FXML
     private HBox hBoxClearAll;
@@ -79,10 +82,6 @@ public class RecentPlayContentController {
     @FXML
     private BorderPane borderPane;
 
-    /**显示当前列表的歌曲数量的label组件*/
-    @FXML
-    private Label labSongCount;
-
     /**注入Spring上下文类*/
     @Resource
     private ApplicationContext applicationContext;
@@ -93,11 +92,8 @@ public class RecentPlayContentController {
     @Resource
     private MyMediaPlayer myMediaPlayer;
 
-    @Resource
-    private BottomController bottomController;
-
-    public Label getLabSongCount() {
-        return labSongCount;
+    public TabPane getTabPane() {
+        return tabPane;
     }
 
     public TableView getTableViewRecentPlaySong() {
@@ -160,7 +156,7 @@ public class RecentPlayContentController {
      * */
     public void updateRecentPlayPane(){
         List<RecentSong> tableItems = tableViewRecentPlaySong.getItems();
-        labSongCount.setText(String.valueOf(tableItems.size()));    //更新歌曲数目显示
+        tabPane.getTabs().get(0).setText(String.valueOf(tableItems.size()));    //更新歌曲数目显示
         Image imageFavor = new Image("/image/FavorTabIcon.png");
         for (int i = 0; i < tableItems.size(); i++) {
             if (tableItems.get(i).getLabAddFavor() == null){

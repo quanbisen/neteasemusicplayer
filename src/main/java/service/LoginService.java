@@ -10,13 +10,13 @@ import javax.annotation.Resource;
 
 @Service
 @Scope("prototype")
-public class LoginService extends javafx.concurrent.Service<User> {
+public class LoginService extends javafx.concurrent.Service<Boolean> {
 
     @Resource
     private LoginTask loginTask;
 
     @Override
-    protected Task<User> createTask() {
+    protected Task<Boolean> createTask() {
         return loginTask;
     }
 }

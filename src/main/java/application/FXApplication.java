@@ -21,7 +21,7 @@ public class FXApplication extends Application {
     private ConfigurableApplicationContext applicationContext;
 
     @Override
-    public void init() {
+    public void init() throws InterruptedException {
         /**Spring配置文件路径*/
         String APPLICATION_CONTEXT_PATH = "/config/application-context.xml";
         applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_PATH);

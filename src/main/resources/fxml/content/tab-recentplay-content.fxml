@@ -16,7 +16,7 @@
 
 <BorderPane fx:id="recentPlayContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/RecentPlayContentStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.RecentPlayContentController">
     <top>
-        <BorderPane prefHeight="45.0" prefWidth="603.0" stylesheets="@../../css/TabPaneStyle.css" BorderPane.alignment="CENTER">
+        <BorderPane prefHeight="45.0" prefWidth="603.0" BorderPane.alignment="CENTER">
             <left>
                 <Label style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;" text="最近播放" textFill="#999999" BorderPane.alignment="CENTER">
                     <padding>
@@ -31,9 +31,9 @@
     </top>
 
     <center>
-        <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 0;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <TabPane fx:id="tabPane" stylesheets="@../../css/TabPaneStyle.css" prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 0;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
             <tabs>
-                <Tab>
+                <Tab text="0">
                     <content>
                         <BorderPane fx:id="borderPane">
                             <center>
@@ -91,22 +91,7 @@
                         </BorderPane>
                     </content>
                     <graphic>
-                        <HBox alignment="CENTER" prefHeight="35.0" prefWidth="55.0" spacing="3.0">
-                            <children>
-                                <HBox fx:id="hBoxSong" alignment="CENTER_LEFT" maxWidth="50.0" prefHeight="0.0" prefWidth="52.0" spacing="1.0">
-                                    <children>
-                                        <Label styleClass="labIndicator" text="歌曲">
-                                 <padding>
-                                    <Insets left="2.0" />
-                                 </padding></Label>
-                                        <Label fx:id="labSongCount" styleClass="count" text="000" />
-                                    </children>
-                                </HBox>
-                            </children>
-                            <padding>
-                                <Insets left="5.0" />
-                            </padding>
-                        </HBox>
+                        <Label prefHeight="20.0" prefWidth="28.0" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 14px;" text="歌曲" />
                     </graphic>
                 </Tab>
             </tabs>

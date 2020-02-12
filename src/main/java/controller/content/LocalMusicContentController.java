@@ -487,6 +487,8 @@ public class LocalMusicContentController {
                     LoadLocalSingerImageService loadLocalSingerImageService = applicationContext.getBean(LoadLocalSingerImageService.class);   //获取加载歌手图片的服务bean
                     progressIndicator.visibleProperty().bind(loadLocalSingerImageService.runningProperty());
                     loadLocalSingerImageService.start();
+                }else { //否则，刷新表格
+                    tableViewSinger.refresh();
                 }
             } else if (newValue == tabPane.getTabs().get(2)){   //切换到“专辑”tag标签对应的表格内容
                 if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0 &&
@@ -495,6 +497,8 @@ public class LocalMusicContentController {
                     LoadLocalAlbumImageService loadLocalAlbumImageService = applicationContext.getBean(LoadLocalAlbumImageService.class);   //获取加载专辑图片的服务bean
                     progressIndicator.visibleProperty().bind(loadLocalAlbumImageService.runningProperty());
                     loadLocalAlbumImageService.start();
+                }else { //否则，刷新表格
+                    tableViewAlbum.refresh();
                 }
             }
 

@@ -84,6 +84,10 @@ public class LoginController {
         return pfPassword;
     }
 
+    public Label getLabLoginInformation() {
+        return labLoginInformation;
+    }
+
     public void initialize(){
 
         btnLogin.setMouseTransparent(true); //初始化不可以点击
@@ -171,21 +175,15 @@ public class LoginController {
             loginProgressIndicator.visibleProperty().bind(loginService.runningProperty());
             loginService.start();
             loginService.valueProperty().addListener((observable, oldValue, newValue) -> {
-                User user = observable.getValue();
-                if (user.getId() != null){
-                    System.out.println("true");
-                    this.onClickedCloseIcon(mouseEvent);   //关闭当前登录窗口
-                    leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(observable.getValue().getImageURL(),38,38));  //设置用户头像图片
-                    leftController.getLabUserName().setText(observable.getValue().getName());  //设置用户名称
-                    WindowUtils.toastInfo(centerController.getStackPane(),new Label("登录成功"));
-
+                if (observable.getValue()){
                     File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile();
+                    User user = applicationContext.getBean(Config.class).getUser();
                     //存储登录成功的用户对象到本地文件
                     loginConfigFile.delete();
                     try {
                         loginConfigFile.createNewFile();  //创建新的文件
                         user.setCache(String.valueOf(System.currentTimeMillis()));
-                        UserUtils.saveUser(observable.getValue(),loginConfigFile);  //调用存储的函数，写入到文件
+                        UserUtils.saveUser(user,loginConfigFile);  //调用存储的函数，写入到文件
 
                         String USER_IMAGE_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "cache";
                         File path = new File(USER_IMAGE_PATH);
@@ -194,14 +192,13 @@ public class LoginController {
                         }
 
                         File imageFile = new File(USER_IMAGE_PATH + File.separator + user.getCache()); //用用户的用户名作为图片命名
-                        ImageUtils.download(observable.getValue().getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
+                        user.setCache(null);
+                        ImageUtils.download(user.getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }else {
                     System.out.println("false");
-                    pfPassword.setText("");
-                    labLoginInformation.setText("登录账号或密码错误");
                 }
             });
 

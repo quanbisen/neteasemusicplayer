@@ -278,7 +278,7 @@ public final class SongUtils {
     public static LocalSinger toLocalSinger(ObservableList<LocalSong> observableLocalSongList,LocalSong localSong,Image image){
         Label labSingerInformation = new Label(localSong.getSinger(),ImageUtils.createImageView(image,48,48));
         labSingerInformation.setGraphicTextGap(15);
-        return new LocalSinger(labSingerInformation,String.valueOf(getSongCountBySinger(observableLocalSongList,localSong.getSinger())));
+        return new LocalSinger(labSingerInformation, getSongCountBySinger(observableLocalSongList, localSong.getSinger()) +"首");
     }
 
     /**把LocalSong模型转变成LocalAlbum模型
@@ -494,6 +494,30 @@ public final class SongUtils {
                     recentSongs.get(i).getAlbum().equals(playListSong.getAlbum())){
                 index = i;
                 break;
+            }
+        }
+        return index;
+    }
+
+    /**获取字符string在集合元素中的位置索引
+     * @param observableList 表格集合
+     * @param string 匹配的字符串
+     * @return int*/
+    public static int getIndex(ObservableList observableList,String string){
+        int index = -1;
+        if (observableList.get(0) instanceof LocalSinger){
+            for (int i = 0; i < observableList.size(); i++) {
+                if (((LocalSinger)observableList.get(i)).getLabSinger().getText().equals(string)){
+                    index = i;
+                    break;
+                }
+            }
+        } else if (observableList.get(0) instanceof LocalAlbum) {
+            for (int i = 0; i < observableList.size(); i++) {
+                if (((LocalAlbum)observableList.get(i)).getLabAlbum().getText().equals(string)){
+                    index = i;
+                    break;
+                }
             }
         }
         return index;

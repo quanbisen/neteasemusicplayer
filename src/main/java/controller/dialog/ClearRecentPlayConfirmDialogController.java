@@ -52,6 +52,7 @@ public class ClearRecentPlayConfirmDialogController {
         ObservableList<RecentSong> recentSongs = recentPlayContentController.getTableViewRecentPlaySong().getItems();
         if (recentSongs != null && recentSongs.size() > 0){
             recentSongs.clear();    //清除最近播放表格的内容
+            recentPlayContentController.getTabPane().getTabs().get(0).setText(String.valueOf(recentSongs.size()));    //更新歌曲数目显示
         }
         this.onClickedCancel(actionEvent);  //最后，调用“取消”按钮事件，关闭对话框
     }

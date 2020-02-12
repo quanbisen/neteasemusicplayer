@@ -33,7 +33,7 @@
                         <HBox fx:id="hBoxSearchTab" alignment="CENTER_LEFT" onMouseClicked="#onClickedSearchTab" spacing="12.0" styleClass="scalableHBox">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../../image/SearchTabIcon.png" />
+                                 <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/SearchTabIcon.png" />
                               </image>
                            </ImageView>
                            <Label text="搜索" />
@@ -45,7 +45,7 @@
                         <HBox fx:id="hBoxExploreMusicTab" alignment="CENTER_LEFT" onMouseClicked="#onClickedExplorerMusicTab" spacing="12.0" styleClass="scalableHBox">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../../image/ExploreMusicTabIcon.png" />
+                                 <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/ExploreMusicTabIcon.png" />
                               </image>
                            </ImageView>
                            <Label text="发现音乐" />
@@ -65,7 +65,7 @@
                         <HBox fx:id="hBoxLocalMusicTab" alignment="CENTER_LEFT" onMouseClicked="#onClickedLocalMusicTab" spacing="12.0" styleClass="scalableHBox">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../../image/LocalMusicIcon.png" />
+                                 <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/LocalMusicIcon.png" />
                               </image>
                            </ImageView>
                            <Label text="本地音乐" />
@@ -77,7 +77,7 @@
                         <HBox fx:id="hBoxRecentPlayTab" alignment="CENTER_LEFT" onMouseClicked="#onClickedRecentPlayTab" spacing="12.0" styleClass="scalableHBox">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../../image/RecentPlayTabIcon.png" />
+                                 <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/RecentPlayTabIcon.png" />
                               </image>
                            </ImageView>
                            <Label text="最近播放" />
@@ -89,7 +89,7 @@
                         <Label style="-fx-text-fill: #999999; -fx-font-size: 12px;" text="创建的歌单" />
                         <ImageView fx:id="addMusicGroup" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onClickedCreateMusicGroup" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../image/CreateMusicGroupTabIcon.png" />
+                              <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/CreateMusicGroupTabIcon.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -99,14 +99,15 @@
                         <HBox fx:id="hBoxMyFavorMusicTab" alignment="CENTER_LEFT" onMouseClicked="#onClickedMyFavorMusicTab" spacing="12.0" styleClass="scalableHBox">
                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                 <Image url="@../../image/FavorTabIcon.png" />
+                                 <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/FavorTabIcon.png" />
                               </image>
                            </ImageView>
                            <Label text="我喜欢的音乐" />
                         </HBox>
                      </children>
                   </HBox>
-               </children></VBox>
+               </children>
+          </VBox>
         </content>
       </ScrollPane>
    </center>

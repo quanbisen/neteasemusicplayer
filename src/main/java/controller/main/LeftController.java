@@ -129,6 +129,10 @@ public class LeftController {
 
         this.setSelectedTab(hBoxExploreMusicTab);   //初始化“发现音乐”为选择的标签
 
+        if (applicationContext.getBean(Config.class).getUser() != null){
+            labUserImage.setGraphic(ImageUtils.createImageView(File.separator + "cache"+File.separator+applicationContext.getBean(Config.class).getUser().getCache(),38,38));
+            labUserName.setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称*/
+        }
     }
 
     /**单击“搜索”标签事件处理*/
@@ -205,10 +209,10 @@ public class LeftController {
     public void setSelectedTab(HBox selectedTab){
         //首先重置所有的标签的背景颜色，我这里的HBox标签背景颜色是由另外一个HBox包裹做背景颜色显示的，所以需要getParent，设置parent的样式
         for (HBox hBoxTab:tabList){
-            ((HBox)hBoxTab.getParent()).getStyleClass().remove("selectedHBox");  //移除parent的css类名
+            hBoxTab.getParent().getStyleClass().remove("selectedHBox");  //移除parent的css类名
         }
         //然后给当前选中的标签的parent容器添加css类名
-        ((HBox)selectedTab.getParent()).getStyleClass().add("selectedHBox");
+        selectedTab.getParent().getStyleClass().add("selectedHBox");
     }
 
     /**单击添加歌单图标事件处理*/
