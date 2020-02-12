@@ -33,7 +33,7 @@
                <children>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../image/ChoseDirectoryIcon.png" />
+                        <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/ChoseDirectoryIcon.png" />
                      </image>
                   </ImageView>
                   <Label style="-fx-text-fill: #1a5a99; -fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;" text="选择目录" />

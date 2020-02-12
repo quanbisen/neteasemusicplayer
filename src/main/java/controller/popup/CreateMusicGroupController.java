@@ -1,6 +1,7 @@
 package controller.popup;
 
 import application.SpringFXMLLoader;
+import controller.component.MusicGroupTabController;
 import controller.main.LeftController;
 import controller.main.MainController;
 import javafx.beans.value.ChangeListener;
@@ -98,15 +99,12 @@ public class CreateMusicGroupController {
     /**创建音乐歌单的函数*/
     private void createMusicGroup(String groupName) throws IOException {
         System.out.println("create");
-
-
         //UI更新部分
         FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/musicgroup-tab.fxml");
-        HBox hBoxTabOut = fxmlLoader.load();
-        HBox hBoxTab = ((HBox)hBoxTabOut.getChildren().get(0));
-        ((Label)(hBoxTab.getChildren().get(1))).setText(groupName);  //拆箱设置里面的Label显示内容为输入的歌单名称
-        leftController.getVBoxTabContainer().getChildren().add(hBoxTabOut);
-        leftController.getTabList().add(hBoxTab);
+        leftController.getVBoxTabContainer().getChildren().add(fxmlLoader.load());
+        MusicGroupTabController musicGroupTabController = fxmlLoader.getController();
+        musicGroupTabController.getLabGroupName().setText(groupName);   //设置Label显示内容为输入的歌单名称
+        leftController.getTabList().add(musicGroupTabController.getHBoxMusicGroup());
 
         ((Stage)tfInput.getScene().getWindow()).close();
         WindowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度

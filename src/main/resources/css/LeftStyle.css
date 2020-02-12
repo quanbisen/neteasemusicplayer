@@ -5,28 +5,24 @@
 BorderPane
 {
     -fx-background-color: #F3F3F5;
-    -fx-border-width: 0 1px 0 0;
+    -fx-border-width: 0 1 0 0;
     -fx-border-color: #DDDDE1;
 }
 HBox
 {
     -fx-pref-width: 190px;
     -fx-pref-height: 40px;
-    -fx-padding: 0 0 0 12px;
+    -fx-padding: 0 0 0 1em;
 }
 /*hBoxTab为包裹标签的容器，包含图标<ImageView>+文字说明<Label>组件*/
 .hBoxTab
 {
     -fx-pref-width: 190px;
     -fx-pref-height: 40px;
-    -fx-padding: 0 0 0 0px;
+    -fx-padding: 0 0 0 1em;
 }
 /*hBoxTab停靠变色*/
 .hBoxTab:hover
-{
-    -fx-background-color: #E8E8EB;
-}
-.hBoxTab:pressed
 {
     -fx-background-color: #E8E8EB;
 }
@@ -36,11 +32,13 @@ HBox
     -fx-font-size: 14px;
 }
 /*HBoxTab里面的HBox容器，按住它可以产生缩小动画效果*/
-.scalableHBox:pressed
+.hBoxTab:pressed
 {
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.98;
-    -fx-scale-z: 0.98;
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
+    -fx-background-color: #E8E8EB;
+    -fx-background-insets: 0 -1 0 -1;
+    -fx-border-insets: 0 0 0 -1;
 }
 /*包裹用户信息的HBox容器*/
 .hBoxUserInfo
@@ -52,16 +50,17 @@ HBox
 }
 .hBoxUserInfo:pressed
 {
-    -fx-scale-x: 0.98;
-    -fx-scale-y: 0.98;
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
 }
 /*选中的HBox样式，通过在TabsContainer中添加和移除类名来控制应用此样式*/
 .selectedHBox
 {
     /*selected style*/
     -fx-background-color: #DDDDE1;
-    -fx-border-width: 0 0 0 2px;
+    -fx-border-width: 0 0 0 2;
     -fx-border-color: #BC2F2D;
+    -fx-padding: 0 0 0 0.83em;
 }
 .scroll-pane {
     -fx-padding: 0px;

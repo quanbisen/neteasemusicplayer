@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.component.MusicGroupIndicatorController"
+      alignment="CENTER_LEFT" spacing="85.0">
+    <children>
+        <Label style="-fx-text-fill: #999999; -fx-font-size: 12px;" text="创建的歌单"/>
+        <ImageView fx:id="ivAddMusicGroupIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#onClickedCreateMusicGroup">
+            <image>
+                <Image requestedHeight="20.0" requestedWidth="20.0" url="@../../image/CreateMusicGroupTabIcon.png"/>
+            </image>
+        </ImageView>
+    </children>
+</HBox>

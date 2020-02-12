@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="236.0" prefWidth="372.0"
+<BorderPane prefHeight="236.0" prefWidth="372.0" maxHeight="236.0" maxWidth="372.0"
             fx:id="actualPane"
             stylesheets="@../../css/CreateMusicGroupStyle.css"
             fx:controller="controller.popup.CreateMusicGroupController"
