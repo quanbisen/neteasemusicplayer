@@ -35,7 +35,7 @@ import java.io.IOException;
  * @date 19-12-6
  */
 @Controller
-public class RightSlideLoginedController {
+public class RightSlideLoginController {
     /**根容器BorderPane，见right-slide.fxml文件*/
     @FXML
     private BorderPane borderPaneRoot;
@@ -86,13 +86,13 @@ public class RightSlideLoginedController {
         borderPaneRoot.prefHeightProperty().bind(centerController.getBorderPane().heightProperty());
         borderPaneRoot.prefWidthProperty().bind(centerController.getBorderPane().widthProperty());
 
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.2),borderPaneRoot);
         borderPaneRoot.setTranslateX(310);
         translateTransition.setToX(0);
         translateTransition.play();
         translateTransition.setOnFinished(event -> {
-            ((Pane)borderPaneRoot.getCenter()).setOnMouseClicked(event1 -> {
-                TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.5),borderPaneRoot);
+            borderPaneRoot.getCenter().setOnMouseClicked(event1 -> {
+                TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.2),borderPaneRoot);
                 borderPaneRoot.setTranslateX(0);
                 translateTransitionOut.setToX(310);
                 translateTransitionOut.play();

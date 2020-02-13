@@ -15,7 +15,7 @@
     </center>
    <right>
           <ImageView fx:id="ivDelete" onMouseClicked="#onClickedClear" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-              <Image url="@../../image/SearchDelete.png" />
+              <Image requestedHeight="20.0" requestedWidth="20.0" url="@../../image/SearchDelete_20.png" />
           </ImageView>
    </right>
 </BorderPane>

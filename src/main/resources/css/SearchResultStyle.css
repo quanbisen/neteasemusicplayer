@@ -108,6 +108,23 @@ BorderPane
 .table-view .table-row-cell:selected{
     -fx-background-color: #DEDEE0;
 }
+/*表格行按压的缩放样式*/
+.table-view .table-row-cell:pressed
+{
+    -fx-scale-x: 0.995;
+    -fx-scale-y: 0.995;
+    -fx-background-insets: 0 -3em 0 -3em;
+}
+/*空行的样式，参见：http://fxexperience.com/2011/11/alternate-row-highlighting-in-empty-tableview-and-listview-rows/*/
+.table-view .table-row-cell:empty
+{
+    -fx-background-color: #FAFAFC;
+}
+/*去除空行的边框*/
+.table-view .table-row-cell:empty .table-cell
+{
+    -fx-border-width: 0px;
+}
 
 .scroll-bar:vertical
 {

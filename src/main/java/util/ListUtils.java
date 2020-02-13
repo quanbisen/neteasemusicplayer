@@ -6,7 +6,7 @@ import java.util.List;
  * @author super lollipop
  * @date 19-12-7
  */
-public final class CheckListUtils {
+public final class ListUtils {
 
     /**判断两个字符串集合是否不同
      * @param list1 字符串集合1
@@ -20,7 +20,7 @@ public final class CheckListUtils {
         }else if (list1 == null && list2 != null){
             return false;
         }
-        if (list1.size()!=list2.size()){
+        if (list1.size() != list2.size()){
             return false;
         }
         for (String str1 : list1){

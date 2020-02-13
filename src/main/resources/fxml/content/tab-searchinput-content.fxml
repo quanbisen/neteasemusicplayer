@@ -23,7 +23,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../image/SearchDelete.png" />
+                              <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/SearchDelete_20.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -32,7 +32,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../image/SearchTabIcon.png" />
+                              <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/SearchTabIcon_20.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -58,7 +58,7 @@
                <right>
                   <ImageView fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onClickedTrashBin" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                      <image>
-                        <Image url="@../../image/TrashBinIcon.png" />
+                        <Image requestedHeight="20.0" requestedWidth="20.0" url="@../../image/TrashBin_20.png" />
                      </image>
                   </ImageView>
                </right>

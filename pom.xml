@@ -244,6 +244,29 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--Apache Email-->
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-email -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.5</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.karaf.http/org.apache.karaf.http.core -->
+        <dependency>
+            <groupId>org.apache.karaf.http</groupId>
+            <artifactId>org.apache.karaf.http.core</artifactId>
+            <version>4.2.8</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.5.11</version>
+        </dependency>
+
 
         <!--jaudiotagger这个jar包,可以解析mp3文件歌曲名.歌手等信息-->
         <dependency>

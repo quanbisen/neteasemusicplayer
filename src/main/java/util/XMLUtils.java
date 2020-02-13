@@ -10,9 +10,6 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultAttribute;
-import org.junit.Test;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -234,5 +231,14 @@ public final class XMLUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static Map<String,String> getEmailConfig(File configFile) throws DocumentException {
+        Element root = getRootElement(configFile);
+        Map<String,String> map = new HashMap<>();
+        root.elements().forEach(element->{
+            map.put(((Element)element).getName(),((Element)element).getText());
+        });
+        return map;
     }
 }

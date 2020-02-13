@@ -3,21 +3,17 @@ package controller.dialog;
 import controller.main.CenterController;
 import controller.main.LeftController;
 import controller.main.MainController;
-import controller.authentication.RightSlideLoginedController;
+import controller.authentication.RightSlideLoginController;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
-import pojo.User;
 import org.springframework.stereotype.Controller;
 import util.ImageUtils;
-import util.UserUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
 import java.io.File;
@@ -40,7 +36,7 @@ public class LogoutConfirmDialogController {
      * 注入上一个页面的控制器
      */
     @Resource
-    private RightSlideLoginedController rightSlideLoginedController;
+    private RightSlideLoginController rightSlideLoginController;
 
     /**
      * 注入窗体根容器（BorderPane）的中间容器的控制器
@@ -71,8 +67,8 @@ public class LogoutConfirmDialogController {
         if (applicationContext.getBean(Config.class).getUser() != null) {   //判断用户为登录状态
             onClickedCancel(actionEvent);
             //播放移除动画
-            TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.5), rightSlideLoginedController.getBorderPaneRoot());
-            rightSlideLoginedController.getBorderPaneRoot().setTranslateX(0);
+            TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.5), rightSlideLoginController.getBorderPaneRoot());
+            rightSlideLoginController.getBorderPaneRoot().setTranslateX(0);
             translateTransitionOut.setToX(310);
             translateTransitionOut.play();
             translateTransitionOut.setOnFinished(event2 -> {

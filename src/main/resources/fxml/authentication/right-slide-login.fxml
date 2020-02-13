@@ -12,7 +12,7 @@
 
 <BorderPane fx:id="borderPaneRoot" prefHeight="475.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             stylesheets="@../../css/RightSlideLoginedStyle.css"
-            fx:controller="controller.authentication.RightSlideLoginedController">
+            fx:controller="controller.authentication.RightSlideLoginController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
@@ -54,7 +54,7 @@
                      <children>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../image/AboutIcon.png" />
+                              <Image requestedHeight="15.0" requestedWidth="15.0" url="@../../image/AboutIcon_15.png" />
                            </image>
                         </ImageView>
                         <Label text="关于音乐" />
@@ -63,7 +63,7 @@
                               <Insets left="160.0" />
                            </HBox.margin>
                            <image>
-                              <Image url="@../../image/PointToRight.png" />
+                              <Image requestedHeight="12.0" requestedWidth="12.0" url="@../../image/PointToRight_12.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -79,7 +79,7 @@
                <children>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../image/LogoutIcon.png" />
+                        <Image requestedHeight="15" requestedWidth="15" url="@../../image/LogoutIcon_15.png" />
                      </image>
                   </ImageView>
                   <Label text="退出登录" />

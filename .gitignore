@@ -10,6 +10,8 @@ neteasemusicplayer.iml
 # Log file
 *.log
 
+
+
 #MacOS file
 *.DS_Store
 

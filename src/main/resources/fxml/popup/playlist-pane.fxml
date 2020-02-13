@@ -29,7 +29,7 @@
                                 <children>
                                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                         <image>
-                                            <Image url="@../../image/FavorIcon.png" />
+                                            <Image requestedWidth="16.0" requestedHeight="16.0" url="@../../image/FavorIcon_16.png" />
                                         </image>
                                     </ImageView>
                                     <Label prefHeight="17.0" prefWidth="52.0" text="收藏全部" />
@@ -40,7 +40,7 @@
                                 <children>
                                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                         <image>
-                                            <Image url="@../../image/TrashBin.png" />
+                                            <Image requestedHeight="16.0" requestedWidth="16.0" url="@../../image/TrashBin_16.png" />
                                         </image>
                                     </ImageView>
                                     <Label text="清空" />

@@ -66,7 +66,7 @@
                                                     <children>
                                                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
-                                                                <Image url="@../../image/NeteasePlayAll.png" />
+                                                                <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/NeteasePlayAll_20.png" />
                                                             </image>
                                                         </ImageView>
                                                         <Button fx:id="btnPlayAll" mnemonicParsing="false" prefHeight="28.0" prefWidth="70.0" text="播放全部" onMouseClicked="#onClickedPlayAll"/>
@@ -77,7 +77,7 @@
                                                     <children>
                                                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
-                                                                <Image url="@../../image/TrashBinIcon.png" />
+                                                                <Image requestedHeight="20.0" requestedWidth="20.0" url="@../../image/TrashBin_20.png" />
                                                             </image>
                                                         </ImageView>
                                                         <Button fx:id="btnClearAll" mnemonicParsing="false" prefHeight="28.0" prefWidth="70.0" text="全部清空" onMouseClicked="#onClickedClearAll"/>

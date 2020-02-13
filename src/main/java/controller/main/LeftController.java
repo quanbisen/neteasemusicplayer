@@ -210,7 +210,7 @@ public class LeftController {
                     stackPane.getChildren().add(borderPaneRoot);  //添加进stackPane
                 }
                 else {  //如果登录对象存在，则已经登录过了。
-                    FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/right-slide-logined.fxml");
+                    FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/right-slide-login.fxml");
                     BorderPane borderPaneRoot = fxmlLoader.load();
 
                     StackPane stackPane = centerController.getStackPane();

@@ -19,7 +19,7 @@ import org.dom4j.DocumentException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.LoadLocalSongService;
-import util.CheckListUtils;
+import util.ListUtils;
 import util.WindowUtils;
 import util.XMLUtils;
 import javax.annotation.Resource;
@@ -133,7 +133,7 @@ public class ChoseFolderController {
         labCloseIcon.getScene().getWindow().hide();      //关闭窗口
         WindowUtils.releaseBorderPane(mainController.getBorderPane());
 
-        if (!CheckListUtils.checkWeatherSame(selectedPaths,folderPathList)){   //如果不一样，证明更改了目录，重新加载目录下的歌曲文件
+        if (!ListUtils.checkWeatherSame(selectedPaths,folderPathList)){   //如果不一样，证明更改了目录，重新加载目录下的歌曲文件
             System.out.println("need to load song");
             LoadLocalSongService loadLocalSongService = applicationContext.getBean(LoadLocalSongService.class);
             localMusicContentController.getProgressIndicator().visibleProperty().bind(loadLocalSongService.runningProperty());

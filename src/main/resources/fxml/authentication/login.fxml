@@ -25,9 +25,9 @@
                <children>
                   <Label fx:id="labBackIcon" onMouseClicked="#onClickedBackIcon">
                      <graphic>
-                        <ImageView fitHeight="13.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../image/BackIcon.png" />
+                              <Image requestedWidth="12.0" requestedHeight="12.0" url="@../../image/BackIcon_12.png" />
                            </image>
                         </ImageView>
                      </graphic>

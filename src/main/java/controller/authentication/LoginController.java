@@ -14,10 +14,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import pojo.User;
 import service.LoginService;
-import util.ImageUtils;
-import util.MD5Utils;
-import util.UserUtils;
-import util.WindowUtils;
+import util.*;
+
 import javax.annotation.Resource;
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
@@ -193,7 +191,7 @@ public class LoginController {
 
                         File imageFile = new File(USER_IMAGE_PATH + File.separator + user.getCache()); //用用户的用户名作为图片命名
                         user.setCache(null);
-                        ImageUtils.download(user.getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
+                        HttpClientUtils.download(user.getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

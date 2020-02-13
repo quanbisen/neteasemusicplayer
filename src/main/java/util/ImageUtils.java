@@ -2,6 +2,24 @@ package util;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.HttpEntityWrapper;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -9,10 +27,13 @@ import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.id3.AbstractID3v2Frame;
 import org.jaudiotagger.tag.id3.framebody.FrameBodyAPIC;
+import org.junit.Test;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import static sun.net.www.protocol.http.HttpURLConnection.userAgent;
 
 /**
  * @author super lollipop
@@ -23,7 +44,7 @@ public final class ImageUtils {
     /**下载网络图片的函数
      * @param resource 图片的URL字符串
      * @param file 文件的存储位置*/
-    public static void download(String resource,File file) throws IOException {
+    /*public static void download(String resource,File file) throws IOException {
         if (file.exists()){
             file.delete();
         }
@@ -35,21 +56,57 @@ public final class ImageUtils {
 
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         fileOutputStream.write(bytes);
+        fileOutputStream.flush();
         fileOutputStream.close();
+        connection.disconnect();
+    }
+    */
+
+
+    @Test
+    public void testUtils() throws IOException {
+/*
+        HttpClientUtils.getInstance().download(
+                "https://firmware.meizu.com/Firmware/Flyme/m1928/8.0.0.0/cn/20200107162943/90e4cc65/update.zip", "update.zip",
+                progress -> System.out.println("download progress = " + progress));
+*/
+
+        HttpClientUtils.download("https://firmware.meizu.com/Firmware/Flyme/m1928/8.0.0.0/cn/20200107162943/90e4cc65/update.zip",new File("update.zip"));
     }
 
-    /**读取输入流的函数
-     * @return byte[] */
-    private static byte[] readInputStream (InputStream inputStream) throws IOException{
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];   //创建一个Buffer字符串
-        int len = 0;   //每次读取的字符串长度，如果为-1，代表全部读取完毕
-        while( (len=inputStream.read(buffer)) != -1 ){   //使用一个输入流从buffer里把数据读取出来
-            outStream.write(buffer, 0, len);   //用输出流往buffer里写入数据，中间参数代表从哪个位置开始读，len代表读取的长度
+    @org.junit.Test
+    public void testUpload() throws IOException {
+        /*HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/OnlineExam_war_exploded/Student/HandleUploadImage");
+        MultipartEntity entity = new MultipartEntity();
+        // entity.addPart(file.getName(), new FileBody(file));
+        try {
+            entity.addPart("attachfile0", new FileBody(new File("neteasemusicplayer.sql")));
+            entity.addPart("counter", new StringBody("1"));
+            entity.addPart("MAX_FILE_SIZE", new StringBody("5242880"));
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
         }
-        inputStream.close();   //关闭输入流
-        return outStream.toByteArray();   //把outStream里的数据写入内存
+        httpPost.setEntity(entity);
+        httpPost.setHeader("User-Agent", userAgent);
+        try {
+            HttpResponse response = httpClient.execute(httpPost);
+            HttpEntity httpEntity = response.getEntity();
+            BufferedReader br = new BufferedReader(new InputStreamReader(httpEntity
+                    .getContent(), "UTF-8"));
+            StringBuffer backData = new StringBuffer();
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                backData.append(line);
+            }
+            System.out.println(backData.toString()   );
+        } catch (IOException e) {
+            return;
+        }
+        return;*/
     }
+
+
 
     /**根据歌曲资源的路径获取资源的专辑图片
      * @param resource 资源的路径
