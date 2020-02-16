@@ -88,6 +88,7 @@ public class LogoutConfirmDialogController {
             leftController.getLabUserName().setText("未登录");
 
             //删除GUI创建的歌单列表......
+            leftController.getVBoxTabContainer().getChildren().remove(5,leftController.getVBoxTabContainer().getChildren().size());
         }
 
     }

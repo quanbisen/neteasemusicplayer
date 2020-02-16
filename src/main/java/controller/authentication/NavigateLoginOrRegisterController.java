@@ -5,7 +5,6 @@ import controller.main.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -77,7 +76,7 @@ public class NavigateLoginOrRegisterController {
     public void onClickedRegisterButton(ActionEvent actionEvent) throws IOException {
 
         Scene registerScene = btnRegister.getScene();
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register.fxml");
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-input.fxml");
         registerScene.setRoot(fxmlLoader.load());
     }
 }

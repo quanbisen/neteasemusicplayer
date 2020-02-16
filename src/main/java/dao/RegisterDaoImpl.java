@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import pojo.Register;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author super lollipop
@@ -36,7 +37,25 @@ public class RegisterDaoImpl implements RegisterDao {
     @Override
     public int queryById(String id) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        return sqlSession.selectOne("model.RegisterMapper.queryById",id);
+        int count = sqlSession.selectOne("model.RegisterMapper.queryById",id);
+        sqlSession.close();
+        return count;
+    }
+
+    @Override
+    public Date queryDate() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        Date date = sqlSession.selectOne("model.RegisterMapper.queryDate");
+        sqlSession.close();
+        return date;
+    }
+
+    @Override
+    public int updateDateAndCode(Register register) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        int row = sqlSession.update("model.RegisterMapper.updateDateAndCode",register);
+        sqlSession.close();
+        return row;
     }
 
 }

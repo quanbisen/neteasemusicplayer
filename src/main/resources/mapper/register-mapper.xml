@@ -12,6 +12,12 @@
     <select id="queryById" parameterType="String" resultType="int">
         select count(*) from registers where id = #{value}
     </select>
+    <select id="queryDate" resultType="Date">
+        select now()
+    </select>
+    <update id="updateDateAndCode" parameterType="Register">
+        update registers set createtime=now(),code=#{code} where id=#{id} and password=#{password}
+    </update>
     <resultMap id="registerResultMap" type="Register">
         <id property="id" column="id"></id>
         <result property="password" column="password"></result>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="266.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authentication.RegisterSuccessController">
+   <children>
+      <Label layoutX="13.0" layoutY="39.0" prefHeight="43.0" prefWidth="315.0" style="-fx-alignment: center; -fx-text-fill: #529e4e;" text="注册成功">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <Button fx:id="btnJumpToLogin" layoutX="31.0" layoutY="185.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="280.0" style="-fx-text-fill: WHITE; -fx-background-color: #BC2F2D; -fx-font-size: 16px; -fx-background-insets: 0; -fx-font-family: Microsoft YaHei,SimSun;" text="转到登录界面" onMouseClicked="#onClickedJumpToLogin"/>
+   </children>
+</AnchorPane>

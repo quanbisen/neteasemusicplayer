@@ -8,7 +8,6 @@
     <context:component-scan base-package="controller"></context:component-scan>
     <context:component-scan base-package="dao"></context:component-scan>
     <context:component-scan base-package="application"></context:component-scan>
-    <context:component-scan base-package="task"></context:component-scan>
     <context:component-scan base-package="service"></context:component-scan>
     <context:component-scan base-package="mediaplayer"></context:component-scan>
 

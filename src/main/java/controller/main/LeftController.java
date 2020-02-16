@@ -68,20 +68,8 @@ public class LeftController {
     @Resource
     private ApplicationContext applicationContext;
 
-//    /**"搜索"标签的内容容器*/
-//    private Parent searchParent;
-//
-//    /**"发现音乐"标签的内容容器*/
-//    private Parent exploreMusicParent;
-
     /**"本地音乐"标签的内容容器*/
     private Parent localMusicParent;
-
-//    /**"最近播放"标签的内容容器*/
-//    private Parent recentPlayParent;
-//
-//    /**"我喜欢的音乐"标签的内容容器*/
-//    private Parent myFavorMusicParent;
 
     public VBox getVBoxTabContainer() {
         return vBoxTabContainer;
@@ -104,6 +92,18 @@ public class LeftController {
     }
 
     public void initialize() throws IOException {
+
+//        LoadUserService loadUserService = applicationContext.getBean(LoadUserService.class);  //启动加载用户的服务
+//        loadUserService.setPeriod(Duration.seconds(2));
+//        loadUserService.setMaximumFailureCount(10);
+//        loadUserService.setOnSucceeded(event -> System.out.println("success"));
+//        loadUserService.setOnFailed(event -> System.out.println("fail"));
+//        loadUserService.setOnCancelled(event -> System.out.println("cancel"));
+//        loadUserService.setOnReady(event -> System.out.println("ready"));
+//        loadUserService.setOnRunning(event -> System.out.println("running"));
+////        loadUserService.setDelay(Duration.seconds(2));
+//        loadUserService.start();
+
 
         tabList = new LinkedList<>();
         tabList.add(hBoxSearchTab);

@@ -7,7 +7,14 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import service.CountDownScheduledService;
+import service.HandleRegisterService;
+import service.ResendRegisterCodeService;
+
+import javax.annotation.Resource;
 
 /**
  * @author super lollipop
@@ -17,57 +24,90 @@ import org.springframework.stereotype.Controller;
 public class RegisterVerifyController {
 
     @FXML
-    private Button btnConfirm;
-
-    @FXML
     private TextField tfCode;
 
     @FXML
-    private Label labTime;
+    private Label labTimeOrResend;
 
     @FXML
-    private ProgressIndicator progressIndicator;
+    private ProgressIndicator verifyProgressIndicator;
 
-    public Button getBtnConfirm() {
-        return btnConfirm;
-    }
+    @FXML
+    private Label labVerifyMessage;
 
-    public void setBtnConfirm(Button btnConfirm) {
-        this.btnConfirm = btnConfirm;
-    }
+    @FXML
+    private Button btnConfirm;
+
+    @Resource
+    private ApplicationContext applicationContext;
+
+    /**定时服务*/
+    private CountDownScheduledService timeSchedule;
 
     public TextField getTfCode() {
         return tfCode;
     }
 
-    public void setTfCode(TextField tfCode) {
-        this.tfCode = tfCode;
+    public Label getLabVerifyMessage() {
+        return labVerifyMessage;
     }
 
-    public Label getLabTime() {
-        return labTime;
+    public CountDownScheduledService getTimeSchedule() {
+        return timeSchedule;
     }
 
-    public void setLabTime(Label labTime) {
-        this.labTime = labTime;
+    public Label getLabTimeOrResend() {
+        return labTimeOrResend;
     }
 
-    public ProgressIndicator getProgressIndicator() {
-        return progressIndicator;
-    }
-
-    public void setProgressIndicator(ProgressIndicator progressIndicator) {
-        this.progressIndicator = progressIndicator;
+    public void setLabTimeOrResend(Label labTimeOrResend) {
+        this.labTimeOrResend = labTimeOrResend;
     }
 
     public void initialize(){
-        progressIndicator.setVisible(false);    //初始化不可见
+        verifyProgressIndicator.setVisible(false);    //初始化不可见
+
+        /**启动倒计时定时服务*/
+        timeSchedule = applicationContext.getBean(CountDownScheduledService.class);
+        timeSchedule.setPeriod(Duration.seconds(1));
+        timeSchedule.start();
+
+
+        /*handleRegisterService.setOnSucceeded(event -> {
+            Register register = handleRegisterService.getValue();
+            applicationContext.getBean(Config.class).setRegister(register); //更新register对象
+            System.out.println(register.getCreateTime());
+            System.out.println((register.getCreateTime().getTime() / 1000) - (new Date().getTime() / 1000) + 60);
+
+        });*/
     }
 
     /**“确定”按钮的事件处理*/
     public void onClickedConfirm(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY && !tfCode.getText().equals("")){
+            HandleRegisterService handleRegisterService = applicationContext.getBean(HandleRegisterService.class);
+            verifyProgressIndicator.visibleProperty().bind(handleRegisterService.runningProperty());
+            handleRegisterService.start();
+        }
+    }
 
+    @FXML
+    public void onClickedLabelTimeOrResend(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && labTimeOrResend.getText().equals("重发")){
+            //切换样式选择器名更换显示样式
+            labTimeOrResend.getStyleClass().remove("labResend");
+            labTimeOrResend.getStyleClass().add("labTime");
+            //清空原先输入的code
+            tfCode.setText("");
+            //获取重发验证码的服务，并启动服务
+            ResendRegisterCodeService resendRegisterCodeService = applicationContext.getBean(ResendRegisterCodeService.class);
+            verifyProgressIndicator.visibleProperty().bind(resendRegisterCodeService.runningProperty());
+            resendRegisterCodeService.setOnSucceeded(event -> {
+                timeSchedule = resendRegisterCodeService.getValue();
+                timeSchedule.setPeriod(Duration.seconds(1));
+                timeSchedule.start();
+            });
+            resendRegisterCodeService.start();
         }
     }
 }

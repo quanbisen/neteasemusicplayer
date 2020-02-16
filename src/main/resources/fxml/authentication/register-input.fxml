@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="shadowPane" maxHeight="440.0" maxWidth="350.0" prefHeight="440.0" prefWidth="350.0" stylesheets="@../../css/RegisterStyle.css" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authentication.RegisterController">
+<BorderPane fx:id="shadowPane" maxHeight="440.0" maxWidth="350.0" prefHeight="440.0" prefWidth="350.0" stylesheets="@../../css/RegisterInputStyle.css" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authentication.RegisterInputController">
    <center>
       <BorderPane fx:id="visualPane" prefHeight="430.0" prefWidth="340.0">
          <top>

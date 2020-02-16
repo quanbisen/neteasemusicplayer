@@ -40,7 +40,6 @@ import application.SpringFXMLLoader;
 import service.LoadLocalAlbumImageService;
 import service.LoadLocalSingerImageService;
 import service.LoadLocalSongService;
-import task.LoadLocalAlbumImageTask;
 import util.SongUtils;
 import util.StageUtils;
 import util.WindowUtils;

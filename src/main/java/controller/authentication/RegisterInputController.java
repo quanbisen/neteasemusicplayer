@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -31,8 +32,7 @@ import java.util.regex.Pattern;
  * @date 19-12-5
  */
 @Controller
-public class RegisterController {
-
+public class RegisterInputController {
 
     /**
      * "返回"Label图标
@@ -68,9 +68,9 @@ public class RegisterController {
     /**注册信息反馈的Label组件*/
     private Label labRegisterInformation;
 
-    /**VBox容器*/
+    /**可视化根容器*/
     @FXML
-    private VBox vBox;
+    private BorderPane visualPane;
 
     /**
      * "注册"按钮组件
@@ -92,10 +92,6 @@ public class RegisterController {
     @Resource
     private NavigateLoginOrRegisterController navigateLoginOrRegisterController;
 
-    /**注入userDao类*/
-    @Resource
-    private UserDao userDao;
-
     /**注入Spring上下文工具类*/
     @Resource
     private ConfigurableApplicationContext applicationContext;
@@ -114,6 +110,10 @@ public class RegisterController {
 
     public Button getBtnRegister() {
         return btnRegister;
+    }
+
+    public BorderPane getVisualPane() {
+        return visualPane;
     }
 
     public void initialize() {
@@ -220,22 +220,22 @@ public class RegisterController {
         RegisterService registerService = applicationContext.getBean(RegisterService.class);
         registerProgressIndicator.visibleProperty().bind(registerService.runningProperty());
         registerService.start();
-        registerService.valueProperty().addListener(new ChangeListener<Boolean>() {
+     /*   registerService.valueProperty().addListener(new ChangeListener<Boolean>() {
             @SneakyThrows
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (observable.getValue()) { //
                     vBox.getChildren().clear();
                     vBox.getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-verify.fxml").load());
-                        /*labRegisterInformation.setTextFill(Color.BLACK);
+                        *//*labRegisterInformation.setTextFill(Color.BLACK);
                         labRegisterInformation.setText("注册成功");
-                        btnRegister.setText("转到登录页面");*/
+                        btnRegister.setText("转到登录页面");*//*
                 } else {
                     labRegisterInformation.setTextFill(Color.rgb(181, 44, 46));
                     labRegisterInformation.setText("注册失败");
                 }
             }
-        });
+        });*/
 
 //        else {  //否则,则注册成功了,按钮可以转到登录页面。
 //            Scene registerScene = btnRegister.getScene();

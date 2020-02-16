@@ -1,13 +1,17 @@
 package service;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import mediaplayer.MyMediaPlayer;
 import model.RecentSong;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import task.LoadRecentSongTask;
+import util.XMLUtils;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author super lollipop
@@ -18,10 +22,20 @@ import javax.annotation.Resource;
 public class LoadRecentSongService extends javafx.concurrent.Service<ObservableList<RecentSong>> {
 
     @Resource
-    private LoadRecentSongTask loadRecentSongTask;
+    private MyMediaPlayer myMediaPlayer;
 
     @Override
     protected Task<ObservableList<RecentSong>> createTask() {
-        return loadRecentSongTask;
+        Task<ObservableList<RecentSong>> task = new Task<ObservableList<RecentSong>>() {
+            @Override
+            protected ObservableList<RecentSong> call() throws Exception {
+                List<RecentSong> recentSongs = XMLUtils.getRecentPlaySongs(myMediaPlayer.getRecentPlayStorageFile(),"PlayedSong");
+                Collections.reverse(recentSongs);   //倒序集合
+                ObservableList<RecentSong> observableList = FXCollections.observableArrayList();
+                observableList.addAll(recentSongs);
+                return observableList;
+            }
+        };
+        return task;
     }
 }
