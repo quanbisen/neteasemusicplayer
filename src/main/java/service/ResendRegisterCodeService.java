@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  */
 @Service
 @Scope(value = "prototype")
-public class ResendRegisterCodeService extends javafx.concurrent.Service<CountDownScheduledService> {
+public class ResendRegisterCodeService extends javafx.concurrent.Service<ScheduledCountDownService> {
 
     @Resource
     private RegisterDao registerDao;
@@ -26,10 +26,10 @@ public class ResendRegisterCodeService extends javafx.concurrent.Service<CountDo
     private ApplicationContext applicationContext;
 
     @Override
-    protected Task<CountDownScheduledService> createTask() {
-        Task<CountDownScheduledService> task = new Task<CountDownScheduledService>() {
+    protected Task<ScheduledCountDownService> createTask() {
+        Task<ScheduledCountDownService> task = new Task<ScheduledCountDownService>() {
             @Override
-            protected CountDownScheduledService call() throws Exception {
+            protected ScheduledCountDownService call() throws Exception {
                 Register register = applicationContext.getBean(Config.class).getRegister();
                 //生成邮箱验证码
                 String code = EmailUtils.generateCode();
@@ -38,7 +38,7 @@ public class ResendRegisterCodeService extends javafx.concurrent.Service<CountDo
                 //更新数据库此用户的创建时间和验证码
                 int row = registerDao.updateDateAndCode(register);
                 if (row == 1){
-                    return applicationContext.getBean(CountDownScheduledService.class);
+                    return applicationContext.getBean(ScheduledCountDownService.class);
                 }else {
                     return null;
                 }

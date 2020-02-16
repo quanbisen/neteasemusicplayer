@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 
 @Service
 @Scope("prototype")
-public class CountDownScheduledService extends ScheduledService<Number> {
+public class ScheduledCountDownService extends ScheduledService<Number> {
 
     private int time = 60;
 
@@ -26,7 +26,7 @@ public class CountDownScheduledService extends ScheduledService<Number> {
             protected void updateValue(Number value) {
                 super.updateValue(value);
                 if (value.intValue() <= 0){
-                    CountDownScheduledService.this.cancel();
+                    ScheduledCountDownService.this.cancel();
                     System.out.println("任务取消");
                     Platform.runLater(()->{
                         registerVerifyController.getLabTimeOrResend().getStyleClass().remove("labTime");

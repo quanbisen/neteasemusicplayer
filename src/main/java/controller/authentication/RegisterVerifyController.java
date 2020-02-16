@@ -1,7 +1,6 @@
 package controller.authentication;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
@@ -10,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
-import service.CountDownScheduledService;
+import service.ScheduledCountDownService;
 import service.HandleRegisterService;
 import service.ResendRegisterCodeService;
 
@@ -35,14 +34,11 @@ public class RegisterVerifyController {
     @FXML
     private Label labVerifyMessage;
 
-    @FXML
-    private Button btnConfirm;
-
     @Resource
     private ApplicationContext applicationContext;
 
     /**定时服务*/
-    private CountDownScheduledService timeSchedule;
+    private ScheduledCountDownService timeSchedule;
 
     public TextField getTfCode() {
         return tfCode;
@@ -52,7 +48,7 @@ public class RegisterVerifyController {
         return labVerifyMessage;
     }
 
-    public CountDownScheduledService getTimeSchedule() {
+    public ScheduledCountDownService getTimeSchedule() {
         return timeSchedule;
     }
 
@@ -68,7 +64,7 @@ public class RegisterVerifyController {
         verifyProgressIndicator.setVisible(false);    //初始化不可见
 
         /**启动倒计时定时服务*/
-        timeSchedule = applicationContext.getBean(CountDownScheduledService.class);
+        timeSchedule = applicationContext.getBean(ScheduledCountDownService.class);
         timeSchedule.setPeriod(Duration.seconds(1));
         timeSchedule.start();
 

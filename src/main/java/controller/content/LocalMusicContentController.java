@@ -102,7 +102,7 @@ public class LocalMusicContentController {
     private ImageView ivSearchIcon;
 
     /**歌曲表格内容的集合变量*/
-    private ObservableList<LocalSong> observableItems;
+    private ObservableList<LocalSong> observableSongItems;
 
     /**歌手表格的BorderPane容器*/
     @FXML
@@ -181,6 +181,10 @@ public class LocalMusicContentController {
 
     public BorderPane getBorderPane() {
         return tabSongContent;
+    }
+
+    public ObservableList<LocalSong> getObservableSongItems() {
+        return observableSongItems;
     }
 
     public void initialize() throws Exception {
@@ -328,8 +332,8 @@ public class LocalMusicContentController {
 
         /**为搜索本地歌曲的文本输入框添加text文本事件监听器*/
         tfSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (observableItems == null){   //如果存储表格内容的变量为空，才指向表格的内容
-                observableItems = tableViewSong.getItems(); //取出表格的内容东西，指向它
+            if (observableSongItems == null){   //如果存储表格内容的变量为空，才指向表格的内容
+                observableSongItems = tableViewSong.getItems(); //取出表格的内容东西，指向它
             }
             if (tableViewSong.itemsProperty().isBound()){
                 tableViewSong.itemsProperty().unbind(); //解除items绑定
@@ -337,7 +341,7 @@ public class LocalMusicContentController {
             ObservableList<LocalSong> observableResultList = FXCollections.observableArrayList();   //定义匹配关键字的Observable集合
             if (!observable.getValue().trim().equals("")){   //如果有内容
                 ivSearchIcon.setImage(new Image("/image/CloseIcon.png"));   //设置图标为清除图标
-                for (LocalSong localSong : SongUtils.getLocalSongList(observableItems)){   //遍历可播放歌曲，查找包含搜索关键字的行
+                for (LocalSong localSong : SongUtils.getLocalSongList(observableSongItems)){   //遍历可播放歌曲，查找包含搜索关键字的行
                     if (localSong.toStringContent().contains(observable.getValue())){    //如果歌曲的歌名、歌手和专辑字符串包含搜索的关键字
                         observableResultList.add(localSong);     //添加到搜索结果集合
                     }
@@ -346,7 +350,7 @@ public class LocalMusicContentController {
             } else {  //否则，还原搜索图标和表格内容
                 ivSearchIcon.setImage(new Image("/image/SearchIcon-16.png"));
                 observableResultList.removeAll();   //清除所有的搜索结果
-                tableViewSong.setItems(observableItems);
+                tableViewSong.setItems(observableSongItems);
                 if (tableViewSong.getSelectionModel().getSelectedIndex() != -1){    //如果表格有选择的行，清除
                     tableViewSong.getSelectionModel().clearSelection();
                 }
@@ -478,6 +482,9 @@ public class LocalMusicContentController {
             fadeOut.setOnFinished(event -> newValue.setContent(newContent));
             SequentialTransition sequentialTransition = new SequentialTransition(fadeOut,fadeIn);
             sequentialTransition.play();
+            if (!tfSearch.getText().equals("")){    //如果歌曲搜索框存在内容，清空它
+                tfSearch.setText("");
+            }
 
             if (newValue == tabPane.getTabs().get(1)){  //设置“歌手”tag标签对应的歌手表格内容
                 if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0 &&

@@ -56,7 +56,8 @@ public class HandleRegisterService extends javafx.concurrent.Service<Void> {
                         User user = new User(register.getId(), register.getPassword(), MD5Utils.getMD5(register.getId()).substring(0, 6), MD5Utils.getMD5(register.getPassword()));         //创建用户对象，设置属性为输入的TextField文本内容
                         try {
                             int row = userDao.insertUser(user);
-                            if (row == 1) {
+                            if (row == 1) { //注册成功part
+                                applicationContext.getBean(Config.class).setRegister(null); //清空注册临时存储对象
                                 Platform.runLater(()->{
                                     registerVerifyController.getTimeSchedule().cancel();    //取消倒计时服务
                                     try {

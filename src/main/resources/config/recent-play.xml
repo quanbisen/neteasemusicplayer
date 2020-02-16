@@ -4,11 +4,16 @@
   <PlayedSong name="她说" singer="林俊杰" album="她说 概念自选辑" totalTime="05:20" resource="http://114.116.240.232:8080/neteasemusicplayerserver/song/林俊杰-她说.mp3"></PlayedSong>  
   <PlayedSong name="于是" singer="G.E.M.邓紫棋" album="新的心跳" totalTime="03:49" resource="/media/ubuntu/Test/G.E.M.邓紫棋 - 于是.mp3"></PlayedSong>  
   <PlayedSong name="这,就是爱" singer="张杰" album="这,就是爱" totalTime="04:54" resource="/media/ubuntu/Test/张杰 - 这,就是爱.mp3"></PlayedSong>  
-  <PlayedSong name="Walk On Water" singer="G.E.M.邓紫棋" album="摩天动物园" totalTime="03:31" resource="/media/ubuntu/Test/G.E.M.邓紫棋 - Walk On Water.mp3"></PlayedSong>  
   <PlayedSong name="Hey KONG" singer="刘聪KEY.L/$CC731" album="Hey KONG" totalTime="04:37" resource="/media/ubuntu/Test/刘聪KEY.L - Hey KONG.mp3"></PlayedSong>  
-  <PlayedSong name="逍遥叹" singer="胡歌" album="仙剑奇侠传 电视原声带" totalTime="05:13" resource="/media/ubuntu/Test/胡歌 - 逍遥叹.mp3"></PlayedSong>  
-  <PlayedSong name="A Little Love" singer="冯曦妤" album="A Little Love" totalTime="03:11" resource="/media/ubuntu/Test/冯曦妤 - A Little Love.mp3"></PlayedSong>  
   <PlayedSong name="大碗宽面" singer="吴亦凡" album="大碗宽面" totalTime="03:41" resource="/media/ubuntu/Test/吴亦凡 - 大碗宽面.mp3"></PlayedSong>  
   <PlayedSong name="贰叁" singer="吴亦凡" album="贰叁" totalTime="05:20" resource="/media/ubuntu/Test/吴亦凡 - 贰叁.mp3"></PlayedSong>  
+  <PlayedSong name="Walk On Water" singer="G.E.M.邓紫棋" album="摩天动物园" totalTime="03:31" resource="/media/ubuntu/Test/G.E.M.邓紫棋 - Walk On Water.mp3"></PlayedSong>  
+  <PlayedSong name="修炼爱情" singer="林俊杰" album="因你而在" totalTime="04:47" resource="http://114.116.240.232:8080/neteasemusicplayerserver/song/林俊杰-修炼爱情.mp3"></PlayedSong>  
+  <PlayedSong name="逍遥叹" singer="胡歌" album="仙剑奇侠传 电视原声带" totalTime="05:13" resource="/media/ubuntu/Test/胡歌 - 逍遥叹.mp3"></PlayedSong>  
+  <PlayedSong name="A Little Love" singer="冯曦妤" album="A Little Love" totalTime="03:11" resource="/media/ubuntu/Test/冯曦妤 - A Little Love.mp3"></PlayedSong>  
+  <PlayedSong name="写不完的温柔" singer="G.E.M.邓紫棋" album="18" totalTime="03:58" resource="/media/ubuntu/1/G.E.M.邓紫棋 - 写不完的温柔.mp3"></PlayedSong>  
+  <PlayedSong name="后会无期" singer="G.E.M.邓紫棋" album="后会无期" totalTime="03:43" resource="/media/ubuntu/1/G.E.M.邓紫棋 - 后会无期.mp3"></PlayedSong>  
+  <PlayedSong name="Heartbeats" singer="AmyDiamond" album="Swings &amp; Roundabouts" totalTime="03:55" resource="/media/ubuntu/1/Amy Diamond - Heartbeats.mp3"></PlayedSong>  
+  <PlayedSong name="A.I.N.Y. 爱你" singer="G.E.M.邓紫棋" album="18" totalTime="03:46" resource="/media/ubuntu/1/G.E.M.邓紫棋 - 02 - A.I.N.Y. 爱你.mp3"></PlayedSong>  
   <PlayedSong name="Wonderland" singer="林俊杰" album="Wonderland" totalTime="04:02" resource="http://114.116.240.232:8080/neteasemusicplayerserver/song/林俊杰-Wonderland.mp3"></PlayedSong>
 </RecentPlaySongs>

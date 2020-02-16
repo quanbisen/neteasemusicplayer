@@ -47,6 +47,11 @@ public class DeleteLocalMusicConfirmDialog {
             File file = new File(resource); //创建文件句柄
             file.delete();  //删除文件
             ObservableList<LocalSong> tableViewSongItems = localMusicContentController.getTableViewSong().getItems();
+            //判断表格内容的第一行是否为字母分类行
+            if (!SongUtils.isCharacterCategory(tableViewSongItems.get(0).getName())){    //如果不是字母分类行，证明当前的表格内容不是正常的“歌曲”表格内容，而是搜索得到的搜索结果表格内容，这里需要替换成正常的表格内容
+                tableViewSongItems.remove(localMusicContentController.getTableViewSong().getSelectionModel().getSelectedItem());    //先清除GUI
+                tableViewSongItems = localMusicContentController.getObservableSongItems();      //然后替换
+            }
             localMusicContentController.getTableViewSong().getSelectionModel().clearSelection();   //清除选中状态
             //tableViewSinger part
             ObservableList<LocalSinger> tableViewSingerItems = localMusicContentController.getTableViewSinger().getItems();

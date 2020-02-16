@@ -76,10 +76,6 @@ public class SearchResultContentController {
     @FXML
     private TableView tableViewSong;
 
-    /**表格tableViewSong的容器BorderPane*/
-    @FXML
-    private BorderPane borderPane;
-
     /**注入搜索输入页面的控制器*/
     @Resource
     private SearchInputContentController searchInputContentController;

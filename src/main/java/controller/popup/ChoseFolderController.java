@@ -1,7 +1,6 @@
 package controller.popup;
 
 import controller.content.LocalMusicContentController;
-import controller.main.BottomController;
 import controller.main.MainController;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import mediaplayer.Config;
 import mediaplayer.MyMediaPlayer;
 import org.dom4j.DocumentException;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -51,12 +51,6 @@ public class ChoseFolderController {
     @Resource
     private LocalMusicContentController localMusicContentController;
 
-    /**播放器配置文件的存放路径*/
-    private String CHOSE_FOLDER_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml";
-
-    /**播放器配置文件*/
-    private File CHOSE_FOLDER_FILE;
-
     /**记录存储文件保存的音乐目录的字符串集合*/
     private List<String> folderPathList;
 
@@ -71,22 +65,14 @@ public class ChoseFolderController {
     @Resource
     private MyMediaPlayer myMediaPlayer;
 
-    /**注入底部显示音乐进度的控制器类*/
-    @Resource
-    private BottomController bottomController;
-
-    public List<String> getSelectedPaths() {
-        return selectedPaths;
-    }
-
     public void initialize() throws IOException, DocumentException {
-        CHOSE_FOLDER_FILE = new File(CHOSE_FOLDER_PATH);
-        if (!CHOSE_FOLDER_FILE.exists()){  //如果文件不存在，创建文件
-            CHOSE_FOLDER_FILE.createNewFile();                          //创建XML文件
-            XMLUtils.createXML(CHOSE_FOLDER_FILE,"FolderList");//添加根元素
+        File choseFolderConfigFile = applicationContext.getBean(Config.class).getChoseFolderConfigFile();
+        if (!choseFolderConfigFile.exists()){  //如果文件不存在，创建文件
+            choseFolderConfigFile.createNewFile();                          //创建XML文件
+            XMLUtils.createXML(choseFolderConfigFile,"FolderList");//添加根元素
         }
         else {   //文件存在，读取记录
-            folderPathList =  XMLUtils.getAllRecord(CHOSE_FOLDER_FILE,"Folder","path");
+            folderPathList =  XMLUtils.getAllRecord(choseFolderConfigFile,"Folder","path");
             if (folderPathList != null && folderPathList.size() > 0){
                 for (String folderPath:folderPathList){
                     CheckBox checkBox = new CheckBox(folderPath);  //创建CheckBox组件
@@ -112,11 +98,13 @@ public class ChoseFolderController {
     @FXML
     public void onConfirmAction(ActionEvent actionEvent) throws Exception {
 
-        //先删除原先的文件，然后再重新创建新文件。
-        CHOSE_FOLDER_FILE.delete();
-        CHOSE_FOLDER_FILE.createNewFile();                          //创建XML文件
-        XMLUtils.createXML(CHOSE_FOLDER_FILE,"FolderList");//添加根元素
-
+        //先删除原先的存储文件，然后再重新创建新文件。
+        File choseFolderConfigFile = applicationContext.getBean(Config.class).getChoseFolderConfigFile();
+        if (choseFolderConfigFile.exists()){    //如果文件已经存在，先删除它
+            choseFolderConfigFile.delete();
+        }
+        choseFolderConfigFile.createNewFile();                          //创建XML文件
+        XMLUtils.createXML(choseFolderConfigFile,"FolderList");//添加根元素
         ObservableList<Node> observableList = vWrapCheckBox.getChildren();  //获取vWrapCheckBox的子组件
         observableList.remove(labTips);  //移除用作提示的label组件
 
@@ -128,7 +116,7 @@ public class ChoseFolderController {
             }
         }
         for(String pathValue:selectedPaths){  //遍历逐个目录路径保存
-            XMLUtils.addOneRecord(CHOSE_FOLDER_FILE,"Folder","path",pathValue);
+            XMLUtils.addOneRecord(choseFolderConfigFile,"Folder","path",pathValue);
         }
         labCloseIcon.getScene().getWindow().hide();      //关闭窗口
         WindowUtils.releaseBorderPane(mainController.getBorderPane());

@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.dom4j.DocumentException;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 import service.SearchSongService;
@@ -68,7 +69,7 @@ public class SearchInputContentController {
 
     /**注入Spring上下文对象*/
     @Resource
-    private ConfigurableApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
     /**显示搜索结果的容器*/
     private Parent parent;

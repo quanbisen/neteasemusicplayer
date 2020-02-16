@@ -36,6 +36,7 @@ import java.io.IOException;
  */
 @Controller
 public class RightSlideLoginController {
+
     /**根容器BorderPane，见right-slide.fxml文件*/
     @FXML
     private BorderPane borderPaneRoot;
@@ -67,10 +68,6 @@ public class RightSlideLoginController {
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
     MainController mainController;
-
-    /**注入标签的控制类*/
-    @Resource
-    private LeftController leftController;
 
     public BorderPane getBorderPaneRoot() {
         return borderPaneRoot;
