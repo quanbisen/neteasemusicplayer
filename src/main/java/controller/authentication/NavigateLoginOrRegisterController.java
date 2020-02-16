@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -27,12 +28,19 @@ import java.io.IOException;
 public class NavigateLoginOrRegisterController {
 
 
+    /**根容器*/
+    @FXML
+    private BorderPane shadowPane;
+
     /**“关闭”图标的label组件*/
     @FXML
     private Label labCloseIcon;
 
     @FXML
-    private Button btnLoginByPhoneNumber;
+    private Button btnLogin;
+
+    @FXML
+    private Button btnRegister;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
@@ -42,11 +50,8 @@ public class NavigateLoginOrRegisterController {
     @Resource
     private ApplicationContext applicationContext;
 
-    /**"导航登录、注册"的容器*/
-    private Parent navigateLoginOrRegister;
-
-    public Parent getNavigateLoginOrRegister() {
-        return navigateLoginOrRegister;
+    public BorderPane getShadowPane() {
+        return shadowPane;
     }
 
     /**单击“关闭按钮时的事件处理”*/
@@ -58,14 +63,11 @@ public class NavigateLoginOrRegisterController {
         }
     }
 
-    /**单击”立即登录“按钮的事件处理*/
+    /**单击”登录“按钮的事件处理*/
     @FXML
     public void onClickedLoginButton(ActionEvent actionEvent) throws IOException {
-        //保存当前的导航容器
-        if (navigateLoginOrRegister == null){
-            navigateLoginOrRegister = btnLoginByPhoneNumber.getScene().getRoot();
-        }
-        Scene loginScene = btnLoginByPhoneNumber.getScene();
+
+        Scene loginScene = btnLogin.getScene();
         FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/login.fxml");
         loginScene.setRoot(fxmlLoader.load());
     }
@@ -73,11 +75,8 @@ public class NavigateLoginOrRegisterController {
     /**单击”注册“按钮的事件处理*/
     @FXML
     public void onClickedRegisterButton(ActionEvent actionEvent) throws IOException {
-        //保存当前的导航容器
-        if (navigateLoginOrRegister == null){
-            navigateLoginOrRegister = btnLoginByPhoneNumber.getScene().getRoot();
-        }
-        Scene registerScene = btnLoginByPhoneNumber.getScene();
+
+        Scene registerScene = btnRegister.getScene();
         FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register.fxml");
         registerScene.setRoot(fxmlLoader.load());
     }

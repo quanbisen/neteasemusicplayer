@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="model.RegisterMapper">
+    <insert id="insertRegister" parameterType="Register">
+        insert into registers(id,password,code) values(#{id},#{password},#{code})
+    </insert>
+    <select id="queryRegister" parameterType="Register" resultMap="registerResultMap">
+        select * from registers where id=#{id} and password=#{password} and code=#{code}
+    </select>
+    <select id="queryById" parameterType="String" resultType="int">
+        select count(*) from registers where id = #{value}
+    </select>
+    <resultMap id="registerResultMap" type="Register">
+        <id property="id" column="id"></id>
+        <result property="password" column="password"></result>
+        <result property="createTime" column="createtime"></result>
+        <result property="code" column="code"></result>
+    </resultMap>
+</mapper>

@@ -18,7 +18,7 @@ public class UserDaoImpl implements UserDao{
     private SqlSessionFactory sqlSessionFactory;
 
     @Override
-    public User findUserByIdAndPassword(User user) {
+    public User queryUserByIdAndPassword(User user) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         User validUser = sqlSession.selectOne("model.UserMapper.findUserByIdAndPassword",user);
         sqlSession.close();
@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public int addUser(User user) {
+    public int insertUser(User user) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         int row = sqlSession.insert("model.UserMapper.addUser",user);
         sqlSession.close();

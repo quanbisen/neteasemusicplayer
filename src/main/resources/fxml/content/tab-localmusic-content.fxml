@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="localMusicContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/LocalMusicContentStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.LocalMusicContentController">
+<BorderPane fx:id="localMusicContentContainer" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/LocalMusicContentStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.LocalMusicContentController">
 
    <top>
       <BorderPane prefHeight="45.0" prefWidth="603.0" BorderPane.alignment="CENTER">
@@ -33,7 +33,7 @@
                <children>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/ChoseDirectoryIcon.png" />
+                        <Image requestedHeight="20.0" requestedWidth="20.0" url="@../../image/ChoseDirectoryIcon.png" />
                      </image>
                   </ImageView>
                   <Label style="-fx-text-fill: #1a5a99; -fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;" text="选择目录" />
@@ -58,7 +58,7 @@
                                 <TableColumn fx:id="singerColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" sortable="false" text="歌手" />
                                 <TableColumn fx:id="albumColumn" editable="false" maxWidth="405.0" minWidth="135.0" prefWidth="-1.0" resizable="false" sortable="false" text="专辑" />
                                 <TableColumn fx:id="totalTimeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" sortable="false" text="时长" />
-                                <TableColumn fx:id="sizeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="-1.0" resizable="false" sortable="false" text="大小" />
+                                <TableColumn fx:id="sizeColumn" editable="false" maxWidth="270.0" minWidth="90.0" prefWidth="105.0" resizable="false" sortable="false" text="大小" />
                             </columns>
                             <placeholder>
                                 <Label text="" />
@@ -75,7 +75,7 @@
                                     <children>
                                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/NeteasePlayAll_20.png" />
+                                                <Image requestedHeight="20.0" requestedWidth="20.0" url="@../../image/NeteasePlayAll_20.png" />
                                             </image>
                                         </ImageView>
                                         <Button fx:id="btnPlayAll" mnemonicParsing="false" onMouseClicked="#onClickedPlayAll" prefHeight="22.0" prefWidth="64.0" text="播放全部" />
@@ -119,14 +119,13 @@
                <content>
                   <BorderPane fx:id="tabSingerContent" prefHeight="200.0" prefWidth="200.0">
                      <center>
-                         <TableView fx:id="tableViewSinger" prefHeight="200.0" prefWidth="200.0"
-                                    BorderPane.alignment="CENTER">
+                         <TableView fx:id="tableViewSinger" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                              <columns>
-                                 <TableColumn fx:id="singerInformationColumn" minWidth="0.0" prefWidth="456.0"/>
-                                 <TableColumn fx:id="singerSongCountColumn" minWidth="0.0" prefWidth="143.0"/>
+                                 <TableColumn fx:id="singerInformationColumn" minWidth="0.0" prefWidth="456.0" />
+                                 <TableColumn fx:id="singerSongCountColumn" minWidth="0.0" prefWidth="143.0" />
                              </columns>
                              <placeholder>
-                                 <Label text=""/>
+                                 <Label text="" />
                              </placeholder>
                          </TableView>
                      </center>
@@ -140,15 +139,14 @@
               <content>
                   <BorderPane fx:id="tabAlbumContent" prefHeight="200.0" prefWidth="200.0">
                       <center>
-                          <TableView fx:id="tableViewAlbum" prefHeight="200.0" prefWidth="200.0"
-                                     BorderPane.alignment="CENTER">
+                          <TableView fx:id="tableViewAlbum" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                               <columns>
-                                  <TableColumn fx:id="albumInformationColumn" minWidth="0.0" prefWidth="456.0"/>
-                                  <TableColumn fx:id="albumSingerColumn" minWidth="0.0" prefWidth="150.0"></TableColumn>
-                                  <TableColumn fx:id="albumSongCountColumn" minWidth="0.0" prefWidth="143.0"/>
+                                  <TableColumn fx:id="albumInformationColumn" minWidth="0.0" prefWidth="456.0" />
+                                  <TableColumn fx:id="albumSingerColumn" minWidth="0.0" prefWidth="150.0" />
+                                  <TableColumn fx:id="albumSongCountColumn" minWidth="0.0" prefWidth="143.0" />
                               </columns>
                               <placeholder>
-                                  <Label text=""/>
+                                  <Label text="" />
                               </placeholder>
                           </TableView>
                       </center>

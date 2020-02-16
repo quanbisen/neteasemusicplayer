@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository(value = "userDao")
 public interface UserDao {
-    User findUserByIdAndPassword(User user);
+    User queryUserByIdAndPassword(User user);
     User queryUserByIdToken(User user);
-    int addUser(User user);
+    int insertUser(User user);
 }

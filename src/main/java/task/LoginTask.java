@@ -51,7 +51,7 @@ public class LoginTask extends Task<Boolean> {
         User user = new User();                    //创建用用持久化对象
         user.setId(accountID);
         user.setPassword(password);
-        applicationContext.getBean(Config.class).setUser(userDao.findUserByIdAndPassword(user));
+        applicationContext.getBean(Config.class).setUser(userDao.queryUserByIdAndPassword(user));
 
         if (applicationContext.getBean(Config.class).getUser() != null){
             Platform.runLater(()->{
@@ -60,6 +60,9 @@ public class LoginTask extends Task<Boolean> {
                 leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(applicationContext.getBean(Config.class).getUser().getImageURL(),38,38));  //设置用户头像图片
                 leftController.getLabUserName().setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称
                 WindowUtils.toastInfo(centerController.getStackPane(),new Label("登录成功"));
+
+                //加载歌单
+
             });
             return true;
         }else {

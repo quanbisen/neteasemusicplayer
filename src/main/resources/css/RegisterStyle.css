@@ -9,7 +9,7 @@
     -fx-padding: 2 2 2 2;
     -fx-effect: dropshadow(three-pass-box, #C2C2C4, 5, 0, 0, 0);
 }
-AnchorPane
+#background
 {
     -fx-background-image: url("/image/SomeTreesBackground.png");
 }

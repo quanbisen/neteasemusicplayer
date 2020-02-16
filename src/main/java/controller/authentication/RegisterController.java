@@ -12,8 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lombok.SneakyThrows;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.RegisterService;
@@ -21,6 +23,8 @@ import dao.UserDao;
 import util.WindowUtils;
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author super lollipop
@@ -28,6 +32,7 @@ import java.io.IOException;
  */
 @Controller
 public class RegisterController {
+
 
     /**
      * "返回"Label图标
@@ -62,6 +67,10 @@ public class RegisterController {
     @FXML
     /**注册信息反馈的Label组件*/
     private Label labRegisterInformation;
+
+    /**VBox容器*/
+    @FXML
+    private VBox vBox;
 
     /**
      * "注册"按钮组件
@@ -132,10 +141,13 @@ public class RegisterController {
         });
         //"清除"账号的图标的显示时机
         tfAccountID.focusedProperty().addListener(((observable, oldValue, newValue) -> {
-            if (newValue == true && !tfAccountID.getText().equals("")) {
-                labClearIcon.setVisible(true);
-            } else {
-                labClearIcon.setVisible(false);
+            if (!tfAccountID.getText().equals("")){
+                if (observable.getValue() == true) {
+                    labClearIcon.setVisible(true);
+                } else {
+                    labClearIcon.setVisible(false);
+                    this.verifyAccountID();
+                }
             }
         }));
 
@@ -152,13 +164,27 @@ public class RegisterController {
 
     }
 
+    /**验证账号合法性的函数*/
+    private void verifyAccountID() {
+        String accountID = tfAccountID.getText();
+        String reg = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        if (accountID.matches(reg)){
+            labRegisterInformation.setText("");
+            btnRegister.setMouseTransparent(false);
+        }else {
+            labRegisterInformation.setTextFill(Color.rgb(181,44,46));
+            labRegisterInformation.setText("邮箱不合法");
+            btnRegister.setMouseTransparent(true);
+        }
+    }
+
     /**
      * "返回"Label图标鼠标点击事件处理
      */
     @FXML
     public void onClickedBackIcon(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {  //鼠标左击
-            labBackIcon.getScene().setRoot(navigateLoginOrRegisterController.getNavigateLoginOrRegister());  //设置根容器为"登录、注册的导航容器"
+            labBackIcon.getScene().setRoot(navigateLoginOrRegisterController.getShadowPane());  //设置根容器为"登录、注册的导航容器"
         }
     }
 
@@ -191,29 +217,30 @@ public class RegisterController {
      */
     @FXML
     public void onClickedRegisterButton(ActionEvent actionEvent) throws IOException {
-        if (!btnRegister.getText().equals("转到登录页面")){   //如果还没有注册成功
-
-            RegisterService registerService = applicationContext.getBean(RegisterService.class);
-            registerProgressIndicator.visibleProperty().bind(registerService.runningProperty());
-            registerService.start();
-            registerService.valueProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                    if (observable.getValue()){
-                        labRegisterInformation.setTextFill(Color.BLACK);
+        RegisterService registerService = applicationContext.getBean(RegisterService.class);
+        registerProgressIndicator.visibleProperty().bind(registerService.runningProperty());
+        registerService.start();
+        registerService.valueProperty().addListener(new ChangeListener<Boolean>() {
+            @SneakyThrows
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (observable.getValue()) { //
+                    vBox.getChildren().clear();
+                    vBox.getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-verify.fxml").load());
+                        /*labRegisterInformation.setTextFill(Color.BLACK);
                         labRegisterInformation.setText("注册成功");
-                        btnRegister.setText("转到登录页面");
-                    }else {
-                        labRegisterInformation.setTextFill(Color.rgb(181,44,46));
-                        labRegisterInformation.setText("注册失败");
-                    }
+                        btnRegister.setText("转到登录页面");*/
+                } else {
+                    labRegisterInformation.setTextFill(Color.rgb(181, 44, 46));
+                    labRegisterInformation.setText("注册失败");
                 }
-            });
-        }
-        else {  //否则,则注册成功了,按钮可以转到登录页面。
-            Scene registerScene = btnRegister.getScene();
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/login.fxml");
-            registerScene.setRoot(fxmlLoader.load());
-        }
+            }
+        });
+
+//        else {  //否则,则注册成功了,按钮可以转到登录页面。
+//            Scene registerScene = btnRegister.getScene();
+//            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/login.fxml");
+//            registerScene.setRoot(fxmlLoader.load());
+//        }
     }
 }

@@ -24,8 +24,8 @@ import java.io.File;
  * @date 20-2-11
  */
 @Component
-@Scope("prototype")
-public class LoadUserTask extends Task<Boolean> {
+@Scope("prototype") //prototype
+public class LoadUserTask extends Task<Void> {
 
     @Resource
     private ApplicationContext applicationContext;
@@ -40,37 +40,34 @@ public class LoadUserTask extends Task<Boolean> {
     private MainController mainController;
 
     @Override
-    protected Boolean call() throws Exception {
+    protected Void call() throws Exception {
         File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile();  //播放器登录文件
 
-        if (loginConfigFile.exists()){
+        if (loginConfigFile.exists()) {
             try {
                 applicationContext.getBean(Config.class).setUser(UserUtils.parseUser(loginConfigFile));  //设置文件读取到的用户信息
                 User user = userDao.queryUserByIdToken(applicationContext.getBean(Config.class).getUser());
-                if (user != null){ //不为null，证明有合法用户
-                    Platform.runLater(()->{
+                if (user != null) { //不为null，证明有合法用户
+                    Platform.runLater(() -> {
                         applicationContext.getBean(Config.class).setUser(user); //存储合法用户对象
-                        Image image = new Image(applicationContext.getBean(Config.class).getUser().getImageURL(),38,38,true,true);
-                        if (!image.isError()){
-                            leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(image,38,38));   //设置用户头像
+                        Image image = new Image(applicationContext.getBean(Config.class).getUser().getImageURL(), 38, 38, true, true);
+                        if (!image.isError()) {
+                            leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(image, 38, 38));   //设置用户头像
                         }
                         leftController.getLabUserName().setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称
                     });
-                }else {
-                    Platform.runLater(()->{
+                } else {
+                    Platform.runLater(() -> {
                         applicationContext.getBean(Config.class).setUser(null); //存储合法用户对象
-                        WindowUtils.toastInfo(mainController.getStackPane(),new Label("登录身份过期"));
-                        leftController.getLabUserImage().setGraphic(ImageUtils.createImageView("/image/UnLoginImage.png",38,38));   //设置用户头像
+                        WindowUtils.toastInfo(mainController.getStackPane(), new Label("登录身份过期"));
+                        leftController.getLabUserImage().setGraphic(ImageUtils.createImageView("/image/UnLoginImage.png", 38, 38));   //设置用户头像
                         leftController.getLabUserName().setText("未登录");  //设置用户名称
                     });
                 }
-                return true;
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
-                return false;
             }
-        }else {
-            return false;
         }
+        return null;
     }
 }

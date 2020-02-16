@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
@@ -112,11 +113,13 @@ public class LoginController {
         });
         //"清除"账号的图标的显示时机
         tfAccountID.focusedProperty().addListener(((observable, oldValue, newValue) -> {
-            if (newValue == true && !tfAccountID.getText().equals("")){
-                labClearIcon.setVisible(true);
-            }
-            else {
-                labClearIcon.setVisible(false);
+            if (!tfAccountID.getText().equals("")){
+                if (observable.getValue() == true) {
+                    labClearIcon.setVisible(true);
+                } else {
+                    labClearIcon.setVisible(false);
+                    this.verifyAccountID();
+                }
             }
         }));
 
@@ -136,11 +139,24 @@ public class LoginController {
 
     }
 
+    /**验证账号合法性的函数*/
+    private void verifyAccountID() {
+        String reg = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        if (tfAccountID.getText().matches(reg)){
+            labLoginInformation.setText("");
+            btnLogin.setMouseTransparent(false);
+        }else {
+            labLoginInformation.setTextFill(Color.rgb(181,44,46));
+            labLoginInformation.setText("邮箱不合法");
+            btnLogin.setMouseTransparent(true);
+        }
+    }
+
     /**"返回"Label图标鼠标点击事件处理*/
     @FXML
     public void onClickedBackIcon(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
-            labBackIcon.getScene().setRoot(navigateLoginOrRegisterController.getNavigateLoginOrRegister());  //设置根容器为"登录、注册的导航容器"
+            labBackIcon.getScene().setRoot(navigateLoginOrRegisterController.getShadowPane());  //设置根容器为"登录、注册的导航容器"
         }
     }
 

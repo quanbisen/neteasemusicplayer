@@ -18,7 +18,7 @@ public class EmailUtils {
      * @param emailAddress 收件人邮箱地址
      * @param code 验证码
      * @return boolean*/
-    public static boolean sendEmail(String emailAddress,int code) throws DocumentException {
+    public static boolean sendEmail(String emailAddress,String code) throws DocumentException {
         //读取发件邮箱的配置文件
         Map<String,String> emailConfig = XMLUtils.getEmailConfig(new File("src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "email-config.xml"));
         try {
@@ -39,8 +39,8 @@ public class EmailUtils {
     }
 
     /**随机生成六位数字*/
-    public static int generateCode(){
-        return (int)((Math.random()*9+1)*100000);
+    public static String generateCode(){
+        return String.valueOf((int)((Math.random()*9+1)*100000));
     }
 
 
