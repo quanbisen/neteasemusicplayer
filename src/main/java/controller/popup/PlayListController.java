@@ -39,7 +39,7 @@ public class PlayListController {
     private Label labCloseIcon;
 
     @FXML
-    private TableView tableViewPlayListSong;
+    private TableView tableViewPlayList;
 
     @FXML
     private TableColumn<LocalSong,String> nameColumn;
@@ -138,10 +138,10 @@ public class PlayListController {
         });
 
 
-        tableViewPlayListSong.setItems(myMediaPlayer.getPlayListSongs());   //设置播放列表的表格items
-        tableViewPlayListSong.scrollTo(myMediaPlayer.getCurrentPlayIndex());   //滚动到播放的行
+        tableViewPlayList.setItems(myMediaPlayer.getPlayListSongs());   //设置播放列表的表格items
+        tableViewPlayList.scrollTo(myMediaPlayer.getCurrentPlayIndex());   //滚动到播放的行
         /**更新表格行Row*/
-        tableViewPlayListSong.setRowFactory(new Callback<TableView<LocalSong>, TableRow<LocalSong>>() {
+        tableViewPlayList.setRowFactory(new Callback<TableView<LocalSong>, TableRow<LocalSong>>() {
             @Override
             public TableRow call(TableView param) {
                 return new TableRow(){
@@ -230,6 +230,17 @@ public class PlayListController {
     public void onClickedClearAll(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){ //鼠标左击
             myMediaPlayer.destroy();
+        }
+    }
+
+    /**播放列表表格的事件*/
+    @FXML
+    public void onClickedTableViewPlayList(MouseEvent mouseEvent) throws Exception{
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标左键双击
+            int index = tableViewPlayList.getSelectionModel().getSelectedIndex();   //获取选中的索引
+            myMediaPlayer.setCurrentPlayIndex(index);   //设置播放索引
+            myMediaPlayer.playSong(myMediaPlayer.getCurrentPlaySong()); //播放当前的索引歌曲
+            tableViewPlayList.refresh();    //刷新表格
         }
     }
 }

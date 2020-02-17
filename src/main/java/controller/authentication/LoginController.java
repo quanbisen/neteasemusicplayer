@@ -19,7 +19,6 @@ import util.*;
 
 import javax.annotation.Resource;
 import java.io.*;
-import java.security.NoSuchAlgorithmException;
 
 @Controller
 public class LoginController {
@@ -197,7 +196,7 @@ public class LoginController {
                     try {
                         loginConfigFile.createNewFile();  //创建新的文件
                         user.setCache(String.valueOf(System.currentTimeMillis()));
-                        UserUtils.saveUser(user,loginConfigFile);  //调用存储的函数，写入到文件
+                        JSONObjectUtils.saveObject(user,loginConfigFile);  //调用存储的函数，写入到文件
 
                         String USER_IMAGE_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "cache";
                         File path = new File(USER_IMAGE_PATH);

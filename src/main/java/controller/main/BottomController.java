@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import mediaplayer.Config;
 import mediaplayer.MyMediaPlayer;
 import mediaplayer.PlayMode;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -85,9 +86,6 @@ public class BottomController {
     @Resource
     private MyMediaPlayer myMediaPlayer;
 
-    /**存储音量值变量*/
-    private double sliderVolumeValue;
-
     @Resource
     private CenterController centerController;
 
@@ -137,8 +135,8 @@ public class BottomController {
         return labPlayListCount;
     }
 
-    public HBox gethBoxPlayListIcon() {
-        return hBoxPlayListIcon;
+    public Label getLabPlayModeIcon() {
+        return labPlayModeIcon;
     }
 
     public void initialize(){
@@ -158,14 +156,18 @@ public class BottomController {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 progressBarVolume.setProgress(newValue.doubleValue() );
-                if ( newValue.doubleValue() == 0){
+                if (observable.getValue().doubleValue() == 0){
                     System.out.println("===0");
-                    myMediaPlayer.getMediaPlayer().setMute(true);
+                    if (myMediaPlayer.getMediaPlayer() != null && !myMediaPlayer.getMediaPlayer().isMute()){
+                        myMediaPlayer.getMediaPlayer().setMute(true);
+                    }
                     labSoundIcon.setGraphic(ImageUtils.createImageView("image/NeteaseVolumeMuteIcon.png",19,19));
                 }
-                else if (myMediaPlayer.getMediaPlayer().isMute() && newValue.doubleValue()>0){
+                else if (observable.getValue().doubleValue() > 0){
                     System.out.println(">>>0");
-                    myMediaPlayer.getMediaPlayer().setMute(false);
+                    if (myMediaPlayer.getMediaPlayer() != null && myMediaPlayer.getMediaPlayer().isMute()){
+                        myMediaPlayer.getMediaPlayer().setMute(false);
+                    }
                     labSoundIcon.setGraphic(ImageUtils.createImageView("image/NeteaseVolumeIcon.png",19,19));
                 }
             }
@@ -429,18 +431,18 @@ public class BottomController {
             if (!myMediaPlayer.getMediaPlayer().isMute()){   //如果mediaPlayer不为空且不是静音，设置静音和一些GUI显示
                 myMediaPlayer.getMediaPlayer().setMute(true);
                 labSoundIcon.setGraphic(ImageUtils.createImageView("image/NeteaseVolumeMuteIcon.png",19,19));
-                sliderVolumeValue = sliderVolume.getValue();   //存储当前的值
+                myMediaPlayer.setMuteBeforeVolume(sliderVolume.getValue());   //存储当前的值
                 sliderVolume.setValue(0);
             }
             else if (myMediaPlayer.getMediaPlayer().isMute()){
                 myMediaPlayer.getMediaPlayer().setMute(false);
                 labSoundIcon.setGraphic(ImageUtils.createImageView("image/NeteaseVolumeIcon.png",19,19));
-                sliderVolume.setValue(sliderVolumeValue);      //更新为静音之前的值
+                sliderVolume.setValue(myMediaPlayer.getMuteBeforeVolume());      //更新为静音之前的值
             }
         }
     }
 
-    /**播放播放图标切换的鼠标事件处理*/
+    /**播放模式图标切换的鼠标事件处理*/
     @FXML
     public void onClickedPlayMode(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){     //鼠标左击才执行

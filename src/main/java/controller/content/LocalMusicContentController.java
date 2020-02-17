@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -238,7 +239,7 @@ public class LocalMusicContentController {
                 if (myMediaPlayer.getPlayListSongs() == null || myMediaPlayer.getPlayListSongs().size() ==0){
                     myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
                     myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.toPlayListSong(selectedLocalSong)));  //设置当前播放的歌曲在播放列表playList中的位置
-                } else if (myMediaPlayer.getCurrentPlaySong().equals(SongUtils.toPlayListSong(selectedLocalSong))) {
+                } else if (myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()).equals(SongUtils.toPlayListSong(selectedLocalSong)) && myMediaPlayer.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
                     return;
                 } else {
                     myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表

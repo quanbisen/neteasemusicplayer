@@ -64,7 +64,7 @@
 
         </center>
         <center>
-            <TableView fx:id="tableViewPlayListSong" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="tableViewPlayList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" onMouseClicked="#onClickedTableViewPlayList">
                 <columns>
                     <TableColumn fx:id="nameColumn" prefWidth="216.0" />
                     <TableColumn fx:id="singerColumn" prefWidth="140.0" />

@@ -1,8 +1,12 @@
 package application;
 
+import controller.main.BottomController;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import mediaplayer.Config;
+import model.MediaPlayerState;
+import mediaplayer.MyMediaPlayer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import javafx.application.Application;
@@ -12,8 +16,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
+import service.LoadMediaPlayerStateService;
 import service.ScheduledQueryUserService;
+import util.JSONObjectUtils;
 import util.WindowUtils;
+
+import java.io.IOException;
 
 @Component
 public class FXApplication extends Application {
@@ -29,6 +37,7 @@ public class FXApplication extends Application {
         ScheduledQueryUserService scheduledQueryUserService = applicationContext.getBean(ScheduledQueryUserService.class);  //启动加载用户的服务
         scheduledQueryUserService.setPeriod(Duration.seconds(30));
         scheduledQueryUserService.start();
+        applicationContext.getBean(LoadMediaPlayerStateService.class).start();
     }
 
     public static void main(String[] args) {
@@ -59,8 +68,21 @@ public class FXApplication extends Application {
     }
 
     @Override
-    public void stop() {
+    public void stop() throws IOException {
+        this.saveState();
         applicationContext.close();
+    }
+
+    /**保存媒体播放器的状态函数*/
+    private void saveState() throws IOException{
+        MyMediaPlayer myMediaPlayer = applicationContext.getBean(MyMediaPlayer.class);
+        myMediaPlayer.pause();
+        MediaPlayerState mediaPlayerState = new MediaPlayerState();
+        mediaPlayerState.setVolume(applicationContext.getBean(BottomController.class).getSliderVolume().getValue());
+        mediaPlayerState.setCurrentPlayIndex(myMediaPlayer.getCurrentPlayIndex());
+        mediaPlayerState.setPlayListSongs(myMediaPlayer.getPlayListSongs());
+        mediaPlayerState.setPlayMode(myMediaPlayer.getPlayMode());
+        JSONObjectUtils.saveObject(mediaPlayerState,applicationContext.getBean(Config.class).getMediaPlayerStateFile());
     }
 
 }

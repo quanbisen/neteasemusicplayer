@@ -6,11 +6,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import mediaplayer.Config;
 import mediaplayer.MyMediaPlayer;
 import model.RecentSong;
 import org.springframework.stereotype.Controller;
 import util.WindowUtils;
 import javax.annotation.Resource;
+import java.io.File;
 
 /**
  * @author super lollipop
@@ -41,13 +43,17 @@ public class ClearRecentPlayConfirmDialogController {
     @Resource
     private MyMediaPlayer myMediaPlayer;
 
+    @Resource
+    private Config config;
+
     /**
      * "确定"按钮的事件处理
      */
     @FXML
     public void onClickedConfirm(ActionEvent actionEvent) {
-        if (myMediaPlayer.getRecentPlayStorageFile().exists()){ //如果存储文件存在，删除
-            myMediaPlayer.getRecentPlayStorageFile().delete();
+        File recentPlayFile = config.getRecentPlayFile();
+        if (recentPlayFile.exists()){ //如果存储文件存在，删除
+            recentPlayFile.delete();
         }
         ObservableList<RecentSong> recentSongs = recentPlayContentController.getTableViewRecentPlaySong().getItems();
         if (recentSongs != null && recentSongs.size() > 0){

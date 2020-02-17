@@ -62,7 +62,6 @@ public final class SongUtils {
 //        Logger.getLogger("org.jaudiotagger.tag").setLevel(Level.OFF);
 //        Logger.getLogger("org.jaudiotagger.audio.mp3.MP3File").setLevel(Level.SEVERE);
 //        Logger.getLogger("org.jaudiotagger.tag.id3.ID3v23Tag").setLevel(Level.WARNING);
-        long currentTimeMillis1 = System.currentTimeMillis();
 
         List<File> songsFile = getSongsFile(folderList);    //根据目录文件集合获取所有的歌曲文件集合
         ObservableList<LocalSong> observableLocalSongList = FXCollections.observableArrayList();  //获取表格显示内容的集合

@@ -2,6 +2,8 @@ package mediaplayer;
 
 import controller.main.BottomController;
 import controller.content.RecentPlayContentController;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -28,6 +30,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author super lollipop
@@ -64,6 +68,9 @@ public class MyMediaPlayer implements IMediaPlayer {
     /**当前播放的歌曲在播放列表中位置索引*/
     private int currentPlayIndex;
 
+    /**播放器静音之前的音量*/
+    private Double muteBeforeVolume;
+
     /**
      * 注入底部播放进度的控制器
      */
@@ -73,11 +80,8 @@ public class MyMediaPlayer implements IMediaPlayer {
     @Resource
     private RecentPlayContentController recentPlayContentController;
 
-    /**记录最近播放记录文件存储位置*/
-    private String recentPlayFilePath = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "recent-play.xml";
-
-    /**记录最近播放记录文件句柄*/
-    private File recentPlayStorageFile = new File(recentPlayFilePath);;
+    @Resource
+    private Config config;
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
@@ -115,8 +119,9 @@ public class MyMediaPlayer implements IMediaPlayer {
         }
         return nextPlayIndexList;
     }
-    public File getRecentPlayStorageFile() {
-        return recentPlayStorageFile;
+
+    public Double getMuteBeforeVolume() {
+        return muteBeforeVolume;
     }
 
     public void setPlayMode(PlayMode playMode) {
@@ -137,6 +142,10 @@ public class MyMediaPlayer implements IMediaPlayer {
 
     public void setNextPlayIndexList(List<Integer> nextPlayIndexList) {
         this.nextPlayIndexList = nextPlayIndexList;
+    }
+
+    public void setMuteBeforeVolume(Double muteBeforeVolume) {
+        this.muteBeforeVolume = muteBeforeVolume;
     }
 
     /**
@@ -186,9 +195,10 @@ public class MyMediaPlayer implements IMediaPlayer {
 
         /**添加到最近播放的存储文件处理操作
          * start*/
-        if (!recentPlayStorageFile.exists()){ //如果文件不存在
-            recentPlayStorageFile.createNewFile();    //创建新文件
-            XMLUtils.createXML(recentPlayStorageFile,"RecentPlaySongs");
+        File recentPlayFile = config.getRecentPlayFile();
+        if (!recentPlayFile.exists()){ //如果文件不存在
+            recentPlayFile.createNewFile();    //创建新文件
+            XMLUtils.createXML(recentPlayFile,"RecentPlaySongs");
         }
         List<String> attributeNameList = new ArrayList<String>(){{
             add("name");
@@ -205,11 +215,11 @@ public class MyMediaPlayer implements IMediaPlayer {
             add(playListSong.getResource());
         }};
         try {
-            List<RecentSong> playedSongs = XMLUtils.getRecentPlaySongs(recentPlayStorageFile,"PlayedSong");   //获取存储文件中的所有最近播放歌曲，存储在集合中
+            List<RecentSong> playedSongs = XMLUtils.getRecentPlaySongs(recentPlayFile,"PlayedSong");   //获取存储文件中的所有最近播放歌曲，存储在集合中
             if (SongUtils.isContains(playedSongs,playListSong)){   //，直接
-                XMLUtils.removeOneRecord(recentPlayStorageFile,playListSong); //删除存储文件中的这条最近播放记录
+                XMLUtils.removeOneRecord(recentPlayFile,playListSong); //删除存储文件中的这条最近播放记录
             }
-            XMLUtils.addOneRecord(recentPlayStorageFile,"PlayedSong",attributeNameList,attributeValueList);   //添加存储到文件
+            XMLUtils.addOneRecord(recentPlayFile,"PlayedSong",attributeNameList,attributeValueList);   //添加存储到文件
         }catch (Exception e){
             e.printStackTrace();
         }

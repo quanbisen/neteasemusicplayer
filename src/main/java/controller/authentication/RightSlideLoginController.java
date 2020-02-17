@@ -2,7 +2,6 @@ package controller.authentication;
 
 import application.SpringFXMLLoader;
 import controller.main.CenterController;
-import controller.main.LeftController;
 import controller.main.MainController;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -24,7 +22,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import util.ImageUtils;
 import util.StageUtils;
-import util.UserUtils;
 import util.WindowUtils;
 
 import javax.annotation.Resource;
