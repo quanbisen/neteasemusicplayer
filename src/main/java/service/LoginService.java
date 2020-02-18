@@ -63,6 +63,8 @@ public class LoginService extends javafx.concurrent.Service<Boolean> {
 
                 if (applicationContext.getBean(Config.class).getUser() != null){
                     Platform.runLater(()->{
+                        applicationContext.getBean(ScheduledQueryUserService.class).restart();    //重新启动定时任务
+
                         ((Stage)loginController.getPfPassword().getScene().getWindow()).close();      //关闭窗口
                         WindowUtils.releaseBorderPane(mainController.getBorderPane());  //释放中间的面板，可以接受鼠标事件和改变透明度
                         leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(applicationContext.getBean(Config.class).getUser().getImageURL(),38,38));  //设置用户头像图片
@@ -74,7 +76,7 @@ public class LoginService extends javafx.concurrent.Service<Boolean> {
                             leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/musicgroup-indicator.fxml").load());   //歌单指示器组件
                             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/musicgroup-tab.fxml");    //"我喜欢的音乐"tab
                             leftController.getVBoxTabContainer().getChildren().add(fxmlLoader.load());
-                            Image imageFavorTabIcon = new Image("/image/FavorTabIcon.png",20,20,true,true);
+                            Image imageFavorTabIcon = new Image("/image/FavorTabIcon_20.png",20,20,true,true);
                             MusicGroupTabController musicGroupTabController = fxmlLoader.getController();
                             musicGroupTabController.getIvMusicGroupIcon().setImage(imageFavorTabIcon);
                             musicGroupTabController.getLabGroupName().setText("我喜欢的音乐");
@@ -84,7 +86,7 @@ public class LoginService extends javafx.concurrent.Service<Boolean> {
                         }
 
                         //加载用户创建的歌单
-
+                        applicationContext.getBean(ScheduledQueryUserService.class).restart();
                     });
                     return true;
                 }else {

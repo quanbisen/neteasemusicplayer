@@ -197,22 +197,6 @@ public final class WindowUtils {
             }
         });
 
-        /**居中显示部分*/
-        Platform.runLater(() -> {
-            // 获取屏幕可视化的宽高（Except TaskBar），把窗体设置在可视化的区域居中
-            primaryStage.setX((Screen.getPrimary().getVisualBounds().getWidth() - primaryStage.getWidth()) / 2.0);
-            primaryStage.setY((Screen.getPrimary().getVisualBounds().getHeight() - primaryStage.getHeight()) / 2.0);
-        });
-
-        /**修复最大化状态下，最小化窗体之后单击任务栏图标恢复时，窗体的高度和宽度是全屏的问题。修复后，宽度和高度是为屏幕可视化的宽度和高度*/
-        primaryStage.iconifiedProperty().addListener((observable, oldValue, newValue) -> {
-            //确保窗体在最大化状态下最小化后，单击任务栏图标显示时占据的屏幕大小是可视化的全屏
-            if (primaryStage.isMaximized()) {
-                primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
-                primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
-            }
-        });
-
         /**使用矩形裁剪可视化容器，然后向跟容器stackPane添加阴影容器，实现阴影效果*/
         double shadowSize = 9;
         Rectangle rectangle = new Rectangle();
@@ -273,9 +257,7 @@ public final class WindowUtils {
         return shadowPane;
     }
 
-    /**
-     * 阻止主舞台的borderPane响应鼠标事件和改变不透明度的函数
-     *
+    /**阻止主舞台的borderPane响应鼠标事件和改变不透明度的函数
      * @param borderPane 主窗体根容器borderPane
      */
     public static void blockBorderPane(BorderPane borderPane) {
@@ -288,9 +270,8 @@ public final class WindowUtils {
         borderPane.getBottom().setOpacity(0.4);
     }
 
-    /**
+    /**还原主舞台的borderPane响应鼠标事件和改变不透明度的函数
      * @param borderPane 主窗体根容器borderPane
-     *                   还原主舞台的borderPane响应鼠标事件和改变不透明度的函数
      */
     public static void releaseBorderPane(BorderPane borderPane) {
         //设置主舞台界面borderPane除了顶部的titleBar部分外，其它的部分都不响应鼠标事件
@@ -303,7 +284,6 @@ public final class WindowUtils {
 
     /**
      * 弹出信息提示动画的函数
-     *
      * @param stackPane 存放labFading组件的容器
      * @param labFading 逐渐淡出的Label组件
      */

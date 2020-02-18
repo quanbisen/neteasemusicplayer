@@ -50,6 +50,10 @@
     -fx-font-family: "Microsoft YaHei","SimSun";
     -fx-border-width: 0 0 1 0;
 }
+.text-input, .text-input:focused
+{
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
 #labLoginInformation
 {
     -fx-font-family: "Microsoft YaHei","SimSun";

@@ -13,6 +13,7 @@ import javafx.util.Duration;
 import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import service.ScheduledQueryUserService;
 import util.ImageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
@@ -65,7 +66,10 @@ public class LogoutConfirmDialogController {
     @FXML
     public void onClickedConfirm(ActionEvent actionEvent) throws IOException {
         if (applicationContext.getBean(Config.class).getUser() != null) {   //判断用户为登录状态
-            onClickedCancel(actionEvent);
+
+            applicationContext.getBean(ScheduledQueryUserService.class).cancel();   //停止定时任务
+
+            onClickedCancel(actionEvent);   //关闭dialog
             //播放移除动画
             TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.5), rightSlideLoginController.getBorderPaneRoot());
             rightSlideLoginController.getBorderPaneRoot().setTranslateX(0);

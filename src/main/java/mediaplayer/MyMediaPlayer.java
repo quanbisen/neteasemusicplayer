@@ -2,8 +2,6 @@ package mediaplayer;
 
 import controller.main.BottomController;
 import controller.content.RecentPlayContentController;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -30,9 +28,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * @author super lollipop
  * @date 19-12-8

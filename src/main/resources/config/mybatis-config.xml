@@ -12,5 +12,6 @@
         <mapper resource="mapper/singer-mapper.xml"></mapper>
         <mapper resource="mapper/album-mapper.xml"></mapper>
         <mapper resource="mapper/register-mapper.xml"></mapper>
+        <mapper resource="mapper/group-mapper.xml"></mapper>
     </mappers>
 </configuration>

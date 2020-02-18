@@ -10,7 +10,7 @@
       styleClass="hBoxTab" onMouseClicked="#onClickedMusicGroupTab">
     <ImageView fx:id="ivMusicGroupIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/MusicGroupIcon.png"/>
+            <Image requestedWidth="20.0" requestedHeight="20.0" url="@../../image/MusicGroupTabIcon_20.png"/>
         </image>
     </ImageView>
     <Label fx:id="labGroupName"/>

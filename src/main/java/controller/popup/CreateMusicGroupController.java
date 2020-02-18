@@ -63,6 +63,7 @@ public class CreateMusicGroupController {
 
     /**初始化函数，自动调用，以前需要实现接口Initializable,从JavaFX2.0开始就自动会调用了，不需要实现接口*/
     public void initialize(){
+
         labInputError.setText("");  //初始化不提示信息
         //为提供输入歌单名称的TextField添加文本属性监听器，当文本内容为空时，提示信息“歌单名不能为空”
         tfInput.textProperty().addListener(new ChangeListener<String>() {

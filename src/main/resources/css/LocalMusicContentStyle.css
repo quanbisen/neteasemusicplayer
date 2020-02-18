@@ -26,11 +26,13 @@ BorderPane
     -fx-scale-y: 0.98;
     -fx-scale-z: 0.98;
 }
+.text-input, .text-input:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
 .table-view
 {
     -fx-background-color: transparent;
 }
-
 /*****************
 歌曲表格的样式 start
 *****************/

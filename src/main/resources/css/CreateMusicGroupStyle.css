@@ -15,6 +15,18 @@
     -fx-background-color:#FFFFFF;
     -fx-border-color:#E8E8EA;
 }
+/*使TextField组件在鼠标聚焦时，如果文本为空还是显示提示文本prompt，默认是不显示的，会被删除
+Default JavaFX Style
+.text-input {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background,-30%);
+}
+.text-input:focused {
+    -fx-prompt-text-fill: transparent;
+}
+*/
+.text-input, .text-input:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
 .button
 {
     -fx-font-family: "Microsoft YaHei","SimSun";

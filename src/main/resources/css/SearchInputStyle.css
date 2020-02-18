@@ -4,7 +4,9 @@
     -fx-font-family: "Microsoft YaHei","SimSun";
     -fx-text-fill: #333333;
 }
-
+.text-input, .text-input:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
 .scroll-bar:vertical
 {
     -fx-pref-width: 8;
