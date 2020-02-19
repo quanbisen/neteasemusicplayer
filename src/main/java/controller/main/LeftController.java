@@ -1,6 +1,6 @@
 package controller.main;
 
-import controller.component.MusicGroupTabController;
+import controller.component.GroupTabController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -93,18 +93,6 @@ public class LeftController {
 
     public void initialize() throws IOException {
 
-//        LoadUserService loadUserService = applicationContext.getBean(LoadUserService.class);  //启动加载用户的服务
-//        loadUserService.setPeriod(Duration.seconds(2));
-//        loadUserService.setMaximumFailureCount(10);
-//        loadUserService.setOnSucceeded(event -> System.out.println("success"));
-//        loadUserService.setOnFailed(event -> System.out.println("fail"));
-//        loadUserService.setOnCancelled(event -> System.out.println("cancel"));
-//        loadUserService.setOnReady(event -> System.out.println("ready"));
-//        loadUserService.setOnRunning(event -> System.out.println("running"));
-////        loadUserService.setDelay(Duration.seconds(2));
-//        loadUserService.start();
-
-
         tabList = new LinkedList<>();
         tabList.add(hBoxSearchTab);
         tabList.add(hBoxExploreMusicTab);
@@ -118,14 +106,11 @@ public class LeftController {
             labUserName.setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称*/
 
             //加载歌单指示器和"我喜欢的音乐"tab标签  load cache part
-            vBoxTabContainer.getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/musicgroup-indicator.fxml").load());   //歌单指示器组件
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/musicgroup-tab.fxml");    //"我喜欢的音乐"tab
+            vBoxTabContainer.getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());   //歌单指示器组件
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/favorgroup-tab.fxml");    //"我喜欢的音乐"tab
             vBoxTabContainer.getChildren().add(fxmlLoader.load());
-            Image imageFavorTabIcon = new Image("/image/FavorTabIcon_20.png",20,20,true,true);
-            MusicGroupTabController musicGroupTabController = fxmlLoader.getController();
-            musicGroupTabController.getIvMusicGroupIcon().setImage(imageFavorTabIcon);
-            musicGroupTabController.getLabGroupName().setText("我喜欢的音乐");
-            tabList.add(musicGroupTabController.getHBoxMusicGroup());
+            GroupTabController groupTabController = fxmlLoader.getController();
+            tabList.add(groupTabController.getHBoxGroup());
 
             //加载用户创建的歌单tab标签
 
@@ -135,35 +120,47 @@ public class LeftController {
     /**添加歌单标签的函数
      * @param tabName 歌单名称*/
     public void addGroupTab(String tabName) throws IOException {
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/musicgroup-tab.fxml");    //"我喜欢的音乐"tab
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-tab.fxml");    //"我喜欢的音乐"tab
         vBoxTabContainer.getChildren().add(fxmlLoader.load());
-        Image imageMusicGroupIcon = new Image("/image/MusicGroupTabIcon_20.png",20,20,true,true);
-        MusicGroupTabController musicGroupTabController = fxmlLoader.getController();
-        musicGroupTabController.getIvMusicGroupIcon().setImage(imageMusicGroupIcon);
-        musicGroupTabController.getLabGroupName().setText(tabName);
-        tabList.add(musicGroupTabController.getHBoxMusicGroup());
+        GroupTabController groupTabController = fxmlLoader.getController();
+        groupTabController.getLabGroupName().setText(tabName);
+        tabList.add(groupTabController.getHBoxGroup());
     }
 
     /**根据歌单名称移除歌单标签的函数
      * @param tabName 歌单名称*/
     public void removeGroupTab(String tabName){
-        tabList.forEach(hBox -> {   //遍历tabList
-            if (((Label)hBox.getChildren().get(1)).getText().equals(tabName)){  //如果歌单名称相等，移除
-                vBoxTabContainer.getChildren().remove(hBox);
-                tabList.remove(hBox);
+        for (int i = 5; i < tabList.size(); i++) {
+            if (((Label)tabList.get(i).getChildren().get(0)).getText().equals(tabName)){  //如果歌单名称相等，移除
+                vBoxTabContainer.getChildren().remove(tabList.get(i));
+                tabList.remove(tabList.get(i));
             }
-        });
+        }
     }
 
     /**判断当前的歌单名称是否已经存在
      * @param tabName 歌单名称*/
     public boolean exist(String tabName){
-        for (int i = 0; i < tabList.size(); i++) {
-            if (((Label)tabList.get(i).getChildren().get(1)).getText().equals(tabName)){
+        for (int i = 5; i < tabList.size(); i++) {
+            if (((Label)tabList.get(i).getChildren().get(0)).getText().equals(tabName)){
                 return true;
             }
         }
         return false;
+    }
+
+    /**获取目前选中的是哪一个标签的名称,如果没有找到，会跑出异常
+     * */
+    public String getContextMenuShowingTabName() throws Exception {
+        int size = tabList.size();
+        if (size >= 5){
+            for (int i = 5; i < tabList.size(); i++) {
+                if (tabList.get(i).isMouseTransparent()){
+                    return ((Label)tabList.get(i).getChildren().get(0)).getText();
+                }
+            }
+        }
+        throw new Exception();
     }
 
     /**单击“搜索”标签事件处理*/

@@ -2,7 +2,7 @@ package service;
 
 import application.SpringFXMLLoader;
 import controller.authentication.LoginController;
-import controller.component.MusicGroupTabController;
+import controller.component.GroupTabController;
 import controller.main.CenterController;
 import controller.main.LeftController;
 import controller.main.MainController;
@@ -63,6 +63,8 @@ public class LoginService extends javafx.concurrent.Service<Boolean> {
 
                 if (applicationContext.getBean(Config.class).getUser() != null){
                     Platform.runLater(()->{
+                        //加载用户创建的歌单
+                        applicationContext.getBean(SynchronizeGroupService.class).start();
                         applicationContext.getBean(ScheduledQueryUserService.class).restart();    //重新启动定时任务
 
                         ((Stage)loginController.getPfPassword().getScene().getWindow()).close();      //关闭窗口
@@ -73,20 +75,20 @@ public class LoginService extends javafx.concurrent.Service<Boolean> {
 
                         //加载歌单指示器和"我喜欢的音乐"tab标签
                         try {
-                            leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/musicgroup-indicator.fxml").load());   //歌单指示器组件
-                            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/musicgroup-tab.fxml");    //"我喜欢的音乐"tab
+                            leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());   //歌单指示器组件
+                            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-tab.fxml");    //"我喜欢的音乐"tab
                             leftController.getVBoxTabContainer().getChildren().add(fxmlLoader.load());
                             Image imageFavorTabIcon = new Image("/image/FavorTabIcon_20.png",20,20,true,true);
-                            MusicGroupTabController musicGroupTabController = fxmlLoader.getController();
-                            musicGroupTabController.getIvMusicGroupIcon().setImage(imageFavorTabIcon);
-                            musicGroupTabController.getLabGroupName().setText("我喜欢的音乐");
-                            leftController.getTabList().add(musicGroupTabController.getHBoxMusicGroup());
+                            GroupTabController groupTabController = fxmlLoader.getController();
+                            groupTabController.getIvGroupIcon().setImage(imageFavorTabIcon);
+                            groupTabController.getLabGroupName().setText("我喜欢的音乐");
+                            leftController.getTabList().add(groupTabController.getHBoxGroup());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
 
-                        //加载用户创建的歌单
-                        applicationContext.getBean(ScheduledQueryUserService.class).restart();
+
+
                     });
                     return true;
                 }else {

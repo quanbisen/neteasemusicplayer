@@ -70,8 +70,8 @@ public class SynchronizeGroupService extends javafx.concurrent.Service<Void> {
                         if (tabList.size() >= 6){    //数量大于等于6证明有加载数据库的自定义歌单，从0开始，第四个是“我喜欢的音乐”tab，第五个用户自定义创建的歌单tab
                             int size = tabList.size();
                             for (int i = 5; i < size; i++) {
-                                if (!this.exist(groupList,((Label)tabList.get(i).getChildren().get(1)).getText())){   //如果查询到的歌单集合没有包含这个标签，移除它
-                                    leftController.removeGroupTab(((Label)tabList.get(i).getChildren().get(1)).getText());
+                                if (!this.exist(groupList,((Label)tabList.get(i).getChildren().get(0)).getText())){   //如果查询到的歌单集合没有包含这个标签，移除它
+                                    leftController.removeGroupTab(((Label)tabList.get(i).getChildren().get(0)).getText());
                                 }
                             }
                         }

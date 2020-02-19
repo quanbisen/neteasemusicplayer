@@ -1,7 +1,7 @@
 package controller.popup;
 
 import application.SpringFXMLLoader;
-import controller.component.MusicGroupTabController;
+import controller.component.GroupTabController;
 import controller.main.LeftController;
 import controller.main.MainController;
 import javafx.beans.value.ChangeListener;
@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -101,11 +100,11 @@ public class CreateMusicGroupController {
     private void createMusicGroup(String groupName) throws IOException {
         System.out.println("create");
         //UI更新部分
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/musicgroup-tab.fxml");
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-tab.fxml");
         leftController.getVBoxTabContainer().getChildren().add(fxmlLoader.load());
-        MusicGroupTabController musicGroupTabController = fxmlLoader.getController();
-        musicGroupTabController.getLabGroupName().setText(groupName);   //设置Label显示内容为输入的歌单名称
-        leftController.getTabList().add(musicGroupTabController.getHBoxMusicGroup());
+        GroupTabController groupTabController = fxmlLoader.getController();
+        groupTabController.getLabGroupName().setText(groupName);   //设置Label显示内容为输入的歌单名称
+        leftController.getTabList().add(groupTabController.getHBoxGroup());
 
         ((Stage)tfInput.getScene().getWindow()).close();
         WindowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度

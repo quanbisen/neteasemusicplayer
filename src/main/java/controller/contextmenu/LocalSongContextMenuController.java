@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-public class SongContextMenuController {
+public class LocalSongContextMenuController {
 
     @Resource
     private LocalMusicContentController localMusicContentController;

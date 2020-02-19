@@ -19,6 +19,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import mediaplayer.Config;
 import org.dom4j.DocumentException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -77,13 +78,6 @@ public class SearchInputContentController {
     @Resource
     private SearchResultContentController searchResultContentController;
 
-
-    /**播放器搜索历史的记录文件存放路径*/
-    private String SEARCH_HISTORY_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "search-history.xml";
-
-    /**播放器搜索历史的记录文件*/
-    private File SEARCH_HISTORY_FILE;
-
     private List<Node> searchHistoryRecordList;
 
     public BorderPane getSearchInputContainer() {
@@ -98,9 +92,6 @@ public class SearchInputContentController {
         return vBoxHistoryContainer;
     }
 
-    public File getSEARCH_HISTORY_FILE() {
-        return SEARCH_HISTORY_FILE;
-    }
 
     public void initialize() throws DocumentException, IOException {
         //初始化宽度、高度绑定
@@ -110,9 +101,9 @@ public class SearchInputContentController {
         labClearIcon.setVisible(false);  //初始化不可见
 
         searchHistoryRecordList = FXCollections.observableArrayList();    //初始化
-        SEARCH_HISTORY_FILE = new File(SEARCH_HISTORY_PATH);    //创建搜索存储文件句柄
-        if (SEARCH_HISTORY_FILE.exists()){  //如果文件存在，读取记录
-            List<String> searchRecordList = XMLUtils.getAllRecord(SEARCH_HISTORY_FILE,"SearchRecord","text");   //使用自定义XML工具获取SearchRecord元素下的所有属性为text对应的Value值
+        File searchHistoryFile = applicationContext.getBean(Config.class).getSearchHistoryFile();   //获取保存文件的句柄
+        if (searchHistoryFile.exists()){  //如果文件存在，读取记录
+            List<String> searchRecordList = XMLUtils.getAllRecord(searchHistoryFile,"SearchRecord","text");   //使用自定义XML工具获取SearchRecord元素下的所有属性为text对应的Value值
             if (searchRecordList != null && searchRecordList.size()>0){ //如果有记录
                 for (String oneRecord:searchRecordList){    //遍历读取到的所有的记录“字符串类型”
                     FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/search-history-record.fxml");   //获取fxml文件加载器
@@ -197,10 +188,11 @@ public class SearchInputContentController {
             vBoxHistoryContainer.getChildren().add(0,fxmlLoader.load());  //加载容器并添加到搜索历史的容器vBoxHistoryContainer
             ((SearchHistoryRecordController)fxmlLoader.getController()).getLabRecordText().setText(text);    //设置文本
             //后保存记录到存储文件
-            if (!SEARCH_HISTORY_FILE.exists()){     //如果存储搜索历史的文件不存在
-                XMLUtils.createXML(SEARCH_HISTORY_FILE,"SearchRecordList"); //创建一个新的XML文件
+            File searchHistoryFile = applicationContext.getBean(Config.class).getSearchHistoryFile();   //获取保存文件的句柄
+            if (!searchHistoryFile.exists()){     //如果存储搜索历史的文件不存在
+                XMLUtils.createXML(searchHistoryFile,"SearchRecordList"); //创建一个新的XML文件
             }
-            XMLUtils.addOneRecord(SEARCH_HISTORY_FILE,"SearchRecord","text",text);
+            XMLUtils.addOneRecord(searchHistoryFile,"SearchRecord","text",text);
         }
         else {  //否则，证明已有，需要把从第2个开始的，包含text文本的记录移除
             List<Node> recordNodeList = vBoxHistoryContainer.getChildren();
@@ -219,8 +211,9 @@ public class SearchInputContentController {
     public void onClickedTrashBin(MouseEvent mouseEvent) {
         if(mouseEvent.getButton() == MouseButton.PRIMARY){
             vBoxHistoryContainer.getChildren().remove(0,vBoxHistoryContainer.getChildren().size()); //删除GUI的记录
-            if (SEARCH_HISTORY_FILE.exists()){  //如果保存搜索记录的文件存在
-                SEARCH_HISTORY_FILE.delete();   //删除它
+            File searchHistoryFile = applicationContext.getBean(Config.class).getSearchHistoryFile();   //获取保存文件的句柄
+            if (searchHistoryFile.exists()){  //如果保存搜索记录的文件存在
+                searchHistoryFile.delete();   //删除它
             }
         }
     }

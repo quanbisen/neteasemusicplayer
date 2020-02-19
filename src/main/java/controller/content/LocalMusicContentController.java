@@ -286,7 +286,7 @@ public class LocalMusicContentController {
                                 if (!SongUtils.isCharacterCategory(this.getItem().getName())){  //选择的是实际上的歌曲行才执行
                                     /**设置表格行的右键菜单contextMenu*/
                                     try {
-                                        this.setContextMenu(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/contextmenu/song-contextmenu.fxml").load());
+                                        this.setContextMenu(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/contextmenu/localsong-contextmenu.fxml").load());
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }

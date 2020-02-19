@@ -33,7 +33,7 @@ public class GroupDaoImpl implements GroupDao{
     public void testInsert(){
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/application-context.xml");
         Group group = new Group();
-        group.setName("邓紫棋");
+        group.setName("林俊杰");
         group.setUserID("1769128867@qq.com");
         System.out.println(applicationContext.getBean(GroupDao.class).insert(group));
     }

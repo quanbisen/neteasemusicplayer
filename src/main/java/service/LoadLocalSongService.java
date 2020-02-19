@@ -4,7 +4,9 @@ import controller.content.LocalMusicContentController;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import mediaplayer.Config;
 import model.LocalSong;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import util.SongUtils;
@@ -27,6 +29,9 @@ public class LoadLocalSongService extends javafx.concurrent.Service<ObservableLi
     @Resource
     private LocalMusicContentController localMusicContentController;
 
+    @Resource
+    private ApplicationContext applicationContext;
+
     @Override
     protected Task<ObservableList<LocalSong>> createTask() {
         Task<ObservableList<LocalSong>> task = new Task<ObservableList<LocalSong>>() {
@@ -34,9 +39,9 @@ public class LoadLocalSongService extends javafx.concurrent.Service<ObservableLi
             @Override
             protected ObservableList<LocalSong> call() throws Exception {
 
-                File CHOSE_FOLDER_FILE = new File("src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator + "chose-folder.xml");
-                if (CHOSE_FOLDER_FILE.exists()) {
-                    List<String> folderList = XMLUtils.getAllRecord(CHOSE_FOLDER_FILE, "Folder", "path");
+                File choseFolderFile = applicationContext.getBean(Config.class).getChoseFolderConfigFile();
+                if (choseFolderFile.exists()) {
+                    List<String> folderList = XMLUtils.getAllRecord(choseFolderFile, "Folder", "path");
                     if (folderList != null && folderList.size() > 0) {   //如果选择的文件目录存在，即记录数大于0，获取目录下的歌曲信息集合
                         ObservableList<LocalSong> observableLocalSongList = SongUtils.getObservableLocalSongList(folderList);
                         if (observableLocalSongList.size()>0){

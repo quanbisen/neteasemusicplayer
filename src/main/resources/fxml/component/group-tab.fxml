@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox fx:id="hBoxGroup" alignment="CENTER_LEFT" onMouseClicked="#onClickedGroupTab" prefHeight="40.0" prefWidth="190.0" spacing="12.0" styleClass="hBoxTab" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.component.GroupTabController">
+
+    <Label fx:id="labGroupName" prefHeight="40.0" prefWidth="190.0" graphicTextGap="12.0">
+        <graphic>
+            <ImageView fx:id="ivGroupIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image requestedHeight="20.0" requestedWidth="20.0" url="@../../image/MusicGroupTabIcon_20.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Label>
+</HBox>

@@ -23,7 +23,7 @@ import java.io.IOException;
  * @date 20-2-12
  */
 @Controller
-public class MusicGroupIndicatorController {
+public class GroupIndicatorController {
 
     @FXML
     private ImageView ivAddMusicGroupIcon;

@@ -4,6 +4,10 @@ import org.springframework.stereotype.Component;
 import pojo.Register;
 import pojo.User;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author super lollipop
@@ -16,28 +20,32 @@ public class Config {
     private User user;
 
     /**播放器配置文件的存放路径*/
-    private String configPath = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "config" + File.separator;
+    private Path configPath;
 
     /**注册时的临时对象*/
     private Register register;
 
     /**获取登录配置存储的文件句柄*/
     public File getLoginConfigFile() {
-        return new File(configPath + "login-config.properties");
+        return configPath.resolve("login-config.properties").toFile();
     }
 
     /**获取选择的目录存储的文件句柄*/
     public File getChoseFolderConfigFile(){
-        return new File(configPath + "chose-folder.xml");
+        return configPath.resolve("chose-folder.xml").toFile();
     }
 
     /**获取最近播放记录文件句柄*/
     public File getRecentPlayFile(){
-        return new File(configPath + "recent-play.xml");
+        return configPath.resolve("recent-play.xml").toFile();
     }
 
     public File getMediaPlayerStateFile(){
-        return new File(configPath + "media-player-state.properties");
+        return configPath.resolve("media-player-state.properties").toFile();
+    }
+
+    public File getSearchHistoryFile(){
+        return configPath.resolve("search-history.xml").toFile();
     }
 
     public User getUser() {
@@ -54,6 +62,21 @@ public class Config {
 
     public void setRegister(Register register) {
         this.register = register;
+    }
+
+    public Config() throws IOException {
+        Path configParent;
+        Path configDir;
+        String appData = System.getenv("APPDATA");
+        System.out.println(appData);
+        if (appData != null) {
+            configParent = Paths.get(appData);
+            configDir = configParent.resolve("neteasemusicplayer");
+        } else {
+            configParent = Paths.get(System.getProperty("user.home"));
+            configDir = configParent.resolve(".neteasemusicplayer");
+        }
+        configPath = Files.createDirectories(configDir);
     }
 
 }

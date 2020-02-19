@@ -232,13 +232,4 @@ public final class XMLUtils {
             e.printStackTrace();
         }
     }
-
-    public static Map<String,String> getEmailConfig(File configFile) throws DocumentException {
-        Element root = getRootElement(configFile);
-        Map<String,String> map = new HashMap<>();
-        root.elements().forEach(element->{
-            map.put(((Element)element).getName(),((Element)element).getText());
-        });
-        return map;
-    }
 }

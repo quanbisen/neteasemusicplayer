@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import mediaplayer.Config;
 import mediaplayer.MyMediaPlayer;
 import org.dom4j.DocumentException;
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.LoadLocalSongService;
@@ -24,9 +25,15 @@ import util.WindowUtils;
 import util.XMLUtils;
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 public class ChoseFolderController {
@@ -66,6 +73,7 @@ public class ChoseFolderController {
     private MyMediaPlayer myMediaPlayer;
 
     public void initialize() throws IOException, DocumentException {
+
         File choseFolderConfigFile = applicationContext.getBean(Config.class).getChoseFolderConfigFile();
         if (!choseFolderConfigFile.exists()){  //如果文件不存在，创建文件
             choseFolderConfigFile.createNewFile();                          //创建XML文件
@@ -159,4 +167,5 @@ public class ChoseFolderController {
             vWrapCheckBox.getChildren().add(checkBox);     //添加组件
         }
     }
+
 }

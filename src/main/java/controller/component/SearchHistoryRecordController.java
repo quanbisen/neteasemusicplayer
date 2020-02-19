@@ -7,12 +7,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import mediaplayer.Config;
 import org.dom4j.DocumentException;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import util.XMLUtils;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 
 @Controller
@@ -31,28 +34,11 @@ public class SearchHistoryRecordController {
     @Resource
     private SearchInputContentController searchInputContentController;
 
-    public BorderPane getOneHistoryContainer() {
-        return oneHistoryContainer;
-    }
-
-    public void setOneHistoryContainer(BorderPane oneHistoryContainer) {
-        this.oneHistoryContainer = oneHistoryContainer;
-    }
+    @Resource
+    private ApplicationContext applicationContext;
 
     public Label getLabRecordText() {
         return labRecordText;
-    }
-
-    public void setLabRecordText(Label labRecordText) {
-        this.labRecordText = labRecordText;
-    }
-
-    public ImageView getIvDelete() {
-        return ivDelete;
-    }
-
-    public void setIvDelete(ImageView ivDelete) {
-        this.ivDelete = ivDelete;
     }
 
     /**初始化，最先执行这里...*/
@@ -65,8 +51,9 @@ public class SearchHistoryRecordController {
     public void onClickedClear(MouseEvent mouseEvent) throws DocumentException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             searchInputContentController.getvBoxHistoryContainer().getChildren().remove(ivDelete.getParent());    //GUI更新，移除本容器
-            if (searchInputContentController.getSEARCH_HISTORY_FILE().exists()){   //如果存储的文件存在
-                XMLUtils.removeOneRecord(searchInputContentController.getSEARCH_HISTORY_FILE(),"text",labRecordText.getText());    //移除本条记录
+            File searchHistoryFile = applicationContext.getBean(Config.class).getSearchHistoryFile();   //获取保存文件的句柄
+            if (searchHistoryFile.exists()){   //如果存储的文件存在
+                XMLUtils.removeOneRecord(searchHistoryFile,"text",labRecordText.getText());    //移除本条记录
             }
         }
     }

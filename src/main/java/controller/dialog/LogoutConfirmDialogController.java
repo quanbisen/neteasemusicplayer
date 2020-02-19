@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
@@ -19,6 +20,7 @@ import util.WindowUtils;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author super lollipop
@@ -93,6 +95,10 @@ public class LogoutConfirmDialogController {
 
             //删除GUI创建的歌单列表......
             leftController.getVBoxTabContainer().getChildren().remove(5,leftController.getVBoxTabContainer().getChildren().size());
+            List<HBox> tabList = leftController.getTabList();
+            for (int i = 4; i < tabList.size();) {
+                tabList.remove(i);
+            }
         }
 
     }

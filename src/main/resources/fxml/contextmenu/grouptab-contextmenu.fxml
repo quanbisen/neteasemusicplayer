@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+
+<?import javafx.scene.control.SeparatorMenuItem?>
+<ContextMenu fx:controller="controller.contextmenu.GroupTabContextMenuController"
+             xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <items>
+        <MenuItem mnemonicParsing="false" text="立即播放" onAction="#onClickedPlayNow"/>
+        <SeparatorMenuItem></SeparatorMenuItem>
+        <MenuItem mnemonicParsing="false" text="编辑" />
+        <MenuItem mnemonicParsing="false" text="删除歌单" onAction="#onClickedDeleteGroup"/>
+    </items>
+</ContextMenu>
