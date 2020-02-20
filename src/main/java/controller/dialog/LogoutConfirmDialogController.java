@@ -69,6 +69,12 @@ public class LogoutConfirmDialogController {
     public void onClickedConfirm(ActionEvent actionEvent) throws IOException {
         if (applicationContext.getBean(Config.class).getUser() != null) {   //判断用户为登录状态
 
+            applicationContext.getBean(Config.class).setUser(null); //清空登录用户对象
+            File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile(); //获取登录文件
+            if (loginConfigFile.exists()){
+                loginConfigFile.delete();   //删除播放器的登录文件
+            }
+
             applicationContext.getBean(ScheduledQueryUserService.class).cancel();   //停止定时任务
 
             onClickedCancel(actionEvent);   //关闭dialog
@@ -84,11 +90,7 @@ public class LogoutConfirmDialogController {
             });
             System.out.println("logout");
 
-            applicationContext.getBean(Config.class).setUser(null); //清空登录用户对象
-            File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile(); //获取登录文件
-            if (loginConfigFile.exists()){
-                loginConfigFile.delete();   //删除播放器的登录文件
-            }
+
             //更新显示用户头像和名称的GUI组件显示为未登录的状态
             leftController.getLabUserImage().setGraphic(ImageUtils.createImageView("/image/UnLoginImage.png",38,38));
             leftController.getLabUserName().setText("未登录");

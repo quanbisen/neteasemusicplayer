@@ -35,7 +35,7 @@ public class FXApplication extends Application {
         String APPLICATION_CONTEXT_PATH = "/config/application-context.xml";
         applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_PATH);
         ScheduledQueryUserService scheduledQueryUserService = applicationContext.getBean(ScheduledQueryUserService.class);  //启动加载用户的服务
-        scheduledQueryUserService.setPeriod(Duration.seconds(20));
+        scheduledQueryUserService.setPeriod(Duration.seconds(10));
         scheduledQueryUserService.start();
         applicationContext.getBean(LoadMediaPlayerStateService.class).start();
     }

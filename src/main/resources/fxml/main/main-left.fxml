@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefWidth="195.0" stylesheets="@../../css/LeftStyle.css" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.main.LeftController">
+<BorderPane prefWidth="195.0" stylesheets="@../../css/LeftStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.main.LeftController">
    <!--显示顶部导航的按钮-->
     <top>
       <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">

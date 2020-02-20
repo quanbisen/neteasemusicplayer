@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileFilter;
+import java.util.*;
 
 /**
  * @author super lollipop
@@ -35,6 +36,43 @@ public class AlbumDaoImpl implements AlbumDao{
         Album album = sqlSession.selectOne("model.AlbumMapper.findAlbumByName",name);
         sqlSession.close();
         return album;
+    }
+
+    @Override
+    public Map<String, String> queryAlbumMap(List<String> albumList) {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+//        Map<String, HashMap<String,String>> map = sqlSession.selectMap("model.AlbumMapper.queryAlbumMap",albumList,"name");
+//        sqlSession.close();
+//        Map<String,String> singerMap = new HashMap<>();
+//        map.keySet().forEach(s -> {
+//            singerMap.put(s,map.get(s).get("image_url_58"));
+//        });
+        Map<String,String> singerMap = new HashMap<>();
+        albumList.forEach(name->{
+            try {
+                Album album = sqlSession.selectOne("model.AlbumMapper.findAlbumByName",name);
+                System.out.println(album.toString());
+                if (album!=null){
+                    singerMap.put(name,album.getImageURL());
+                }
+            }catch (Exception e){e.printStackTrace();}
+
+        });
+        sqlSession.close();
+        return singerMap;
+    }
+
+    @Test
+    public void testQueryAlbumMap(){
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/application-context.xml");
+        List<String> list = new ArrayList<>();
+        list.add("不如吃茶去");
+        list.add("18");
+        Map<String,String> singerListMap = applicationContext.getBean(AlbumDao.class).queryAlbumMap(list);
+        Set<String> set = singerListMap.keySet();
+        set.forEach(s -> {
+            System.out.println(s + "-->" + singerListMap.get(s));
+        });
     }
 
     @Test

@@ -5,7 +5,7 @@
 
 <?import javafx.scene.control.SeparatorMenuItem?>
 <ContextMenu fx:controller="controller.contextmenu.LocalSongContextMenuController"
-             xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <items>
     <MenuItem mnemonicParsing="false" text="下一首播放" onAction="#onClickedNextPlay"/>
     <SeparatorMenuItem></SeparatorMenuItem>

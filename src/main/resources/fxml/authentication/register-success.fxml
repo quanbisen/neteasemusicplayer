@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="266.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authentication.RegisterSuccessController">
+<AnchorPane prefHeight="266.0" prefWidth="340.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authentication.RegisterSuccessController">
    <children>
       <Label layoutX="13.0" layoutY="39.0" prefHeight="43.0" prefWidth="315.0" style="-fx-alignment: center; -fx-text-fill: #529e4e;" text="注册成功">
          <font>

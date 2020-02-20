@@ -14,7 +14,7 @@
 <TabPane fx:id="tabPaneSearchResult" prefHeight="344.0" prefWidth="509.0"
          stylesheets="@../../css/SearchResultStyle.css"
          fx:controller="controller.content.SearchResultContentController"
-         tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" >
+         tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
    <tabs>
       <Tab>
          <content>

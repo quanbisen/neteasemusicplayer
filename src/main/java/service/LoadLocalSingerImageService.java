@@ -15,6 +15,9 @@ import util.ImageUtils;
 import util.SongUtils;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author super lollipop
@@ -37,15 +40,15 @@ public class LoadLocalSingerImageService extends javafx.concurrent.Service<Boole
 
             @Override
             protected Boolean call() throws Exception {
-
+                //获取歌手表格所有的歌手集合singerList
                 ObservableList<LocalSinger> observableLocalSingerList = localMusicContentController.getTableViewSinger().getItems();
 
                 for (int i = 0; i < observableLocalSingerList.size(); i++) {
                     Label labSinger = observableLocalSingerList.get(i).getLabSinger();
                     if (!SongUtils.isCharacterCategory(labSinger.getText())){   //如果不是字母分类行
                         /**歌手图片*/
-                        Singer singer = singerDao.querySinger(labSinger.getText()); //数据库查询歌手图片url
-                        if (singer != null){    //不为空，证明数据库查询到用户对象
+                        Singer singer = singerDao.querySinger(labSinger.getText());
+                        if (singer != null){
                             Platform.runLater(()->{
                                 Image imageSinger = new Image(singer.getImageURL(),48,48,false,true); //根据查询得到的url创建图片对象
                                 if (!imageSinger.isError()){ //如果没错误，设置歌手图片

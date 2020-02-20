@@ -11,7 +11,7 @@
 <BorderPane prefHeight="236.0" prefWidth="372.0" maxHeight="236.0" maxWidth="372.0"
             fx:id="actualPane"
             stylesheets="@../../css/CreateMusicGroupStyle.css"
-            fx:controller="controller.popup.CreateMusicGroupController"
+            fx:controller="controller.popup.CreateGroupController"
             xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1">
    <center>
@@ -30,8 +30,8 @@
          <bottom>
             <HBox alignment="CENTER" prefHeight="67.0" prefWidth="348.0" spacing="12.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button id="btnCreate" onMouseClicked="#onCreateButtonClicked" mnemonicParsing="false" prefHeight="32.0" prefWidth="92.0" text="新建" />
-                  <Button id="btnCancel" onMouseClicked="#onCancelButtonClicked" mnemonicParsing="false" prefHeight="32.0" prefWidth="92.0" text="取消" />
+                  <Button fx:id="btnCreate" onMouseClicked="#onCreateButtonClicked" mnemonicParsing="false" prefHeight="32.0" prefWidth="92.0" text="新建" />
+                  <Button fx:id="btnCancel" onMouseClicked="#onCancelButtonClicked" mnemonicParsing="false" prefHeight="32.0" prefWidth="92.0" text="取消" />
                </children>
             </HBox>
          </bottom>

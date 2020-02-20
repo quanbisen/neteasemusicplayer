@@ -14,4 +14,11 @@
         <result property="name" column="name"></result>
         <result property="imageURL" column="image_url_210"></result>
     </resultMap>
+
+    <select id="queryAlbumMap" parameterType="List" resultType="Map">
+        select name,image_url_58 from albums where name in
+        <foreach collection="list" index="index" item="name" open="(" close=")" separator=",">
+            #{name}
+        </foreach>
+    </select>
 </mapper>

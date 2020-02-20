@@ -15,6 +15,9 @@ import util.ImageUtils;
 import util.SongUtils;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author super lollipop
@@ -35,13 +38,14 @@ public class LoadLocalAlbumImageService extends javafx.concurrent.Service<Boolea
         Task<Boolean> task = new Task<Boolean>() {
             @Override
             protected Boolean call() throws Exception {
+                //获取专辑表格所有的专辑集合
                 ObservableList<LocalAlbum> observableLocalAlbumList = localMusicContentController.getTableViewAlbum().getItems();
 
                 for (int i = 0; i < observableLocalAlbumList.size(); i++) {
                     Label labAlbum = observableLocalAlbumList.get(i).getLabAlbum();
                     if (!SongUtils.isCharacterCategory(labAlbum.getText())){   //如果不是字母分类行
                         /**专辑图片*/
-                        Album album = albumDao.queryAlbumByName(labAlbum.getText()); //数据库查询专辑图片url
+                        Album album = albumDao.queryAlbumByName(labAlbum.getText());
                         if (album != null){    //不为空，证明数据库查询到对象
                             Platform.runLater(()->{
                                 Image imageAlbum = new Image(album.getImageURL(),48,48,false,true); //根据查询得到的url创建图片对象
@@ -52,6 +56,7 @@ public class LoadLocalAlbumImageService extends javafx.concurrent.Service<Boolea
                         }
                     }
                 }
+
                 return true;
             }
         };

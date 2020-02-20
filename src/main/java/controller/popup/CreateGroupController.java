@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
+import service.CreateGroupService;
 import util.WindowUtils;
 
 import javax.annotation.Resource;
@@ -26,7 +27,7 @@ import java.io.IOException;
  * @date 19-11-30
  */
 @Controller
-public class CreateMusicGroupController {
+public class CreateGroupController {
 
     /**错误提示信息*/
     private String ERROR_MESSAGE = "歌单名不能为空";
@@ -49,7 +50,7 @@ public class CreateMusicGroupController {
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
-    MainController mainController;
+    private MainController mainController;
 
 
     /**注入Spring上下文工具类*/
@@ -58,7 +59,11 @@ public class CreateMusicGroupController {
 
     /**注入左边放置标签的容器控制器*/
     @Resource
-    LeftController leftController;
+    private LeftController leftController;
+
+    public TextField getTfInput() {
+        return tfInput;
+    }
 
     /**初始化函数，自动调用，以前需要实现接口Initializable,从JavaFX2.0开始就自动会调用了，不需要实现接口*/
     public void initialize(){
@@ -85,11 +90,12 @@ public class CreateMusicGroupController {
     public void onCreateButtonClicked(MouseEvent mouseEvent) throws IOException{
         if (mouseEvent.getButton() == MouseButton.PRIMARY){  //鼠标左击
             if (!labInputError.getText().equals(ERROR_MESSAGE)){  //如果显示错误信息的label文本内容不是错误信息内容
-                if (tfInput.getText().trim().equals("")
-                        &&tfInput.getText().trim().length()==0){     //如果输入内容的TextField组件没有合法内容，直接调用取消按钮的事件处理，隐藏窗体
+                String text = tfInput.getText().trim();
+                if (text.equals("") || text.length()==0){     //如果输入内容的TextField组件没有合法内容，或者已经存在名称为text的歌单，直接调用取消按钮的事件处理，隐藏窗体
                     this.onCancelButtonClicked(mouseEvent);
-                }
-                else {  //否则
+                } else if (leftController.exist(text)){
+                    labInputError.setText("歌单名称已存在");
+                } else {  //否则
                     this.createMusicGroup(tfInput.getText());   //调用创建音乐歌单的函数
                 }
             }
@@ -108,6 +114,8 @@ public class CreateMusicGroupController {
 
         ((Stage)tfInput.getScene().getWindow()).close();
         WindowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
+
+        applicationContext.getBean(CreateGroupService.class).start();   //启动创建歌单更新数据库的服务
     }
 
     /**"取消"按钮鼠标单机事件处理*/
