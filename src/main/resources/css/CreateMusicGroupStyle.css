@@ -12,6 +12,8 @@
     -fx-effect: dropshadow(three-pass-box, #c9c9cb,5,0,0,0);
 }
 .text-field {
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 14;
     -fx-background-color:#FFFFFF;
     -fx-border-color:#E8E8EA;
 }

@@ -64,9 +64,11 @@ public class GroupTabController {
         labGroupName.setContextMenu(contextMenu);   //设置右键菜单
         /**通过设置contextMenu显示和隐藏事件来实现目前选中的是哪一个标签，参见LeftController的的getContextMenuShowingTabName*/
         contextMenu.setOnHidden(event -> {
+            System.out.println("hidden");
             hBoxGroup.setMouseTransparent(false);
         });
         contextMenu.setOnShowing(event -> {
+            System.out.println("showing");
             hBoxGroup.setMouseTransparent(true);
         });
     }

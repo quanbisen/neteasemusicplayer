@@ -35,7 +35,7 @@ public class FXApplication extends Application {
         String APPLICATION_CONTEXT_PATH = "/config/application-context.xml";
         applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_PATH);
         ScheduledQueryUserService scheduledQueryUserService = applicationContext.getBean(ScheduledQueryUserService.class);  //启动加载用户的服务
-        scheduledQueryUserService.setPeriod(Duration.seconds(10));
+        scheduledQueryUserService.setPeriod(Duration.seconds(15));
         scheduledQueryUserService.start();
         applicationContext.getBean(LoadMediaPlayerStateService.class).start();
     }
@@ -80,13 +80,14 @@ public class FXApplication extends Application {
     /**保存媒体播放器的状态函数*/
     private void saveState() throws IOException{
         MyMediaPlayer myMediaPlayer = applicationContext.getBean(MyMediaPlayer.class);
-        myMediaPlayer.pause();
         MediaPlayerState mediaPlayerState = new MediaPlayerState();
         mediaPlayerState.setVolume(applicationContext.getBean(BottomController.class).getSliderVolume().getValue());
         mediaPlayerState.setCurrentPlayIndex(myMediaPlayer.getCurrentPlayIndex());
         mediaPlayerState.setPlayListSongs(myMediaPlayer.getPlayListSongs());
         mediaPlayerState.setPlayMode(myMediaPlayer.getPlayMode());
         JSONObjectUtils.saveObject(mediaPlayerState,applicationContext.getBean(Config.class).getMediaPlayerStateFile());
+        //保存用户的登录信息
+        JSONObjectUtils.saveObject(applicationContext.getBean(Config.class).getUser(),applicationContext.getBean(Config.class).getLoginConfigFile());
     }
 
     /**

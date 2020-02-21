@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
@@ -68,7 +69,12 @@ public class RegisterVerifyController {
         timeSchedule.setPeriod(Duration.seconds(1));
         timeSchedule.start();
 
-
+        tfCode.setTextFormatter(new TextFormatter<String>(change -> {
+            if (change.getText().matches("^[0-9]") || change.isDeleted()){
+                return change;
+            }
+            return null;
+        }));
         /*handleRegisterService.setOnSucceeded(event -> {
             Register register = handleRegisterService.getValue();
             applicationContext.getBean(Config.class).setRegister(register); //更新register对象

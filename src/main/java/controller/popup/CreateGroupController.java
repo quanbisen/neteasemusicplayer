@@ -96,21 +96,14 @@ public class CreateGroupController {
                 } else if (leftController.exist(text)){
                     labInputError.setText("歌单名称已存在");
                 } else {  //否则
-                    this.createMusicGroup(tfInput.getText());   //调用创建音乐歌单的函数
+                    this.createMusicGroup();   //调用创建音乐歌单的函数
                 }
             }
         }
     }
 
     /**创建音乐歌单的函数*/
-    private void createMusicGroup(String groupName) throws IOException {
-        System.out.println("create");
-        //UI更新部分
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-tab.fxml");
-        leftController.getVBoxTabContainer().getChildren().add(fxmlLoader.load());
-        GroupTabController groupTabController = fxmlLoader.getController();
-        groupTabController.getLabGroupName().setText(groupName);   //设置Label显示内容为输入的歌单名称
-        leftController.getTabList().add(groupTabController.getHBoxGroup());
+    private void createMusicGroup() throws IOException {
 
         ((Stage)tfInput.getScene().getWindow()).close();
         WindowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度

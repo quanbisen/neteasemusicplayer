@@ -19,6 +19,7 @@ import util.*;
 
 import javax.annotation.Resource;
 import java.io.*;
+import java.util.function.UnaryOperator;
 
 @Controller
 public class LoginController {
@@ -95,6 +96,17 @@ public class LoginController {
         });
         btnLogin.setOpacity(0.8);           //初始化不透明度为0.8
 
+        //设置限制输入的文本格式
+        tfAccountID.setTextFormatter(new TextFormatter<String>(change -> {
+            if (change.getText().matches("^[a-zA-Z@.0-9]")){
+                return change;
+            }else if (change.isDeleted()){
+                System.out.println(change.getAnchor());
+                return change;
+            }else{
+                return null;
+            }
+        }));
 
         //"清除"账号的图标的显示时机
         tfAccountID.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -187,34 +199,6 @@ public class LoginController {
             LoginService loginService = applicationContext.getBean(LoginService.class);
             loginProgressIndicator.visibleProperty().bind(loginService.runningProperty());
             loginService.start();
-            loginService.valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (observable.getValue()){
-                    File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile();
-                    User user = applicationContext.getBean(Config.class).getUser();
-                    //存储登录成功的用户对象到本地文件
-                    loginConfigFile.delete();
-                    try {
-                        loginConfigFile.createNewFile();  //创建新的文件
-                        user.setCache(String.valueOf(System.currentTimeMillis()));
-                        JSONObjectUtils.saveObject(user,loginConfigFile);  //调用存储的函数，写入到文件
-
-                        String USER_IMAGE_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "cache";
-                        File path = new File(USER_IMAGE_PATH);
-                        if (!path.exists()){
-                            path.mkdirs();              //创建目录
-                        }
-
-                        File imageFile = new File(USER_IMAGE_PATH + File.separator + user.getCache()); //用用户的用户名作为图片命名
-                        user.setCache(null);
-                        HttpClientUtils.download(user.getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }else {
-                    System.out.println("false");
-                }
-            });
-
         }
     }
 

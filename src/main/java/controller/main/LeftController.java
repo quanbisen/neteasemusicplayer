@@ -14,6 +14,7 @@ import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
+import pojo.User;
 import util.ImageUtils;
 
 import javax.annotation.Resource;
@@ -71,6 +72,9 @@ public class LeftController {
     /**"本地音乐"标签的内容容器*/
     private Parent localMusicParent;
 
+    /**记录选择的标签索引*/
+    private int selectedTabIndex = -1;
+
     public VBox getVBoxTabContainer() {
         return vBoxTabContainer;
     }
@@ -91,6 +95,10 @@ public class LeftController {
         return localMusicParent;
     }
 
+    public int getSelectedTabIndex() {
+        return selectedTabIndex;
+    }
+
     public void initialize() throws IOException {
 
         tabList = new LinkedList<>();
@@ -101,8 +109,9 @@ public class LeftController {
 
         this.setSelectedTab(hBoxExploreMusicTab);   //初始化“发现音乐”为选择的标签
 
-        if (applicationContext.getBean(Config.class).getUser() != null){
-            labUserImage.setGraphic(ImageUtils.createImageView(File.separator + "cache"+File.separator+applicationContext.getBean(Config.class).getUser().getCache(),38,38));
+        User user = applicationContext.getBean(Config.class).getUser();
+        if (user != null){
+            labUserImage.setGraphic(ImageUtils.createImageView("file:" + applicationContext.getBean(Config.class).getCachePath() + File.separator + applicationContext.getBean(Config.class).getUser().getLoginTime().getTime(),38,38));
             labUserName.setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称*/
 
             //加载歌单指示器和"我喜欢的音乐"tab标签  load cache part
@@ -113,7 +122,14 @@ public class LeftController {
             tabList.add(groupTabController.getHBoxGroup());
 
             //加载用户创建的歌单tab标签
-
+            user.getGroupList().forEach(group -> {
+                try {
+                    this.addGroupTab(group.getName());  //添加歌单tab
+                    tabList.get(tabList.size() - 1).setUserData(group); //存储歌单数据对象
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
@@ -151,12 +167,12 @@ public class LeftController {
 
     /**获取目前选中的是哪一个标签的名称,如果没有找到，会跑出异常
      * */
-    public String getContextMenuShowingTabName() throws Exception {
+    public HBox getContextMenuShownTab() throws Exception {
         int size = tabList.size();
         if (size >= 5){
             for (int i = 5; i < tabList.size(); i++) {
                 if (tabList.get(i).isMouseTransparent()){
-                    return ((Label)tabList.get(i).getChildren().get(0)).getText();
+                    return tabList.get(i);
                 }
             }
         }
@@ -216,12 +232,21 @@ public class LeftController {
 
     /**设置选择的标签背景颜色的函数*/
     public void setSelectedTab(HBox selectedTab){
-        //首先重置所有的标签的背景颜色，我这里的HBox标签背景颜色是由另外一个HBox包裹做背景颜色显示的，所以需要getParent，设置parent的样式
+        this.resetSelectedTab();
+        //然后给当前选中的标签的parent容器添加css类名
+        selectedTab.getStyleClass().add("selectedHBox");
+        selectedTabIndex = tabList.indexOf(selectedTab);
+    }
+
+    public HBox getSelectedTab(){
+        return tabList.get(selectedTabIndex);
+    }
+
+    public void resetSelectedTab(){
+        //重置所有的标签的背景颜色，我这里的HBox标签背景颜色是由另外一个HBox包裹做背景颜色显示的，所以需要getParent，设置parent的样式
         for (HBox hBoxTab:tabList){
             hBoxTab.getStyleClass().remove("selectedHBox");  //移除parent的css类名
         }
-        //然后给当前选中的标签的parent容器添加css类名
-        selectedTab.getStyleClass().add("selectedHBox");
     }
 
     /**单击“用户头像”HBox容器的事件处理*/

@@ -23,27 +23,31 @@ public class GroupDaoImpl implements GroupDao{
 
     @Override
     public int insert(Group group) {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        int row = sqlSession.insert("pojo.GroupMapper.insert",group);
-        sqlSession.close();
-        return row;
+        try {
+            SqlSession sqlSession = sqlSessionFactory.openSession();
+            int row = sqlSession.insert("pojo.GroupMapper.insert",group);
+            sqlSession.close();
+            return row;
+        }catch (Exception e){e.printStackTrace();}
+        return 0;
     }
 
     @Test
     public void testInsert(){
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/application-context.xml");
-        Group group = new Group();
-        group.setName("林俊杰");
-        group.setUserID("1769128867@qq.com");
+        Group group = new Group(null,"林俊杰","1769128867@qq.com");
         System.out.println(applicationContext.getBean(GroupDao.class).insert(group));
     }
 
     @Override
     public List<Group> queryAll(String userID) {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        List<Group> groupList = sqlSession.selectList("pojo.GroupMapper.query",userID);
-        sqlSession.close();
-        return groupList;
+        try {
+            SqlSession sqlSession = sqlSessionFactory.openSession();
+            List<Group> groupList = sqlSession.selectList("pojo.GroupMapper.query",userID);
+            sqlSession.close();
+            return groupList;
+        }catch (Exception e){e.printStackTrace();}
+        return null;
     }
 
     @Test
@@ -54,36 +58,39 @@ public class GroupDaoImpl implements GroupDao{
 
     @Override
     public int delete(Group group) {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        int row = sqlSession.delete("pojo.GroupMapper.delete",group);
-        sqlSession.close();
-        return row;
+        try {
+            SqlSession sqlSession = sqlSessionFactory.openSession();
+            int row = sqlSession.delete("pojo.GroupMapper.delete",group);
+            sqlSession.close();
+            return row;
+        }catch (Exception e){e.printStackTrace();}
+        return 0;
+
     }
 
     @Test
     public void testDelete(){
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/application-context.xml");
-        Group group = new Group();
-        group.setName("邓紫棋");
-        group.setUserID("1769128867@qq.com");
+        Group group = new Group(null,"邓紫棋","1769128867@qq.com");
         System.out.println(applicationContext.getBean(GroupDao.class).delete(group));
     }
 
     @Override
     public int update(Group group) {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        int row = sqlSession.update("pojo.GroupMapper.update",group);
-        sqlSession.close();
-        return row;
+        try {
+            SqlSession sqlSession = sqlSessionFactory.openSession();
+            int row = sqlSession.update("pojo.GroupMapper.update",group);
+            sqlSession.close();
+            return row;
+        }catch (Exception e){e.printStackTrace();}
+        return 0;
     }
 
     @Test
     public void testUpdate(){
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/config/application-context.xml");
-        Group group = new Group();
+        Group group = new Group(1,"邓紫棋","1769128867@qq.com");
         group.setId(1);
-        group.setName("邓紫棋");
-        group.setUserID("1769128867@qq.com");
         System.out.println(applicationContext.getBean(GroupDao.class).update(group));
     }
 }

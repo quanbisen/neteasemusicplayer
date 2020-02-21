@@ -56,11 +56,13 @@ public class SynchronizeGroupService extends javafx.concurrent.Service<Void> {
                 User user = applicationContext.getBean(Config.class).getUser();
                 if (user != null){  //用户存在
                     List<Group> groupList = groupDao.queryAll(user.getId());    //查询用户创建的所有歌单
+                    user.setGroupList(groupList);
                     Platform.runLater(()->{
                         groupList.forEach(group -> {    //遍历查询到的歌单集合，逐个添加不存在的到左侧的标签tab栏
                             if (!leftController.exist(group.getName())){    //如果左侧的标签歌单没有查询到的歌单列表，添加
                                 try {
                                     leftController.addGroupTab(group.getName());
+                                    leftController.getTabList().get(leftController.getTabList().size() - 1).setUserData(group); //存储对象
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

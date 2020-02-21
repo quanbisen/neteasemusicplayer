@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane stylesheets="@../../css/EditGroupContentStyle.css"
+            fx:controller="controller.content.EditGroupContentController"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <BorderPane prefHeight="335.0" prefWidth="600.0" style="-fx-padding: 0 2.5em 0  2.5em;" BorderPane.alignment="CENTER">
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="编辑歌单信息">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #E4E4E7; -fx-border-width: 1 0 1 0;" BorderPane.alignment="CENTER">
+               <right>
+                  <AnchorPane minHeight="200.0" prefHeight="283.0" prefWidth="227.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <StackPane layoutX="12.0" layoutY="37.0" prefHeight="210.0" prefWidth="210.0" onMouseClicked="#onClickedAlbumImage">
+                           <children>
+                              <ImageView fx:id="ivAlbum" fitHeight="210.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../../../../folder.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label prefHeight="30.0" prefWidth="80.0" style="-fx-text-fill: #FFFFFF; -fx-alignment: center;" text="编辑封面" StackPane.alignment="BOTTOM_RIGHT">
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" preserveRatio="true">
+                                       <Image requestedHeight="16.0" requestedWidth="16.0" url="@../../image/EditIcon.png" />
+                                    </ImageView>
+                                 </graphic>
+                              </Label>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </AnchorPane>
+               </right>
+               <center>
+                  <GridPane prefHeight="217.0" prefWidth="313.0" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="45.0" minHeight="45.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="89.0" minHeight="4.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="218.0" minHeight="10.0" prefHeight="137.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label maxWidth="39.0" prefHeight="18.0" prefWidth="39.0" style="-fx-font-size: 13; -fx-text-fill: #666666;" text="名称：" />
+                        <TextField fx:id="tfGroupName" minHeight="42.0" prefHeight="42.0" prefWidth="218.0" GridPane.columnIndex="1" />
+                        <Label fx:id="labTips" style="-fx-alignment: center;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label prefHeight="206.0" prefWidth="39.0" style="-fx-font-size: 13; -fx-text-fill: #666666; -fx-alignment: top-left;" text="描述：" GridPane.rowIndex="2" />
+                        <TextArea fx:id="taDescription" prefHeight="160.0" prefWidth="274.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                     <BorderPane.margin>
+                        <Insets bottom="36.0" right="10.0" top="36.0" />
+                     </BorderPane.margin>
+                  </GridPane>
+               </center>
+            </BorderPane>
+         </center>
+      </BorderPane>
+   </top>
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="12.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnSave" mnemonicParsing="false" text="保存" onAction="#onClickedSave"/>
+            <Button fx:id="btnCancel" mnemonicParsing="false" text="取消" onAction="#onClickedCancel"/>
+         </children>
+         <padding>
+            <Insets left="28.0" top="30.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets left="30.0" />
+         </BorderPane.margin>
+      </HBox>
+   </center>
+</BorderPane>

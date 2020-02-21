@@ -1,0 +1,48 @@
+.label{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
+#btnSave{
+    -fx-pref-height: 30;
+    -fx-pref-width: 90;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 14;
+    -fx-background-color: #BC2F2D;
+    -fx-border-color: #BC2F2D;
+    -fx-text-fill: WHITE;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+#btnCancel
+{
+    -fx-pref-height: 30;
+    -fx-pref-width: 90;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 14;
+    -fx-background-color: WHITE;
+    -fx-text-fill: #BC2F2D;
+    -fx-border-color: #BC2F2D;
+    -fx-border-width: 1;
+}
+#btnSave:hover,#btnCancel:hover
+{
+    -fx-opacity: 0.8;
+}
+.text-field,.text-area
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 14;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E4E4E7;
+
+}
+.text-area .content
+{
+    -fx-background-color: #FFFFFF;
+}
+.text-area .scroll-bar:vertical:disabled {
+    -fx-opacity: 0;
+}
+#labTips
+{
+    -fx-text-fill: #BC2F2C;
+}

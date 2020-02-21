@@ -2,6 +2,9 @@ package pojo;
 
 import lombok.*;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @author super lollipop
  * @date 19-12-6
@@ -20,5 +23,6 @@ public class User {
     @NonNull
     private String token;
     private String imageURL;
-    private String cache;   /*记录缓存的头像文件名*/
+    private Date loginTime;   /*登录时间*/
+    private List<Group> groupList;
 }

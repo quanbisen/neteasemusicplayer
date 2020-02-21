@@ -12,4 +12,5 @@ public interface UserDao {
     User queryUserByIdAndPassword(User user);
     User queryUserByIdToken(User user);
     int insertUser(User user);
+    int updateLoginTime(String id);
 }

@@ -13,7 +13,7 @@ public class ReadLineMain {
 
     private static int countLine = 0;
     private static List<File> fileList = new ArrayList<>();
-    private static File root = new File("/media/ubuntu/Documents/IntelliJProject/neteasemusicplayer/src");
+    private static File root = new File("D:\\Documents\\IntelliJProject\\neteasemusicplayer\\src");
     public static void main(String[] args) throws IOException {
         getFile(root);
         for (File file : fileList){

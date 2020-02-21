@@ -1,6 +1,7 @@
 package mediaplayer;
 
 import org.springframework.stereotype.Component;
+import pojo.Group;
 import pojo.Register;
 import pojo.User;
 import java.io.File;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * @author super lollipop
@@ -46,6 +48,14 @@ public class Config {
 
     public File getSearchHistoryFile(){
         return configPath.resolve("search-history.xml").toFile();
+    }
+
+    public File getCachePath() throws IOException {
+        File path = configPath.resolve("cache").toFile();
+        if (!path.exists()){
+            path.mkdir();
+        }
+        return path;
     }
 
     public User getUser() {

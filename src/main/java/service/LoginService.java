@@ -18,10 +18,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import pojo.User;
+import util.HttpClientUtils;
 import util.ImageUtils;
+import util.JSONObjectUtils;
 import util.WindowUtils;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 
 @Service
@@ -59,9 +62,29 @@ public class LoginService extends javafx.concurrent.Service<Boolean> {
                 User user = new User();                    //创建用用持久化对象
                 user.setId(accountID);
                 user.setPassword(password);
-                applicationContext.getBean(Config.class).setUser(userDao.queryUserByIdAndPassword(user));
+                user = userDao.queryUserByIdAndPassword(user);
 
-                if (applicationContext.getBean(Config.class).getUser() != null){
+                if (user != null){
+                    try {
+                        int row = userDao.updateLoginTime(user.getId());  //更新数据库中的登录时间字段
+                        if (row == 1){
+                            user = userDao.queryUserByIdToken(user);
+                        }
+
+                        //保存登录信息到本地文件
+                        File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile();
+                        loginConfigFile.delete();
+                        loginConfigFile.createNewFile();  //创建新的文件
+
+                        JSONObjectUtils.saveObject(user,loginConfigFile);  //调用存储的函数，写入到文件
+
+                        File cachePath = applicationContext.getBean(Config.class).getCachePath();
+                        File imageFile = new File(cachePath + File.separator + user.getLoginTime().getTime()); //用用户的用户名作为图片命名
+                        HttpClientUtils.download(user.getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    applicationContext.getBean(Config.class).setUser(user);
                     Platform.runLater(()->{
                         //加载用户创建的歌单
                         applicationContext.getBean(SynchronizeGroupService.class).start();
@@ -76,18 +99,13 @@ public class LoginService extends javafx.concurrent.Service<Boolean> {
                         //加载歌单指示器和"我喜欢的音乐"tab标签
                         try {
                             leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());   //歌单指示器组件
-                            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-tab.fxml");    //"我喜欢的音乐"tab
+                            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/favorgroup-tab.fxml");    //"我喜欢的音乐"tab
                             leftController.getVBoxTabContainer().getChildren().add(fxmlLoader.load());
-                            Image imageFavorTabIcon = new Image("/image/FavorTabIcon_20.png",20,20,true,true);
                             GroupTabController groupTabController = fxmlLoader.getController();
-                            groupTabController.getIvGroupIcon().setImage(imageFavorTabIcon);
-                            groupTabController.getLabGroupName().setText("我喜欢的音乐");
                             leftController.getTabList().add(groupTabController.getHBoxGroup());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
-
 
                     });
                     return true;

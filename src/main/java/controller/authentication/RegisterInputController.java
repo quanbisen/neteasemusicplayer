@@ -112,6 +112,15 @@ public class RegisterInputController {
         btnRegister.setOpacity(0.8);           //初始化不透明度为0.8
         registerProgressIndicator.setVisible(false);  //设置加载指示器不显示
 
+        tfAccountID.setTextFormatter(new TextFormatter<String>(change -> {
+            if (change.getText().matches("^[a-zA-Z@.0-9]")){
+                return change;
+            }else if (change.isDeleted()){
+                return change;
+            }
+            return null;
+        }));
+
         Platform.runLater(() -> {
             btnRegister.requestFocus();         //"登录"按钮请求聚焦
         });

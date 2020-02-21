@@ -257,6 +257,17 @@ public class LocalMusicContentController {
         /**设置表格行的行为
          * start*/
         loadLocalSongService.setOnSucceeded(event -> {
+
+            tableViewSinger.setItems(SongUtils.getObservableLocalSingerList(tableViewSong.getItems())); //设置歌手表格的内容
+            LoadLocalSingerImageService loadLocalSingerImageService = applicationContext.getBean(LoadLocalSingerImageService.class);   //获取加载歌手图片的服务bean
+            progressIndicator.visibleProperty().bind(loadLocalSingerImageService.runningProperty());
+            loadLocalSingerImageService.start();
+
+            tableViewAlbum.setItems(SongUtils.getObservableLocalAlbumList(tableViewSong.getItems()));
+            LoadLocalAlbumImageService loadLocalAlbumImageService = applicationContext.getBean(LoadLocalAlbumImageService.class);   //获取加载专辑图片的服务bean
+            progressIndicator.visibleProperty().bind(loadLocalAlbumImageService.runningProperty());
+            loadLocalAlbumImageService.start();
+
             tableViewSong.setRowFactory(new Callback<TableView<LocalSong>, TableRow<LocalSong>>() {
                 @Override
                 public TableRow<LocalSong> call(TableView<LocalSong> param) {
@@ -469,6 +480,7 @@ public class LocalMusicContentController {
         /**“专辑”tab end*/
         /******************/
 
+
         /**为TabPane切换内容添加淡入淡出动画*/
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             Node oldContent = oldValue.getContent();
@@ -487,27 +499,28 @@ public class LocalMusicContentController {
                 tfSearch.setText("");
             }
 
-            if (newValue == tabPane.getTabs().get(1)){  //设置“歌手”tag标签对应的歌手表格内容
-                if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0 &&
-                        (tableViewSinger.getItems() == null || tableViewSinger.getItems().size() == 0)){
-                    tableViewSinger.setItems(SongUtils.getObservableLocalSingerList(tableViewSong.getItems())); //设置歌手表格的内容
-                    LoadLocalSingerImageService loadLocalSingerImageService = applicationContext.getBean(LoadLocalSingerImageService.class);   //获取加载歌手图片的服务bean
-                    progressIndicator.visibleProperty().bind(loadLocalSingerImageService.runningProperty());
-                    loadLocalSingerImageService.start();
-                }else { //否则，刷新表格
-                    tableViewSinger.refresh();
-                }
-            } else if (newValue == tabPane.getTabs().get(2)){   //切换到“专辑”tag标签对应的表格内容
-                if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0 &&
-                        (tableViewAlbum.getItems() == null || tableViewAlbum.getItems().size() == 0)){
-                    tableViewAlbum.setItems(SongUtils.getObservableLocalAlbumList(tableViewSong.getItems()));
-                    LoadLocalAlbumImageService loadLocalAlbumImageService = applicationContext.getBean(LoadLocalAlbumImageService.class);   //获取加载专辑图片的服务bean
-                    progressIndicator.visibleProperty().bind(loadLocalAlbumImageService.runningProperty());
-                    loadLocalAlbumImageService.start();
-                }else { //否则，刷新表格
-                    tableViewAlbum.refresh();
-                }
-            }
+
+//            if (newValue == tabPane.getTabs().get(1)){  //设置“歌手”tag标签对应的歌手表格内容
+//                if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0 &&
+//                        (tableViewSinger.getItems() == null || tableViewSinger.getItems().size() == 0)){
+//                    tableViewSinger.setItems(SongUtils.getObservableLocalSingerList(tableViewSong.getItems())); //设置歌手表格的内容
+//                    LoadLocalSingerImageService loadLocalSingerImageService = applicationContext.getBean(LoadLocalSingerImageService.class);   //获取加载歌手图片的服务bean
+//                    progressIndicator.visibleProperty().bind(loadLocalSingerImageService.runningProperty());
+//                    loadLocalSingerImageService.start();
+//                }else { //否则，刷新表格
+//                    tableViewSinger.refresh();
+//                }
+//            } else if (newValue == tabPane.getTabs().get(2)){   //切换到“专辑”tag标签对应的表格内容
+//                if (tableViewSong.getItems() != null && tableViewSong.getItems().size() > 0 &&
+//                        (tableViewAlbum.getItems() == null || tableViewAlbum.getItems().size() == 0)){
+//                    tableViewAlbum.setItems(SongUtils.getObservableLocalAlbumList(tableViewSong.getItems()));
+//                    LoadLocalAlbumImageService loadLocalAlbumImageService = applicationContext.getBean(LoadLocalAlbumImageService.class);   //获取加载专辑图片的服务bean
+//                    progressIndicator.visibleProperty().bind(loadLocalAlbumImageService.runningProperty());
+//                    loadLocalAlbumImageService.start();
+//                }else { //否则，刷新表格
+//                    tableViewAlbum.refresh();
+//                }
+//            }
 
         });
     }
