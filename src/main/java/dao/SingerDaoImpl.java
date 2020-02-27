@@ -1,13 +1,12 @@
 package dao;
 
-import org.apache.ibatis.annotations.MapKey;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import pojo.Singer;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
+import pojo.Singer;
 
 import javax.annotation.Resource;
 import java.util.*;

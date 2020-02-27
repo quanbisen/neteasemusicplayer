@@ -1,15 +1,18 @@
 package service;
 
-import dao.RegisterDao;
+import com.alibaba.fastjson.JSON;
 import javafx.concurrent.Task;
 import mediaplayer.Config;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import pojo.Register;
-import util.EmailUtils;
+import response.RegisterResponse;
+import util.HttpClientUtils;
 
 import javax.annotation.Resource;
+import java.nio.charset.Charset;
 
 /**
  * @author super lollipop
@@ -19,8 +22,6 @@ import javax.annotation.Resource;
 @Scope(value = "prototype")
 public class ResendRegisterCodeService extends javafx.concurrent.Service<ScheduledCountDownService> {
 
-    @Resource
-    private RegisterDao registerDao;
 
     @Resource
     private ApplicationContext applicationContext;
@@ -30,18 +31,25 @@ public class ResendRegisterCodeService extends javafx.concurrent.Service<Schedul
         Task<ScheduledCountDownService> task = new Task<ScheduledCountDownService>() {
             @Override
             protected ScheduledCountDownService call() throws Exception {
-                Register register = applicationContext.getBean(Config.class).getRegister();
-                //生成邮箱验证码
-                String code = EmailUtils.generateCode();
-                register.setCode(code);
-                EmailUtils.sendEmail(register.getId(),code);
-                //更新数据库此用户的创建时间和验证码
-                int row = registerDao.updateDateAndCode(register);
-                if (row == 1){
-                    return applicationContext.getBean(ScheduledCountDownService.class);
-                }else {
-                    return null;
+                try {
+                    //取出账号密码
+                    RegisterResponse registerResponse = applicationContext.getBean(Config.class).getRegisterResponse();
+                    String email = registerResponse.getId();
+                    String password = registerResponse.getPassword();
+                    String url = applicationContext.getBean(Config.class).getUserURL() + "/sendAuthenticationCode";
+                    MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create().addTextBody("email",email, ContentType.create("text/pain", Charset.forName("UTF-8"))).
+                            addTextBody("password",password,ContentType.create("text/pain",Charset.forName("UTF-8")));
+                    String responseString = HttpClientUtils.executePost(url,multipartEntityBuilder.build());
+                    if (registerResponse.getMessage().equals("验证码发送成功")){
+                        applicationContext.getBean(Config.class).setRegisterResponse(JSON.parseObject(responseString,RegisterResponse.class));
+                        ScheduledCountDownService scheduledCountDownService = applicationContext.getBean(ScheduledCountDownService.class);
+                        scheduledCountDownService.setTime(registerResponse.getExpireSecond());
+                        return scheduledCountDownService;
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
+                return null;
             }
         };
         return task;

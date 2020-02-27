@@ -101,7 +101,6 @@ public class LoginController {
             if (change.getText().matches("^[a-zA-Z@.0-9]")){
                 return change;
             }else if (change.isDeleted()){
-                System.out.println(change.getAnchor());
                 return change;
             }else{
                 return null;

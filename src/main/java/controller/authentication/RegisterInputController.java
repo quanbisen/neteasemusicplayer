@@ -219,27 +219,5 @@ public class RegisterInputController {
         RegisterService registerService = applicationContext.getBean(RegisterService.class);
         registerProgressIndicator.visibleProperty().bind(registerService.runningProperty());
         registerService.start();
-     /*   registerService.valueProperty().addListener(new ChangeListener<Boolean>() {
-            @SneakyThrows
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (observable.getValue()) { //
-                    vBox.getChildren().clear();
-                    vBox.getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-verify.fxml").load());
-                        *//*labRegisterInformation.setTextFill(Color.BLACK);
-                        labRegisterInformation.setText("注册成功");
-                        btnRegister.setText("转到登录页面");*//*
-                } else {
-                    labRegisterInformation.setTextFill(Color.rgb(181, 44, 46));
-                    labRegisterInformation.setText("注册失败");
-                }
-            }
-        });*/
-
-//        else {  //否则,则注册成功了,按钮可以转到登录页面。
-//            Scene registerScene = btnRegister.getScene();
-//            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/login.fxml");
-//            registerScene.setRoot(fxmlLoader.load());
-//        }
     }
 }

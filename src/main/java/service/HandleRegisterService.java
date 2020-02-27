@@ -1,23 +1,22 @@
 package service;
 
 import application.SpringFXMLLoader;
+import com.alibaba.fastjson.JSON;
 import controller.authentication.RegisterInputController;
 import controller.authentication.RegisterVerifyController;
-import dao.RegisterDao;
-import dao.UserDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import mediaplayer.Config;
-import org.apache.ibatis.exceptions.PersistenceException;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import pojo.Register;
-import pojo.User;
-import util.MD5Utils;
+import response.RegisterResponse;
+import util.HttpClientUtils;
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Date;
+import java.nio.charset.Charset;
 
 /**
  * @author super lollipop
@@ -26,12 +25,6 @@ import java.util.Date;
 @Service
 @Scope("prototype")
 public class HandleRegisterService extends javafx.concurrent.Service<Void> {
-
-    @Resource
-    private RegisterDao registerDao;
-
-    @Resource
-    private UserDao userDao;
 
     @Resource
     private ApplicationContext applicationContext;
@@ -47,43 +40,32 @@ public class HandleRegisterService extends javafx.concurrent.Service<Void> {
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                Date createTime = registerDao.query(applicationContext.getBean(Config.class).getRegister()).getCreateTime();
-                Date nowTime = registerDao.queryDate();
-                if ( (nowTime.getTime() - createTime.getTime()) / 1000 <= 60 ){ //时间合法
-                    Register register = registerDao.query(applicationContext.getBean(Config.class).getRegister());  //查询数据库的register对象
-                    applicationContext.getBean(Config.class).setRegister(register);     //更新applicationContext的register对象
-                    if (register.getCode().equals(registerVerifyController.getTfCode().getText())){    //如果验证码也正确
-                        User user = new User(register.getId(), register.getPassword(), MD5Utils.getMD5(register.getId()).substring(0, 6), MD5Utils.getMD5(register.getPassword()));         //创建用户对象，设置属性为输入的TextField文本内容
+
+                String url = applicationContext.getBean(Config.class).getUserURL() + "/register";
+                RegisterResponse registerResponse = applicationContext.getBean(Config.class).getRegisterResponse();
+                String id = registerResponse.getId();
+                String password = registerResponse.getPassword();
+                String code = registerVerifyController.getTfCode().getText();
+
+                MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create().
+                        addTextBody("email",id, ContentType.create("text/pain", Charset.forName("UTF-8"))).
+                        addTextBody("password",password,ContentType.create("text/pain",Charset.forName("UTF-8"))).
+                        addTextBody("code",code,ContentType.create("text/pain",Charset.forName("UTF-8")));
+                String responseString = HttpClientUtils.executePost(url,multipartEntityBuilder.build());
+
+                String message = JSON.parseObject(responseString,RegisterResponse.class).getMessage();
+                Platform.runLater(()->{
+                    registerVerifyController.getLabVerifyMessage().setText(message);
+                    if (registerVerifyController.getLabVerifyMessage().getText().equals("注册成功")){
+                        applicationContext.getBean(Config.class).setRegisterResponse(null); //清空注册临时对象
+                        registerVerifyController.getTimeSchedule().cancel();    //取消倒计时服务
                         try {
-                            int row = userDao.insertUser(user);
-                            if (row == 1) { //注册成功part
-                                applicationContext.getBean(Config.class).setRegister(null); //清空注册临时存储对象
-                                Platform.runLater(()->{
-                                    registerVerifyController.getTimeSchedule().cancel();    //取消倒计时服务
-                                    try {
-                                        registerInputController.getVisualPane().setBottom(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-success.fxml").load());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                });
-                            } else {
-                                Platform.runLater(()->{
-                                    registerVerifyController.getLabVerifyMessage().setText("注册失败");
-                                });
-                            }
-                        } catch (PersistenceException e) {
+                            registerInputController.getVisualPane().setBottom(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-success.fxml").load());
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    }else {
-                        Platform.runLater(()->{
-                            registerVerifyController.getLabVerifyMessage().setText("验证码输入错误");
-                        });
                     }
-                }else { //否则,时间过期了
-                    Platform.runLater(()->{
-                        registerVerifyController.getLabVerifyMessage().setText("注册失败");
-                    });
-                }
+                });
                 return null;
             }
         };

@@ -14,7 +14,7 @@ import javafx.util.Duration;
 import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
-import service.ScheduledQueryUserService;
+import service.ValidateUserService;
 import util.ImageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
@@ -75,7 +75,7 @@ public class LogoutConfirmDialogController {
                 loginConfigFile.delete();   //删除播放器的登录文件
             }
 
-            applicationContext.getBean(ScheduledQueryUserService.class).cancel();   //停止定时任务
+            applicationContext.getBean(ValidateUserService.class).cancel();   //停止定时任务
 
             onClickedCancel(actionEvent);   //关闭dialog
             //播放移除动画

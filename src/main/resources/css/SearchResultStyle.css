@@ -2,36 +2,43 @@ BorderPane
 {
     -fx-background-color: #FAFAFC;
 }
-.tab-pane
-{
-    -fx-tab-max-height: 40px;
-    -fx-background-color: transparent;
-    -fx-padding: 0 0 0 5px;
-}
-.tab
-{
-    -fx-background-color: transparent;
-    -fx-background-insets: 0px;
-    -fx-background-radius: 0px;
-}
-.tab:selected
-{
-    -fx-border-insets: 0;
-}
-/*被选中的HBox样式*/
-.selectedHBox
-{
-    -fx-background-color: transparent;
-    -fx-border-color: #C62E2E;
-    -fx-border-width: 0 0 2px 0;
-}
-.tab:selected .focus-indicator
-{
-    -fx-border-color: transparent;
-}
+
 .HBox
 {
     -fx-background-color: transparent;
+}
+#tabPaneSearchResult
+{
+    -fx-tab-min-width: 4.5em;
+    -fx-tab-max-width: 4.5em;
+    -fx-tab-min-height: 2.8em;
+    -fx-tab-max-height: 2.8em;
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 5px;
+}
+.tab .tab-label
+{
+    -fx-font-size: 0.83em;
+    -fx-text-fill: #999999;
+}
+.tab
+{
+    -fx-background-insets: 0 0 0 0;
+    -fx-padding: 0 0 0 0;
+    -fx-background-color: transparent;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.tab:selected .focus-indicator
+{
+    -fx-border-width: 0 0 2 0, 0 0 2 0;
+    -fx-border-color: #C62E2E;
+    -fx-border-insets: 0 0 -2 0, 0 0 -2 0;
+    -fx-border-radius: 2, 1; /* looks sharper if outer border has a tighter radius (2 instead of 3) */
+}
+.tab-pane > .tab-header-area
+{
+    -fx-padding: 0 0 0 1.0em;
 }
 .tab-pane *.tab-header-background
 {

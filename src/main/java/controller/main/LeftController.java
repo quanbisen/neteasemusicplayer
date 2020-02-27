@@ -14,6 +14,7 @@ import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
+import pojo.Group;
 import pojo.User;
 import util.ImageUtils;
 
@@ -111,25 +112,23 @@ public class LeftController {
 
         User user = applicationContext.getBean(Config.class).getUser();
         if (user != null){
-            labUserImage.setGraphic(ImageUtils.createImageView("file:" + applicationContext.getBean(Config.class).getCachePath() + File.separator + applicationContext.getBean(Config.class).getUser().getLoginTime().getTime(),38,38));
+//            labUserImage.setGraphic(ImageUtils.createImageView("file:" + applicationContext.getBean(Config.class).getCachePath() + File.separator + applicationContext.getBean(Config.class).getUser().getLoginTime().getTime(),38,38));
             labUserName.setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称*/
 
-            //加载歌单指示器和"我喜欢的音乐"tab标签  load cache part
-            vBoxTabContainer.getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());   //歌单指示器组件
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/favorgroup-tab.fxml");    //"我喜欢的音乐"tab
-            vBoxTabContainer.getChildren().add(fxmlLoader.load());
-            GroupTabController groupTabController = fxmlLoader.getController();
-            tabList.add(groupTabController.getHBoxGroup());
+
 
             //加载用户创建的歌单tab标签
-            user.getGroupList().forEach(group -> {
-                try {
-                    this.addGroupTab(group.getName());  //添加歌单tab
-                    tabList.get(tabList.size() - 1).setUserData(group); //存储歌单数据对象
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+//            List<Group> groupList = user.getGroupList();
+//            if (groupList != null){
+//                groupList.forEach(group -> {
+//                    try {
+//                        this.addGroupTab(group.getName());  //添加歌单tab
+//                        tabList.get(tabList.size() - 1).setUserData(group); //存储歌单数据对象
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                });
+//            }
         }
     }
 
@@ -151,6 +150,23 @@ public class LeftController {
                 vBoxTabContainer.getChildren().remove(tabList.get(i));
                 tabList.remove(tabList.get(i));
             }
+        }
+    }
+
+    /**添加登录用户的“我喜欢的音乐”tab和tab上面的标签文字函数*/
+    public void addFavorTab() throws IOException {
+        vBoxTabContainer.getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());    //歌单指示器组件
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/favorgroup-tab.fxml");    //"我喜欢的音乐"tab
+        vBoxTabContainer.getChildren().add(fxmlLoader.load());
+        GroupTabController groupTabController = fxmlLoader.getController();
+        tabList.add(groupTabController.getHBoxGroup());
+    }
+
+    /**当登录用户身份验证失败时，移除歌单tab组件的函数*/
+    public void removeGroupTab(){
+        vBoxTabContainer.getChildren().remove(5,vBoxTabContainer.getChildren().size() - 1);
+        for (int i = 4; i < tabList.size(); i++) {
+            tabList.remove(i);
         }
     }
 
@@ -195,15 +211,15 @@ public class LeftController {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxExploreMusicTab);
 
-//                exploreMusicParent = new Label("发现音乐");
+            centerController.getBorderPane().setCenter(new Label("敬请期待"));
 
-            Slider slider = new Slider(0, 1, 0.5);
-            slider.setShowTickMarks(true);
-            slider.setShowTickLabels(true);
-            slider.setMajorTickUnit(0.2f);
-            slider.setContextMenu(null);
-            slider.setBlockIncrement(0.1f);
-            centerController.getBorderPane().setCenter(slider);
+//            Slider slider = new Slider(0, 1, 0.5);
+//            slider.setShowTickMarks(true);
+//            slider.setShowTickLabels(true);
+//            slider.setMajorTickUnit(0.2f);
+//            slider.setContextMenu(null);
+//            slider.setBlockIncrement(0.1f);
+//            centerController.getBorderPane().setCenter(slider);
         }
     }
 

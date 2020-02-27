@@ -13,8 +13,9 @@ public class ReadLineMain {
 
     private static int countLine = 0;
     private static List<File> fileList = new ArrayList<>();
-    private static File root = new File("D:\\Documents\\IntelliJProject\\neteasemusicplayer\\src");
+    private static File root = new File(System.getProperty("user.dir") + File.separator + "src");
     public static void main(String[] args) throws IOException {
+        System.out.println();
         getFile(root);
         for (File file : fileList){
             System.out.println(file.getPath());

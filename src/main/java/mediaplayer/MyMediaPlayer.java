@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -156,19 +157,22 @@ public class MyMediaPlayer implements IMediaPlayer {
         }
         /**创建MediaPlayer播放*/
         String resource = playListSong.getResource();
-        if (resource.contains("http:")){
+        if (resource.contains("http:")){    //如果是在线资源，加载专辑图，并设置显示
             mediaPlayer = new MediaPlayer(new Media(resource)); //创建在线资源的媒体播放器对象
+            Image image = new Image(playListSong.getImageURL(),58,58,true,true);
+            if (!image.isError()){
+                bottomController.getLabAlbum().setGraphic(ImageUtils.createImageView(image,58,58));
+            }
+
         }else {
             mediaPlayer = new MediaPlayer(new Media(new File(playListSong.getResource()).toURI().toString()));  //创建本地资源的媒体播放器对象
+            //1.专辑图片
+            bottomController.getLabAlbum().setGraphic(ImageUtils.getAlbumImage(playListSong.getResource()));
         }
         mediaPlayer.setMute(isMute);
         mediaPlayer.volumeProperty().bind(bottomController.getSliderVolume().valueProperty());  //设置媒体播放器的音量绑定音量条组件的音量
         mediaPlayer.play();   //播放
 
-        /**设置播放时底部的UI组件显示*/
-        //1.专辑图片
-        bottomController.getLabAlbum().setGraphic(null);
-        bottomController.getLabAlbum().setGraphic(ImageUtils.getAlbumImage(playListSong.getResource()));
         //2."播放、暂停"按钮图片
         bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePlaying.png", 32, 32));
         //3.歌曲名称、歌手、歌曲总时间
@@ -178,12 +182,9 @@ public class MyMediaPlayer implements IMediaPlayer {
         //4.播放进度条设置
         bottomController.getSliderSong().setValue(0);
         bottomController.getSliderSong().setMax(TimeUtils.toSeconds(playListSong.getTotalTime()));  //设置歌曲滑动条的最大值为歌曲的秒数
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                if (!bottomController.getSliderSong().isPressed()) {  //没有被鼠标按下时
-                    bottomController.getSliderSong().setValue(observable.getValue().toSeconds());
-                }
+        mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            if (!bottomController.getSliderSong().isPressed()) {  //没有被鼠标按下时
+                bottomController.getSliderSong().setValue(observable.getValue().toSeconds());
             }
         });
         System.gc();

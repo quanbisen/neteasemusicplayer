@@ -1,15 +1,13 @@
 package mediaplayer;
 
 import org.springframework.stereotype.Component;
-import pojo.Group;
-import pojo.Register;
 import pojo.User;
-import java.io.File;
-import java.io.IOException;
+import response.RegisterResponse;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.Properties;
 
 /**
  * @author super lollipop
@@ -25,7 +23,25 @@ public class Config {
     private Path configPath;
 
     /**注册时的临时对象*/
-    private Register register;
+    private RegisterResponse registerResponse;
+
+    private String server;
+
+    public String getSongURL() {
+        return server + "/song";
+    }
+
+    public String getSingerURL(){
+        return server + "/singer";
+    }
+
+    public String getUserURL(){
+        return server + "/user";
+    }
+
+    public String getGroupURL(){
+        return server + "/group";
+    }
 
     /**获取登录配置存储的文件句柄*/
     public File getLoginConfigFile() {
@@ -50,12 +66,8 @@ public class Config {
         return configPath.resolve("search-history.xml").toFile();
     }
 
-    public File getCachePath() throws IOException {
-        File path = configPath.resolve("cache").toFile();
-        if (!path.exists()){
-            path.mkdir();
-        }
-        return path;
+    public Path getCachePath() throws IOException {
+        return configPath.resolve("cache");
     }
 
     public User getUser() {
@@ -66,15 +78,22 @@ public class Config {
         this.user = user;
     }
 
-    public Register getRegister() {
-        return register;
+    public RegisterResponse getRegisterResponse() {
+        return registerResponse;
     }
 
-    public void setRegister(Register register) {
-        this.register = register;
+    public void setRegisterResponse(RegisterResponse registerResponse) {
+        this.registerResponse = registerResponse;
     }
 
     public Config() throws IOException {
+        /**server part*/
+        BufferedReader in = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("config/server-config.properties")));
+        Properties properties = new Properties();
+        properties.load(in);
+        server = properties.getProperty("server");
+
+        /**local config part*/
         Path configParent;
         Path configDir;
         String appData = System.getenv("APPDATA");

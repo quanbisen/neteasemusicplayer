@@ -64,10 +64,6 @@ public class SearchInputContentController {
     @FXML
     private TextField tfSearchText;
 
-    /**注入歌曲的数据库操作类*/
-    @Resource
-    private SongDao songDao;
-
     /**注入Spring上下文对象*/
     @Resource
     private ApplicationContext applicationContext;
@@ -144,8 +140,8 @@ public class SearchInputContentController {
     public void onClickedSearchIcon(MouseEvent mouseEvent) throws IOException, DocumentException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             if (!tfSearchText.getText().trim().equals("")) {     //有输入文本内容才执行
-                this.saveSearchText(tfSearchText.getText());    //保存当前文本
-                this.startSearchService();                      //启动服务
+                saveSearchText(tfSearchText.getText());    //保存当前文本
+                startSearchService();                      //启动服务
             }
         }
     }
@@ -155,8 +151,8 @@ public class SearchInputContentController {
     public void onKeyPressedSearchTextField(KeyEvent keyEvent) throws IOException, DocumentException {
         if (keyEvent.getCode() == KeyCode.ENTER){  //如果按下的enter回车键才执行
             if (!tfSearchText.getText().trim().equals("")){     //有输入文本内容才执行
-                this.saveSearchText(tfSearchText.getText());    //保存当前文本
-                this.startSearchService();                      //启动服务
+                saveSearchText(tfSearchText.getText());    //保存当前文本
+                startSearchService();                      //启动服务
             }
         }
     }

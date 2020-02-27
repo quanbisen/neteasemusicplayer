@@ -8,7 +8,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
 <TabPane fx:id="tabPaneSearchResult" prefHeight="344.0" prefWidth="509.0"
@@ -43,15 +42,7 @@
             </StackPane>
          </content>
          <graphic>
-            <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
-               <children>
-                  <HBox fx:id="hBoxSong" alignment="CENTER" maxWidth="40.0" onMouseClicked="#onClickedHBoxSong" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
-                     <children>
-                        <Label styleClass="labIndicator" text="歌曲" />
-                     </children>
-                  </HBox>
-               </children>
-            </HBox>
+            <Label prefHeight="20.0" prefWidth="28.0" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 14px;" text="歌曲" />
          </graphic>
       </Tab>
       <Tab>
@@ -63,15 +54,7 @@
             </AnchorPane>
          </content>
          <graphic>
-            <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
-               <children>
-                  <HBox fx:id="hBoxSinger" alignment="CENTER" maxWidth="40.0" onMouseClicked="#onClickedHBoxSinger" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
-                     <children>
-                        <Label styleClass="labIndicator" text="歌手" />
-                     </children>
-                  </HBox>
-               </children>
-            </HBox>
+            <Label prefHeight="20.0" prefWidth="28.0" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 14px;" text="歌手" />
          </graphic>
       </Tab>
       <Tab>
@@ -83,15 +66,7 @@
             </AnchorPane>
          </content>
          <graphic>
-            <HBox alignment="CENTER" prefHeight="35.0" prefWidth="50.0" spacing="3.0">
-               <children>
-                  <HBox fx:id="hBoxAlbum" alignment="CENTER" maxWidth="40.0" onMouseClicked="#onClickedHBoxAlbum" prefHeight="0.0" prefWidth="40.0" spacing="3.0">
-                     <children>
-                        <Label styleClass="labIndicator" text="专辑" />
-                     </children>
-                  </HBox>
-               </children>
-            </HBox>
+            <Label prefHeight="20.0" prefWidth="28.0" style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;;-fx-font-size: 14px;" text="专辑" />
          </graphic>
       </Tab>
    </tabs>

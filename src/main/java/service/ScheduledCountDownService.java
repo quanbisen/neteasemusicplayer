@@ -12,10 +12,14 @@ import javax.annotation.Resource;
 @Scope("prototype")
 public class ScheduledCountDownService extends ScheduledService<Number> {
 
-    private int time = 60;
+    private int time;
 
     @Resource
     private RegisterVerifyController registerVerifyController;
+
+    public void setTime(int time) {
+        this.time = time;
+    }
 
     @Override
     protected Task<Number> createTask() {

@@ -11,18 +11,15 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-@RequiredArgsConstructor
 @NoArgsConstructor
 public class User {
-    @NonNull
     private String id;
-    @NonNull
     private String password;
-    @NonNull
     private String name;
-    @NonNull
     private String token;
+    private Date loginTime;
+    private String description;
+    private String sex;
+    private Date birthday;
     private String imageURL;
-    private Date loginTime;   /*登录时间*/
-    private List<Group> groupList;
 }

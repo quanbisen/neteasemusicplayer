@@ -1,5 +1,6 @@
 package model;
 
+import com.sun.istack.internal.NotNull;
 import javafx.scene.control.Label;
 import lombok.*;
 
@@ -11,17 +12,30 @@ import lombok.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class PlayListSong {
-    @NonNull
     private String name;
-    @NonNull
     private String singer;
-    @NonNull
     private String album;
-    @NonNull
     private String totalTime;
     private Label labRemoveIcon;
-    @NonNull
     private String resource;
-    private String lyrics;
+    private String lyricURL;
+    private String imageURL;
 
+    public PlayListSong(String name, String singer, String album, String totalTime, String resource, String lyricURL, String imageURL) {
+        this.name = name;
+        this.singer = singer;
+        this.album = album;
+        this.totalTime = totalTime;
+        this.resource = resource;
+        this.lyricURL = lyricURL;
+        this.imageURL = imageURL;
+    }
+
+    public PlayListSong(String name, String singer, String album, String totalTime, String resource) {
+        this.name = name;
+        this.singer = singer;
+        this.album = album;
+        this.totalTime = totalTime;
+        this.resource = resource;
+    }
 }

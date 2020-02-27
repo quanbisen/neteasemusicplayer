@@ -8,6 +8,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
+import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.ScheduledCountDownService;
@@ -66,22 +67,16 @@ public class RegisterVerifyController {
 
         /**启动倒计时定时服务*/
         timeSchedule = applicationContext.getBean(ScheduledCountDownService.class);
+        timeSchedule.setTime(applicationContext.getBean(Config.class).getRegisterResponse().getExpireSecond()); //设置倒计时时间
         timeSchedule.setPeriod(Duration.seconds(1));
         timeSchedule.start();
 
-        tfCode.setTextFormatter(new TextFormatter<String>(change -> {
-            if (change.getText().matches("^[0-9]") || change.isDeleted()){
-                return change;
-            }
-            return null;
-        }));
-        /*handleRegisterService.setOnSucceeded(event -> {
-            Register register = handleRegisterService.getValue();
-            applicationContext.getBean(Config.class).setRegister(register); //更新register对象
-            System.out.println(register.getCreateTime());
-            System.out.println((register.getCreateTime().getTime() / 1000) - (new Date().getTime() / 1000) + 60);
-
-        });*/
+//        tfCode.setTextFormatter(new TextFormatter<String>(change -> {
+//            if (change.getText().matches("^[0-9]") || change.isDeleted()){
+//                return change;
+//            }
+//            return null;
+//        }));
     }
 
     /**“确定”按钮的事件处理*/

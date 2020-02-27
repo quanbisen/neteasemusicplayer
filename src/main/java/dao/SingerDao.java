@@ -1,8 +1,7 @@
 package dao;
 
-import pojo.Singer;
 import org.springframework.stereotype.Repository;
-
+import pojo.Singer;
 import java.util.List;
 import java.util.Map;
 

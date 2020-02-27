@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="266.0" prefWidth="340.0" stylesheets="@../../css/RegisterVerifyStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authentication.RegisterVerifyController">
+<VBox prefHeight="266.0" prefWidth="340.0" stylesheets="@../../css/RegisterVerifyStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.authentication.RegisterVerifyController">
    <children>
       <HBox alignment="CENTER" prefHeight="80.0" prefWidth="340.0" spacing="8.0">
          <children>
@@ -59,7 +59,7 @@
             <Button fx:id="btnConfirm" mnemonicParsing="false" onMouseClicked="#onClickedConfirm" prefHeight="40.0" prefWidth="280.0" text="确定" />
          </children>
          <VBox.margin>
-            <Insets />
+            <Insets top="10.0" />
          </VBox.margin>
       </HBox>
    </children>

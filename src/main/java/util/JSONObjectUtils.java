@@ -22,7 +22,7 @@ public final class JSONObjectUtils {
     /**根据存储文件解析出MediaPlayerState对象的函数
      * @param file 存储文件
      * @return MediaPlayerState*/
-    public static MediaPlayerState parseMediaPlayerStage(File file) throws IOException {
+    public static MediaPlayerState parseMediaPlayerState(File file) throws IOException {
         return JSON.parseObject(readObject(file), MediaPlayerState.class);
     }
 

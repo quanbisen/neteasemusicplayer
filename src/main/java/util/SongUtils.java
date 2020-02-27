@@ -7,16 +7,24 @@ import javafx.scene.image.Image;
 import model.*;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.audio.mp3.MP3AudioHeader;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.tag.id3.AbstractID3v2Frame;
 import org.jaudiotagger.tag.id3.ID3v1Tag;
+import org.jaudiotagger.tag.id3.framebody.FrameBodyAPIC;
 import org.jaudiotagger.tag.wav.WavTag;
 import pojo.Song;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,99 +61,119 @@ public final class SongUtils {
         return songsFile;
     }
 
-    /**获取本地音乐“歌曲”tag下的表格内容
-     * @param folderList 目录文件集合
-     * @return ObservableList<LocalSong> */
-    public static ObservableList<LocalSong> getObservableLocalSongList(List<String> folderList)  {
+    public static LocalSong getLocalSong(File songFile){
         //设置日志的输出级别，音乐文件解析时有某些音乐文件会输出警告提示在控制台，关闭它方便调试
         Logger.getLogger("org.jaudiotagger").setLevel(Level.SEVERE);
 //        Logger.getLogger("org.jaudiotagger.tag").setLevel(Level.OFF);
 //        Logger.getLogger("org.jaudiotagger.audio.mp3.MP3File").setLevel(Level.SEVERE);
 //        Logger.getLogger("org.jaudiotagger.tag.id3.ID3v23Tag").setLevel(Level.WARNING);
+        try {
+            String name = "";
+            String singer = "";
+            String album = "";
+            String totalTime = "";
+            String size = "";
+            String resource = "";
+            String lyrics = "";
+            AudioFile audioFile = AudioFileIO.read(songFile);    //读取歌曲文件
+            /**mp3文件的处理部分*/
+            if (songFile.getPath().endsWith(".mp3")){
+                MP3File mp3File = (MP3File) audioFile;
+                if (mp3File.hasID3v2Tag()){
+                    Set<String> keySet = mp3File.getID3v2Tag().frameMap.keySet();
+                    if(keySet.contains("TIT2")){ //读取歌名
+                        name = mp3File.getID3v2Tag().frameMap.get("TIT2").toString();
+                        if(name!=null&&!name.equals("null")) {
+                            name=name.substring(name.indexOf("\"")+1, name.lastIndexOf("\""));
+                        }
+                    }
+                    if(keySet.contains("TPE1")){  //读取歌手
+                        singer = mp3File.getID3v2Tag().frameMap.get("TPE1").toString();
+                        if(singer!=null&&!singer.equals("null")) {
+                            singer=singer.substring(singer.indexOf("\"")+1, singer.lastIndexOf("\""));
+                        }
+                    }
+                    if(keySet.contains("TALB")){  //读取专辑名
+                        album = mp3File.getID3v2Tag().frameMap.get("TALB").toString();
+                        if(album!=null&&!album.equals("null")) {
+                            album=album.substring(album.indexOf("\"")+1, album.lastIndexOf("\""));
+                        }
+                    }
+                }
+                else if(mp3File.hasID3v1Tag()) {
+                    ID3v1Tag id3v1Tag = mp3File.getID3v1Tag();
+                    name = id3v1Tag.getFirst(FieldKey.TITLE);
+                    singer = id3v1Tag.getFirst(FieldKey.ARTIST);
+                    album = id3v1Tag.getFirst(FieldKey.ALBUM);
+                }
+                MP3AudioHeader mp3AudioHeader = (MP3AudioHeader)mp3File.getAudioHeader();
+                totalTime = mp3AudioHeader.getTrackLengthAsString();    //读取总时长，返回字符串类型，如“04：30”
+            }
+            /**wav文件的处理部分*/
+            else if (songFile.getPath().endsWith(".wav")){          //
+                WavTag wavTag = (WavTag)audioFile.getTag();
+                name = wavTag.getFirst(FieldKey.TITLE);
+                singer = wavTag.getFirst(FieldKey.ARTIST);
+                album = wavTag.getFirst(FieldKey.ALBUM);
+                totalTime = TimeUtils.toString(audioFile.getAudioHeader().getTrackLength());
+            }
+            else if (songFile.getPath().endsWith(".flac")){
+                Tag tag = audioFile.getTag();
+                name = tag.getFirst(FieldKey.TITLE);
+                singer = tag.getFirst(FieldKey.ARTIST);
+                album=tag.getFirst(FieldKey.ALBUM);
+                totalTime = TimeUtils.toString(audioFile.getAudioHeader().getTrackLength());
+            }
+            String m =String.valueOf(songFile.length()/1024.0/1024.0);
+            size=m.substring(0, m.indexOf(".")+3)+"MB";   //文件大小
+            resource = songFile.getPath();                //资源路径
+
+            /**trim name,singer,album String*/
+            name = name.trim();
+            singer = singer.trim().replace(" ","");
+            album = album.trim();
+            return new LocalSong(null,name,singer,album,totalTime,size,resource,lyrics);
+        }catch (Exception e){
+            System.out.println(songFile.getPath()+" cause exception.");
+        }
+        return null;
+    }
+
+    public static byte[] getAlbumBytes(File songFile) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+        MP3File mp3File = new MP3File(songFile);
+        if (mp3File.hasID3v2Tag()) {
+            try {
+                AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");
+                FrameBodyAPIC frameBodyAPIC = (FrameBodyAPIC) abstractID3v2Frame.getBody();
+                byte[] imageData = frameBodyAPIC.getImageData();
+                return imageData;
+            }catch (Exception e){e.printStackTrace();}
+        }
+        return null;
+    }
+
+    /**获取本地音乐“歌曲”tag下的表格内容
+     * @param folderList 目录文件集合
+     * @return ObservableList<LocalSong> */
+    public static ObservableList<LocalSong> getObservableLocalSongList(List<String> folderList)  {
 
         List<File> songsFile = getSongsFile(folderList);    //根据目录文件集合获取所有的歌曲文件集合
         ObservableList<LocalSong> observableLocalSongList = FXCollections.observableArrayList();  //获取表格显示内容的集合
 
         Map<Character,List<LocalSong>> characterLocalSongListMap = new HashMap<>();   //创建存储歌曲歌名首字的拼音字符映射的map
         for (File songFile:songsFile){
-            try {
-                String name = "";
-                String singer = "";
-                String album = "";
-                String totalTime = "";
-                String size = "";
-                String resource = "";
-                String lyrics = "";
-                AudioFile audioFile = AudioFileIO.read(songFile);    //读取歌曲文件
-                /**mp3文件的处理部分*/
-                if (songFile.getPath().endsWith(".mp3")){
-                    MP3File mp3File = (MP3File) audioFile;
-                    if (mp3File.hasID3v2Tag()){
-                        Set<String> keySet = mp3File.getID3v2Tag().frameMap.keySet();
-                        if(keySet.contains("TIT2")){ //读取歌名
-                            name = mp3File.getID3v2Tag().frameMap.get("TIT2").toString();
-                            if(name!=null&&!name.equals("null")) {
-                                name=name.substring(name.indexOf("\"")+1, name.lastIndexOf("\""));
-                            }
-                        }
-                        if(keySet.contains("TPE1")){  //读取歌手
-                            singer = mp3File.getID3v2Tag().frameMap.get("TPE1").toString();
-                            if(singer!=null&&!singer.equals("null")) {
-                                singer=singer.substring(singer.indexOf("\"")+1, singer.lastIndexOf("\""));
-                            }
-                        }
-                        if(keySet.contains("TALB")){  //读取专辑名
-                            album = mp3File.getID3v2Tag().frameMap.get("TALB").toString();
-                            if(album!=null&&!album.equals("null")) {
-                                album=album.substring(album.indexOf("\"")+1, album.lastIndexOf("\""));
-                            }
-                        }
-                    }
-                    else if(mp3File.hasID3v1Tag()) {
-                        ID3v1Tag id3v1Tag = mp3File.getID3v1Tag();
-                        name = id3v1Tag.getFirst(FieldKey.TITLE);
-                        singer = id3v1Tag.getFirst(FieldKey.ARTIST);
-                        album = id3v1Tag.getFirst(FieldKey.ALBUM);
-                    }
-                    MP3AudioHeader mp3AudioHeader = (MP3AudioHeader)mp3File.getAudioHeader();
-                    totalTime = mp3AudioHeader.getTrackLengthAsString();    //读取总时长，返回字符串类型，如“04：30”
-                }
-                /**wav文件的处理部分*/
-                else if (songFile.getPath().endsWith(".wav")){          //
-                    WavTag wavTag = (WavTag)audioFile.getTag();
-                    name = wavTag.getFirst(FieldKey.TITLE);
-                    singer = wavTag.getFirst(FieldKey.ARTIST);
-                    album = wavTag.getFirst(FieldKey.ALBUM);
-                    totalTime = TimeUtils.toString(audioFile.getAudioHeader().getTrackLength());
-                }
-                else if (songFile.getPath().endsWith(".flac")){
-                    Tag tag = audioFile.getTag();
-                    name = tag.getFirst(FieldKey.TITLE);
-                    singer = tag.getFirst(FieldKey.ARTIST);
-                    album=tag.getFirst(FieldKey.ALBUM);
-                    totalTime = TimeUtils.toString(audioFile.getAudioHeader().getTrackLength());
-                }
-                String m =String.valueOf(songFile.length()/1024.0/1024.0);
-                size=m.substring(0, m.indexOf(".")+3)+"MB";   //文件大小
-                resource = songFile.getPath();                //资源路径
-
-                /**trim name,singer,album String*/
-                name = name.trim();
-                singer = singer.trim().replace(" ","");
-                album = album.trim();
-
-                char head = Pinyin4jUtils.getFirstPinYinHeadChar(name);
+            LocalSong localSong = getLocalSong(songFile);
+            if (localSong != null){
+                char head = Pinyin4jUtils.getFirstPinYinHeadChar(localSong.getName());
                 if (!characterLocalSongListMap.containsKey(head)){   //如果没有这个字符的map映射，创建集合存储
                     List<LocalSong> characterList = new ArrayList<>();
-                    characterList.add(new LocalSong(null,name,singer,album,totalTime,size,resource,lyrics));
+                    characterList.add(localSong);
                     characterLocalSongListMap.put(head,characterList);
                 }
                 else {  //否则，就有了这个字符的map映射了，追加到字符对应的value的List集合
                     List<LocalSong> characterListValue = characterLocalSongListMap.get(head);
-                    characterListValue.add(new LocalSong(null,name,singer,album,totalTime,size,resource,lyrics));
+                    characterListValue.add(localSong);
                 }
-            }catch (Exception e){
-                System.out.println(songFile.getPath()+" cause exception.");
             }
         }
         for (char c:characterLocalSongListMap.keySet()){ //遍历字符集合map，把对应的value集合添加到observableSongList
@@ -428,7 +456,7 @@ public final class SongUtils {
      * @param song
      * @return PlayListSong*/
     public static PlayListSong toPlayListSong(Song song){
-        return new PlayListSong(song.getName(), song.getSinger(), song.getAlbum(), song.getTotalTime(), song.getResource());
+        return new PlayListSong(song.getName(), song.getSinger(), song.getAlbum(), song.getTotalTime(), song.getResourceURL(),song.getLyricURL(),song.getAlbumURL());
     }
 
     /**把在线音乐对象模型转换成播放列表模型函数

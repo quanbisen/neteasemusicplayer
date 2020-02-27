@@ -1,9 +1,6 @@
 package pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 /**
  * @author super lollipop
@@ -12,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
+@NoArgsConstructor
 public class Song {
+    private Integer id;
     @NonNull
     private String name;
     @NonNull
@@ -21,8 +20,9 @@ public class Song {
     private String album;
     @NonNull
     private String totalTime;
+    private String size;
     @NonNull
-    private String resource;
-    private String lyrics;
+    private String resourceURL;
+    private String lyricURL;
     private String albumURL;
 }

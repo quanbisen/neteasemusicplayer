@@ -6,12 +6,18 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.audio.mp3.MP3File;
+import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.tag.id3.AbstractID3v1Tag;
 import org.jaudiotagger.tag.id3.AbstractID3v2Frame;
+import org.jaudiotagger.tag.id3.ID3v1Tag;
+import org.jaudiotagger.tag.id3.ID3v24Tag;
 import org.jaudiotagger.tag.id3.framebody.FrameBodyAPIC;
 import org.junit.Test;
 
+import javax.annotation.Resource;
 import java.io.*;
+import java.nio.file.Files;
 
 /**
  * @author super lollipop
@@ -96,7 +102,7 @@ public final class ImageUtils {
                 MP3File mp3File = new MP3File(resource);
                 if (mp3File.hasID3v2Tag()){
                     try {
-                        AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");
+                        AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");    //APIC：Attached picture
                         FrameBodyAPIC frameBodyAPIC = (FrameBodyAPIC) abstractID3v2Frame.getBody();
                         byte[] imageData = frameBodyAPIC.getImageData();
                         Image image = new Image(new ByteArrayInputStream(imageData),58,58,false,true);
@@ -117,6 +123,29 @@ public final class ImageUtils {
         }
 
         return imgAlbum;
+    }
+
+    public static void setAlbumImage(String imageFile) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+        MP3File mp3File = new MP3File((System.getProperty("user.home")) + File.separator + "Music" + File.separator + "Amy Diamond - Heartbeats.mp3");
+        System.out.println(mp3File.hasID3v2Tag());
+        System.out.println((System.getProperty("user.home")) + File.separator + "Pictures" + File.separator + "林俊杰.png");
+        File file = new File((System.getProperty("user.home")) + File.separator + "Pictures" + File.separator + "林俊杰.png");
+        if (file.exists()){
+            byte[] fileBytes = Files.readAllBytes(file.toPath());
+            System.out.println(fileBytes.length);
+            AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");    //APIC：Attached picture
+            FrameBodyAPIC frameBodyAPIC = (FrameBodyAPIC) abstractID3v2Frame.getBody();
+            frameBodyAPIC.setImageData(fileBytes);
+        }
+        mp3File.getID3v2Tag().setField(FieldKey.TITLE,"Heartbeats");
+
+        System.out.println(mp3File.getID3v2Tag().getFrame("TIT2"));
+        mp3File.save();
+    }
+
+    @Test
+    public void testSetAlbumImage() throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
+        setAlbumImage("");
     }
 
     /**获取一个ImageView的对象

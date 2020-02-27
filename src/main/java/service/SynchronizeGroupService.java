@@ -1,9 +1,13 @@
 package service;
 
+import application.SpringFXMLLoader;
+import com.alibaba.fastjson.JSON;
+import controller.component.GroupTabController;
 import controller.main.LeftController;
 import dao.GroupDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import mediaplayer.Config;
@@ -12,6 +16,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import pojo.Group;
 import pojo.User;
+import util.HttpClientUtils;
+
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
@@ -23,9 +29,6 @@ import java.util.List;
 @Service
 @Scope("prototype")
 public class SynchronizeGroupService extends javafx.concurrent.Service<Void> {
-
-    @Resource
-    private GroupDao groupDao;
 
     @Resource
     private ApplicationContext applicationContext;
@@ -52,32 +55,40 @@ public class SynchronizeGroupService extends javafx.concurrent.Service<Void> {
 
             @Override
             protected Void call() throws Exception {
-                System.out.println(Thread.currentThread().getName());
                 User user = applicationContext.getBean(Config.class).getUser();
+
                 if (user != null){  //用户存在
-                    List<Group> groupList = groupDao.queryAll(user.getId());    //查询用户创建的所有歌单
-                    user.setGroupList(groupList);
-                    Platform.runLater(()->{
-                        groupList.forEach(group -> {    //遍历查询到的歌单集合，逐个添加不存在的到左侧的标签tab栏
-                            if (!leftController.exist(group.getName())){    //如果左侧的标签歌单没有查询到的歌单列表，添加
-                                try {
-                                    leftController.addGroupTab(group.getName());
-                                    leftController.getTabList().get(leftController.getTabList().size() - 1).setUserData(group); //存储对象
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                    try {
+                        String url = applicationContext.getBean(Config.class).getGroupURL() + "/query/" + user.getToken();
+                        String responseString = HttpClientUtils.executeGet(url);    //执行查询歌单
+                        List<Group> groupList = JSON.parseArray(responseString,Group.class);
+//                    user.setGroupList(groupList);
+                        if (groupList != null && groupList.size() > 0){
+                            Platform.runLater(()->{
+                                groupList.forEach(group -> {    //遍历查询到的歌单集合，逐个添加不存在的到左侧的标签tab栏
+                                    if (!leftController.exist(group.getName())){    //如果左侧的标签歌单没有查询到的歌单列表，添加
+                                        try {
+                                            leftController.addGroupTab(group.getName());
+                                            leftController.getTabList().get(leftController.getTabList().size() - 1).setUserData(group); //存储对象
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                                List<HBox> tabList = leftController.getTabList();
+                                if (tabList.size() >= 6){    //数量大于等于6证明有加载数据库的自定义歌单，从0开始，第四个是“我喜欢的音乐”tab，第五个用户自定义创建的歌单tab
+                                    int size = tabList.size();
+                                    for (int i = 5; i < size; i++) {
+                                        if (!this.exist(groupList,((Label)tabList.get(i).getChildren().get(0)).getText())){   //如果查询到的歌单集合没有包含这个标签，移除它
+                                            leftController.removeGroupTab(((Label)tabList.get(i).getChildren().get(0)).getText());
+                                        }
+                                    }
                                 }
-                            }
-                        });
-                        List<HBox> tabList = leftController.getTabList();
-                        if (tabList.size() >= 6){    //数量大于等于6证明有加载数据库的自定义歌单，从0开始，第四个是“我喜欢的音乐”tab，第五个用户自定义创建的歌单tab
-                            int size = tabList.size();
-                            for (int i = 5; i < size; i++) {
-                                if (!this.exist(groupList,((Label)tabList.get(i).getChildren().get(0)).getText())){   //如果查询到的歌单集合没有包含这个标签，移除它
-                                    leftController.removeGroupTab(((Label)tabList.get(i).getChildren().get(0)).getText());
-                                }
-                            }
+                            });
                         }
-                    });
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
                 return null;
             }

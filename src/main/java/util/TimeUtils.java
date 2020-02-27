@@ -1,6 +1,9 @@
 package util;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public final class TimeUtils {
 
     /**把时间格式为mm：ss的字符串转换成秒数
@@ -37,5 +40,10 @@ public final class TimeUtils {
             secondStr = String.valueOf(seconds);
         }
         return minuteStr + ":" + secondStr;
+    }
+
+    public static String formatDate(Date date, String pattern){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(date);
     }
 }

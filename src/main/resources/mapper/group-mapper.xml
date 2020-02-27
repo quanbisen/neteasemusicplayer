@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pojo.GroupMapper">
-    <insert id="insert" parameterType="Group">
+    <insert id="insert" parameterType="Group" useGeneratedKeys="true" keyProperty="id">
         insert into t_groups(name,user_id) values (#{name},#{userID})
     </insert>
     <select id="query" parameterType="String" resultMap="groupResultMap">

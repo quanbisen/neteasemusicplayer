@@ -14,7 +14,7 @@
    <top>
       <BorderPane prefHeight="45.0" prefWidth="600.0" style="-fx-border-color: #E4E4E7; -fx-background-color: WHITE;" BorderPane.alignment="CENTER">
          <left>
-            <TextField fx:id="tfSearchText" onKeyPressed="#onKeyPressedSearchTextField" prefHeight="35.0" prefWidth="521.0" promptText="搜索音乐、歌手" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER" />
+            <TextField fx:id="tfSearchText" onKeyPressed="#onKeyPressedSearchTextField" prefHeight="35.0" prefWidth="521.0" promptText="搜索音乐、歌手、专辑" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER" />
          </left>
          <right>
             <HBox fx:id="hBoxSearch" alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="50.0" spacing="5.0" BorderPane.alignment="CENTER">

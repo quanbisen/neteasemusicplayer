@@ -37,21 +37,6 @@ public class SearchResultContentController {
     @FXML
     private TabPane tabPaneSearchResult;
 
-    /**"歌曲"的HBox容器*/
-    @FXML
-    private HBox hBoxSong;
-
-    /**"歌手"的HBox容器*/
-    @FXML
-    private HBox hBoxSinger;
-
-    /**"专辑"的HBox容器*/
-    @FXML
-    private HBox hBoxAlbum;
-
-    /**装标签的集合tabList*/
-    private List<HBox> tabList;
-
     /**查询进度指示器组件*/
     @FXML
     private ProgressIndicator progressIndicator;
@@ -97,11 +82,7 @@ public class SearchResultContentController {
     }
 
     public void initialize() {
-        tabList = new ArrayList<>();
-        tabList.add(hBoxSong);
-        tabList.add(hBoxSinger);
-        tabList.add(hBoxAlbum);
-        this.setSelectedTab(hBoxSong);
+
         //宽度和高度绑定为父容器的宽度
         tabPaneSearchResult.prefWidthProperty().bind(((Region) searchInputContentController.getSearchInputContainer().getCenter()).widthProperty());
         tabPaneSearchResult.prefHeightProperty().bind(((Region) searchInputContentController.getSearchInputContainer().getCenter()).heightProperty());
@@ -138,41 +119,6 @@ public class SearchResultContentController {
 
     }
 
-    /**单击"歌曲"标签的事件处理*/
-    @FXML
-    public void onClickedHBoxSong(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            this.setSelectedTab(hBoxSong);
-        }
-    }
-
-
-
-    /**单击"歌手"标签的事件处理*/
-    @FXML
-    public void onClickedHBoxSinger(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            this.setSelectedTab(hBoxSinger);
-        }
-    }
-
-    /**单击"专辑"标签的事件处理*/
-    @FXML
-    public void onClickedHBoxAlbum(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            this.setSelectedTab(hBoxAlbum);
-        }
-    }
-
-    /**设置选择的标签背景颜色的函数*/
-    private void setSelectedTab(HBox selectedTab){
-        //首先重置所有的标签的背景颜色，我这里的HBox标签背景颜色是由另外一个HBox包裹做背景颜色显示的，所以需要getParent，设置parent的样式
-        for (HBox hBoxTab:tabList){
-            hBoxTab.getStyleClass().remove("selectedHBox");  //移除parent的css类名
-        }
-        //然后给当前选中的标签的parent容器添加css类名
-        selectedTab.getStyleClass().add("selectedHBox");
-    }
 
     /**单击表格存储歌曲的容器事件处理*/
     @FXML

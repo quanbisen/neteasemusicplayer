@@ -4,7 +4,6 @@ import controller.main.BottomController;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
-import javafx.util.Duration;
 import mediaplayer.Config;
 import model.MediaPlayerState;
 import mediaplayer.MyMediaPlayer;
@@ -18,7 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
 import service.LoadMediaPlayerStateService;
-import service.ScheduledQueryUserService;
+import service.ValidateUserService;
 import util.JSONObjectUtils;
 import util.WindowUtils;
 import java.io.IOException;
@@ -34,9 +33,9 @@ public class FXApplication extends Application {
         /**Spring配置文件路径*/
         String APPLICATION_CONTEXT_PATH = "/config/application-context.xml";
         applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_PATH);
-        ScheduledQueryUserService scheduledQueryUserService = applicationContext.getBean(ScheduledQueryUserService.class);  //启动加载用户的服务
-        scheduledQueryUserService.setPeriod(Duration.seconds(15));
-        scheduledQueryUserService.start();
+//        ScheduledQueryUserService scheduledQueryUserService = applicationContext.getBean(ScheduledQueryUserService.class);  //启动加载用户的服务
+//        scheduledQueryUserService.setPeriod(Duration.seconds(15));
+//        scheduledQueryUserService.start();
         applicationContext.getBean(LoadMediaPlayerStateService.class).start();
     }
 
@@ -87,7 +86,7 @@ public class FXApplication extends Application {
         mediaPlayerState.setPlayMode(myMediaPlayer.getPlayMode());
         JSONObjectUtils.saveObject(mediaPlayerState,applicationContext.getBean(Config.class).getMediaPlayerStateFile());
         //保存用户的登录信息
-        JSONObjectUtils.saveObject(applicationContext.getBean(Config.class).getUser(),applicationContext.getBean(Config.class).getLoginConfigFile());
+//        JSONObjectUtils.saveObject(applicationContext.getBean(Config.class).getUser(),applicationContext.getBean(Config.class).getLoginConfigFile());
     }
 
     /**
@@ -102,10 +101,10 @@ public class FXApplication extends Application {
             }
             if (observable.getValue()){
                 System.out.println("cancel");
-                applicationContext.getBean(ScheduledQueryUserService.class).cancel();
+                applicationContext.getBean(ValidateUserService.class).cancel();
             }else {
                 System.out.println("restart");
-                applicationContext.getBean(ScheduledQueryUserService.class).restart();
+                applicationContext.getBean(ValidateUserService.class).restart();
             }
         });
     }

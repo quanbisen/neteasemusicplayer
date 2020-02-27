@@ -73,9 +73,7 @@ public class EditGroupContentController {
     }
 
     public void initialize() throws Exception {
-        Platform.runLater(()->{
-            taDescription.lookup(".scroll-bar:vertical").setDisable(true);
-        });
+
         group = (Group) leftController.getContextMenuShownTab().getUserData();
         tfGroupName.setText(group.getName());
         taDescription.setText(group.getDescription());
@@ -102,8 +100,10 @@ public class EditGroupContentController {
                 btnSave.setOpacity(0.8);
                 btnSave.setMouseTransparent(true);
             }
+            if (!taDescription.lookup(".scroll-bar:vertical").isDisable()){
+                taDescription.lookup(".scroll-bar:vertical").setDisable(true);
+            }
         }));
-
     }
 
     /**专辑封面的事件处理*/

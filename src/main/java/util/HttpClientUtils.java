@@ -2,22 +2,49 @@ package util;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 import java.io.*;
-
-import static sun.net.www.protocol.http.HttpURLConnection.userAgent;
 
 /**
  * @author super lollipop
  * @date 20-2-13
  */
 public class HttpClientUtils {
+
+    private static CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+
+    private static RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(10000).setConnectTimeout(10000).build();
+
+    public static String executePost(String url, HttpEntity httpEntity) throws IOException {
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setConfig(requestConfig);
+        httpPost.setEntity(httpEntity);
+        HttpResponse httpResponse = httpClient.execute(httpPost);
+        return EntityUtils.toString(httpResponse.getEntity());
+    }
+
+    public static String executeGet(String url) throws IOException{
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.setConfig(requestConfig);
+        HttpResponse httpResponse = httpClient.execute(httpGet);
+        return EntityUtils.toString(httpResponse.getEntity());
+    }
+
+    public static String executeDelete(String url) throws IOException{
+        HttpDelete httpDelete = new HttpDelete(url);
+        httpDelete.setConfig(requestConfig);
+        HttpResponse httpResponse = httpClient.execute(httpDelete);
+        return EntityUtils.toString(httpResponse.getEntity());
+    }
 
     /**下载网络图片的函数
      * @param url 图片的URL字符串
@@ -26,7 +53,6 @@ public class HttpClientUtils {
         if (file.exists()){
             file.delete();
         }
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet httpGet = new HttpGet(url);
         CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
         System.out.println(httpResponse.getStatusLine());
@@ -36,34 +62,6 @@ public class HttpClientUtils {
         fileOutputStream.write(bytes);
         fileOutputStream.flush();
         fileOutputStream.close();
-        return true;
-    }
-
-    /**上传文件的函数
-     * @param url 服务器发送地址*/
-    public static boolean upload(String url){
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost httpPost = new HttpPost(url);  //"http://127.0.0.1:8080/OnlineExam_war_exploded/Student/HandleUploadImage"
-        MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create().
-                addBinaryBody("file",new File("pom.xml")).
-                addTextBody("MAX_FILE_SIZE","5242880");
-        httpPost.setEntity(multipartEntityBuilder.build());
-        httpPost.setHeader("User-Agent", userAgent);
-        try {
-            HttpResponse response = httpClient.execute(httpPost);
-            httpClient.close();
-            HttpEntity httpEntity = response.getEntity();
-            BufferedReader br = new BufferedReader(new InputStreamReader(httpEntity
-                    .getContent(), "UTF-8"));
-            StringBuffer backData = new StringBuffer();
-            String line;
-            while ((line = br.readLine()) != null) {
-                backData.append(line);
-            }
-            System.out.println(backData.toString()   );
-        } catch (IOException e) {
-            return false;
-        }
         return true;
     }
 
