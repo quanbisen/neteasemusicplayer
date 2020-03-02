@@ -1,15 +1,25 @@
 package mediaplayer;
 
+import controller.content.AlbumLyricContentController;
 import controller.main.BottomController;
 import controller.content.RecentPlayContentController;
+import controller.main.CenterController;
+import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import model.PlayListSong;
 import model.RecentSong;
@@ -25,10 +35,8 @@ import util.XMLUtils;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+
 /**
  * @author super lollipop
  * @date 19-12-8
@@ -78,6 +86,12 @@ public class MyMediaPlayer implements IMediaPlayer {
 
     @Resource
     private Config config;
+
+    @Resource
+    private AlbumLyricContentController albumLyricContentController;
+
+    @Resource
+    private CenterController centerController;
 
     public MediaPlayer getMediaPlayer() {
         return mediaPlayer;
@@ -167,7 +181,7 @@ public class MyMediaPlayer implements IMediaPlayer {
         }else {
             mediaPlayer = new MediaPlayer(new Media(new File(playListSong.getResource()).toURI().toString()));  //创建本地资源的媒体播放器对象
             //1.专辑图片
-            bottomController.getLabAlbum().setGraphic(ImageUtils.getAlbumImage(playListSong.getResource()));
+            bottomController.getLabAlbum().setGraphic(ImageUtils.getAlbumImageView(playListSong,58,58));
         }
         mediaPlayer.setMute(isMute);
         mediaPlayer.volumeProperty().bind(bottomController.getSliderVolume().valueProperty());  //设置媒体播放器的音量绑定音量条组件的音量
@@ -182,12 +196,19 @@ public class MyMediaPlayer implements IMediaPlayer {
         //4.播放进度条设置
         bottomController.getSliderSong().setValue(0);
         bottomController.getSliderSong().setMax(TimeUtils.toSeconds(playListSong.getTotalTime()));  //设置歌曲滑动条的最大值为歌曲的秒数
+        //
         mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            //底部进度条
             if (!bottomController.getSliderSong().isPressed()) {  //没有被鼠标按下时
                 bottomController.getSliderSong().setValue(observable.getValue().toSeconds());
             }
+
+            if (albumLyricContentController.isShowing()){
+                //歌词滚动
+                float second = (float) (Math.round(observable.getValue().toSeconds() * 10 ) / 10.0);    //保留一位小数
+                albumLyricContentController.scrollLyric(second);
+            }
         });
-        System.gc();
 
         /**添加到最近播放的存储文件处理操作
          * start*/
@@ -231,10 +252,15 @@ public class MyMediaPlayer implements IMediaPlayer {
             recentPlayContentController.updateRecentPlayPane(); //更新最近播放面板的GUI
         }
 
+        /**专辑歌词面板*/
+        albumLyricContentController.loadAlbumLyric();
+
+
+
+
         /**媒体播放器结束后触发的事件
          * start*/
         mediaPlayer.setOnEndOfMedia(() -> {   //媒体播放器结束后触发的事件
-
             switch (playMode) {
                 case SINGLE_LOOP: {                        //单曲循环模式
                     mediaPlayer.seek(new Duration(0));  //定位到0毫秒(0秒)的时间，重新开始播放
@@ -440,6 +466,9 @@ public class MyMediaPlayer implements IMediaPlayer {
     public void pause() {
         mediaPlayer.pause();
         bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePause.png", 32, 32));  //"播放、暂停"按钮图片
+        if (albumLyricContentController.isShowing() && albumLyricContentController.getRotateTransition().getStatus() != Animation.Status.PAUSED){
+            albumLyricContentController.getRotateTransition().pause();
+        }
     }
 
     /**
@@ -449,5 +478,9 @@ public class MyMediaPlayer implements IMediaPlayer {
     public void play() {
         mediaPlayer.play();
         bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePlaying.png", 32, 32));  //"播放、暂停"按钮图片
+        if (albumLyricContentController.isShowing()
+                && albumLyricContentController.getRotateTransition().getStatus() != Animation.Status.RUNNING){
+            albumLyricContentController.getRotateTransition().play();
+        }
     }
 }

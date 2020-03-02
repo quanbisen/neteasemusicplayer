@@ -1,7 +1,10 @@
 package application;
 
+import controller.content.AlbumLyricContentController;
 import controller.main.BottomController;
+import javafx.animation.Animation;
 import javafx.scene.image.Image;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import mediaplayer.Config;
@@ -60,7 +63,7 @@ public class FXApplication extends Application {
             WindowUtils.addWindowsStyle(primaryStage);  //为primaryStage添加一些GUI的修复代码
         }else { //minWidth="870.0" minHeight="580.0"
             primaryStage.setMinWidth(870.0);
-            primaryStage.setMinHeight(580.0);
+            primaryStage.setMinHeight(620);
         }
         this.addIconifiedBehavior(primaryStage);    //添加最大化最小化的行为
         primaryStage.show();  //显示主舞台
@@ -99,12 +102,21 @@ public class FXApplication extends Application {
                 primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
                 primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
             }
+            AlbumLyricContentController albumLyricContentController = applicationContext.getBean(AlbumLyricContentController.class);
             if (observable.getValue()){
                 System.out.println("cancel");
                 applicationContext.getBean(ValidateUserService.class).cancel();
+                if (albumLyricContentController.isShowing() && albumLyricContentController.getRotateTransition().getStatus() == Animation.Status.RUNNING){
+                    albumLyricContentController.getRotateTransition().pause();
+                }
             }else {
                 System.out.println("restart");
                 applicationContext.getBean(ValidateUserService.class).restart();
+                if (albumLyricContentController.isShowing()
+                        && albumLyricContentController.getRotateTransition().getStatus() == Animation.Status.PAUSED
+                        && applicationContext.getBean(MyMediaPlayer.class).getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING){
+                    albumLyricContentController.getRotateTransition().play();
+                }
             }
         });
     }

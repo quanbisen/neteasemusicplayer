@@ -67,7 +67,23 @@ public class Config {
     }
 
     public Path getCachePath() throws IOException {
-        return configPath.resolve("cache");
+        Path cachePath;
+        if (!configPath.resolve("cache").toFile().exists()){
+            cachePath = Files.createDirectories(configPath.resolve("cache"));
+        }else {
+            cachePath = configPath.resolve("cache");
+        }
+        return cachePath;
+    }
+
+    public Path getLyricPath() throws IOException {
+        Path lyricPath;
+        if (!configPath.resolve("lyric").toFile().exists()){
+            lyricPath = Files.createDirectories(configPath.resolve("lyric"));
+        }else {
+            lyricPath = configPath.resolve("lyric");
+        }
+        return lyricPath;
     }
 
     public User getUser() {

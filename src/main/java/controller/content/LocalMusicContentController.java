@@ -9,6 +9,7 @@ import javafx.animation.SequentialTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -38,6 +39,7 @@ import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
+import service.HideScrollerBarService;
 import service.LoadLocalAlbumImageService;
 import service.LoadLocalSingerImageService;
 import service.LoadLocalSongService;
@@ -46,6 +48,8 @@ import util.StageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Controller
 public class LocalMusicContentController {
@@ -192,6 +196,23 @@ public class LocalMusicContentController {
 
         progressIndicator.setVisible(false);   //初始化进度指示器为不可见
         tabSongContent.setVisible(false);   //初始化不可见，在service中加载歌曲后控制可见性
+
+        /**实现表格的滚动条在不滚动一段时间后隐藏滚动条的效果　ｓｔａｒｔ
+         * －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－*/
+        tableViewSong.addEventFilter(ScrollEvent.ANY,event -> {
+            ScrollBar scrollBar = (ScrollBar) tableViewSong.lookup(".scroll-bar:vertical");
+            if (scrollBar.isDisable()){
+                scrollBar.setDisable(false);
+            }
+            HideScrollerBarService hideScrollerBarService = applicationContext.getBean(HideScrollerBarService.class);
+            hideScrollerBarService.setDelay(Duration.seconds(5));
+            hideScrollerBarService.restart();
+            hideScrollerBarService.setOnSucceeded(event1 -> {
+                hideScrollerBarService.cancel();
+            });
+        });
+        /**实现表格的滚动条在不滚动一段时间后隐藏滚动条的效果　ｅｎｄ
+         * －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－*/
 
 
         /******************/
@@ -537,20 +558,23 @@ public class LocalMusicContentController {
         }
     }
 
+    @FXML
     public void onScrollTableView(ScrollEvent scrollEvent) {
-
         System.out.println("scrolling");
 //        tableViewSong.refresh();
     }
 
+    @FXML
     public void onScrollToColumn(ScrollToEvent<TableColumn<LocalSong,?>> tableColumnScrollToEvent) {
         System.out.println("scrollToColumn");
     }
 
+    @FXML
     public void onScrollFinished(ScrollEvent scrollEvent) {
         System.out.println("scrollFinished");
     }
 
+    @FXML
     public void onScrollStarted(ScrollEvent scrollEvent) {
         System.out.println("scrollStarted");
     }

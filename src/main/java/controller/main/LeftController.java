@@ -5,8 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -14,12 +12,8 @@ import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
-import pojo.Group;
 import pojo.User;
-import util.ImageUtils;
-
 import javax.annotation.Resource;
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -112,23 +106,7 @@ public class LeftController {
 
         User user = applicationContext.getBean(Config.class).getUser();
         if (user != null){
-//            labUserImage.setGraphic(ImageUtils.createImageView("file:" + applicationContext.getBean(Config.class).getCachePath() + File.separator + applicationContext.getBean(Config.class).getUser().getLoginTime().getTime(),38,38));
             labUserName.setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称*/
-
-
-
-            //加载用户创建的歌单tab标签
-//            List<Group> groupList = user.getGroupList();
-//            if (groupList != null){
-//                groupList.forEach(group -> {
-//                    try {
-//                        this.addGroupTab(group.getName());  //添加歌单tab
-//                        tabList.get(tabList.size() - 1).setUserData(group); //存储歌单数据对象
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                });
-//            }
         }
     }
 

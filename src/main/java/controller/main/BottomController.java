@@ -1,6 +1,7 @@
 package controller.main;
 
 import application.SpringFXMLLoader;
+import controller.content.AlbumLyricContentController;
 import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,14 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import mediaplayer.Config;
 import mediaplayer.MyMediaPlayer;
 import mediaplayer.PlayMode;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -93,7 +93,11 @@ public class BottomController {
     @Resource
     private ApplicationContext applicationContext;
 
-    private VBox vBox;
+    /**装显示专辑、歌词面板的VBox容器*/
+    private VBox vBoxAlbumLyricContainer;
+
+    @Resource
+    private AlbumLyricContentController albumLyricContentController;
 
     public Label getLabPlay() {
         return labPlay;
@@ -139,6 +143,10 @@ public class BottomController {
         return labPlayModeIcon;
     }
 
+    public VBox getVBoxAlbumLyricContainer() {
+        return vBoxAlbumLyricContainer;
+    }
+
     public void initialize(){
         progressBarSong.prefWidthProperty().bind(((StackPane)progressBarSong.getParent()).widthProperty());  //宽度绑定
         sliderSong.prefWidthProperty().bind(((StackPane)sliderSong.getParent()).widthProperty());            //宽度绑定
@@ -177,120 +185,87 @@ public class BottomController {
 
     /**专辑图片单击事件处理*/
     @FXML
-    public void onClickedAlbum(MouseEvent mouseEvent) throws IOException,Throwable {
-        //获取main布局的根组件
-        StackPane stackPane = centerController.getStackPane();
-        Label label = new Label("Just a test.");
-        label.setPrefWidth(128);
-        label.setPrefHeight(128);
-        label.setBackground(new Background(new BackgroundFill(Color.rgb(221,221,221),null,null)));
-        if (mouseEvent.getButton()== MouseButton.PRIMARY){
+    public void onClickedAlbum(MouseEvent mouseEvent) throws Throwable {
+        //如果容器属性变量为null，初始化它
+        if (vBoxAlbumLyricContainer == null){
+            vBoxAlbumLyricContainer = new VBox();
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/album-lyric-content.fxml");
+            Pane albumLyricPane = fxmlLoader.load();
+            albumLyricContentController = fxmlLoader.getController();
 
-            if (stackPane.getChildren().size()==1){
-                vBox = new VBox();
-                HBox hBox = new HBox();
-                hBox.getChildren().add(vBox);
-                hBox.setAlignment(Pos.BOTTOM_LEFT);
-                vBox.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
-
-                vBox.setMaxWidth(0);
-                vBox.setMaxHeight(0);
-                vBox.getChildren().add(new Button("test"));
-                vBox.getChildren().add(new Button("test"));
-
-                Region region = stackPane;
-
-                stackPane.getChildren().add(vBox);
-                stackPane.setAlignment(Pos.BOTTOM_LEFT);
-
-                Timeline timeline = new Timeline();
-                timeline.getKeyFrames().addAll(
-                        new KeyFrame(Duration.seconds(0.5),new KeyValue(vBox.minHeightProperty(),region.getHeight())),
-                        new KeyFrame(Duration.seconds(0.5),new KeyValue(vBox.minWidthProperty(),region.getWidth()))
-                );
-                timeline.play();
-                timeline.setOnFinished((event -> {
-                    stackPane.setAlignment(Pos.CENTER);
-                    System.out.println(vBox.getWidth());
-                    System.out.println(vBox.getHeight());
-                }));
-            }
-
-
-
-            /*Fade Animation*/
-//            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1),label);
-//            fadeTransition.setFromValue(0);
-//            fadeTransition.setToValue(1);
-//            //开始播放渐变动画提示
-//            fadeTransition.play();
-//            fadeTransition.setOnFinished(event ->{
-//
-//            });
-
-            /*Slide Animation*/
-//            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),vBox);
-//            translateTransition.setFromX(-pane.getWidth());
-//            translateTransition.setToX(0);
-//            borderPane1.setTranslateY(50);
-//            translateTransition.setFromY(-pane.getHeight());
-//            translateTransition.setToY(0);
-//            translateTransition.play();
-
-//            Duration cycleDuration = Duration.millis(500);
-//            Timeline timeline = new Timeline(
-//                    new KeyFrame(cycleDuration,
-//                            new KeyValue(borderPane1.maxWidthProperty(),pane.getWidth()))
-//                    ,
-//                    new KeyFrame(cycleDuration,
-//                            new KeyValue(borderPane1.prefHeightProperty(),pane.getHeight()))
-//            );
-
-//            timeline.play();
-
-            //No effect
-//            Timeline timeline = new Timeline();
-//            timeline.getKeyFrames().addAll(
-//                    new KeyFrame(Duration.ZERO,new KeyValue(borderPane1.prefHeightProperty(),0)),
-//                    new KeyFrame(Duration.seconds(2),new KeyValue(borderPane1.prefHeightProperty(),50))
-//            );
-//            timeline.play();
-
-
-//            Timeline timeline = new Timeline();
-//            System.out.println(borderPane.getWidth());
-//            System.out.println(borderPane.getHeight());
-//            borderPane1.minWidthProperty().set(0);
-//            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane1.minWidthProperty(),borderPane.getWidth(), Interpolator.EASE_OUT)));
-//            timeline.play();
-
-
-//            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5),borderPane1);
-//            translateTransition.setToX(borderPane.getWidth());
-//            translateTransition.play();
-//            Timeline timeline1 = new Timeline();
-//            borderPane1.translateYProperty().set(borderPane1.getHeight());
-//            timeline1.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5),new KeyValue(borderPane1.translateYProperty(),0, Interpolator.EASE_IN)));
-//            timeline1.play();
+            vBoxAlbumLyricContainer.getChildren().add(albumLyricPane);
+            albumLyricPane.maxHeightProperty().bind(vBoxAlbumLyricContainer.heightProperty());
+            albumLyricPane.maxWidthProperty().bind(vBoxAlbumLyricContainer.widthProperty());
+            albumLyricPane.minHeightProperty().bind(vBoxAlbumLyricContainer.heightProperty());
+            albumLyricPane.minWidthProperty().bind(vBoxAlbumLyricContainer.widthProperty());
         }
-        else if (mouseEvent.getButton()==MouseButton.SECONDARY){
-            if (stackPane.getChildren().size()>=2){
+        if (!centerController.getStackPane().getChildren().contains(vBoxAlbumLyricContainer)){
+            showAlbumLyricPane();
+        }
+        else if (centerController.getStackPane().getChildren().contains(vBoxAlbumLyricContainer)){
+            hideAlbumLyricPane();
+        }
+    }
 
-                Timeline timeline = new Timeline();
-                timeline.getKeyFrames().addAll(
-                        new KeyFrame(Duration.seconds(0.5),new KeyValue(vBox.minHeightProperty(),0)),
-                        new KeyFrame(Duration.seconds(0.5),new KeyValue(vBox.minWidthProperty(),0))
-                );
-                stackPane.setAlignment(Pos.BOTTOM_LEFT);
-                timeline.play();
-                timeline.setOnFinished((event -> {
-                    stackPane.getChildren().remove(1,stackPane.getChildren().size());
-                    stackPane.setAlignment(Pos.CENTER);
-                    System.out.println(vBox.getWidth());
-                    System.out.println(vBox.getHeight());
-                }));
-            }
+    /**显示专辑歌词面板函数*/
+    public void showAlbumLyricPane(){
+        labAlbum.setMouseTransparent(true);
+        albumLyricContentController.setShowing(true);
+        centerController.getStackPane().getChildren().add(vBoxAlbumLyricContainer);
+        centerController.getStackPane().setAlignment(Pos.BOTTOM_LEFT);
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.seconds(0.2),new KeyValue(vBoxAlbumLyricContainer.maxHeightProperty(),centerController.getStackPane().getHeight(),Interpolator.EASE_IN)),
+                new KeyFrame(Duration.seconds(0.2),new KeyValue(vBoxAlbumLyricContainer.maxWidthProperty(),centerController.getStackPane().getWidth(),Interpolator.EASE_IN)),
+                new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbumOutdoor().fitHeightProperty(),320)),
+                new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbumOutdoor().fitWidthProperty(),320)),
+                new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbum().fitHeightProperty(),190)),
+                new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbum().fitWidthProperty(),190))
+        );
+        timeline.play();
+        vBoxAlbumLyricContainer.setMinWidth(0);
+        vBoxAlbumLyricContainer.setMinHeight(0);
+        timeline.setOnFinished((event -> {
+            labAlbum.setMouseTransparent(false);
+            centerController.getStackPane().setAlignment(Pos.CENTER);
+            vBoxAlbumLyricContainer.maxHeightProperty().bind(centerController.getStackPane().heightProperty());
+            vBoxAlbumLyricContainer.maxWidthProperty().bind(centerController.getStackPane().widthProperty());
+        }));
 
+        //控制专辑图旋转动画
+        if (myMediaPlayer.getMediaPlayer() != null && myMediaPlayer.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING
+        && albumLyricContentController.getRotateTransition() != null && albumLyricContentController.getRotateTransition().getStatus() != Animation.Status.RUNNING){
+            albumLyricContentController.getRotateTransition().play();
+        }
+    }
+
+    /**隐藏专辑歌词面板函数*/
+    public void hideAlbumLyricPane(){
+        labAlbum.setMouseTransparent(true);
+        albumLyricContentController.setShowing(false);  //设置显示标记为false,隐藏了,不是正在显示
+        vBoxAlbumLyricContainer.maxWidthProperty().unbind();
+        vBoxAlbumLyricContainer.maxHeightProperty().unbind();
+
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.seconds(0.2), new KeyValue(vBoxAlbumLyricContainer.maxHeightProperty(), 0,Interpolator.EASE_IN)),
+                new KeyFrame(Duration.seconds(0.2), new KeyValue(vBoxAlbumLyricContainer.maxWidthProperty(), 0,Interpolator.EASE_IN)),
+                new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbumOutdoor().fitHeightProperty(),0)),
+                new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbumOutdoor().fitWidthProperty(),0)),
+                new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbum().fitHeightProperty(),0)),
+                new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbum().fitWidthProperty(),0))
+        );
+        centerController.getStackPane().setAlignment(Pos.BOTTOM_LEFT);
+        timeline.play();
+        timeline.setOnFinished((event -> {
+            labAlbum.setMouseTransparent(false);
+            centerController.getStackPane().getChildren().remove(vBoxAlbumLyricContainer);
+            centerController.getStackPane().setAlignment(Pos.CENTER);
+        }));
+
+        //控制专辑图旋转动画,暂停旋转动画,减少资源使用
+        if (albumLyricContentController.getRotateTransition() != null && albumLyricContentController.getRotateTransition().getStatus() != Animation.Status.PAUSED){
+            albumLyricContentController.getRotateTransition().pause();
         }
     }
 

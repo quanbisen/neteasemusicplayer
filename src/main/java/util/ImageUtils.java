@@ -2,6 +2,7 @@ package util;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import model.PlayListSong;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -24,39 +25,6 @@ import java.nio.file.Files;
  * @date 19-12-7
  */
 public final class ImageUtils {
-
-    /**下载网络图片的函数
-     * @param resource 图片的URL字符串
-     * @param file 文件的存储位置*/
-    /*public static void download(String resource,File file) throws IOException {
-        if (file.exists()){
-            file.delete();
-        }
-        HttpURLConnection connection = (HttpURLConnection)new URL(resource).openConnection();  //创建连接
-        connection.setRequestMethod("GET");  //设置请求方式为"GET"
-        connection.setConnectTimeout(5 * 1000);  //超时响应时间为5秒
-        InputStream inputStream = connection.getInputStream();  //通过输入流获取图片数据
-        byte[] bytes = readInputStream(inputStream);
-
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(bytes);
-        fileOutputStream.flush();
-        fileOutputStream.close();
-        connection.disconnect();
-    }
-    */
-
-
-    @Test
-    public void testUtils() throws IOException {
-/*
-        HttpClientUtils.getInstance().download(
-                "https://firmware.meizu.com/Firmware/Flyme/m1928/8.0.0.0/cn/20200107162943/90e4cc65/update.zip", "update.zip",
-                progress -> System.out.println("download progress = " + progress));
-*/
-
-        HttpClientUtils.download("https://firmware.meizu.com/Firmware/Flyme/m1928/8.0.0.0/cn/20200107162943/90e4cc65/update.zip",new File("update.zip"));
-    }
 
     @org.junit.Test
     public void testUpload() throws IOException {
@@ -93,36 +61,41 @@ public final class ImageUtils {
 
 
     /**根据歌曲资源的路径获取资源的专辑图片
-     * @param resource 资源的路径
+     * @param playListSong 播放歌曲
      * @return imgAlbum */
-    public static ImageView getAlbumImage(String resource) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+    public static ImageView getAlbumImageView(PlayListSong playListSong, double width, double height) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
         ImageView imgAlbum;
-        if (!resource.contains("http:")){
+        if (!playListSong.getResource().contains("http:")){
             try {
-                MP3File mp3File = new MP3File(resource);
+                MP3File mp3File = new MP3File(playListSong.getResource());
                 if (mp3File.hasID3v2Tag()){
-                    try {
-                        AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");    //APIC：Attached picture
-                        FrameBodyAPIC frameBodyAPIC = (FrameBodyAPIC) abstractID3v2Frame.getBody();
-                        byte[] imageData = frameBodyAPIC.getImageData();
-                        Image image = new Image(new ByteArrayInputStream(imageData),58,58,false,true);
-                        imgAlbum= createImageView(image,58,58);
-                    }catch (NullPointerException e){
-                        imgAlbum = createImageView("image/DefaultAlbum_58.png",58,58);
-                    }
-
+                    imgAlbum = createImageView(getAlbumImage(playListSong,width,height),width,height);
                 }
                 else {
-                    imgAlbum = createImageView("image/DefaultAlbum_58.png",58,58);
+                    imgAlbum = createImageView("image/DefaultAlbum_58.png",width,height);
                 }
             }catch (FileNotFoundException e){
-                return createImageView("image/DefaultAlbum_58.png",58,58);
+                return createImageView("image/DefaultAlbum_58.png",width,height);
             }
         }else { //在线歌曲资源的专辑图，先设置为默认的黑白专辑图，后面再添加。。。
-            imgAlbum = createImageView("image/DefaultAlbum_58.png",58,58);
+            imgAlbum = createImageView("image/DefaultAlbum_58.png",width,height);
         }
-
         return imgAlbum;
+    }
+
+    public static Image getAlbumImage(PlayListSong playListSong,double width,double height) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+        MP3File mp3File = new MP3File(playListSong.getResource());
+        if (mp3File.hasID3v2Tag()){
+            try {
+                AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");    //APIC：Attached picture
+                FrameBodyAPIC frameBodyAPIC = (FrameBodyAPIC) abstractID3v2Frame.getBody();
+                byte[] imageData = frameBodyAPIC.getImageData();
+                return new Image(new ByteArrayInputStream(imageData),width,height,true,true);
+            }catch (NullPointerException e){
+                return new Image("image/DefaultAlbum_58.png",width,height,true,true);
+            }
+        }
+        return new Image("image/DefaultAlbum_58.png",width,height,true,true);
     }
 
     public static void setAlbumImage(String imageFile) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {

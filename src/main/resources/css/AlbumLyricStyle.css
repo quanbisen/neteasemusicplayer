@@ -1,0 +1,127 @@
+#root{
+    -fx-background-color: transparent;
+}
+.label{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
+.labAlbumBottom{
+    -fx-opacity: 0.8;
+    -fx-background-color: line;
+    -fx-alignment: center;
+    -fx-border-color: linear-gradient(to right,#858486,#777678) linear-gradient(to bottom,#777678,#818183) linear-gradient(to left,#818183,#8f8e90) linear-gradient(to top,#8f8e90,#858486);
+    -fx-background-color: linear-gradient(to bottom,#AEADAD,#B5B5B5);
+}
+.labAlbumBottom:hover{
+    -fx-opacity: 0.8;
+    -fx-border-color: linear-gradient(to right,#6E6F74,#636368) linear-gradient(to bottom,#636368,#6B6C71) linear-gradient(to left,#6B6C71,#76767B) linear-gradient(to top,#76767B,#6E6F74);
+}
+.labAlbumBottom:pressed{
+    -fx-scale-y: 0.991;
+    -fx-scale-x: 0.991;
+}
+/*.list-view{*/
+/*    -fx-background-color: transparent;*/
+/*    -fx-background-insets: 0;*/
+/*}*/
+/*.list-cell {*/
+/*    -fx-padding: 0 0 0 0; !* 3 7 3 7 *!*/
+/*    -fx-background: transparent;*/
+/*    -fx-text-fill: #333333;*/
+/*    -fx-alignment: center-left;*/
+/*    -fx-pref-height: 2.5em;*/
+/*    -fx-font-size: 1.1em;*/
+/*    -fx-font-family: "Microsoft YaHei","SimSun";*/
+/*}*/
+/*.list-cell:filled:selected{*/
+/*    -fx-background-color: transparent;*/
+/*}*/
+#vBoxLyric,#scrollLyric{
+    -fx-background-color: transparent;
+}
+.labLyric{
+    -fx-alignment: center-left;
+    -fx-pref-height: 2.5em;
+    -fx-max-height: 2.5em;
+    -fx-min-height: 2.5em;
+    -fx-font-size: 1.1em;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
+.labCurrent{
+    -fx-text-fill: #FFFFFF;
+}
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+.scroll-bar:vertical
+{
+    -fx-pref-width: 6;
+    -fx-background-color: transparent;
+}
+.scroll-pane .scroll-bar:vertical .thumb
+{
+    -fx-opacity: 0.5;
+    -fx-background-color: #C8C9CC;
+    -fx-background-insets: 0;
+    -fx-background-radius: 2em;
+}
+.scroll-pane .scroll-bar:vertical .thumb:hover
+{
+    -fx-opacity: 0.5;
+    -fx-background-color: #ADAFB2;
+}
+.scroll-pane .scroll-bar:vertical .track
+{
+    -fx-background-color:transparent;
+    -fx-background-insets: 0;
+}
+.scroll-pane .scroll-bar:horizontal
+{
+    visibility: hidden;
+    -fx-pref-height: 0;
+    -fx-border:0;
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+}
+.scroll-pane .scroll-bar:horizontal .thumb
+{
+    visibility:hidden;
+    -fx-pref-height: 2;
+    -fx-border-insets: 0;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+.scroll-pane .scroll-bar:horizontal .thumb:hover
+{
+    -fx-background-color: #ADAFB2;
+}
+.scroll-pane .scroll-bar:horizontal .track
+{
+    -fx-pref-height: 0;
+    -fx-border:0;
+    -fx-background-insets: 0;
+    -fx-background-color:#F3F3F5;
+}
+/*关闭按钮:垂直和水平的按钮*/
+.scroll-pane .scroll-bar .increment-arrow
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-pane .scroll-bar .decrement-arrow
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-pane .scroll-bar .increment-button
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-pane .scroll-bar .decrement-button
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-pane .scroll-bar:vertical:disabled {
+    -fx-opacity: 0;
+}
