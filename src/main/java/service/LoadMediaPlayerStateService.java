@@ -1,5 +1,6 @@
 package service;
 
+import application.SpringFXMLLoader;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import controller.main.BottomController;
@@ -123,6 +124,7 @@ public class LoadMediaPlayerStateService extends javafx.concurrent.Service<Void>
                         user.setSex(validUser.getSex());
                         user.setDescription(validUser.getDescription());
                         user.setLoginTime(validUser.getLoginTime());
+                        user.setGroupList(validUser.getGroupList());
                         JSONObjectUtils.saveObject(user,applicationContext.getBean(Config.class).getLoginConfigFile());   //保存更新的用户信息到本地存储文件
                         applicationContext.getBean(Config.class).setUser(validUser);
                         //加载歌单指示器和"我喜欢的音乐"tab标签
@@ -131,12 +133,19 @@ public class LoadMediaPlayerStateService extends javafx.concurrent.Service<Void>
                                 //用户呢称和头像文件UI更新
                                 leftController.getLabUserName().setText(validUser.getName());
                                 leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(validUser.getImageURL(),38,38));
-                                leftController.addFavorTab();   //调用添加登录用户的“我喜欢的音乐”tab和tab上面的标签文字的函数
+                                leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());    //歌单指示器组件
+                                validUser.getGroupList().forEach(group -> {
+                                    try {
+                                        leftController.addGroupTab(group);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                });
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                             //启动同步歌单的服务
-                            applicationContext.getBean(SynchronizeGroupService.class).start();
+//                            applicationContext.getBean(SynchronizeGroupService.class).start();
                         });
 
                     }catch (JSONException e){
@@ -153,7 +162,7 @@ public class LoadMediaPlayerStateService extends javafx.concurrent.Service<Void>
                         applicationContext.getBean(Config.class).setUser(user);
                         Platform.runLater(()->{
                             try {
-                                leftController.addFavorTab();   //调用添加登录用户的“我喜欢的音乐”tab和tab上面的标签文字的函数
+                                leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());    //歌单指示器组件
                                 //用户呢称和头像文件UI更新
                                 leftController.getLabUserName().setText(user.getName());
                                 leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(user.getImageURL(),38,38));

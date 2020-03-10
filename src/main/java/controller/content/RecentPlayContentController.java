@@ -162,10 +162,10 @@ public class RecentPlayContentController {
     public void updateRecentPlayPane(){
         List<RecentSong> tableItems = tableViewRecentPlaySong.getItems();
         tabPane.getTabs().get(0).setText(String.valueOf(tableItems.size()));    //更新歌曲数目显示
-        Image imageFavor = new Image("/image/FavorTabIcon_20.png");
+        Image imageFavor = new Image("/image/FavorIcon_16.png",16.0,16.0,true,true);
         for (int i = 0; i < tableItems.size(); i++) {
             if (tableItems.get(i).getLabAddFavor() == null){
-                ImageView imageView = ImageUtils.createImageView(imageFavor,20,20);
+                ImageView imageView = ImageUtils.createImageView(imageFavor,16.0,16.0);
                 Label labAddFavor = new Label("",imageView);
                 labAddFavor.setOnMouseClicked(event -> {
                     System.out.println("clicked ...");

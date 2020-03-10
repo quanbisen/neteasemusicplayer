@@ -4,12 +4,14 @@ import controller.main.BottomController;
 import controller.main.CenterController;
 import controller.main.MainController;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -21,6 +23,7 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import service.HideScrollerBarService;
 import service.LoadLyricService;
 import util.ImageUtils;
 import javax.annotation.Resource;
@@ -174,6 +177,8 @@ public class AlbumLyricContentController {
             lyricPane.setMaxWidth(observable.getValue().doubleValue()/100*57);
             lyricPane.setMinWidth(observable.getValue().doubleValue()/100*57);
         }));
+        vBoxLyric.prefWidthProperty().bind(scrollLyric.widthProperty());
+        vBoxLyric.prefHeightProperty().bind(scrollLyric.heightProperty());
         ((ImageView)labBlur.getGraphic()).fitWidthProperty().bind(stackPane.widthProperty());
         ((ImageView)labBlur.getGraphic()).fitHeightProperty().bind(stackPane.heightProperty());
 
@@ -184,6 +189,24 @@ public class AlbumLyricContentController {
         rotateTransition.setCycleCount(Animation.INDEFINITE);   //无数次
 
         loadAlbumLyric();
+
+        /**实现scrollPane的滚动条在不滚动一段时间后隐藏滚动条的效果　ｓｔａｒｔ
+         * －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－*/
+        scrollLyric.addEventFilter(ScrollEvent.ANY,event -> {
+            ScrollBar scrollBar = (ScrollBar) scrollLyric.lookup(".scroll-bar:vertical");
+            if (scrollBar.isDisable()){
+                scrollBar.setDisable(false);
+            }
+            HideScrollerBarService hideScrollerBarService = applicationContext.getBean(HideScrollerBarService.class);   //获取隐藏滚动条的服务对象
+            hideScrollerBarService.setScrollBar(scrollBar);
+            hideScrollerBarService.setDelay(Duration.seconds(5));   //设置延时5秒
+            hideScrollerBarService.restart();   //重启服务
+            hideScrollerBarService.setOnSucceeded(event1 -> {   //成功后取消服务
+                hideScrollerBarService.cancel();
+            });
+        });
+        /**实现scrollPane的滚动条在不滚动一段时间后隐藏滚动条的效果　ｅｎｄ
+         * －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－*/
     }
 
     /**设置布局的宽高度绑定*/

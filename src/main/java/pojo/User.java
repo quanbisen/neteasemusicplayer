@@ -22,4 +22,5 @@ public class User {
     private String sex;
     private Date birthday;
     private String imageURL;
+    private List<Group> groupList;
 }

@@ -3,8 +3,6 @@ package service;
 import application.SpringFXMLLoader;
 import com.alibaba.fastjson.JSON;
 import controller.authentication.RegisterInputController;
-import dao.RegisterDao;
-import dao.UserDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.paint.Color;
@@ -32,13 +30,6 @@ public class RegisterService extends javafx.concurrent.Service<Void> {
     /**注入注册页面的控制器*/
     @Resource
     private RegisterInputController registerInputController;
-
-    /**注入用户的操作类*/
-    @Resource
-    private UserDao userDao;
-
-    @Resource
-    private RegisterDao registerDao;
 
     @Resource
     private ApplicationContext applicationContext;

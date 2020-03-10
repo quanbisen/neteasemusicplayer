@@ -21,7 +21,6 @@ import org.jaudiotagger.tag.id3.framebody.FrameBodyAPIC;
 import org.jaudiotagger.tag.wav.WavTag;
 import pojo.Song;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -463,7 +462,7 @@ public final class SongUtils {
      * @param recentSong
      * @return PlayListSong*/
     public static PlayListSong toPlayListSong(RecentSong recentSong){
-        return new PlayListSong(recentSong.getName(),recentSong.getSinger(),recentSong.getAlbum(),recentSong.getTotalTime(),recentSong.getResource());
+        return new PlayListSong(recentSong.getName(), recentSong.getSinger(), recentSong.getAlbum(), recentSong.getTotalTime(), recentSong.getResource());
     }
 
     /**把播放列表模型歌曲转变成最近播放歌曲模型
@@ -477,7 +476,7 @@ public final class SongUtils {
      * @param playedSongs
      * @param playListSong
      * @return boolean*/
-    public static boolean isContains(List<RecentSong> playedSongs,PlayListSong playListSong){
+    public static boolean isContains(List<RecentSong> playedSongs, PlayListSong playListSong){
         for (int i = 0; i < playedSongs.size(); i++) {
             if (playedSongs.get(i).getResource().equals(playListSong.getResource()) &&
                     playedSongs.get(i).getName().equals(playListSong.getName()) &&
@@ -514,7 +513,7 @@ public final class SongUtils {
      * @param recentSongs
      * @param playListSong
      * @return int */
-    public static int getIndex(List<RecentSong> recentSongs,PlayListSong playListSong){
+    public static int getIndex(List<RecentSong> recentSongs, PlayListSong playListSong){
         int index = -1;
         for (int i = 0; i < recentSongs.size(); i++) {
             if (recentSongs.get(i).getResource().equals(playListSong.getResource()) &&

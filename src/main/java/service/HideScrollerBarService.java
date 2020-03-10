@@ -19,12 +19,21 @@ public class HideScrollerBarService extends javafx.concurrent.ScheduledService<V
     @Resource
     private LocalMusicContentController localMusicContentController;
 
+    private ScrollBar scrollBar;
+
+    public ScrollBar getScrollBar() {
+        return scrollBar;
+    }
+
+    public void setScrollBar(ScrollBar scrollBar) {
+        this.scrollBar = scrollBar;
+    }
+
     @Override
     protected Task<Void> createTask() {
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                ScrollBar scrollBar = (ScrollBar) localMusicContentController.getTableViewSong().lookup(".scroll-bar:vertical");
                 System.out.println("schedule");
                 if (!scrollBar.isDisable()){
                     scrollBar.setDisable(true);

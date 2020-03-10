@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="390.0" style="-fx-border-color: #E8E8EA; -fx-border-width: 0 0 1 0;" styleClass="grouptab" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="controller.component.GroupCandidateController" onMouseClicked="#onClickedGroupCandidate">
+   <children>
+      <Label fx:id="labGroupName" graphicTextGap="10.0" prefHeight="128.0" prefWidth="390.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image requestedWidth="50.0" requestedHeight="50.0" url="@../../image/DefaultAlbumImage.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
+   </children>
+</HBox>

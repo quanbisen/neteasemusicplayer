@@ -2,37 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
     <!--开启注解处理器-->
     <context:component-scan base-package="controller"></context:component-scan>
-    <context:component-scan base-package="dao"></context:component-scan>
     <context:component-scan base-package="application"></context:component-scan>
     <context:component-scan base-package="service"></context:component-scan>
     <context:component-scan base-package="mediaplayer"></context:component-scan>
 
-<!--    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>-->
-    <!--配置数据连接配置文件路径-->
-    <context:property-placeholder location="classpath:config/db.properties"></context:property-placeholder>
-    <!--配置数据库连接的用户、密码等-->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" >
-        <property name="driverClassName" value="${jdbc.driver}"></property>
-        <property name="url" value="${jdbc.url}"></property>
-        <property name="username" value="${jdbc.username}"></property>
-        <property name="password" value="${jdbc.password}"></property>
-        <property name="initialSize" value="${jdbc.initialSize}"></property>
-        <property name="maxIdle" value="${jdbc.maxIdle}"></property>
-        <property name="maxTotal" value="${jdbc.maxTotal}"></property>
-        <property name="maxWaitMillis" value="${jdbc.maxWaitMillis}"></property>
-    </bean>
-<!--    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"></property>
-    </bean>
-    <tx:annotation-driven transaction-manager="transactionManager"/>-->
-    <!--配置MyBatis的sqlSessionFactory-->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"></property>
-        <property name="configLocation" value="classpath:config/mybatis-config.xml"></property>
-    </bean>
-
+    <context:annotation-config></context:annotation-config>
 </beans>

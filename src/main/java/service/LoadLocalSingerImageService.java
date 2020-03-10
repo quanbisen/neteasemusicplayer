@@ -2,7 +2,6 @@ package service;
 
 import com.alibaba.fastjson.JSON;
 import controller.content.LocalMusicContentController;
-import dao.SingerDao;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -17,7 +16,6 @@ import pojo.Singer;
 import util.HttpClientUtils;
 import util.ImageUtils;
 import util.SongUtils;
-
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -31,9 +29,6 @@ public class LoadLocalSingerImageService extends javafx.concurrent.Service<Void>
 
     @Resource
     private LocalMusicContentController localMusicContentController;
-
-    @Resource
-    private SingerDao singerDao;
 
     @Resource
     private ApplicationContext applicationContext;

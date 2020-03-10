@@ -78,10 +78,13 @@
                      <children>
                         <ScrollPane fx:id="scrollLyric" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
                            <content>
-                              <VBox fx:id="vBoxLyric" prefHeight="600.0" prefWidth="429.0" style="-fx-background-color: transparent;" />
+                              <VBox fx:id="vBoxLyric" prefWidth="429.0" style="-fx-background-color: transparent;" />
                            </content>
                         </ScrollPane>
-                        <ProgressIndicator fx:id="progressIndicator" maxHeight="20.0" maxWidth="20.0" prefHeight="20.0" prefWidth="20.0" style="-fx-progress-color: gray;" visible="false" />
+                        <ProgressIndicator fx:id="progressIndicator" maxHeight="20.0" maxWidth="20.0" prefHeight="20.0" prefWidth="20.0" style="-fx-progress-color: gray;" visible="false">
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin></ProgressIndicator>
                      </children>
                      <BorderPane.margin>
                         <Insets bottom="80.0" right="25.0" top="10.0" />

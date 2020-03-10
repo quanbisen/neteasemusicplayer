@@ -9,7 +9,7 @@
   <items>
     <MenuItem mnemonicParsing="false" text="下一首播放" onAction="#onClickedNextPlay"/>
     <SeparatorMenuItem></SeparatorMenuItem>
-    <MenuItem mnemonicParsing="false" text="收藏" />
+    <MenuItem mnemonicParsing="false" text="收藏" onAction="#onClickedCollection"/>
     <SeparatorMenuItem></SeparatorMenuItem>
     <MenuItem mnemonicParsing="false" text="删除本地文件" onAction="#onClickedDelete"/>
   </items>

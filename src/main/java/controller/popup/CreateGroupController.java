@@ -52,7 +52,6 @@ public class CreateGroupController {
     @Resource
     private MainController mainController;
 
-
     /**注入Spring上下文工具类*/
     @Resource
     private ConfigurableApplicationContext applicationContext;
@@ -60,6 +59,9 @@ public class CreateGroupController {
     /**注入左边放置标签的容器控制器*/
     @Resource
     private LeftController leftController;
+
+    @Resource
+    private ChoseGroupController choseGroupController;
 
     public TextField getTfInput() {
         return tfInput;
@@ -116,7 +118,13 @@ public class CreateGroupController {
     public void onCancelButtonClicked(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             (tfInput.getScene().getWindow()).hide();  //隐藏窗体
-            WindowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
+            if (((Stage)tfInput.getScene().getWindow()).getOwner() == mainController.getStackPane().getScene().getWindow()){    //是单击左侧的"+"图标调用的创建歌单stage,释放主控器的borderPane
+                WindowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
+            }else { //否则,就是"选择收藏歌单"面板调用创建歌单stage,释放"选择收藏歌单"面板
+                choseGroupController.getActualPane().setOpacity(1);
+                choseGroupController.getActualPane().setMouseTransparent(false);
+            }
+
         }
     }
 

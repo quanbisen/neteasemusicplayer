@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="actualPane" maxHeight="338.0" maxWidth="400.0" prefHeight="338.0" prefWidth="400.0" stylesheets="@../../css/ChoseGroupStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.popup.ChoseGroupController">
+   <center>
+      <BorderPane fx:id="visualPane" prefHeight="328.0" prefWidth="350.0">
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0" spacing="259.0" BorderPane.alignment="CENTER_LEFT">
+               <children>
+                  <Label style="-fx-font-family: &quot;Microsoft YaHei&quot;,&quot;SimSun&quot;; -fx-font-size: 16;" text="添加到歌单" textFill="#333333">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="labCloseIcon" onMouseClicked="#onClickedCloseIcon">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true"><Image url="@../../image/CloseIcon.png" /></ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+
+         <center>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="204.0" prefWidth="348.0" style="-fx-padding: 0; -fx-background-insets: 0;" vbarPolicy="AS_NEEDED">
+               <content>
+                  <VBox fx:id="vWrapGroupCandidate" minHeight="284.0" spacing="0.0" style="-fx-background-color: white; -fx-padding: 0;">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="390.0" style="-fx-border-color: #E8E8EA; -fx-border-width: 0 0 1 0;" styleClass="grouptab" onMouseClicked="#onClickedCreateMusicGroup">
+                           <children>
+                              <StackPane maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="50.0">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#485c6f" height="50.0" stroke="BLACK" strokeType="INSIDE" style="-fx-stroke-width: 1; -fx-fill: transparent; -fx-stroke: #8D8D8D; -fx-stroke-dash-array: 5; -fx-stroke-dash-offset: 5;" width="50.0" />
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../image/CreateGroupIcon_16.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </StackPane>
+                              <Label graphicTextGap="10.0" prefHeight="128.0" prefWidth="401.0" text="新建歌单" textFill="#8d8d8d">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                           </children></HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </center>
+
+</BorderPane>

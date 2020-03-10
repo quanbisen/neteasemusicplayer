@@ -2,7 +2,6 @@ package controller.content;
 
 import application.SpringFXMLLoader;
 import controller.component.SearchHistoryRecordController;
-import dao.SongDao;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,7 +21,6 @@ import javafx.scene.layout.VBox;
 import mediaplayer.Config;
 import org.dom4j.DocumentException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 import service.SearchSongService;
 import util.XMLUtils;

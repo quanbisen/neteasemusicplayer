@@ -81,7 +81,7 @@ HBox
     -fx-background-color: #ADAFB2;
 }
 .scroll-bar:vertical .track{
-    -fx-background-color:#F3F3F5;
+    -fx-background-color: #F3F3F5;
     -fx-background-insets:  0, 0;
 }
 .scroll-bar:vertical > .increment-button > .increment-arrow {

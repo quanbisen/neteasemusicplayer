@@ -1,7 +1,6 @@
 package service;
 
 import controller.content.LocalMusicContentController;
-import dao.AlbumDao;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -30,8 +29,6 @@ public class LoadLocalAlbumImageService extends javafx.concurrent.Service<Boolea
     @Resource
     private LocalMusicContentController localMusicContentController;
 
-    @Resource
-    private AlbumDao albumDao;
 
     @Override
     protected Task<Boolean> createTask() {
@@ -39,23 +36,23 @@ public class LoadLocalAlbumImageService extends javafx.concurrent.Service<Boolea
             @Override
             protected Boolean call() throws Exception {
                 //获取专辑表格所有的专辑集合
-                ObservableList<LocalAlbum> observableLocalAlbumList = localMusicContentController.getTableViewAlbum().getItems();
-
-                for (int i = 0; i < observableLocalAlbumList.size(); i++) {
-                    Label labAlbum = observableLocalAlbumList.get(i).getLabAlbum();
-                    if (!SongUtils.isCharacterCategory(labAlbum.getText())){   //如果不是字母分类行
-                        /**专辑图片*/
-                        Album album = albumDao.queryAlbumByName(labAlbum.getText());
-                        if (album != null){    //不为空，证明数据库查询到对象
-                            Platform.runLater(()->{
-                                Image imageAlbum = new Image(album.getImageURL(),48,48,false,true); //根据查询得到的url创建图片对象
-                                if (!imageAlbum.isError()){ //如果没错误，设置歌手图片
-                                    labAlbum.setGraphic(ImageUtils.createImageView(imageAlbum,48,48));    //设置Label显示图片
-                                }
-                            });
-                        }
-                    }
-                }
+//                ObservableList<LocalAlbum> observableLocalAlbumList = localMusicContentController.getTableViewAlbum().getItems();
+//
+//                for (int i = 0; i < observableLocalAlbumList.size(); i++) {
+//                    Label labAlbum = observableLocalAlbumList.get(i).getLabAlbum();
+//                    if (!SongUtils.isCharacterCategory(labAlbum.getText())){   //如果不是字母分类行
+//                        /**专辑图片*/
+//                        Album album = albumDao.queryAlbumByName(labAlbum.getText());
+//                        if (album != null){    //不为空，证明数据库查询到对象
+//                            Platform.runLater(()->{
+//                                Image imageAlbum = new Image(album.getImageURL(),48,48,false,true); //根据查询得到的url创建图片对象
+//                                if (!imageAlbum.isError()){ //如果没错误，设置歌手图片
+//                                    labAlbum.setGraphic(ImageUtils.createImageView(imageAlbum,48,48));    //设置Label显示图片
+//                                }
+//                            });
+//                        }
+//                    }
+//                }
 
                 return true;
             }

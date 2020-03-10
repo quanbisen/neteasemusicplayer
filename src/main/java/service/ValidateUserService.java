@@ -2,11 +2,7 @@ package service;
 
 import controller.main.LeftController;
 import controller.main.MainController;
-import dao.UserDao;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -28,9 +24,6 @@ public class ValidateUserService extends javafx.concurrent.Service<Void> {
 
     @Resource
     private ApplicationContext applicationContext;
-
-    @Resource
-    private UserDao userDao;
 
     @Resource
     private LeftController leftController;

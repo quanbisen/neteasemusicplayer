@@ -2,6 +2,7 @@ package service;
 
 import com.alibaba.fastjson.JSON;
 import controller.content.AlbumLyricContentController;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -14,6 +15,7 @@ import mediaplayer.MyMediaPlayer;
 import model.PlayListSong;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import pojo.Song;
@@ -51,6 +53,7 @@ public class LoadLyricService extends javafx.concurrent.Service<Void> {
             protected Void call() throws Exception {
                 //获取当前播放歌曲
                 PlayListSong playListSong = myMediaPlayer.getCurrentPlaySong();
+                Thread.sleep(100);  //睡眠
                 File lyricFile = null; //歌词文件句柄
                 //查找缓存目录有没有歌词文件，根据文件的歌曲名称和歌手名称判断
                 Path lyricPath = config.getLyricPath();
@@ -74,7 +77,7 @@ public class LoadLyricService extends javafx.concurrent.Service<Void> {
                         StringEntity entity = new StringEntity(JSON.toJSONString(song), ContentType.create("application/json", Charset.forName("UTF-8")));
                         String responseString = HttpClientUtils.executePost(url,entity);    //执行post请求
 
-                        if (responseString != null){
+                        if (responseString != null && responseString.length() > 0){
                             song = JSON.parseObject(responseString,Song.class);
                             String lyricURL = song.getLyricURL();
                             lyricFile = new File(lyricPath + File.separator + playListSong.getName() + " - " + playListSong.getSinger() + lyricURL.substring(lyricURL.lastIndexOf(".")));
@@ -109,15 +112,24 @@ public class LoadLyricService extends javafx.concurrent.Service<Void> {
 
                         try {
                             albumLyricContentController.getLyricTimeList().add(second);
+                            Platform.runLater(()->{
+                                Label labLyric = new Label(strRow); //创建歌词Label
+                                labLyric.getStyleClass().add("labLyric");   //添加ｃｓｓ类名，在ｃｓｓ文件添加样式,见AlbumLyricStyle.css文件
+                                albumLyricContentController.getVBoxLyric().getChildren().add(labLyric);
+                            });
 
-                            Label labLyric = new Label(strRow); //创建歌词Label
-                            labLyric.getStyleClass().add("labLyric");   //添加ｃｓｓ类名，在ｃｓｓ文件添加样式,见AlbumLyricStyle.css文件
-                            albumLyricContentController.getVBoxLyric().getChildren().add(labLyric);
                         }catch (Exception e){
                             e.printStackTrace();
                         }
-
                     }
+                }else {
+                    Platform.runLater(()->{
+                        Label label = new Label("暂无歌词");
+                        label.getStyleClass().add("labNoLyric");
+                        label.prefWidthProperty().bind(albumLyricContentController.getVBoxLyric().widthProperty());
+                        label.prefHeightProperty().bind(albumLyricContentController.getVBoxLyric().heightProperty());
+                        albumLyricContentController.getVBoxLyric().getChildren().add(label);
+                    });
                 }
                 return null;
             }

@@ -19,22 +19,6 @@
     -fx-scale-y: 0.991;
     -fx-scale-x: 0.991;
 }
-/*.list-view{*/
-/*    -fx-background-color: transparent;*/
-/*    -fx-background-insets: 0;*/
-/*}*/
-/*.list-cell {*/
-/*    -fx-padding: 0 0 0 0; !* 3 7 3 7 *!*/
-/*    -fx-background: transparent;*/
-/*    -fx-text-fill: #333333;*/
-/*    -fx-alignment: center-left;*/
-/*    -fx-pref-height: 2.5em;*/
-/*    -fx-font-size: 1.1em;*/
-/*    -fx-font-family: "Microsoft YaHei","SimSun";*/
-/*}*/
-/*.list-cell:filled:selected{*/
-/*    -fx-background-color: transparent;*/
-/*}*/
 #vBoxLyric,#scrollLyric{
     -fx-background-color: transparent;
 }
@@ -48,6 +32,10 @@
 }
 .labCurrent{
     -fx-text-fill: #FFFFFF;
+}
+.labNoLyric{
+    -fx-text-fill: #FFFFFF;
+    -fx-alignment: center;
 }
 .scroll-pane > .viewport {
     -fx-background-color: transparent;

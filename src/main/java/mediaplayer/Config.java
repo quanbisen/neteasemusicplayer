@@ -43,6 +43,10 @@ public class Config {
         return server + "/group";
     }
 
+    public String getGroupSongURL(){
+        return server + "/groupSong";
+    }
+
     /**获取登录配置存储的文件句柄*/
     public File getLoginConfigFile() {
         return configPath.resolve("login-config.properties").toFile();
@@ -64,6 +68,10 @@ public class Config {
 
     public File getSearchHistoryFile(){
         return configPath.resolve("search-history.xml").toFile();
+    }
+
+    public File getGroupsSongFile(){
+        return configPath.resolve("groups-song.xml").toFile();
     }
 
     public Path getCachePath() throws IOException {

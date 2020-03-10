@@ -97,4 +97,15 @@ public class LocalSongContextMenuController {
         WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
         deleteConfirmDialog.showAndWait();  //显示并且等待
     }
+
+    /**"收藏"contextmenu事件处理*/
+    @FXML
+    public void onClickedCollection(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/popup/chose-group.fxml");  //获取被Spring工厂接管的FXMLLoader对象
+        Stage choseGroupStage = StageUtils.getStage((Stage) localMusicContentController.getBorderPane().getScene().getWindow(),fxmlLoader.load());
+
+        StageUtils.synchronizeCenter((Stage) localMusicContentController.getBorderPane().getScene().getWindow(),choseGroupStage);   //设置choseGroupStage对象居中到primaryStage
+        WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
+        choseGroupStage.showAndWait();  //显示并且等待
+    }
 }

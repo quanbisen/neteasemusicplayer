@@ -3,13 +3,11 @@ package service;
 import com.alibaba.fastjson.JSON;
 import controller.main.LeftController;
 import controller.main.MainController;
-import dao.GroupDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import lombok.SneakyThrows;
 import mediaplayer.Config;
-import org.apache.http.HttpEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.springframework.context.ApplicationContext;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Service;
 import pojo.Group;
 import util.HttpClientUtils;
 import util.WindowUtils;
-
 import javax.annotation.Resource;
 import java.nio.charset.Charset;
 
@@ -29,8 +26,6 @@ public class DeleteGroupService extends javafx.concurrent.Service<Void> {
     @Resource
     private LeftController leftController;
 
-    @Resource
-    private GroupDao groupDao;
 
     @Resource
     private ApplicationContext applicationContext;

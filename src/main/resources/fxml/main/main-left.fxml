@@ -82,7 +82,7 @@
                <graphic>
                   <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../image/UnLoginImage.png" />
+                        <Image requestedHeight="38.0" requestedWidth="38.0" url="@../../image/UnLoginImage.png" />
                      </image>
                   </ImageView>
                </graphic>

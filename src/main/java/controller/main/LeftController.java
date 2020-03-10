@@ -8,10 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
+import pojo.Group;
 import pojo.User;
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -108,16 +111,26 @@ public class LeftController {
         if (user != null){
             labUserName.setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称*/
         }
+
+        labUserImage.setClip(new Circle(19,19,19)); //切割用户头像
     }
 
     /**添加歌单标签的函数
-     * @param tabName 歌单名称*/
-    public void addGroupTab(String tabName) throws IOException {
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-tab.fxml");    //"我喜欢的音乐"tab
-        vBoxTabContainer.getChildren().add(fxmlLoader.load());
-        GroupTabController groupTabController = fxmlLoader.getController();
-        groupTabController.getLabGroupName().setText(tabName);
-        tabList.add(groupTabController.getHBoxGroup());
+     * @param group 歌单对象*/
+    public void addGroupTab(Group group) throws IOException {
+        if (group.getFavor() == 1) { //如果是"我喜欢的音乐"歌单
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/favorgroup-tab.fxml");    //"我喜欢的音乐"tab
+            vBoxTabContainer.getChildren().add(fxmlLoader.load());
+            GroupTabController groupTabController = fxmlLoader.getController();
+            tabList.add(groupTabController.getHBoxGroup());
+        } else {
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-tab.fxml");    //"我喜欢的音乐"tab
+            vBoxTabContainer.getChildren().add(fxmlLoader.load());
+            GroupTabController groupTabController = fxmlLoader.getController();
+            groupTabController.getLabGroupName().setText(group.getName());
+            tabList.add(groupTabController.getHBoxGroup());
+        }
+        tabList.get(tabList.size() - 1).setUserData(group); //存储对象
     }
 
     /**根据歌单名称移除歌单标签的函数
@@ -129,15 +142,6 @@ public class LeftController {
                 tabList.remove(tabList.get(i));
             }
         }
-    }
-
-    /**添加登录用户的“我喜欢的音乐”tab和tab上面的标签文字函数*/
-    public void addFavorTab() throws IOException {
-        vBoxTabContainer.getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());    //歌单指示器组件
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/favorgroup-tab.fxml");    //"我喜欢的音乐"tab
-        vBoxTabContainer.getChildren().add(fxmlLoader.load());
-        GroupTabController groupTabController = fxmlLoader.getController();
-        tabList.add(groupTabController.getHBoxGroup());
     }
 
     /**当登录用户身份验证失败时，移除歌单tab组件的函数*/
@@ -159,7 +163,7 @@ public class LeftController {
         return false;
     }
 
-    /**获取目前选中的是哪一个标签的名称,如果没有找到，会跑出异常
+    /**获取目前选中的是哪一个标签的名称,如果没有找到，会抛出异常
      * */
     public HBox getContextMenuShownTab() throws Exception {
         int size = tabList.size();
@@ -176,7 +180,7 @@ public class LeftController {
     /**单击“搜索”标签事件处理*/
     @FXML
     public void onClickedSearchTab(MouseEvent mouseEvent) throws IOException {
-        if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
+        if (mouseEvent.getButton()== MouseButton.PRIMARY && getSelectedTab() != hBoxSearchTab){  //鼠标左击
             this.setSelectedTab(hBoxSearchTab);  //设置当前选择的为“搜索”标签
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-searchinput-content.fxml");
             centerController.getBorderPane().setCenter(fxmlLoader.load());
@@ -186,7 +190,7 @@ public class LeftController {
     /**单击“发现音乐”标签事件处理*/
     @FXML
     public void onClickedExplorerMusicTab(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
+        if (mouseEvent.getButton()== MouseButton.PRIMARY && getSelectedTab() != hBoxExploreMusicTab){  //鼠标左击
             this.setSelectedTab(hBoxExploreMusicTab);
 
             centerController.getBorderPane().setCenter(new Label("敬请期待"));
@@ -204,7 +208,7 @@ public class LeftController {
     /**单击“本地音乐”标签事件处理*/
     @FXML
     public void onClickedLocalMusicTab(MouseEvent mouseEvent) throws IOException {
-        if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
+        if (mouseEvent.getButton()== MouseButton.PRIMARY && getSelectedTab() != hBoxLocalMusicTab){  //鼠标左击
             this.setSelectedTab(hBoxLocalMusicTab);
             if (localMusicParent == null){
                 FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-localmusic-content.fxml");
@@ -217,7 +221,7 @@ public class LeftController {
     /**单击“最近播放”标签事件处理*/
     @FXML
     public void onClickedRecentPlayTab(MouseEvent mouseEvent) throws IOException {
-        if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
+        if (mouseEvent.getButton()== MouseButton.PRIMARY && getSelectedTab() != hBoxRecentPlayTab){  //鼠标左击
             this.setSelectedTab(hBoxRecentPlayTab);
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-recentplay-content.fxml");
             centerController.getBorderPane().setCenter(fxmlLoader.load());

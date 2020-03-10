@@ -1,0 +1,189 @@
+.scroll-pane,.viewport{
+    -fx-background-color: transparent;
+}
+#btnPlayAll {
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 15px;
+}
+/**"播放全部"按钮容器的鼠标按下样式*/
+#hBoxPlayAll:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-scale-z: 0.98;
+}
+.text-input, .text-input:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
+/*本地文件标记Label样式*/
+.labLocalFlag{
+    -fx-min-width: 14px;
+    -fx-min-height: 14px;
+    -fx-max-width: 14px;
+    -fx-max-height: 14px;
+    -fx-background-color: #88D2F2;
+    -fx-background-radius: 14;
+    -fx-alignment: center
+}
+.table-view
+{
+    -fx-background-color: transparent;
+}
+/*设置标题栏的显示为0，不显示标题*/
+.table-view .column-header-background
+{
+    -fx-max-height: 0;
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+}
+
+.table-view .column-header
+{
+    -fx-background-color: transparent;
+    -fx-border-width: 1 1 1 0;
+    -fx-border-color: #E4E4E7;
+    -fx-size: 30;
+}
+.table-view .column-header .label
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-alignment: center-left;
+}
+.table-view .table-cell
+{
+    -fx-text-fill: #333333;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-border-color:transparent;
+    -fx-alignment: center-left;
+    -fx-padding: 5 5 5 5;
+}
+/*表格行按压的缩放样式*/
+.table-view .table-row-cell:pressed
+{
+    -fx-scale-x: 0.995;
+    -fx-scale-y: 0.995;
+    -fx-background-insets: 0 -3em 0 -3em;
+}
+/*设置表格第一列的样式*/
+#indexColumn.table-cell
+{
+    -fx-text-fill: #333333;
+    -fx-padding:0 0 0 5;
+    -fx-alignment: center-right;
+}
+#addFavorColumn.table-cell
+{
+    -fx-alignment: center;
+    -fx-padding: 0 0 0 0;
+}
+#nameColumn.table-cell,#localFlagColumn.table-cell,#singerColumn.table-cell,#albumColumn.table-cell,#totalTimeColumn.table-cell
+{
+    -fx-padding:0 0 0 0;
+    -fx-alignment: center-left;
+}
+/*表格行样式*/
+.table-view .table-row-cell
+{
+    -fx-cell-size: 40px;
+    -fx-background-color:#FAFAFC;
+    -fx-background-insets: 0;
+}
+/*表格偶数行样式*/
+.table-view .table-row-cell:odd
+{
+    -fx-background-color:#F4F4F6;
+}
+/*表格行鼠标放置在上面的样式*/
+.table-view .table-row-cell:hover
+{
+    -fx-background-color: #F2F2F3;
+}
+/*选中行的背景颜色*/
+.table-view .table-row-cell:selected
+{
+    -fx-background-color: #DEDEE0;
+}
+
+/*空行的样式，参见：http://fxexperience.com/2011/11/alternate-row-highlighting-in-empty-tableview-and-listview-rows/*/
+.table-view .table-row-cell:empty
+{
+    -fx-background-color: #FAFAFC;
+}
+/*去除空行的边框*/
+.table-view .table-row-cell:empty .table-cell
+{
+    -fx-border-width: 0px;
+}
+.scroll-bar:vertical
+{
+    -fx-pref-width: 8;
+    -fx-background-color: transparent;
+}
+.scroll-bar:vertical .thumb
+{
+    -fx-background-color: #C8C9CC;
+    -fx-background-insets: 0;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:vertical .thumb:hover
+{
+    -fx-background-color: #ADAFB2;
+}
+.scroll-bar:vertical .track
+{
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+.scroll-bar:horizontal
+{
+    visibility: hidden;
+    -fx-pref-height: 0;
+    -fx-border:0;
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+}
+.scroll-bar:horizontal .thumb
+{
+    visibility:hidden;
+    -fx-pref-height: 2;
+    -fx-border-insets: 0;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+.scroll-bar:horizontal .thumb:hover
+{
+    -fx-background-color: #ADAFB2;
+}
+.scroll-bar:horizontal .track
+{
+    -fx-pref-height: 0;
+    -fx-border:0;
+    -fx-background-insets: 0;
+    -fx-background-color:#F3F3F5;
+}
+
+/*关闭按钮:垂直和水平的按钮*/
+.scroll-bar .increment-arrow
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .decrement-arrow
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .increment-button
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .decrement-button
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar:vertical:disabled {
+    -fx-opacity: 0;
+}

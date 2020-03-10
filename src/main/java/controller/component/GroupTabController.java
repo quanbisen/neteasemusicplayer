@@ -1,15 +1,18 @@
 package controller.component;
 
 import application.SpringFXMLLoader;
+import controller.content.GroupContentController;
 import controller.main.CenterController;
 import controller.main.LeftController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -74,16 +77,15 @@ public class GroupTabController {
     }
 
     @FXML
-    public void onClickedGroupTab(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY){
+    public void onClickedGroupTab(MouseEvent mouseEvent) throws IOException {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && leftController.getSelectedTab() != hBoxGroup){
             leftController.setSelectedTab(hBoxGroup);  //设置当前选中的tab
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-group-content.fxml");
+            centerController.getBorderPane().setCenter(fxmlLoader.load());
             if(labGroupName.getText().equals("我喜欢的音乐")){
-                centerController.getBorderPane().setCenter(new Label("我喜欢的音乐"));
-            }else {
-                centerController.getBorderPane().setCenter(new Label(labGroupName.getText()));
+                GroupContentController groupContentController = fxmlLoader.getController();
+                groupContentController.gethBoxDescription().setVisible(false);  //把描述的容器组件设置不可见
             }
-        }else if (mouseEvent.getButton() == MouseButton.SECONDARY){ //鼠标右键，打开右键菜单
-
         }
     }
 }

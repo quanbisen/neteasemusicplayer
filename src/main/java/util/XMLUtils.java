@@ -1,5 +1,8 @@
 package util;
 
+import javafx.scene.control.Label;
+import model.GroupSong;
+import model.LocalSong;
 import model.PlayListSong;
 import model.RecentSong;
 import org.dom4j.Document;
@@ -10,13 +13,14 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultAttribute;
+import pojo.Group;
+import pojo.Song;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public final class XMLUtils {
 
@@ -122,7 +126,79 @@ public final class XMLUtils {
             }
         }
         saveToFile(xmlFile, root.getDocument());
+    }
 
+    /**保存本地歌曲到歌单的函数操作
+     * @param xmlFile 存储的xml文件
+     * @param group 歌单对象
+     * @param localSong 本地歌曲对象*/
+    public static String addOneRecord(File xmlFile, Group group, LocalSong localSong) throws DocumentException {
+        Element root = getRootElement(xmlFile);
+        if (root.element(group.getName()) == null){    //如果root元素下没有歌单名称元素,
+            root.addElement(group.getName());   //新增
+        }
+        //先判断当前歌单是否已经存在该歌曲
+        List<Element> songsElement = root.element(group.getName()).elements("song");
+        for (int i = 0; i < songsElement.size(); i++) {
+            if (songsElement.get(i).attributeValue("resourceURL").equals(localSong.getResource())){ //以resourceURL作为判断是否重复的依据
+                return "歌曲已存在";
+            }
+        }
+        //然后在groupName元素下添加song元素
+        Element songElement = root.element(group.getName()).addElement("song");
+        songElement.addAttribute("name",localSong.getName());
+        songElement.addAttribute("singer",localSong.getSinger());
+        songElement.addAttribute("album",localSong.getAlbum());
+        songElement.addAttribute("totalTime",localSong.getTotalTime());
+        songElement.addAttribute("resourceURL",localSong.getResource());
+        songElement.addAttribute("addTime",String.valueOf(new Date().getTime()));
+        String favorFlag;
+        if (group.getName().equals("我喜欢的音乐")){
+            favorFlag = "like";
+        }else {
+            favorFlag = "dislike";
+        }
+        songElement.addAttribute("labFavorData",favorFlag);
+        //最后保存
+        saveToFile(xmlFile,root.getDocument());
+        return "添加成功";
+    }
+
+    public static String removeOneRecord(File xmlFile, Group group, GroupSong groupSong) throws DocumentException {
+        Element root = getRootElement(xmlFile);
+        String message = "移除失败";
+        List<Element> songList = root.element(group.getName()).elements("song");
+        for (int i = 0; i < songList.size(); i++) {
+            if (songList.get(i).attributeValue("resourceURL").equals(groupSong.getResourceURL())){
+                songList.get(i).detach();
+                message = "移除成功";
+                break;
+            }
+        }
+        saveToFile(xmlFile,root.getDocument());
+        return message;
+    }
+
+    /**获取xml文件歌单分组下所有的歌曲信息
+     * @param xmlFile xml文件
+     * @param group 分组对象信息*/
+    public static List<GroupSong> getGroupSongs(File xmlFile,Group group) throws DocumentException {
+        List<GroupSong> groupSongs = new ArrayList<>();
+        Element root = getRootElement(xmlFile);
+        List<Element> songList = root.element(group.getName()).elements();
+        for (int i = 0; i < songList.size(); i++) {
+            GroupSong groupSong = new GroupSong();
+            groupSong.setName(songList.get(i).attributeValue("name"));
+            groupSong.setSinger(songList.get(i).attributeValue("singer"));
+            groupSong.setAlbum(songList.get(i).attributeValue("album"));
+            groupSong.setTotalTime(songList.get(i).attributeValue("totalTime"));
+            groupSong.setResourceURL(songList.get(i).attributeValue("resourceURL"));
+            Label labFavorFlag = new Label();
+            labFavorFlag.setUserData(songList.get(i).attributeValue("labFavorData"));
+            groupSong.setLabFavor(labFavorFlag);
+            groupSongs.add(groupSong);
+        }
+        return groupSongs;
     }
 
     public static boolean isExist(File xmlFile, String subName, String attributeName,String candidate) throws DocumentException{

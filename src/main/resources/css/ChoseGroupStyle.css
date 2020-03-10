@@ -1,0 +1,83 @@
+#actualPane
+{
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+}
+#visualPane
+{
+    -fx-background-color: WHITE;
+    -fx-border-width: 1;
+    -fx-border-color: #c9c9cb;
+    -fx-effect: dropshadow(three-pass-box, #c9c9cb,5,0,0,0);
+}
+#labCloseIcon:hover
+{
+    -fx-graphic: url("/image/CloseIconHover.png");
+}
+.grouptab{
+    -fx-border-width:0 0 1 0;
+    -fx-border-color: #E8E8EA;
+}
+.grouptab:hover{
+    -fx-background-color: #F2F2F3;
+}
+.scroll-pane
+ {
+     /*-fx-background-color: white; */
+     -fx-border-width: 1 0 1 0;
+     -fx-border-color: #E8E8EA;
+     -fx-padding: 0 5 0 5;
+     -fx-background-color: WHITE;  /*设置背景颜色*/
+     -fx-background:#F3F3F5;  /*content（滚动的内容）填充*/
+ }
+
+.scroll-bar:vertical
+{
+    -fx-pref-width: 5;
+    -fx-background-color: transparent;
+}
+.scroll-bar:vertical .thumb
+{
+    -fx-min-width: 5;
+    -fx-background-color: #C8C9CC;
+    -fx-background-insets: 0;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:vertical .thumb:hover
+{
+    -fx-background-color: #ADAFB2;
+}
+.scroll-bar:vertical .track
+{
+    -fx-background-color: transparent;
+    -fx-background-insets:  0;
+}
+.scroll-bar:vertical > .track-background
+{
+    -fx-background-insets:  0, 0;
+}
+.scroll-bar:horizontal .track
+{
+    -fx-background-color:#F3F3F5;
+}
+/*关闭按钮:垂直和水平的*/
+.scroll-bar .increment-arrow
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .decrement-arrow
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .increment-button
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .decrement-button
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}

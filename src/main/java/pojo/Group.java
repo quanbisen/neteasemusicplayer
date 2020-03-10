@@ -21,4 +21,5 @@ public class Group {
     private String imageURL;
     @NonNull
     private String userID;
+    private int favor;
 }

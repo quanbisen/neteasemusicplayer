@@ -7,7 +7,6 @@ import controller.component.GroupTabController;
 import controller.main.CenterController;
 import controller.main.LeftController;
 import controller.main.MainController;
-import dao.UserDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +15,6 @@ import javafx.stage.Stage;
 import mediaplayer.Config;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -100,63 +98,17 @@ public class LoginService extends javafx.concurrent.Service<Void> {
                         //加载歌单指示器和"我喜欢的音乐"tab标签
                         try {
                             leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());   //歌单指示器组件
-                            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/favorgroup-tab.fxml");    //"我喜欢的音乐"tab
-                            leftController.getVBoxTabContainer().getChildren().add(fxmlLoader.load());
-                            GroupTabController groupTabController = fxmlLoader.getController();
-                            leftController.getTabList().add(groupTabController.getHBoxGroup());
+//                            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/favorgroup-tab.fxml");    //"我喜欢的音乐"tab
+//                            leftController.getVBoxTabContainer().getChildren().add(fxmlLoader.load());
+//                            GroupTabController groupTabController = fxmlLoader.getController();
+//                            leftController.getTabList().add(groupTabController.getHBoxGroup());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
 
                     });
                 }
-
-//                if (user != null){
-//                    try {
-//                        int row = userDao.updateLoginTime(user.getId());  //更新数据库中的登录时间字段
-//                        if (row == 1){
-//                            user = userDao.queryUserByIdToken(user);
-//                        }
-//
-//                        //保存登录信息到本地文件
-//                        File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile();
-//                        loginConfigFile.delete();
-//                        loginConfigFile.createNewFile();  //创建新的文件
-//
-//                        JSONObjectUtils.saveObject(user,loginConfigFile);  //调用存储的函数，写入到文件
-//
-//                        File cachePath = applicationContext.getBean(Config.class).getCachePath();
-//                        File imageFile = new File(cachePath + File.separator + user.getLoginTime().getTime()); //用用户的用户名作为图片命名
-//                        HttpClientUtils.download(user.getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    applicationContext.getBean(Config.class).setUser(user);
-//                    Platform.runLater(()->{
-//                        //加载用户创建的歌单
-//                        applicationContext.getBean(SynchronizeGroupService.class).start();
-//                        applicationContext.getBean(ScheduledQueryUserService.class).restart();    //重新启动定时任务
-//
-//                        ((Stage)loginController.getPfPassword().getScene().getWindow()).close();      //关闭窗口
-//                        WindowUtils.releaseBorderPane(mainController.getBorderPane());  //释放中间的面板，可以接受鼠标事件和改变透明度
-//                        leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(applicationContext.getBean(Config.class).getUser().getImageURL(),38,38));  //设置用户头像图片
-//                        leftController.getLabUserName().setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称
-//                        WindowUtils.toastInfo(centerController.getStackPane(),new Label("登录成功"));
-//
-//                        //加载歌单指示器和"我喜欢的音乐"tab标签
-//                        try {
-//                            leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());   //歌单指示器组件
-//                            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/favorgroup-tab.fxml");    //"我喜欢的音乐"tab
-//                            leftController.getVBoxTabContainer().getChildren().add(fxmlLoader.load());
-//                            GroupTabController groupTabController = fxmlLoader.getController();
-//                            leftController.getTabList().add(groupTabController.getHBoxGroup());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-
-//                    });
-                    return null;
-//                }
+                return null;
 
             }
         };

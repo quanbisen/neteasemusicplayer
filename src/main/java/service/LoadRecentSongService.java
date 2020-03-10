@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import mediaplayer.Config;
-import mediaplayer.MyMediaPlayer;
 import model.RecentSong;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;

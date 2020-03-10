@@ -14,16 +14,6 @@
 {
     -fx-graphic: url("/image/CloseIconHover.png");
 }
-.table-view
-{
-    -fx-background-color: transparent;
-}
-.table-view .column-header-background
-{
-    -fx-max-height: 0;
-    -fx-pref-height: 0;
-    -fx-min-height: 0;
-}
 .scroll-pane
 {
     /*-fx-background-color: white; */

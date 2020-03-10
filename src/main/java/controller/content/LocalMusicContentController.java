@@ -9,7 +9,6 @@ import javafx.animation.SequentialTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -48,8 +47,6 @@ import util.StageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 @Controller
 public class LocalMusicContentController {
@@ -204,10 +201,11 @@ public class LocalMusicContentController {
             if (scrollBar.isDisable()){
                 scrollBar.setDisable(false);
             }
-            HideScrollerBarService hideScrollerBarService = applicationContext.getBean(HideScrollerBarService.class);
-            hideScrollerBarService.setDelay(Duration.seconds(5));
-            hideScrollerBarService.restart();
-            hideScrollerBarService.setOnSucceeded(event1 -> {
+            HideScrollerBarService hideScrollerBarService = applicationContext.getBean(HideScrollerBarService.class);   //获取服务对象
+            hideScrollerBarService.setScrollBar(scrollBar);
+            hideScrollerBarService.setDelay(Duration.seconds(5));   //设置延时5秒
+            hideScrollerBarService.restart();   //重启服务
+            hideScrollerBarService.setOnSucceeded(event1 -> {   //成功后取消服务
                 hideScrollerBarService.cancel();
             });
         });

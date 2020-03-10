@@ -4,7 +4,6 @@ import application.SpringFXMLLoader;
 import com.alibaba.fastjson.JSON;
 import controller.component.GroupTabController;
 import controller.main.LeftController;
-import dao.GroupDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -62,14 +61,12 @@ public class SynchronizeGroupService extends javafx.concurrent.Service<Void> {
                         String url = applicationContext.getBean(Config.class).getGroupURL() + "/query/" + user.getToken();
                         String responseString = HttpClientUtils.executeGet(url);    //执行查询歌单
                         List<Group> groupList = JSON.parseArray(responseString,Group.class);
-//                    user.setGroupList(groupList);
                         if (groupList != null && groupList.size() > 0){
                             Platform.runLater(()->{
                                 groupList.forEach(group -> {    //遍历查询到的歌单集合，逐个添加不存在的到左侧的标签tab栏
                                     if (!leftController.exist(group.getName())){    //如果左侧的标签歌单没有查询到的歌单列表，添加
                                         try {
-                                            leftController.addGroupTab(group.getName());
-                                            leftController.getTabList().get(leftController.getTabList().size() - 1).setUserData(group); //存储对象
+                                            leftController.addGroupTab(group);  //添加歌单标签
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }

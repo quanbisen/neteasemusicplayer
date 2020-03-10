@@ -2,7 +2,6 @@ package service;
 
 import controller.content.EditGroupContentController;
 import controller.main.CenterController;
-import dao.GroupDao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
@@ -23,9 +22,6 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
     private EditGroupContentController editGroupContentController;
 
     @Resource
-    private GroupDao groupDao;
-
-    @Resource
     private ApplicationContext applicationContext;
 
     @Resource
@@ -38,25 +34,25 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                String name = editGroupContentController.getTfGroupName().getText();
-                String description = editGroupContentController.getTaDescription().getText();
-                String userID = applicationContext.getBean(Config.class).getUser().getId();
-                try {
-                    Group group = editGroupContentController.getGroup();
-                    group.setName(name);
-                    group.setDescription(description);
-                    group.setUserID(userID);
-                    int row = groupDao.update(group);
-                    if (row == 1){
-                        Platform.runLater(()->{
-                            WindowUtils.toastInfo(centerController.getStackPane(),new Label("保存成功"));
-                        });
-                    }else {
-                        Platform.runLater(()->{
-                            WindowUtils.toastInfo(centerController.getStackPane(),new Label("保存失败"));
-                        });
-                    }
-                }catch (Exception e){e.printStackTrace();}
+//                String name = editGroupContentController.getTfGroupName().getText();
+//                String description = editGroupContentController.getTaDescription().getText();
+//                String userID = applicationContext.getBean(Config.class).getUser().getId();
+//                try {
+//                    Group group = editGroupContentController.getGroup();
+//                    group.setName(name);
+//                    group.setDescription(description);
+//                    group.setUserID(userID);
+//                    int row = groupDao.update(group);
+//                    if (row == 1){
+//                        Platform.runLater(()->{
+//                            WindowUtils.toastInfo(centerController.getStackPane(),new Label("保存成功"));
+//                        });
+//                    }else {
+//                        Platform.runLater(()->{
+//                            WindowUtils.toastInfo(centerController.getStackPane(),new Label("保存失败"));
+//                        });
+//                    }
+//                }catch (Exception e){e.printStackTrace();}
 
                 return null;
             }

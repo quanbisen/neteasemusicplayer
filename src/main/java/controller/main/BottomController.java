@@ -8,16 +8,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import mediaplayer.MyMediaPlayer;
 import mediaplayer.PlayMode;
@@ -98,6 +95,12 @@ public class BottomController {
 
     @Resource
     private AlbumLyricContentController albumLyricContentController;
+
+    /**显示专辑歌词面板的动画*/
+    private Timeline timelineShow;
+
+    /**y隐藏专辑歌词面板的动画*/
+    private Timeline timelineHide;
 
     public Label getLabPlay() {
         return labPlay;
@@ -199,22 +202,25 @@ public class BottomController {
             albumLyricPane.minHeightProperty().bind(vBoxAlbumLyricContainer.heightProperty());
             albumLyricPane.minWidthProperty().bind(vBoxAlbumLyricContainer.widthProperty());
         }
-        if (!centerController.getStackPane().getChildren().contains(vBoxAlbumLyricContainer)){
+        if (!albumLyricContentController.isShowing()){
             showAlbumLyricPane();
-        }
-        else if (centerController.getStackPane().getChildren().contains(vBoxAlbumLyricContainer)){
+        } else{
             hideAlbumLyricPane();
         }
     }
 
     /**显示专辑歌词面板函数*/
     public void showAlbumLyricPane(){
-        labAlbum.setMouseTransparent(true);
         albumLyricContentController.setShowing(true);
-        centerController.getStackPane().getChildren().add(vBoxAlbumLyricContainer);
+        if (!centerController.getStackPane().getChildren().contains(vBoxAlbumLyricContainer)){
+            centerController.getStackPane().getChildren().add(vBoxAlbumLyricContainer);
+        }
         centerController.getStackPane().setAlignment(Pos.BOTTOM_LEFT);
-        Timeline timeline = new Timeline();
-        timeline.getKeyFrames().addAll(
+        if (timelineHide != null && timelineHide.getStatus() == Animation.Status.RUNNING){
+            timelineHide.pause();
+        }
+        timelineShow = new Timeline();
+        timelineShow.getKeyFrames().addAll(
                 new KeyFrame(Duration.seconds(0.2),new KeyValue(vBoxAlbumLyricContainer.maxHeightProperty(),centerController.getStackPane().getHeight(),Interpolator.EASE_IN)),
                 new KeyFrame(Duration.seconds(0.2),new KeyValue(vBoxAlbumLyricContainer.maxWidthProperty(),centerController.getStackPane().getWidth(),Interpolator.EASE_IN)),
                 new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbumOutdoor().fitHeightProperty(),320)),
@@ -222,11 +228,10 @@ public class BottomController {
                 new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbum().fitHeightProperty(),190)),
                 new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbum().fitWidthProperty(),190))
         );
-        timeline.play();
+        timelineShow.play();
         vBoxAlbumLyricContainer.setMinWidth(0);
         vBoxAlbumLyricContainer.setMinHeight(0);
-        timeline.setOnFinished((event -> {
-            labAlbum.setMouseTransparent(false);
+        timelineShow.setOnFinished((event -> {
             centerController.getStackPane().setAlignment(Pos.CENTER);
             vBoxAlbumLyricContainer.maxHeightProperty().bind(centerController.getStackPane().heightProperty());
             vBoxAlbumLyricContainer.maxWidthProperty().bind(centerController.getStackPane().widthProperty());
@@ -241,13 +246,15 @@ public class BottomController {
 
     /**隐藏专辑歌词面板函数*/
     public void hideAlbumLyricPane(){
-        labAlbum.setMouseTransparent(true);
         albumLyricContentController.setShowing(false);  //设置显示标记为false,隐藏了,不是正在显示
         vBoxAlbumLyricContainer.maxWidthProperty().unbind();
         vBoxAlbumLyricContainer.maxHeightProperty().unbind();
 
-        Timeline timeline = new Timeline();
-        timeline.getKeyFrames().addAll(
+        if (timelineShow != null && timelineShow.getStatus() == Animation.Status.RUNNING){
+            timelineShow.pause();
+        }
+        timelineHide = new Timeline();
+        timelineHide.getKeyFrames().addAll(
                 new KeyFrame(Duration.seconds(0.2), new KeyValue(vBoxAlbumLyricContainer.maxHeightProperty(), 0,Interpolator.EASE_IN)),
                 new KeyFrame(Duration.seconds(0.2), new KeyValue(vBoxAlbumLyricContainer.maxWidthProperty(), 0,Interpolator.EASE_IN)),
                 new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbumOutdoor().fitHeightProperty(),0)),
@@ -256,9 +263,8 @@ public class BottomController {
                 new KeyFrame((Duration.seconds(0.2)),new KeyValue(albumLyricContentController.getIvAlbum().fitWidthProperty(),0))
         );
         centerController.getStackPane().setAlignment(Pos.BOTTOM_LEFT);
-        timeline.play();
-        timeline.setOnFinished((event -> {
-            labAlbum.setMouseTransparent(false);
+        timelineHide.play();
+        timelineHide.setOnFinished((event -> {
             centerController.getStackPane().getChildren().remove(vBoxAlbumLyricContainer);
             centerController.getStackPane().setAlignment(Pos.CENTER);
         }));
