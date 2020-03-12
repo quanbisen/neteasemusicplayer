@@ -1,8 +1,6 @@
 package mediaplayer;
 
 import org.springframework.stereotype.Component;
-import pojo.User;
-import response.RegisterResponse;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,14 +14,8 @@ import java.util.Properties;
 @Component
 public class Config {
 
-    /**播放器合法的登录用户对象*/
-    private User user;
-
     /**播放器配置文件的存放路径*/
     private Path configPath;
-
-    /**注册时的临时对象*/
-    private RegisterResponse registerResponse;
 
     private String server;
 
@@ -94,21 +86,6 @@ public class Config {
         return lyricPath;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public RegisterResponse getRegisterResponse() {
-        return registerResponse;
-    }
-
-    public void setRegisterResponse(RegisterResponse registerResponse) {
-        this.registerResponse = registerResponse;
-    }
 
     public Config() throws IOException {
         /**server part*/

@@ -38,6 +38,10 @@ import java.util.*;
 @Controller
 public class AlbumLyricContentController {
 
+    /**VBox根容器*/
+    @FXML
+    private VBox vBoxAlbumLyricContainer;
+
     @FXML
     private StackPane stackPane;
 
@@ -114,8 +118,8 @@ public class AlbumLyricContentController {
 
     private int lyricIndex;
 
-    /**标记这个面板是否正在显示在centerPane里,在bottomController里控制,当单击专辑图片时,设置正在显示true*/
-    private boolean showing;
+    /**标记这个面板是否正在显示在centerPane里,在bottomController里控制,当单击专辑图片时,设置显示true*/
+    private boolean show;
 
     public AlbumLyricContentController() {
         lyricTimeList = new ArrayList<>();
@@ -157,18 +161,19 @@ public class AlbumLyricContentController {
         this.lyricIndex = lyricIndex;
     }
 
-    public boolean isShowing() {
-        return showing;
+    public boolean isShow() {
+        return show;
     }
 
-    public void setShowing(boolean showing) {
-        this.showing = showing;
+    public void setShow(boolean show) {
+        this.show = show;
     }
 
     public void initialize() throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
         //设置布局的宽高度绑定
         absolutelyBind(root,stackPane);
         absolutelyBind(labBlur,stackPane);
+        absolutelyBind(stackPane,vBoxAlbumLyricContainer);
 
         stackPane.widthProperty().addListener(((observable, oldValue, newValue) -> {
             albumLyricPane.setPrefWidth(observable.getValue().doubleValue()/100*43);
@@ -186,7 +191,7 @@ public class AlbumLyricContentController {
         //初始化设置专辑图片的容器的旋转动画
         stackPaneAlbum.setCache(true);
         stackPaneAlbum.setCacheHint(CacheHint.ROTATE);
-        rotateTransition = new RotateTransition(Duration.seconds(6),stackPaneAlbum);
+        rotateTransition = new RotateTransition(Duration.seconds(10),stackPaneAlbum);
         rotateTransition.setInterpolator(Interpolator.LINEAR);  //匀速旋转
         rotateTransition.setByAngle(360);   //360度旋转
         rotateTransition.setCycleCount(Animation.INDEFINITE);   //无数次

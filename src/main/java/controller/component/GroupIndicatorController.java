@@ -11,6 +11,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import mediaplayer.Config;
+import mediaplayer.PlayerState;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import util.StageUtils;
@@ -41,7 +42,7 @@ public class GroupIndicatorController {
     @FXML
     public void onClickedCreateMusicGroup(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
-            if (applicationContext.getBean(Config.class).getUser() == null){   //判断用户是否登录过了。
+            if (applicationContext.getBean(PlayerState.class).getUser() == null){   //判断用户是否登录过了。
                 WindowUtils.toastInfo(centerController.getStackPane(),new Label("请先登录！"));
             }
             else{

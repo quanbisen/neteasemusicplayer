@@ -3,6 +3,7 @@ package service;
 import com.alibaba.fastjson.JSON;
 import javafx.concurrent.Task;
 import mediaplayer.Config;
+import mediaplayer.PlayerState;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.context.ApplicationContext;
@@ -33,7 +34,7 @@ public class ResendRegisterCodeService extends javafx.concurrent.Service<Schedul
             protected ScheduledCountDownService call() throws Exception {
                 try {
                     //取出账号密码
-                    RegisterResponse registerResponse = applicationContext.getBean(Config.class).getRegisterResponse();
+                    RegisterResponse registerResponse = applicationContext.getBean(PlayerState.class).getRegisterResponse();
                     String email = registerResponse.getId();
                     String password = registerResponse.getPassword();
                     String url = applicationContext.getBean(Config.class).getUserURL() + "/sendAuthenticationCode";
@@ -41,7 +42,7 @@ public class ResendRegisterCodeService extends javafx.concurrent.Service<Schedul
                             addTextBody("password",password,ContentType.create("text/pain",Charset.forName("UTF-8")));
                     String responseString = HttpClientUtils.executePost(url,multipartEntityBuilder.build());
                     if (registerResponse.getMessage().equals("验证码发送成功")){
-                        applicationContext.getBean(Config.class).setRegisterResponse(JSON.parseObject(responseString,RegisterResponse.class));
+                        applicationContext.getBean(PlayerState.class).setRegisterResponse(JSON.parseObject(responseString,RegisterResponse.class));
                         ScheduledCountDownService scheduledCountDownService = applicationContext.getBean(ScheduledCountDownService.class);
                         scheduledCountDownService.setTime(registerResponse.getExpireSecond());
                         return scheduledCountDownService;

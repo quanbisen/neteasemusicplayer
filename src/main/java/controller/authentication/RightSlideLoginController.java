@@ -17,6 +17,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mediaplayer.Config;
+import mediaplayer.PlayerState;
 import pojo.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -98,7 +99,7 @@ public class RightSlideLoginController {
 
         //设置登录用户的UI组件显示
         Circle circle = new Circle(20,20,20);
-        User user = applicationContext.getBean(Config.class).getUser();
+        User user = applicationContext.getBean(PlayerState.class).getUser();
         ImageView userImage = ImageUtils.createImageView(new Image(user.getImageURL()),40,40);
         userImage.setClip(circle);   //设置圆形图片
         labUserImage.setGraphic(userImage);

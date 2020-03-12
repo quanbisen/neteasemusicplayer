@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import mediaplayer.Config;
+import mediaplayer.PlayerState;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.ValidateUserService;
@@ -67,9 +68,9 @@ public class LogoutConfirmDialogController {
      */
     @FXML
     public void onClickedConfirm(ActionEvent actionEvent) throws IOException {
-        if (applicationContext.getBean(Config.class).getUser() != null) {   //判断用户为登录状态
+        if (applicationContext.getBean(PlayerState.class).getUser() != null) {   //判断用户为登录状态
 
-            applicationContext.getBean(Config.class).setUser(null); //清空登录用户对象
+            applicationContext.getBean(PlayerState.class).setUser(null); //清空登录用户对象
             File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile(); //获取登录文件
             if (loginConfigFile.exists()){
                 loginConfigFile.delete();   //删除播放器的登录文件

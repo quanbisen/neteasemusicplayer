@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import mediaplayer.Config;
+import mediaplayer.PlayerState;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.context.ApplicationContext;
@@ -30,6 +31,9 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
     private Config config;
 
     @Resource
+    private PlayerState playerState;
+
+    @Resource
     private CenterController centerController;
 
     @Resource
@@ -43,7 +47,7 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
                 String url = config.getGroupURL() + "/update";
                 String name = editGroupContentController.getTfGroupName().getText();
                 String description = editGroupContentController.getTaDescription().getText();
-                String userID = config.getUser().getId();
+                String userID = playerState.getUser().getId();
                 try {
                     Group group = editGroupContentController.getGroup();
                     group.setName(name);

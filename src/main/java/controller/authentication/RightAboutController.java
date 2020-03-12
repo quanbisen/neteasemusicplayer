@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import mediaplayer.Config;
+import mediaplayer.PlayerState;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import javax.annotation.Resource;
@@ -26,7 +27,7 @@ public class RightAboutController {
     @FXML
     public void onClickedBack(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            if (applicationContext.getBean(Config.class).getUser() != null){
+            if (applicationContext.getBean(PlayerState.class).getUser() != null){
                 rightSlideLoginController.getBorderPaneRoot().setRight(rightSlideLoginController.getVisualBorderPane());
             }else {
                 rightSlideUnLoginController.getBorderPaneRoot().setRight(rightSlideUnLoginController.getVisualBorderPane());

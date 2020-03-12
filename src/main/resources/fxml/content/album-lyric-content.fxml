@@ -12,125 +12,129 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="876.0" stylesheets="@../../css/AlbumLyricStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.AlbumLyricContentController">
+<VBox fx:id="vBoxAlbumLyricContainer" stylesheets="@../../css/AlbumLyricStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.AlbumLyricContentController">
    <children>
-      <Label fx:id="labBlur" maxHeight="522.0" maxWidth="876.0" minHeight="522.0" minWidth="876.0" prefHeight="522.0" prefWidth="876.0" style="-fx-background-color: #D6D8DA;" text="Label" textFill="#898888">
-         <graphic>
-            <ImageView fitHeight="522.0" fitWidth="876.0" opacity="0.7" />
-         </graphic>
-      </Label>
-      <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="876.0">
-         <center>
-            <BorderPane fx:id="lyricPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <top>
-                  <VBox prefHeight="65.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <BorderPane prefHeight="40.0" prefWidth="200.0">
-                           <left>
-                              <Label fx:id="labTitle" text="七里香" textFill="#333333" BorderPane.alignment="CENTER">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                           </left>
-                           <right>
-                              <Label onMouseClicked="#onClickedResizeSmall" prefHeight="25.0" prefWidth="35.0" style="-fx-background-color: linear-gradient(to right,#C5C5C5,#CCCCCC); -fx-background-radius: 5; -fx-alignment: center; -fx-border-color: #B0B9AB; -fx-border-radius: 3; -fx-opacity: 0.7;" BorderPane.alignment="CENTER">
-                                 <graphic>
-                                    <ImageView fx:id="labResizeSmall">
-                                       <Image requestedHeight="16.0" requestedWidth="16.0" url="@../../image/ResizeSmall_24.png" />
-                                    </ImageView>
-                                 </graphic>
-                                 <BorderPane.margin>
-                                    <Insets right="25.0" />
-                                 </BorderPane.margin>
-                              </Label>
-                           </right>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </BorderPane>
-                        <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
-                           <children>
-                              <Label text="专辑：" textFill="#333333" />
-                              <Label fx:id="labAlbum" text="未知" textFill="#333333" />
-                              <Label text="歌手：" textFill="#333333">
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <Label fx:id="labArtist" text="未知" />
-                           </children>
-                        </HBox>
-                     </children>
-                     <BorderPane.margin>
-                        <Insets top="50.0" />
-                     </BorderPane.margin>
-                  </VBox>
-               </top>
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
-               <padding>
-                  <Insets left="20.0" right="20.0" />
-               </padding>
+      <StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="876.0">
+         <children>
+            <Label fx:id="labBlur" maxHeight="522.0" maxWidth="876.0" minHeight="522.0" minWidth="876.0" prefHeight="522.0" prefWidth="876.0" style="-fx-background-color: #D6D8DA;" text="Label" textFill="#898888">
+               <graphic>
+                  <ImageView fitHeight="522.0" fitWidth="876.0" opacity="0.7" />
+               </graphic>
+            </Label>
+            <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="876.0">
                <center>
-                  <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <ScrollPane fx:id="scrollLyric" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
-                           <content>
-                              <VBox fx:id="vBoxLyric" prefWidth="429.0" style="-fx-background-color: transparent;" />
-                           </content>
-                        </ScrollPane>
-                        <ProgressIndicator fx:id="progressIndicator" maxHeight="20.0" maxWidth="20.0" prefHeight="20.0" prefWidth="20.0" style="-fx-progress-color: gray;" visible="false">
-                           <StackPane.margin>
-                              <Insets />
-                           </StackPane.margin></ProgressIndicator>
-                     </children>
-                     <BorderPane.margin>
-                        <Insets bottom="80.0" right="25.0" top="10.0" />
-                     </BorderPane.margin>
-                  </StackPane>
-               </center>
-            </BorderPane>
-         </center>
-         <left>
-            <BorderPane fx:id="albumLyricPane" prefHeight="200.0" prefWidth="380.0" BorderPane.alignment="CENTER">
-               <center>
-                  <VBox fx:id="vBoxAlbum" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <StackPane fx:id="stackPaneAlbum" prefHeight="150.0" prefWidth="200.0">
+                  <BorderPane fx:id="lyricPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <top>
+                        <VBox prefHeight="65.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                            <children>
-                              <ImageView fx:id="ivAlbumOutdoor" fitHeight="320.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image requestedHeight="320.0" requestedWidth="320.0" url="@../../image/AlbumOutdoor.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="ivAlbum" fitHeight="190.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true" />
+                              <BorderPane prefHeight="40.0" prefWidth="200.0">
+                                 <left>
+                                    <Label fx:id="labTitle" text="七里香" textFill="#333333" BorderPane.alignment="CENTER">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </left>
+                                 <right>
+                                    <Label onMouseClicked="#onClickedResizeSmall" prefHeight="25.0" prefWidth="35.0" style="-fx-background-color: linear-gradient(to right,#C5C5C5,#CCCCCC); -fx-background-radius: 5; -fx-alignment: center; -fx-border-color: #B0B9AB; -fx-border-radius: 3; -fx-opacity: 0.7;" BorderPane.alignment="CENTER">
+                                       <graphic>
+                                          <ImageView fx:id="labResizeSmall">
+                                             <Image requestedHeight="16.0" requestedWidth="16.0" url="@../../image/ResizeSmall_24.png" />
+                                          </ImageView>
+                                       </graphic>
+                                       <BorderPane.margin>
+                                          <Insets right="25.0" />
+                                       </BorderPane.margin>
+                                    </Label>
+                                 </right>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </BorderPane>
+                              <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="专辑：" textFill="#333333" />
+                                    <Label fx:id="labAlbum" text="未知" textFill="#333333" />
+                                    <Label text="歌手：" textFill="#333333">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label fx:id="labArtist" text="未知" />
+                                 </children>
+                              </HBox>
                            </children>
+                           <BorderPane.margin>
+                              <Insets top="50.0" />
+                           </BorderPane.margin>
+                        </VBox>
+                     </top>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                     <center>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <ScrollPane fx:id="scrollLyric" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+                                 <content>
+                                    <VBox fx:id="vBoxLyric" prefWidth="429.0" style="-fx-background-color: transparent;" />
+                                 </content>
+                              </ScrollPane>
+                              <ProgressIndicator fx:id="progressIndicator" maxHeight="20.0" maxWidth="20.0" prefHeight="20.0" prefWidth="20.0" style="-fx-progress-color: gray;" visible="false">
+                                 <StackPane.margin>
+                                    <Insets />
+                                 </StackPane.margin></ProgressIndicator>
+                           </children>
+                           <BorderPane.margin>
+                              <Insets bottom="80.0" right="25.0" top="10.0" />
+                           </BorderPane.margin>
                         </StackPane>
-                        <HBox alignment="CENTER" prefHeight="35.0" prefWidth="350.0" spacing="10.0">
-                           <children>
-                              <Label fx:id="labAddFavor" prefHeight="26.0" prefWidth="60.0" styleClass="labAlbumBottom" text="喜欢">
-                                 <graphic>
-                                    <ImageView>
-                                       <Image requestedHeight="16.0" requestedWidth="16.0" url="@../../image/FavorIcon_16.png" />
-                                    </ImageView>
-                                 </graphic>
-                              </Label>
-                              <Label fx:id="labCollect" prefHeight="26.0" prefWidth="60.0" styleClass="labAlbumBottom" text="收藏">
-                                 <graphic>
-                                    <ImageView>
-                                       <Image requestedHeight="16.0" requestedWidth="16.0" url="@../../image/CollectIcon_16.png" />
-                                    </ImageView>
-                                 </graphic>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+                     </center>
+                  </BorderPane>
                </center>
+               <left>
+                  <BorderPane fx:id="albumLyricPane" prefHeight="200.0" prefWidth="380.0" BorderPane.alignment="CENTER">
+                     <center>
+                        <VBox fx:id="vBoxAlbum" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <StackPane fx:id="stackPaneAlbum" prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fx:id="ivAlbumOutdoor" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image requestedHeight="320.0" requestedWidth="320.0" url="@../../image/AlbumOutdoor.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="ivAlbum" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </StackPane>
+                              <HBox alignment="CENTER" prefHeight="35.0" prefWidth="350.0" spacing="10.0">
+                                 <children>
+                                    <Label fx:id="labAddFavor" prefHeight="26.0" prefWidth="60.0" styleClass="labAlbumBottom" text="喜欢">
+                                       <graphic>
+                                          <ImageView>
+                                             <Image requestedHeight="16.0" requestedWidth="16.0" url="@../../image/FavorIcon_16.png" />
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                    <Label fx:id="labCollect" prefHeight="26.0" prefWidth="60.0" styleClass="labAlbumBottom" text="收藏">
+                                       <graphic>
+                                          <ImageView>
+                                             <Image requestedHeight="16.0" requestedWidth="16.0" url="@../../image/CollectIcon_16.png" />
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+               </left>
             </BorderPane>
-         </left>
-      </BorderPane>
+         </children>
+      </StackPane>
    </children>
-</StackPane>
+</VBox>

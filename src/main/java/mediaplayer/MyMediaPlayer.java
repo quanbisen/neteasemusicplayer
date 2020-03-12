@@ -154,6 +154,17 @@ public class MyMediaPlayer implements IMediaPlayer {
      */
     @Override
     public void playSong(PlayListSong playListSong) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+        playBefore(playListSong);
+        mediaPlayer.play();   //播放
+        playAfter(playListSong);
+    }
+
+    /**播放之前,需要设置播放器的UI更新,还有播放进度结束之后的事件*/
+    public void playBefore(PlayListSong playListSong) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+
+        /**专辑歌词面板*/
+        albumLyricContentController.loadAlbumLyric();
+
         boolean isMute = false;
         if (mediaPlayer != null) {  //如果当前的媒体播放器不为空,销毁它
             isMute = mediaPlayer.isMute();
@@ -176,10 +187,10 @@ public class MyMediaPlayer implements IMediaPlayer {
         }
         mediaPlayer.setMute(isMute);
         mediaPlayer.volumeProperty().bind(bottomController.getSliderVolume().valueProperty());  //设置媒体播放器的音量绑定音量条组件的音量
-        mediaPlayer.play();   //播放
+
 
         //2."播放、暂停"按钮图片
-        bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePlaying.png", 32, 32));
+        bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePause.png", 32, 32));
         //3.歌曲名称、歌手、歌曲总时间
         bottomController.getLabMusicName().setText(playListSong.getName());
         bottomController.getLabMusicSinger().setText(playListSong.getSinger());
@@ -194,60 +205,12 @@ public class MyMediaPlayer implements IMediaPlayer {
                 bottomController.getSliderSong().setValue(observable.getValue().toSeconds());
             }
 
-            if (albumLyricContentController.isShowing()){
+            if (albumLyricContentController.isShow()){
                 //歌词滚动
                 float second = (float) (Math.round(observable.getValue().toSeconds() * 10 ) / 10.0);    //保留一位小数
                 albumLyricContentController.scrollLyric(second);
             }
         });
-
-        /**添加到最近播放的存储文件处理操作
-         * start*/
-        File recentPlayFile = config.getRecentPlayFile();
-        if (!recentPlayFile.exists()){ //如果文件不存在
-            recentPlayFile.createNewFile();    //创建新文件
-            XMLUtils.createXML(recentPlayFile,"RecentPlaySongs");
-        }
-        List<String> attributeNameList = new ArrayList<String>(){{
-            add("name");
-            add("singer");
-            add("album");
-            add("totalTime");
-            add("resource");
-        }};
-        List<String> attributeValueList = new ArrayList<String>(){{
-            add(playListSong.getName());
-            add(playListSong.getSinger());
-            add(playListSong.getAlbum());
-            add(playListSong.getTotalTime());
-            add(playListSong.getResource());
-        }};
-        try {
-            List<RecentSong> playedSongs = XMLUtils.getRecentPlaySongs(recentPlayFile,"PlayedSong");   //获取存储文件中的所有最近播放歌曲，存储在集合中
-            if (SongUtils.isContains(playedSongs,playListSong)){   //，直接
-                XMLUtils.removeOneRecord(recentPlayFile,playListSong); //删除存储文件中的这条最近播放记录
-            }
-            XMLUtils.addOneRecord(recentPlayFile,"PlayedSong",attributeNameList,attributeValueList);   //添加存储到文件
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        /**“最近播放”tab的GUI更新处理操作
-         * start*/
-        TableView tableViewRecentSongs = recentPlayContentController.getTableViewRecentPlaySong();
-        if (tableViewRecentSongs != null && tableViewRecentSongs.getItems() != null && tableViewRecentSongs.getItems().size() > 0){
-            ObservableList<RecentSong> tableItems = recentPlayContentController.getTableViewRecentPlaySong().getItems();
-            if (SongUtils.isContains(tableItems,playListSong)){
-                tableItems.remove(SongUtils.getIndex(tableItems,playListSong));
-            }
-            recentPlayContentController.getTableViewRecentPlaySong().getItems().add(0,SongUtils.toRecentSong(playListSong));
-            recentPlayContentController.updateRecentPlayPane(); //更新最近播放面板的GUI
-        }
-
-        /**专辑歌词面板*/
-        albumLyricContentController.loadAlbumLyric();
-
-
-
 
         /**媒体播放器结束后触发的事件
          * start*/
@@ -372,8 +335,54 @@ public class MyMediaPlayer implements IMediaPlayer {
             }
         });
         /**end*/
-
     }
+
+    /**播放之后需要处理"最近播放"*/
+    public void playAfter(PlayListSong playListSong) throws IOException {
+        /**添加到最近播放的存储文件处理操作
+         * start*/
+        File recentPlayFile = config.getRecentPlayFile();
+        if (!recentPlayFile.exists()){ //如果文件不存在
+            recentPlayFile.createNewFile();    //创建新文件
+            XMLUtils.createXML(recentPlayFile,"RecentPlaySongs");
+        }
+        List<String> attributeNameList = new ArrayList<String>(){{
+            add("name");
+            add("singer");
+            add("album");
+            add("totalTime");
+            add("resource");
+        }};
+        List<String> attributeValueList = new ArrayList<String>(){{
+            add(playListSong.getName());
+            add(playListSong.getSinger());
+            add(playListSong.getAlbum());
+            add(playListSong.getTotalTime());
+            add(playListSong.getResource());
+        }};
+        try {
+            List<RecentSong> playedSongs = XMLUtils.getRecentPlaySongs(recentPlayFile,"PlayedSong");   //获取存储文件中的所有最近播放歌曲，存储在集合中
+            if (SongUtils.isContains(playedSongs,playListSong)){   //，直接
+                XMLUtils.removeOneRecord(recentPlayFile,playListSong); //删除存储文件中的这条最近播放记录
+            }
+            XMLUtils.addOneRecord(recentPlayFile,"PlayedSong",attributeNameList,attributeValueList);   //添加存储到文件
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        /**“最近播放”tab的GUI更新处理操作
+         * start*/
+        TableView tableViewRecentSongs = recentPlayContentController.getTableViewRecentPlaySong();
+        if (tableViewRecentSongs != null && tableViewRecentSongs.getItems() != null && tableViewRecentSongs.getItems().size() > 0){
+            ObservableList<RecentSong> tableItems = recentPlayContentController.getTableViewRecentPlaySong().getItems();
+            if (SongUtils.isContains(tableItems,playListSong)){
+                tableItems.remove(SongUtils.getIndex(tableItems,playListSong));
+            }
+            recentPlayContentController.getTableViewRecentPlaySong().getItems().add(0,SongUtils.toRecentSong(playListSong));
+            recentPlayContentController.updateRecentPlayPane(); //更新最近播放面板的GUI
+        }
+    }
+
+
 
     /**自定义媒体播放器“播放全部”行为
      * @param tableItems 需要播放的表格集合*/
@@ -457,19 +466,19 @@ public class MyMediaPlayer implements IMediaPlayer {
     public void pause() {
         mediaPlayer.pause();
         bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePause.png", 32, 32));  //"播放、暂停"按钮图片
-        if (albumLyricContentController.isShowing() && albumLyricContentController.getRotateTransition().getStatus() != Animation.Status.PAUSED){
+        if (albumLyricContentController.isShow() && albumLyricContentController.getRotateTransition().getStatus() != Animation.Status.PAUSED){
             albumLyricContentController.getRotateTransition().pause();
         }
     }
 
     /**
-     * 自定义媒体播放器继续播放行为
+     * 自定义媒体播放器播放行为
      */
     @Override
     public void play() {
         mediaPlayer.play();
         bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePlaying.png", 32, 32));  //"播放、暂停"按钮图片
-        if (albumLyricContentController.isShowing()
+        if (albumLyricContentController.isShow()
                 && albumLyricContentController.getRotateTransition().getStatus() != Animation.Status.RUNNING){
             albumLyricContentController.getRotateTransition().play();
         }

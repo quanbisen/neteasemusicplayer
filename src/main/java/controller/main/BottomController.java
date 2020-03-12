@@ -191,26 +191,18 @@ public class BottomController {
     public void onClickedAlbum(MouseEvent mouseEvent) throws Throwable {
         //如果容器属性变量为null，初始化它
         if (vBoxAlbumLyricContainer == null){
-            vBoxAlbumLyricContainer = new VBox();
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/album-lyric-content.fxml");
-            Pane albumLyricPane = fxmlLoader.load();
-            albumLyricContentController = fxmlLoader.getController();
-            vBoxAlbumLyricContainer.getChildren().add(albumLyricPane);
-            albumLyricPane.maxHeightProperty().bind(vBoxAlbumLyricContainer.heightProperty());
-            albumLyricPane.maxWidthProperty().bind(vBoxAlbumLyricContainer.widthProperty());
-            albumLyricPane.minHeightProperty().bind(vBoxAlbumLyricContainer.heightProperty());
-            albumLyricPane.minWidthProperty().bind(vBoxAlbumLyricContainer.widthProperty());
+            vBoxAlbumLyricContainer = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/album-lyric-content.fxml").load();
         }
-        if (!albumLyricContentController.isShowing()){
-            showAlbumLyricPane();
-        } else{
-            hideAlbumLyricPane();
+        if (!albumLyricContentController.isShow()){  //如果歌词面板不是显示状态
+            showAlbumLyricPane();   //显示歌词面板
+        } else{ //否则
+            hideAlbumLyricPane();   //隐藏歌词面板
         }
     }
 
     /**显示专辑歌词面板函数*/
     public void showAlbumLyricPane(){
-        albumLyricContentController.setShowing(true);
+        albumLyricContentController.setShow(true);
         if (!centerController.getStackPane().getChildren().contains(vBoxAlbumLyricContainer)){
             centerController.getStackPane().getChildren().add(vBoxAlbumLyricContainer);
         }
@@ -245,7 +237,7 @@ public class BottomController {
 
     /**隐藏专辑歌词面板函数*/
     public void hideAlbumLyricPane(){
-        albumLyricContentController.setShowing(false);  //设置显示标记为false,隐藏了,不是正在显示
+        albumLyricContentController.setShow(false);  //设置显示标记为false,隐藏了,不是正在显示
         vBoxAlbumLyricContainer.maxWidthProperty().unbind();
         vBoxAlbumLyricContainer.maxHeightProperty().unbind();
 

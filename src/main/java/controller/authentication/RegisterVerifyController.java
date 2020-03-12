@@ -9,6 +9,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import mediaplayer.Config;
+import mediaplayer.PlayerState;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.ScheduledCountDownService;
@@ -67,7 +68,7 @@ public class RegisterVerifyController {
 
         /**启动倒计时定时服务*/
         timeSchedule = applicationContext.getBean(ScheduledCountDownService.class);
-        timeSchedule.setTime(applicationContext.getBean(Config.class).getRegisterResponse().getExpireSecond()); //设置倒计时时间
+        timeSchedule.setTime(applicationContext.getBean(PlayerState.class).getRegisterResponse().getExpireSecond()); //设置倒计时时间
         timeSchedule.setPeriod(Duration.seconds(1));
         timeSchedule.start();
 

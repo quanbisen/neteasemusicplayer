@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import mediaplayer.Config;
+import mediaplayer.PlayerState;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
@@ -107,9 +108,9 @@ public class LeftController {
 
         this.setSelectedTab(hBoxExploreMusicTab);   //初始化“发现音乐”为选择的标签
 
-        User user = applicationContext.getBean(Config.class).getUser();
+        User user = applicationContext.getBean(PlayerState.class).getUser();
         if (user != null){
-            labUserName.setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称*/
+            labUserName.setText(applicationContext.getBean(PlayerState.class).getUser().getName());  //设置用户名称*/
         }
 
         labUserImage.setClip(new Circle(19,19,19)); //切割用户头像
@@ -138,6 +139,7 @@ public class LeftController {
     public void removeGroupTab(String tabName){
         for (int i = 5; i < tabList.size(); i++) {
             if (((Label)tabList.get(i).getChildren().get(0)).getText().equals(tabName)){  //如果歌单名称相等，移除
+                tabList.get(i).setUserData(null);
                 vBoxTabContainer.getChildren().remove(tabList.get(i));
                 tabList.remove(tabList.get(i));
             }
@@ -155,7 +157,7 @@ public class LeftController {
     /**判断当前的歌单名称是否已经存在
      * @param tabName 歌单名称*/
     public boolean exist(String tabName){
-        for (int i = 5; i < tabList.size(); i++) {
+        for (int i = 4; i < tabList.size(); i++) {
             if (((Label)tabList.get(i).getChildren().get(0)).getText().equals(tabName)){
                 return true;
             }
@@ -261,7 +263,7 @@ public class LeftController {
     public void onClickedHBoxUserInfo(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             if (centerController.getStackPane().getChildren().size()==1){
-                if (applicationContext.getBean(Config.class).getUser() == null){  //如果登录配置文件不存在，则没有登录
+                if (applicationContext.getBean(PlayerState.class).getUser() == null){  //如果登录配置文件不存在，则没有登录
                     FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/right-slide-unlogin.fxml");
                     BorderPane borderPaneRoot = fxmlLoader.load();
 

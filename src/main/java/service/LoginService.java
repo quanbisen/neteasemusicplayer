@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import mediaplayer.Config;
+import mediaplayer.PlayerState;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.springframework.context.ApplicationContext;
@@ -70,7 +71,7 @@ public class LoginService extends javafx.concurrent.Service<Void> {
 
                 }else { //否则，认证通过
                     user = JSON.parseObject(responseString,User.class);
-                    applicationContext.getBean(Config.class).setUser(user); //保存User对象到applicationContext，user对象有token信息
+                    applicationContext.getBean(PlayerState.class).setUser(user); //保存User对象到applicationContext，user对象有token信息
 
                     Path imagePath = applicationContext.getBean(Config.class).getCachePath().resolve("image");
                     Files.createDirectories(imagePath);
@@ -86,13 +87,13 @@ public class LoginService extends javafx.concurrent.Service<Void> {
                     //关闭登录界面，并且开始同步歌单
                     Platform.runLater(()->{
                         //加载用户创建的歌单
-                        applicationContext.getBean(SynchronizeGroupService.class).start();
+                        applicationContext.getBean(SynchronizeGroupService.class).restart();
 //                        applicationContext.getBean(ScheduledQueryUserService.class).restart();    //重新启动定时任务
 
                         ((Stage)loginController.getPfPassword().getScene().getWindow()).close();      //关闭窗口
                         WindowUtils.releaseBorderPane(mainController.getBorderPane());  //释放中间的面板，可以接受鼠标事件和改变透明度
-                        leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(applicationContext.getBean(Config.class).getUser().getImageURL(),38,38));  //设置用户头像图片
-                        leftController.getLabUserName().setText(applicationContext.getBean(Config.class).getUser().getName());  //设置用户名称
+                        leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(applicationContext.getBean(PlayerState.class).getUser().getImageURL(),38,38));  //设置用户头像图片
+                        leftController.getLabUserName().setText(applicationContext.getBean(PlayerState.class).getUser().getName());  //设置用户名称
                         WindowUtils.toastInfo(centerController.getStackPane(),new Label("登录成功"));
 
                         //加载歌单指示器和"我喜欢的音乐"tab标签

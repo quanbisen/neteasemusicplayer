@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import mediaplayer.Config;
-import model.MediaPlayerState;
+import mediaplayer.PlayerState;
 import mediaplayer.MyMediaPlayer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -20,7 +20,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
-import service.LoadMediaPlayerStateService;
+import service.LoadPlayerStateService;
 import service.SynchronizeGroupService;
 import service.ValidateUserService;
 import util.JSONObjectUtils;
@@ -38,10 +38,10 @@ public class FXApplication extends Application {
         /**Spring配置文件路径*/
         String APPLICATION_CONTEXT_PATH = "/config/application-context.xml";
         applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_PATH);
-        SynchronizeGroupService scheduledQueryUserService = applicationContext.getBean(SynchronizeGroupService.class);  //启动加载用户的服务
-        scheduledQueryUserService.setPeriod(Duration.seconds(15));
-        scheduledQueryUserService.start();
-        applicationContext.getBean(LoadMediaPlayerStateService.class).start();
+        SynchronizeGroupService synchronizeGroupService = applicationContext.getBean(SynchronizeGroupService.class);  //启动加载用户的服务
+        synchronizeGroupService.setPeriod(Duration.seconds(15));
+        synchronizeGroupService.start();
+        applicationContext.getBean(LoadPlayerStateService.class).start();
     }
 
     public static void main(String[] args) {
@@ -84,12 +84,12 @@ public class FXApplication extends Application {
     /**保存媒体播放器的状态函数*/
     private void saveState() throws IOException{
         MyMediaPlayer myMediaPlayer = applicationContext.getBean(MyMediaPlayer.class);
-        MediaPlayerState mediaPlayerState = new MediaPlayerState();
-        mediaPlayerState.setVolume(applicationContext.getBean(BottomController.class).getSliderVolume().getValue());
-        mediaPlayerState.setCurrentPlayIndex(myMediaPlayer.getCurrentPlayIndex());
-        mediaPlayerState.setPlayListSongs(myMediaPlayer.getPlayListSongs());
-        mediaPlayerState.setPlayMode(myMediaPlayer.getPlayMode());
-        JSONObjectUtils.saveObject(mediaPlayerState,applicationContext.getBean(Config.class).getMediaPlayerStateFile());
+        PlayerState playerState = applicationContext.getBean(PlayerState.class);
+        playerState.setVolume(applicationContext.getBean(BottomController.class).getSliderVolume().getValue());
+        playerState.setCurrentPlayIndex(myMediaPlayer.getCurrentPlayIndex());
+        playerState.setPlayListSongs(myMediaPlayer.getPlayListSongs());
+        playerState.setPlayMode(myMediaPlayer.getPlayMode());
+        JSONObjectUtils.saveObject(playerState,applicationContext.getBean(Config.class).getMediaPlayerStateFile());
         //保存用户的登录信息
 //        JSONObjectUtils.saveObject(applicationContext.getBean(Config.class).getUser(),applicationContext.getBean(Config.class).getLoginConfigFile());
     }
@@ -108,13 +108,13 @@ public class FXApplication extends Application {
             if (observable.getValue()){
                 System.out.println("cancel");
                 applicationContext.getBean(ValidateUserService.class).cancel();
-                if (albumLyricContentController.isShowing() && albumLyricContentController.getRotateTransition().getStatus() == Animation.Status.RUNNING){
+                if (albumLyricContentController.isShow() && albumLyricContentController.getRotateTransition().getStatus() == Animation.Status.RUNNING){
                     albumLyricContentController.getRotateTransition().pause();
                 }
             }else {
                 System.out.println("restart");
                 applicationContext.getBean(ValidateUserService.class).restart();
-                if (albumLyricContentController.isShowing()
+                if (albumLyricContentController.isShow()
                         && albumLyricContentController.getRotateTransition().getStatus() == Animation.Status.PAUSED
                         && applicationContext.getBean(MyMediaPlayer.class).getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING){
                     albumLyricContentController.getRotateTransition().play();
