@@ -42,7 +42,3 @@
 .text-area .scroll-bar:vertical:disabled {
     -fx-opacity: 0;
 }
-#labTips
-{
-    -fx-text-fill: #BC2F2C;
-}

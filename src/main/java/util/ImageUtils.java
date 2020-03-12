@@ -9,14 +9,9 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
-import org.jaudiotagger.tag.id3.AbstractID3v1Tag;
 import org.jaudiotagger.tag.id3.AbstractID3v2Frame;
-import org.jaudiotagger.tag.id3.ID3v1Tag;
-import org.jaudiotagger.tag.id3.ID3v24Tag;
 import org.jaudiotagger.tag.id3.framebody.FrameBodyAPIC;
 import org.junit.Test;
-
-import javax.annotation.Resource;
 import java.io.*;
 import java.nio.file.Files;
 
@@ -25,40 +20,6 @@ import java.nio.file.Files;
  * @date 19-12-7
  */
 public final class ImageUtils {
-
-    @org.junit.Test
-    public void testUpload() throws IOException {
-        /*HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/OnlineExam_war_exploded/Student/HandleUploadImage");
-        MultipartEntity entity = new MultipartEntity();
-        // entity.addPart(file.getName(), new FileBody(file));
-        try {
-            entity.addPart("attachfile0", new FileBody(new File("neteasemusicplayer.sql")));
-            entity.addPart("counter", new StringBody("1"));
-            entity.addPart("MAX_FILE_SIZE", new StringBody("5242880"));
-        } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
-        }
-        httpPost.setEntity(entity);
-        httpPost.setHeader("User-Agent", userAgent);
-        try {
-            HttpResponse response = httpClient.execute(httpPost);
-            HttpEntity httpEntity = response.getEntity();
-            BufferedReader br = new BufferedReader(new InputStreamReader(httpEntity
-                    .getContent(), "UTF-8"));
-            StringBuffer backData = new StringBuffer();
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                backData.append(line);
-            }
-            System.out.println(backData.toString()   );
-        } catch (IOException e) {
-            return;
-        }
-        return;*/
-    }
-
-
 
     /**根据歌曲资源的路径获取资源的专辑图片
      * @param playListSong 播放歌曲
@@ -69,22 +30,23 @@ public final class ImageUtils {
             try {
                 MP3File mp3File = new MP3File(playListSong.getResource());
                 if (mp3File.hasID3v2Tag()){
-                    imgAlbum = createImageView(getAlbumImage(playListSong,width,height),width,height);
+                    imgAlbum = createImageView(getAlbumImage(playListSong.getResource(),width,height),width,height);
                 }
                 else {
-                    imgAlbum = createImageView("image/DefaultAlbum_58.png",width,height);
+                    imgAlbum = createImageView("image/DefaultAlbumImage_200.png",width,height);
                 }
             }catch (FileNotFoundException e){
-                return createImageView("image/DefaultAlbum_58.png",width,height);
+                return createImageView("image/DefaultAlbumImage_200.png",width,height);
             }
         }else { //在线歌曲资源的专辑图，先设置为默认的黑白专辑图，后面再添加。。。
-            imgAlbum = createImageView("image/DefaultAlbum_58.png",width,height);
+            imgAlbum = createImageView("image/DefaultAlbumImage_200.png",width,height);
         }
         return imgAlbum;
     }
 
-    public static Image getAlbumImage(PlayListSong playListSong,double width,double height) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
-        MP3File mp3File = new MP3File(playListSong.getResource());
+    /**获取资源路径的音乐文件的专辑图片*/
+    public static Image getAlbumImage(String resource,double width,double height) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+        MP3File mp3File = new MP3File(resource);
         if (mp3File.hasID3v2Tag()){
             try {
                 AbstractID3v2Frame abstractID3v2Frame = (AbstractID3v2Frame) mp3File.getID3v2Tag().getFrame("APIC");    //APIC：Attached picture
@@ -92,10 +54,10 @@ public final class ImageUtils {
                 byte[] imageData = frameBodyAPIC.getImageData();
                 return new Image(new ByteArrayInputStream(imageData),width,height,true,true);
             }catch (NullPointerException e){
-                return new Image("image/DefaultAlbum_58.png",width,height,true,true);
+                return new Image("image/DefaultAlbumImage_200.png",width,height,true,true);
             }
         }
-        return new Image("image/DefaultAlbum_58.png",width,height,true,true);
+        return new Image("image/DefaultAlbumImage_200.png",width,height,true,true);
     }
 
     public static void setAlbumImage(String imageFile) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {

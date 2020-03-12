@@ -16,9 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane stylesheets="@../../css/EditGroupContentStyle.css"
-            fx:controller="controller.content.EditGroupContentController"
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane stylesheets="@../../css/EditGroupContentStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.EditGroupContentController">
    <top>
       <BorderPane prefHeight="335.0" prefWidth="600.0" style="-fx-padding: 0 2.5em 0  2.5em;" BorderPane.alignment="CENTER">
          <top>
@@ -37,11 +35,12 @@
                <right>
                   <AnchorPane minHeight="200.0" prefHeight="283.0" prefWidth="227.0" BorderPane.alignment="CENTER">
                      <children>
-                        <StackPane layoutX="12.0" layoutY="37.0" prefHeight="210.0" prefWidth="210.0" onMouseClicked="#onClickedAlbumImage">
+                        <Label fx:id="labChoseImageTips" alignment="CENTER" layoutX="62.0" layoutY="257.0" prefHeight="25.0" prefWidth="110.0" style="-fx-text-fill: #BC2F2C;" />
+                        <StackPane layoutX="12.0" layoutY="37.0" onMouseClicked="#onClickedAlbumImage" prefHeight="210.0" prefWidth="210.0">
                            <children>
                               <ImageView fx:id="ivAlbum" fitHeight="210.0" fitWidth="210.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../../../../folder.jpg" />
+                                    <Image requestedHeight="200.0" requestedWidth="200.0" url="@/image/DefaultAlbumImage_200.png" />
                                  </image>
                               </ImageView>
                               <Label prefHeight="30.0" prefWidth="80.0" style="-fx-text-fill: #FFFFFF; -fx-alignment: center;" text="编辑封面" StackPane.alignment="BOTTOM_RIGHT">
@@ -70,7 +69,7 @@
                      <children>
                         <Label maxWidth="39.0" prefHeight="18.0" prefWidth="39.0" style="-fx-font-size: 13; -fx-text-fill: #666666;" text="名称：" />
                         <TextField fx:id="tfGroupName" minHeight="42.0" prefHeight="42.0" prefWidth="218.0" GridPane.columnIndex="1" />
-                        <Label fx:id="labTips" style="-fx-alignment: center;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="labTips" style="-fx-alignment: center; -fx-text-fill: #BC2F2C;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label prefHeight="206.0" prefWidth="39.0" style="-fx-font-size: 13; -fx-text-fill: #666666; -fx-alignment: top-left;" text="描述：" GridPane.rowIndex="2" />
                         <TextArea fx:id="taDescription" prefHeight="160.0" prefWidth="274.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
@@ -86,8 +85,8 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="12.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnSave" mnemonicParsing="false" text="保存" onAction="#onClickedSave"/>
-            <Button fx:id="btnCancel" mnemonicParsing="false" text="取消" onAction="#onClickedCancel"/>
+            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#onClickedSave" text="保存" />
+            <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#onClickedCancel" text="取消" />
          </children>
          <padding>
             <Insets left="28.0" top="30.0" />

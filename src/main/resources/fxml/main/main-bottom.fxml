@@ -20,7 +20,7 @@
             </padding>
             <Label fx:id="labAlbum" onMouseClicked="#onClickedAlbum">
                 <graphic>
-                    <ImageView fitHeight="58" fitWidth="58"><Image url="@/image/DefaultAlbum_58.png" requestedHeight="58.0" requestedWidth="58.0"/></ImageView>
+                    <ImageView fitHeight="58" fitWidth="58"><Image url="@/image/DefaultAlbumImage_200.png" requestedHeight="58.0" requestedWidth="58.0"/></ImageView>
                 </graphic>
             </Label>
             <Label fx:id="labPlayLast" onMouseClicked="#onClickedPlayLast">

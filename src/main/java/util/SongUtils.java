@@ -270,7 +270,7 @@ public final class SongUtils {
     public static ObservableList<LocalAlbum> getObservableLocalAlbumList(ObservableList<LocalSong> observableLocalSongList){
         ObservableList<LocalAlbum> observableLocalAlbumList = FXCollections.observableArrayList();
         Map<Character,List<LocalAlbum>> characterLocalAlbumListMap = new HashMap<>();
-        Image albumImage = new Image("/image/DefaultAlbum.png",48,48,false,true); //歌手的默认图片资源
+        Image albumImage = new Image("/image/DefaultAlbumImage_200.png",48,48,false,true); //歌手的默认图片资源
         observableLocalSongList.forEach(localSong -> {  //遍历“歌手”tag下的表格内容
             if (localSong.getAlbum() != null && !localSong.getAlbum().equals("")){    //判断不为空的
                 char singerHead = Pinyin4jUtils.getFirstPinYinHeadChar(localSong.getAlbum());  //取出歌手字符串的对应的字母分类
@@ -549,5 +549,21 @@ public final class SongUtils {
             }
         }
         return index;
+    }
+
+    /**判断当前的歌曲groupSong是否为"喜欢"的歌曲
+     * @param favorSongs
+     * @param groupSong
+     * */
+    public static boolean isFavorSong(List<GroupSong> favorSongs,GroupSong groupSong){
+        for (int i = 0; i < favorSongs.size(); i++) {
+            GroupSong favorSong = favorSongs.get(i);
+            if (favorSong.getResourceURL().equals(groupSong.getResourceURL())
+                    && favorSong.getName().equals(groupSong.getName()) && favorSong.getSinger().equals(groupSong.getSinger())
+                    && favorSong.getAlbum().equals(groupSong.getAlbum()) && favorSong.getTotalTime().equals(groupSong.getTotalTime())){
+                return true;
+            }
+        }
+        return false;
     }
 }

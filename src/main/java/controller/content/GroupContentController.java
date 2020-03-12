@@ -3,13 +3,17 @@ package controller.content;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Callback;
 import model.GroupSong;
@@ -36,10 +40,13 @@ public class GroupContentController {
     private ScrollPane scrollPaneContainer;
 
     @FXML
-    private Label labBlur;
+    private StackPane stackPane;
 
     @FXML
     private VBox vBoxContainer;
+
+    @FXML
+    private Label labBlur;
 
     @FXML
     private BorderPane borderPaneGroupInfo;
@@ -115,10 +122,6 @@ public class GroupContentController {
         return scrollPaneContainer;
     }
 
-    public Label getLabBlur() {
-        return labBlur;
-    }
-
     public VBox getVBoxContainer() {
         return vBoxContainer;
     }
@@ -135,6 +138,10 @@ public class GroupContentController {
         return ivAlbumImage;
     }
 
+    public Label getLabBlur() {
+        return labBlur;
+    }
+
     public ImageView getIvUserImage() {
         return ivUserImage;
     }
@@ -147,7 +154,7 @@ public class GroupContentController {
         return labCreateTime;
     }
 
-    public HBox gethBoxDescription() {
+    public HBox getHBoxDescription() {
         return hBoxDescription;
     }
 
@@ -178,6 +185,11 @@ public class GroupContentController {
     public void initialize(){
         vBoxContainer.prefWidthProperty().bind(groupContentContainer.widthProperty());
         vBoxContainer.prefHeightProperty().bind(groupContentContainer.heightProperty());
+        stackPane.prefWidthProperty().bind(groupContentContainer.widthProperty());
+        stackPane.prefHeightProperty().bind(groupContentContainer.heightProperty());
+        groupContentContainer.widthProperty().addListener(((observable, oldValue, newValue) -> {
+            labBlur.setPrefWidth(observable.getValue().doubleValue() - 150);
+        }));
 
         /**属性绑定*/
         indexColumn.setCellValueFactory(new PropertyValueFactory<>("index"));
@@ -205,20 +217,20 @@ public class GroupContentController {
                     ivAlbumImage.setFitWidth(observable.getValue().doubleValue() / 100 * 23);
                 });
             }
-            Platform.runLater(()->{
-                labBlur.setMaxWidth(observable.getValue().doubleValue() - 150);
-            });
         });
 
         ivUserImage.setClip(new Circle(15,15,15));  //切割用户头像
 
         //宽高度绑定,然后设置模糊效果
-        ImageView ivBlur = new ImageView(ivAlbumImage.getImage());
-        ivBlur.fitWidthProperty().bind(labBlur.maxWidthProperty());
-        ivBlur.fitHeightProperty().bind(labBlur.maxHeightProperty());
-        labBlur.setGraphic(ivBlur);
+        ivAlbumImage.imageProperty().addListener((observable, oldValue, newValue) -> {
+            ImageView ivBlur = new ImageView(observable.getValue());
+            ivBlur.fitWidthProperty().bind(labBlur.prefWidthProperty());
+            ivBlur.fitHeightProperty().bind(labBlur.prefHeightProperty());
+            labBlur.setGraphic(ivBlur);
+        });
         labBlur.setOpacity(0.8);
         labBlur.setEffect(new BoxBlur(150,150,2));
+
 
         LoadGroupSongService loadGroupSongService = applicationContext.getBean(LoadGroupSongService.class);
         progressIndicator.visibleProperty().bind(loadGroupSongService.runningProperty());
@@ -245,26 +257,10 @@ public class GroupContentController {
                                 labLocalFlag.getStyleClass().add("labLocalFlag");
                                 item.setLabLocalFlag(labLocalFlag);
                             }
-                            if (item.getLabFavor().getUserData().equals("like")){
-                                item.getLabFavor().setGraphic(ImageUtils.createImageView(new Image("/image/FavoredIcon_16.png"),16,16));
-                            }else {
-                                item.getLabFavor().setGraphic(ImageUtils.createImageView(new Image("/image/FavorIcon_16.png"),16,16));
-                            }
                         }
                     }
                 };
             }
         });
-//        ObservableList<GroupSong> observableList = FXCollections.observableArrayList();
-//        for (int i = 0; i < 30; i++) {
-//            Label label = new Label("", ImageUtils.createImageView(new Image("/image/LocalFlag_10.png"),10,10));
-//            label.setMinWidth(14);
-//            label.setMinHeight(14);
-//            Label labFavor = new Label("",ImageUtils.createImageView(new Image("/image/FavoredIcon_16.png"),16,16));
-//            label.setStyle("-fx-background-color: #88D2F2;-fx-background-radius: 14;-fx-alignment: center");
-//            observableList.add(new GroupSong(String.valueOf(111),labFavor,"test",label,"test","test","test","test"));
-//        }
-//        tableViewGroupSong.setItems(observableList);
-//        tableViewGroupSong.setMinHeight(tableViewGroupSong.getItems().size() * 40);
     }
 }

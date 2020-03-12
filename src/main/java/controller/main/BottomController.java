@@ -195,7 +195,6 @@ public class BottomController {
             FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/album-lyric-content.fxml");
             Pane albumLyricPane = fxmlLoader.load();
             albumLyricContentController = fxmlLoader.getController();
-
             vBoxAlbumLyricContainer.getChildren().add(albumLyricPane);
             albumLyricPane.maxHeightProperty().bind(vBoxAlbumLyricContainer.heightProperty());
             albumLyricPane.maxWidthProperty().bind(vBoxAlbumLyricContainer.widthProperty());

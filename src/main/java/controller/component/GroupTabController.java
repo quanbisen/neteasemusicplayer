@@ -78,14 +78,23 @@ public class GroupTabController {
 
     @FXML
     public void onClickedGroupTab(MouseEvent mouseEvent) throws IOException {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY && leftController.getSelectedTab() != hBoxGroup){
-            leftController.setSelectedTab(hBoxGroup);  //设置当前选中的tab
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-group-content.fxml");
-            centerController.getBorderPane().setCenter(fxmlLoader.load());
-            if(labGroupName.getText().equals("我喜欢的音乐")){
-                GroupContentController groupContentController = fxmlLoader.getController();
-                groupContentController.gethBoxDescription().setVisible(false);  //把描述的容器组件设置不可见
+        if (mouseEvent.getButton() == MouseButton.PRIMARY ){
+            if (leftController.getSelectedTab() != hBoxGroup){
+                setupGroupContent();
+            }else if (mouseEvent.getClickCount() == 5){
+                setupGroupContent();
             }
+
+        }
+    }
+
+    private void setupGroupContent() throws IOException {
+        leftController.setSelectedTab(hBoxGroup);  //设置当前选中的tab
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-group-content.fxml");
+        centerController.getBorderPane().setCenter(fxmlLoader.load());
+        if(labGroupName.getText().equals("我喜欢的音乐")){
+            GroupContentController groupContentController = fxmlLoader.getController();
+            groupContentController.getHBoxDescription().setVisible(false);  //把描述的容器组件设置不可见
         }
     }
 }

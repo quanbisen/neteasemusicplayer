@@ -45,12 +45,14 @@ public class GroupIndicatorController {
                 WindowUtils.toastInfo(centerController.getStackPane(),new Label("请先登录！"));
             }
             else{
-                WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
+                System.out.println("clicked");
                 FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/popup/create-musicgroup.fxml");  //加载添加音乐歌单的fxml文件
                 Stage primaryStage = ((Stage)ivAddMusicGroupIcon.getScene().getWindow());              //获取主窗体的stage对象primaryStage
                 Stage createMusicGroupStage = StageUtils.getStage(primaryStage,fxmlLoader.load());  //使用自定义工具获取Stage对象
                 StageUtils.synchronizeCenter(primaryStage,createMusicGroupStage);   //设置createMusicGroupStage对象居中到primaryStage
+                WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
                 createMusicGroupStage.showAndWait();  //显示并且等待
+
             }
         }
     }

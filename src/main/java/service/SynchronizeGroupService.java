@@ -26,8 +26,8 @@ import java.util.List;
  * @date 20-2-18
  */
 @Service
-@Scope("prototype")
-public class SynchronizeGroupService extends javafx.concurrent.Service<Void> {
+@Scope("singleton")
+public class SynchronizeGroupService extends javafx.concurrent.ScheduledService<Void> {
 
     @Resource
     private ApplicationContext applicationContext;
@@ -55,7 +55,6 @@ public class SynchronizeGroupService extends javafx.concurrent.Service<Void> {
             @Override
             protected Void call() throws Exception {
                 User user = applicationContext.getBean(Config.class).getUser();
-
                 if (user != null){  //用户存在
                     try {
                         String url = applicationContext.getBean(Config.class).getGroupURL() + "/query/" + user.getToken();

@@ -180,35 +180,38 @@ public class LeftController {
     /**单击“搜索”标签事件处理*/
     @FXML
     public void onClickedSearchTab(MouseEvent mouseEvent) throws IOException {
-        if (mouseEvent.getButton()== MouseButton.PRIMARY && getSelectedTab() != hBoxSearchTab){  //鼠标左击
-            this.setSelectedTab(hBoxSearchTab);  //设置当前选择的为“搜索”标签
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-searchinput-content.fxml");
-            centerController.getBorderPane().setCenter(fxmlLoader.load());
+        if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
+            if (getSelectedTab() != hBoxSearchTab){
+                this.setSelectedTab(hBoxSearchTab);  //设置当前选择的为“搜索”标签
+                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-searchinput-content.fxml");
+                centerController.getBorderPane().setCenter(fxmlLoader.load());
+            }else if (mouseEvent.getClickCount() == 5){
+                this.setSelectedTab(hBoxSearchTab);  //设置当前选择的为“搜索”标签
+                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-searchinput-content.fxml");
+                centerController.getBorderPane().setCenter(fxmlLoader.load());
+            }
+
         }
     }
 
     /**单击“发现音乐”标签事件处理*/
     @FXML
     public void onClickedExplorerMusicTab(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton()== MouseButton.PRIMARY && getSelectedTab() != hBoxExploreMusicTab){  //鼠标左击
-            this.setSelectedTab(hBoxExploreMusicTab);
-
-            centerController.getBorderPane().setCenter(new Label("敬请期待"));
-
-//            Slider slider = new Slider(0, 1, 0.5);
-//            slider.setShowTickMarks(true);
-//            slider.setShowTickLabels(true);
-//            slider.setMajorTickUnit(0.2f);
-//            slider.setContextMenu(null);
-//            slider.setBlockIncrement(0.1f);
-//            centerController.getBorderPane().setCenter(slider);
+        if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
+            if (getSelectedTab() != hBoxExploreMusicTab){   //普通单击时,不是当前选中的tab
+                this.setSelectedTab(hBoxExploreMusicTab);
+                centerController.getBorderPane().setCenter(new Label("敬请期待"));
+            }else if (mouseEvent.getClickCount() == 5){     //用作fireEvent操作
+                this.setSelectedTab(hBoxExploreMusicTab);
+                centerController.getBorderPane().setCenter(new Label("敬请期待"));
+            }
         }
     }
 
     /**单击“本地音乐”标签事件处理*/
     @FXML
     public void onClickedLocalMusicTab(MouseEvent mouseEvent) throws IOException {
-        if (mouseEvent.getButton()== MouseButton.PRIMARY && getSelectedTab() != hBoxLocalMusicTab){  //鼠标左击
+        if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
             this.setSelectedTab(hBoxLocalMusicTab);
             if (localMusicParent == null){
                 FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-localmusic-content.fxml");
@@ -221,10 +224,16 @@ public class LeftController {
     /**单击“最近播放”标签事件处理*/
     @FXML
     public void onClickedRecentPlayTab(MouseEvent mouseEvent) throws IOException {
-        if (mouseEvent.getButton()== MouseButton.PRIMARY && getSelectedTab() != hBoxRecentPlayTab){  //鼠标左击
-            this.setSelectedTab(hBoxRecentPlayTab);
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-recentplay-content.fxml");
-            centerController.getBorderPane().setCenter(fxmlLoader.load());
+        if (mouseEvent.getButton()== MouseButton.PRIMARY){  //鼠标左击
+            if (getSelectedTab() != hBoxRecentPlayTab){     //普通单击时,不是当前选中的tab
+                this.setSelectedTab(hBoxRecentPlayTab);
+                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-recentplay-content.fxml");
+                centerController.getBorderPane().setCenter(fxmlLoader.load());
+            }else if (mouseEvent.getClickCount() == 5){ //用作fireEvent操作
+                this.setSelectedTab(hBoxRecentPlayTab);
+                FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/tab-recentplay-content.fxml");
+                centerController.getBorderPane().setCenter(fxmlLoader.load());
+            }
         }
     }
 

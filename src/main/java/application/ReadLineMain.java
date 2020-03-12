@@ -42,7 +42,7 @@ public class ReadLineMain {
         File[] files = targetFile.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
-                if (pathname.isDirectory() || pathname.getPath().endsWith(".java") || pathname.getPath().endsWith(".fxml") || pathname.getPath().endsWith(".css") || pathname.getPath().endsWith(".xml")){
+                if (pathname.isDirectory() || pathname.getPath().endsWith(".java") || pathname.getPath().endsWith(".fxml") || pathname.getPath().endsWith(".css")){
                     return true;
                 }else {
                     return false;

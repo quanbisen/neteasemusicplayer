@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
+import javafx.util.Duration;
 import mediaplayer.Config;
 import model.MediaPlayerState;
 import mediaplayer.MyMediaPlayer;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
 import service.LoadMediaPlayerStateService;
+import service.SynchronizeGroupService;
 import service.ValidateUserService;
 import util.JSONObjectUtils;
 import util.WindowUtils;
@@ -36,9 +38,9 @@ public class FXApplication extends Application {
         /**Spring配置文件路径*/
         String APPLICATION_CONTEXT_PATH = "/config/application-context.xml";
         applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_PATH);
-//        ScheduledQueryUserService scheduledQueryUserService = applicationContext.getBean(ScheduledQueryUserService.class);  //启动加载用户的服务
-//        scheduledQueryUserService.setPeriod(Duration.seconds(15));
-//        scheduledQueryUserService.start();
+        SynchronizeGroupService scheduledQueryUserService = applicationContext.getBean(SynchronizeGroupService.class);  //启动加载用户的服务
+        scheduledQueryUserService.setPeriod(Duration.seconds(15));
+        scheduledQueryUserService.start();
         applicationContext.getBean(LoadMediaPlayerStateService.class).start();
     }
 
@@ -65,7 +67,7 @@ public class FXApplication extends Application {
             primaryStage.setMinWidth(870.0);
             primaryStage.setMinHeight(620);
         }
-        this.addIconifiedBehavior(primaryStage);    //添加最大化最小化的行为
+        addIconifiedBehavior(primaryStage);    //添加最大化最小化的行为
         primaryStage.show();  //显示主舞台
         // 获取屏幕可视化的宽高（Except TaskBar），把窗体设置在可视化的区域居中
         primaryStage.setX((Screen.getPrimary().getVisualBounds().getWidth() - primaryStage.getWidth()) / 2.0);
@@ -75,7 +77,7 @@ public class FXApplication extends Application {
 
     @Override
     public void stop() throws IOException {
-        this.saveState();
+        saveState();
         applicationContext.close();
     }
 
@@ -93,7 +95,7 @@ public class FXApplication extends Application {
     }
 
     /**
-     * 修复最大化状态下，最小化窗体之后单击任务栏图标恢复时，窗体的高度和宽度是全屏的问题。修复后，宽度和高度是为屏幕可视化的宽度和高度
+     * 修补在最大化状态下，最小化窗体之后单击任务栏图标恢复时，窗体的高度和宽度是全屏的问题。修复后，宽度和高度是为屏幕可视化的宽度和高度
      */
     private void addIconifiedBehavior(Stage primaryStage) {
         primaryStage.iconifiedProperty().addListener((observable, oldValue, newValue) -> {

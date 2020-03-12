@@ -6,6 +6,7 @@ import controller.main.MainController;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.CacheHint;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
@@ -183,6 +184,8 @@ public class AlbumLyricContentController {
         ((ImageView)labBlur.getGraphic()).fitHeightProperty().bind(stackPane.heightProperty());
 
         //初始化设置专辑图片的容器的旋转动画
+        stackPaneAlbum.setCache(true);
+        stackPaneAlbum.setCacheHint(CacheHint.ROTATE);
         rotateTransition = new RotateTransition(Duration.seconds(6),stackPaneAlbum);
         rotateTransition.setInterpolator(Interpolator.LINEAR);  //匀速旋转
         rotateTransition.setByAngle(360);   //360度旋转
@@ -232,7 +235,7 @@ public class AlbumLyricContentController {
                 labArtist.setText(playListSong.getSinger());
                 labTitle.setText(playListSong.getName());
                 labAlbum.setText(playListSong.getAlbum());
-                ivAlbum.setImage(ImageUtils.getAlbumImage(playListSong,190,190));
+                ivAlbum.setImage(ImageUtils.getAlbumImage(playListSong.getResource(),190,190));
                 Circle circle = new Circle(95,95,95);
                 ivAlbum.setClip(circle);
                 ivAlbum.fitHeightProperty().addListener(((observable, oldValue, newValue) -> {

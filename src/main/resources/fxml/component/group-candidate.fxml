@@ -21,7 +21,7 @@ fx:controller="controller.component.GroupCandidateController" onMouseClicked="#o
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image requestedWidth="50.0" requestedHeight="50.0" url="@../../image/DefaultAlbumImage.png" />
+                  <Image requestedWidth="50.0" requestedHeight="50.0" url="@../../image/DefaultAlbumImage_200.png" />
                </image>
             </ImageView>
          </graphic>
