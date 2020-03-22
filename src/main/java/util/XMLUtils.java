@@ -231,6 +231,15 @@ public final class XMLUtils {
         return null;
     }
 
+    public static void removeGroup(File groupsSongFile, Group group) throws DocumentException {
+        Element root = getRootElement(groupsSongFile);
+        Element groupElement = getGroupElement(root.elements("Group"),group);
+        if (groupElement != null){
+            groupElement.detach();
+            saveToFile(groupsSongFile,root.getDocument());
+        }
+    }
+
     public static boolean isExist(File xmlFile, String subName, String attributeName,String candidate) throws DocumentException{
         List<String> list = getAllRecord(xmlFile,subName,attributeName);
         for (String string:list){
@@ -338,4 +347,6 @@ public final class XMLUtils {
             e.printStackTrace();
         }
     }
+
+
 }

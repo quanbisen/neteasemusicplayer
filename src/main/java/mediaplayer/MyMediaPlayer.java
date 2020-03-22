@@ -155,7 +155,7 @@ public class MyMediaPlayer implements IMediaPlayer {
     @Override
     public void playSong(PlayListSong playListSong) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
         playBefore(playListSong);
-        mediaPlayer.play();   //播放
+        play();   //播放
         playAfter(playListSong);
     }
 
@@ -447,7 +447,7 @@ public class MyMediaPlayer implements IMediaPlayer {
         }
 
         //还需要更新底部显示音乐进度的GUI显示
-        bottomController.getLabAlbum().setGraphic(ImageUtils.createImageView("image/NeteaseDefaultAlbumWhiteBackground.png", 58, 58));    //设置默认的图片专辑图
+        bottomController.getLabAlbum().setGraphic(ImageUtils.createImageView("image/DefaultAlbumImage_200.png", 58, 58));    //设置默认的图片专辑图
         bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePause.png", 32, 32));           //设置为暂停的图片
         bottomController.getLabMusicName().setText("无");    //设置播放歌曲信息"无"
         bottomController.getLabMusicSinger().setText("无");  //设置播放歌手信息"无"

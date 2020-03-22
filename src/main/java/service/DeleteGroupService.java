@@ -10,6 +10,7 @@ import lombok.SneakyThrows;
 import mediaplayer.Config;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.dom4j.DocumentException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,11 @@ public class DeleteGroupService extends javafx.concurrent.Service<Void> {
                 String responseString = HttpClientUtils.executePost(url,entity);
                 Platform.runLater(()->{
                     if (responseString.equals("删除歌单成功")){
-                        leftController.removeGroupTab(group.getName());
+                        try {
+                            leftController.removeGroupTab(group);
+                        } catch (DocumentException e) {
+                            e.printStackTrace();
+                        }
                     }
                     WindowUtils.toastInfo(mainController.getStackPane(),new Label(responseString));
                 });

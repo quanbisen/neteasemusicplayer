@@ -127,7 +127,7 @@ public class LoadGroupSongService extends javafx.concurrent.Service<ObservableLi
                             observableList.get(i).setLabFavor(labFavoredIcon);
                             observableList.get(i).getLabFavor().addEventHandler(MouseEvent.MOUSE_CLICKED, onClickedFavoredIcon);
                         }
-                    } else { //否则,再次判断
+                    } else{ //否则,再次判断
                         for (int i = 0; i < observableList.size(); i++) {
                             if (SongUtils.isFavorSong(XMLUtils.getGroupSongs(config.getGroupsSongFile(), favorGroup), observableList.get(i))) {
                                 Label labFavoredIcon = new Label("", ImageUtils.createImageView(favoredImage, 16, 16));
@@ -149,23 +149,36 @@ public class LoadGroupSongService extends javafx.concurrent.Service<ObservableLi
                     });
 
                     Platform.runLater(() -> {
-                        //面板的专辑图片是最新添加的歌曲的专辑图
-                        if (!observableList.get(0).getResourceURL().contains("http://")) {   //如果最新的歌曲是本地音乐文件,获取文件的专辑图,设置成文件的专辑图
-                            try {
-                                groupContentController.getIvAlbumImage().setImage(ImageUtils.getAlbumImage(observableList.get(0).getResourceURL(), 200, 200));
-                            } catch (Exception e) {
-                                groupContentController.getIvAlbumImage().setImage(new Image("/image/DefaultAlbumImage_200.png", 200, 200, true, true));
-                            }
-                        }
                         if (group.getImageURL() != null) {   //如果图片的资源不为空,加载图片
-
+                            Image image = new Image(group.getImageURL(),200,200,true,true);
+                            if (!image.isError()){
+                                groupContentController.getIvAlbumImage().setImage(image);
+                            }else {
+                                loadGroupAlbumImage(observableList);
+                            }
+                        }else {
+                            loadGroupAlbumImage(observableList);
                         }
+
                         groupContentController.getTableViewGroupSong().setMinHeight(observableList.size() * 40);    //设置表格的高度
 
                     });
                     return observableList;
                 }else {
                     return null;
+                }
+            }
+
+            /**加载歌单专辑图片函数,默认加载歌单集合第一个歌曲的图片
+             * @param observableList 歌单歌曲集合*/
+            private void loadGroupAlbumImage(ObservableList<GroupSong> observableList) {
+                //面板的专辑图片是最新添加的歌曲的专辑图
+                if (!observableList.get(0).getResourceURL().contains("http://")) {   //如果最新的歌曲是本地音乐文件,获取文件的专辑图,设置成文件的专辑图
+                    try {
+                        groupContentController.getIvAlbumImage().setImage(ImageUtils.getAlbumImage(observableList.get(0).getResourceURL(), 200, 200));
+                    } catch (Exception e) {
+                        groupContentController.getIvAlbumImage().setImage(new Image("/image/DefaultAlbumImage_200.png", 200, 200, true, true));
+                    }
                 }
             }
         };

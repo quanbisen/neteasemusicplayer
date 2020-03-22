@@ -3,6 +3,7 @@ package controller.content;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,18 +13,26 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Callback;
+import mediaplayer.MyMediaPlayer;
 import model.GroupSong;
 import model.RecentSong;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.LoadGroupSongService;
 import util.ImageUtils;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author super lollipop
@@ -113,6 +122,9 @@ public class GroupContentController {
 
     @Resource
     private ApplicationContext applicationContext;
+
+    @Resource
+    private MyMediaPlayer myMediaPlayer;
 
     public StackPane getGroupContentContainer() {
         return groupContentContainer;
@@ -262,5 +274,21 @@ public class GroupContentController {
                 };
             }
         });
+
     }
+
+    /**"播放全部"事件处理*/
+    @FXML
+    public void onClickedPlayAll(ActionEvent actionEvent) throws ReadOnlyFileException, IOException, TagException, InvalidAudioFrameException, CannotReadException {
+        myMediaPlayer.playAll(tableViewGroupSong.getItems());
+    }
+
+    /**单击表格的事件处理*/
+    @FXML
+    public void onClickedTableViewSong(MouseEvent mouseEvent) throws ReadOnlyFileException, IOException, TagException, InvalidAudioFrameException, CannotReadException {
+        if(mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){
+            myMediaPlayer.playAll(tableViewGroupSong.getItems(),tableViewGroupSong.getSelectionModel().getSelectedIndex());
+        }
+    }
+
 }

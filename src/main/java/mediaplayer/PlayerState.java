@@ -1,10 +1,13 @@
 package mediaplayer;
 
+import javafx.collections.ObservableList;
 import lombok.Data;
 import model.PlayListSong;
 import org.springframework.stereotype.Component;
 import pojo.User;
 import response.RegisterResponse;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,4 +48,13 @@ public class PlayerState {
      */
     protected PlayMode playMode = PlayMode.SEQUENCE;
 
+    public void setPlayListSongs(List<PlayListSong> observableList) {
+        if (playListSongs == null){
+            playListSongs = new ArrayList<>();
+        }
+        for (int i = 0; i < observableList.size(); i++) {
+            PlayListSong observableSong = observableList.get(i);
+            playListSongs.add(observableSong);
+        }
+    }
 }

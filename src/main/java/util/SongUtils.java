@@ -437,8 +437,11 @@ public final class SongUtils {
                     observableList.add(new PlayListSong(item.getName(),item.getSinger(),item.getAlbum(),item.getTotalTime(),item.getResource()));
                 }
             }else if (tableItem instanceof RecentSong){
-                RecentSong item = (RecentSong) tableItem;
+                RecentSong item = (RecentSong) tableItem;   //拆箱
                 observableList.add(new PlayListSong(item.getName(),item.getSinger(),item.getAlbum(),item.getTotalTime(),item.getResource()));
+            }else if (tableItem instanceof GroupSong){
+                GroupSong item = (GroupSong) tableItem;    //拆箱
+                observableList.add(new PlayListSong(item.getName(),item.getSinger(),item.getAlbum(),item.getTotalTime(),item.getResourceURL()));
             }
         }
         return observableList;
@@ -556,12 +559,14 @@ public final class SongUtils {
      * @param groupSong
      * */
     public static boolean isFavorSong(List<GroupSong> favorSongs,GroupSong groupSong){
-        for (int i = 0; i < favorSongs.size(); i++) {
-            GroupSong favorSong = favorSongs.get(i);
-            if (favorSong.getResourceURL().equals(groupSong.getResourceURL())
-                    && favorSong.getName().equals(groupSong.getName()) && favorSong.getSinger().equals(groupSong.getSinger())
-                    && favorSong.getAlbum().equals(groupSong.getAlbum()) && favorSong.getTotalTime().equals(groupSong.getTotalTime())){
-                return true;
+        if (favorSongs != null && favorSongs.size() >0){
+            for (int i = 0; i < favorSongs.size(); i++) {
+                GroupSong favorSong = favorSongs.get(i);
+                if (favorSong.getResourceURL().equals(groupSong.getResourceURL())
+                        && favorSong.getName().equals(groupSong.getName()) && favorSong.getSinger().equals(groupSong.getSinger())
+                        && favorSong.getAlbum().equals(groupSong.getAlbum()) && favorSong.getTotalTime().equals(groupSong.getTotalTime())){
+                    return true;
+                }
             }
         }
         return false;

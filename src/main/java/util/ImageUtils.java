@@ -30,7 +30,7 @@ public final class ImageUtils {
             try {
                 MP3File mp3File = new MP3File(playListSong.getResource());
                 if (mp3File.hasID3v2Tag()){
-                    imgAlbum = createImageView(getAlbumImage(playListSong.getResource(),width,height),width,height);
+                    imgAlbum = createImageView(getAlbumImage(playListSong,width,height),width,height);
                 }
                 else {
                     imgAlbum = createImageView("image/DefaultAlbumImage_200.png",width,height);
@@ -45,7 +45,20 @@ public final class ImageUtils {
     }
 
     /**获取资源路径的音乐文件的专辑图片*/
-    public static Image getAlbumImage(String resource,double width,double height) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+    public static Image getAlbumImage(PlayListSong playListSong,double width,double height) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+        if (!playListSong.getResource().contains("http://")){   //没有包含"http字样",那就是本地歌曲了.
+            Image imageData = getAlbumImage(playListSong.getResource(),width, height);
+            if (imageData != null) return imageData;
+        }else if (playListSong.getImageURL() != null){
+            Image image = new Image(playListSong.getImageURL(),width,height,true,true);
+            if (!image.isError()){
+                return image;
+            }
+        }
+        return new Image("image/DefaultAlbumImage_200.png",width,height,true,true);
+    }
+
+    public static Image getAlbumImage(String resource,double width, double height) throws IOException, TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException {
         MP3File mp3File = new MP3File(resource);
         if (mp3File.hasID3v2Tag()){
             try {
@@ -57,7 +70,7 @@ public final class ImageUtils {
                 return new Image("image/DefaultAlbumImage_200.png",width,height,true,true);
             }
         }
-        return new Image("image/DefaultAlbumImage_200.png",width,height,true,true);
+        return null;
     }
 
     public static void setAlbumImage(String imageFile) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {

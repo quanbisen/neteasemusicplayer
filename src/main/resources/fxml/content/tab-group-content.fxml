@@ -95,7 +95,7 @@
                                                       <Image requestedHeight="20.0" requestedWidth="20.0" url="@../../image/NeteasePlayAll_20.png" />
                                                    </image>
                                                 </ImageView>
-                                                <Button fx:id="btnPlayAll" mnemonicParsing="false" prefHeight="22.0" prefWidth="64.0" text="播放全部" />
+                                                <Button fx:id="btnPlayAll" mnemonicParsing="false" prefHeight="22.0" prefWidth="64.0" text="播放全部" onAction="#onClickedPlayAll"/>
                                              </children>
                                           </HBox>
                                        </left>
@@ -128,7 +128,7 @@
                                           <Insets top="10.0" />
                                        </padding>
                                     </BorderPane>
-                                    <TableView fx:id="tableViewGroupSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;">
+                                    <TableView fx:id="tableViewGroupSong" prefHeight="271.0" prefWidth="600.0" style="-fx-padding: 0;" onMouseClicked="#onClickedTableViewSong">
                                        <columns>
                                           <TableColumn fx:id="indexColumn" editable="false" maxWidth="37.0" minWidth="37.0" prefWidth="37.0" resizable="false" sortable="false" text="序号" />
                                           <TableColumn fx:id="addFavorColumn" editable="false" maxWidth="32.0" minWidth="32.0" prefWidth="32.0" resizable="false" sortable="false" text="喜欢" />

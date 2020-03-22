@@ -67,6 +67,9 @@ public class AlbumLyricContentController {
     private ImageView ivAlbumOutdoor;
 
     @FXML
+    private ImageView ivAlbum;
+
+    @FXML
     private Label labTitle;
 
     @FXML
@@ -89,9 +92,6 @@ public class AlbumLyricContentController {
 
     @FXML
     private Label labCollect;
-
-    @FXML
-    private ImageView ivAlbum;
 
     @FXML
     private ProgressIndicator progressIndicator;
@@ -188,10 +188,15 @@ public class AlbumLyricContentController {
         ((ImageView)labBlur.getGraphic()).fitWidthProperty().bind(stackPane.widthProperty());
         ((ImageView)labBlur.getGraphic()).fitHeightProperty().bind(stackPane.heightProperty());
 
-        //初始化设置专辑图片的容器的旋转动画
+        //设置缓存
         stackPaneAlbum.setCache(true);
         stackPaneAlbum.setCacheHint(CacheHint.ROTATE);
-        rotateTransition = new RotateTransition(Duration.seconds(10),stackPaneAlbum);
+        ivAlbumOutdoor.setCache(true);
+        ivAlbumOutdoor.setCacheHint(CacheHint.ROTATE);
+        ivAlbum.setCache(true);
+        ivAlbum.setCacheHint(CacheHint.ROTATE);
+        //初始化设置专辑图片的容器的旋转动画
+        rotateTransition = new RotateTransition(Duration.seconds(16),stackPaneAlbum);
         rotateTransition.setInterpolator(Interpolator.LINEAR);  //匀速旋转
         rotateTransition.setByAngle(360);   //360度旋转
         rotateTransition.setCycleCount(Animation.INDEFINITE);   //无数次
@@ -240,7 +245,7 @@ public class AlbumLyricContentController {
                 labArtist.setText(playListSong.getSinger());
                 labTitle.setText(playListSong.getName());
                 labAlbum.setText(playListSong.getAlbum());
-                ivAlbum.setImage(ImageUtils.getAlbumImage(playListSong.getResource(),190,190));
+                ivAlbum.setImage(ImageUtils.getAlbumImage(playListSong,190,190));
                 Circle circle = new Circle(95,95,95);
                 ivAlbum.setClip(circle);
                 ivAlbum.fitHeightProperty().addListener(((observable, oldValue, newValue) -> {
