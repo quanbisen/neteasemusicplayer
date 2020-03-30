@@ -53,7 +53,7 @@ public class PlayerState {
             playListSongs = new ArrayList<>();
         }
         for (int i = 0; i < observableList.size(); i++) {
-            PlayListSong observableSong = observableList.get(i);
+            PlayListSong observableSong = new PlayListSong(observableList.get(i).getName(),observableList.get(i).getSinger(),observableList.get(i).getAlbum(),observableList.get(i).getTotalTime(),observableList.get(i).getResource(),observableList.get(i).getLyricURL(),observableList.get(i).getImageURL());
             playListSongs.add(observableSong);
         }
     }

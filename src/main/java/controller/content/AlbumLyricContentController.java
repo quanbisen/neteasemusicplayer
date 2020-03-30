@@ -297,9 +297,9 @@ public class AlbumLyricContentController {
             }
             System.out.println(vBoxLyric.getChildren().get(0).getStyleClass());
             if (lyricIndex < lyricTimeList.size() - 1 &&
-                    second >= lyricTimeList.get(lyricIndex + 1)) {
+                    second >= max) {
                 lyricIndex = lyricIndex + 1;//当前歌词索引的指示器
-            }else if (lyricIndex > 0 && second <= lyricTimeList.get(lyricIndex)){
+            }else if (lyricIndex > 0 && second <= min){
                 lyricIndex = lyricIndex - 1;
             }
             //滚动歌词
