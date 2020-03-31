@@ -40,8 +40,8 @@ public class Config {
     }
 
     /**获取登录配置存储的文件句柄*/
-    public File getLoginConfigFile() {
-        return configPath.resolve("login-config.properties").toFile();
+    public File getUserStatusFile() {
+        return configPath.resolve("user-status.properties").toFile();
     }
 
     /**获取选择的目录存储的文件句柄*/
@@ -54,8 +54,8 @@ public class Config {
         return configPath.resolve("recent-play.xml").toFile();
     }
 
-    public File getMediaPlayerStateFile(){
-        return configPath.resolve("media-player-state.properties").toFile();
+    public File getPlayerStatusFile(){
+        return configPath.resolve("player-state.properties").toFile();
     }
 
     public File getSearchHistoryFile(){

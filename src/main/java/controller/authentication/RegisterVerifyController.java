@@ -4,12 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
-import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.UserStatus;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.ScheduledCountDownService;
@@ -68,7 +66,7 @@ public class RegisterVerifyController {
 
         /**启动倒计时定时服务*/
         timeSchedule = applicationContext.getBean(ScheduledCountDownService.class);
-        timeSchedule.setTime(applicationContext.getBean(PlayerState.class).getRegisterResponse().getExpireSecond()); //设置倒计时时间
+        timeSchedule.setTime(applicationContext.getBean(UserStatus.class).getRegisterResponse().getExpireSecond()); //设置倒计时时间
         timeSchedule.setPeriod(Duration.seconds(1));
         timeSchedule.start();
 

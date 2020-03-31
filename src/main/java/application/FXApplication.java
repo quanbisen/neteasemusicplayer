@@ -1,7 +1,6 @@
 package application;
 
-import controller.content.AlbumLyricContentController;
-import controller.main.BottomController;
+import controller.content.LyricContentController;
 import javafx.animation.Animation;
 import javafx.scene.image.Image;
 import javafx.scene.media.MediaPlayer;
@@ -9,7 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.PlayerStatus;
 import mediaplayer.MyMediaPlayer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -84,14 +83,8 @@ public class FXApplication extends Application {
     /**保存媒体播放器的状态函数*/
     private void saveState() throws IOException{
         MyMediaPlayer myMediaPlayer = applicationContext.getBean(MyMediaPlayer.class);
-        PlayerState playerState = applicationContext.getBean(PlayerState.class);
-        playerState.setVolume(applicationContext.getBean(BottomController.class).getSliderVolume().getValue());
-        playerState.setCurrentPlayIndex(myMediaPlayer.getCurrentPlayIndex());
-        playerState.setPlayListSongs(myMediaPlayer.getPlayListSongs());
-        playerState.setPlayMode(myMediaPlayer.getPlayMode());
-        JSONObjectUtils.saveObject(playerState,applicationContext.getBean(Config.class).getMediaPlayerStateFile());
-        //保存用户的登录信息
-//        JSONObjectUtils.saveObject(applicationContext.getBean(Config.class).getUser(),applicationContext.getBean(Config.class).getLoginConfigFile());
+        PlayerStatus playerStatus = new PlayerStatus(myMediaPlayer.getVolume(),myMediaPlayer.isMute(),myMediaPlayer.getPlayListSongs(),myMediaPlayer.getCurrentPlayIndex(),myMediaPlayer.getPlayMode());
+        JSONObjectUtils.saveObject(playerStatus,applicationContext.getBean(Config.class).getPlayerStatusFile());
     }
 
     /**
@@ -104,20 +97,20 @@ public class FXApplication extends Application {
                 primaryStage.setHeight(Screen.getPrimary().getVisualBounds().getHeight());
                 primaryStage.setWidth(Screen.getPrimary().getVisualBounds().getWidth());
             }
-            AlbumLyricContentController albumLyricContentController = applicationContext.getBean(AlbumLyricContentController.class);
+            LyricContentController lyricContentController = applicationContext.getBean(LyricContentController.class);
             if (observable.getValue()){
                 System.out.println("cancel");
                 applicationContext.getBean(ValidateUserService.class).cancel();
-                if (albumLyricContentController.isShow() && albumLyricContentController.getRotateTransition().getStatus() == Animation.Status.RUNNING){
-                    albumLyricContentController.getRotateTransition().pause();
+                if (lyricContentController.isShow() && lyricContentController.getRotateTransition().getStatus() == Animation.Status.RUNNING){
+                    lyricContentController.getRotateTransition().pause();
                 }
             }else {
                 System.out.println("restart");
                 applicationContext.getBean(ValidateUserService.class).restart();
-                if (albumLyricContentController.isShow()
-                        && albumLyricContentController.getRotateTransition().getStatus() == Animation.Status.PAUSED
-                        && applicationContext.getBean(MyMediaPlayer.class).getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING){
-                    albumLyricContentController.getRotateTransition().play();
+                if (lyricContentController.isShow()
+                        && lyricContentController.getRotateTransition().getStatus() == Animation.Status.PAUSED
+                        && applicationContext.getBean(MyMediaPlayer.class).getPlayer().getStatus() == MediaPlayer.Status.PLAYING){
+                    lyricContentController.getRotateTransition().play();
                 }
             }
         });

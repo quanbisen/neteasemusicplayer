@@ -3,6 +3,8 @@ package controller.popup;
 import controller.main.BottomController;
 import controller.main.MainController;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -20,10 +22,15 @@ import javafx.util.Callback;
 import mediaplayer.MyMediaPlayer;
 import model.LocalSong;
 import model.PlayListSong;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 import org.springframework.stereotype.Controller;
 import util.ImageUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
+import java.io.IOException;
 
 @Controller
 public class PlayListController {
@@ -34,9 +41,6 @@ public class PlayListController {
 
     @FXML
     private BorderPane borderPanePlayList;
-
-    @FXML
-    private Label labCloseIcon;
 
     @FXML
     private TableView tableViewPlayList;
@@ -61,6 +65,10 @@ public class PlayListController {
 
     @Resource
     private BottomController bottomController;
+
+    public TableView getTableViewPlayList() {
+        return tableViewPlayList;
+    }
 
     public void initialize() {
 
@@ -138,7 +146,9 @@ public class PlayListController {
         });
 
 
-        tableViewPlayList.setItems(myMediaPlayer.getPlayListSongs());   //设置播放列表的表格items
+        ObservableList<PlayListSong> observablePlayListSongs = FXCollections.observableArrayList();
+        observablePlayListSongs.addAll(myMediaPlayer.getPlayListSongs());
+        tableViewPlayList.setItems(observablePlayListSongs);   //设置播放列表的表格items
         tableViewPlayList.scrollTo(myMediaPlayer.getCurrentPlayIndex());   //滚动到播放的行
         /**更新表格行Row*/
         tableViewPlayList.setRowFactory(new Callback<TableView<LocalSong>, TableRow<LocalSong>>() {
@@ -163,45 +173,15 @@ public class PlayListController {
                         if (selected){
                             Label labRemoveIcon = new Label("", ImageUtils.createImageView("/image/RemovePlayListSongIcon.png",16,16));
                             labRemoveIcon.getStyleClass().add("labRemoveIcon");
-                            /**移除按钮的事件处理 start*/
+//                            /**移除按钮的事件处理 start*/
                             labRemoveIcon.setOnMouseClicked(event -> {
-                                if (myMediaPlayer.getPlayListSongs().size() == 1){  //如果播放列表只有一个歌曲，直接销毁播放器，返回
-                                    myMediaPlayer.destroy();
-                                    return;
-                                }else {
-                                    /**更新记录下一首索引的集合*/
-                                    for (int i = 0; i < myMediaPlayer.getNextPlayIndexList().size(); i++) {  //播放列表集合移除了歌曲，记录的索引需要更新处理
-                                        int indexValue = myMediaPlayer.getNextPlayIndexList().get(i);
-                                        if ( indexValue > getIndex()){  //如果记录下一首播放记录的集合大于此选中的移除索引，需要更新记录下一首索引的集合
-                                            myMediaPlayer.getNextPlayIndexList().remove(i);     //先移除
-                                            myMediaPlayer.getNextPlayIndexList().add(i,indexValue - 1); //再-1操作
-                                        }else if (indexValue == getIndex()){    //如果记录下一首播放记录的集合等于此索引，移除
-                                            myMediaPlayer.getNextPlayIndexList().remove(i);
-                                        }
-                                    }
-                                    /**需要更新记录上一首索引的集合*/
-                                    for (int i = 0; i < myMediaPlayer.getLastPlayIndexList().size(); i++) {  //播放列表集合移除了歌曲，记录的索引需要更新处理
-                                        int indexValue = myMediaPlayer.getLastPlayIndexList().get(i);
-                                        if ( indexValue > getIndex()){  //如果记录上一首播放记录的集合大于此选中的移除索引，需要更新记录上一首索引的集合
-                                            myMediaPlayer.getLastPlayIndexList().remove(i);     //先移除
-                                            myMediaPlayer.getLastPlayIndexList().add(i,indexValue - 1); //再-1操作
-                                        }else if (indexValue == getIndex()){    //如果记录上一首播放记录的集合等于此索引，移除
-                                            myMediaPlayer.getLastPlayIndexList().remove(i);
-                                        }
-                                    }
-                                    /**更新当前播放索引*/
-                                    if (myMediaPlayer.getCurrentPlayIndex() > getIndex()){
-                                        myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getCurrentPlayIndex()-1);
-                                    }else if (myMediaPlayer.getCurrentPlayIndex() == getIndex()) { //如果清除的为当前的播放歌曲
-                                        myMediaPlayer.getMediaPlayer().seek(myMediaPlayer.getMediaPlayer().getStopTime());  //定位到结束，唤醒endOfMedia事件
-                                    }
+                                try {
+                                    myMediaPlayer.removeFromPlayList(getIndex());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-
-                                getTableView().getItems().remove(getIndex());   //移除选中的行
-                                getTableView().getSelectionModel().clearSelection();    //清除选择选中行状态
-                                bottomController.getLabPlayListCount().setText(String.valueOf(myMediaPlayer.getPlayListSongs().size()));    //更新底部右下角的歌曲数目显示
                             });
-                            /**移除按钮的事件处理 end*/
+//                            /**移除按钮的事件处理 end*/
                             ((PlayListSong)this.getItem()).setLabRemoveIcon(labRemoveIcon);
                         }else {
                             if (getItem() != null){     //if no judgement,it will throw null exception.
@@ -230,6 +210,9 @@ public class PlayListController {
     public void onClickedClearAll(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){ //鼠标左击
             myMediaPlayer.destroy();
+            if (tableViewPlayList.getItems() != null && tableViewPlayList.getItems().size() > 0){   //如果表格存在items
+                tableViewPlayList.getItems().clear();   //清除表格
+            }
         }
     }
 
@@ -239,7 +222,7 @@ public class PlayListController {
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标左键双击
             int index = tableViewPlayList.getSelectionModel().getSelectedIndex();   //获取选中的索引
             myMediaPlayer.setCurrentPlayIndex(index);   //设置播放索引
-            myMediaPlayer.playSong(myMediaPlayer.getCurrentPlaySong()); //播放当前的索引歌曲
+            myMediaPlayer.playSong(); //播放当前的索引歌曲
             tableViewPlayList.refresh();    //刷新表格
         }
     }

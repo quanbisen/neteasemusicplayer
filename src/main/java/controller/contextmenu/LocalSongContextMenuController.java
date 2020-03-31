@@ -54,36 +54,7 @@ public class LocalSongContextMenuController {
     public void onClickedNextPlay(ActionEvent actionEvent) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
         LocalSong selectedLocalSong = localMusicContentController.getTableViewSong().getSelectionModel().getSelectedItem(); //获取表格选中的歌曲
         PlayListSong playListSong = SongUtils.toPlayListSong(selectedLocalSong);    //转变成播放列表歌曲模型对象
-        List<PlayListSong> playListSongs = myMediaPlayer.getPlayListSongs();
-        List<Integer> nextPlayIndexList = myMediaPlayer.getNextPlayIndexList();
-        if (!playListSongs.contains(playListSong)){  //如果播放列表集合不包含此播放列表歌曲
-            if (playListSongs.size() == 0){ //如果播放列表没有歌曲，直接播放
-                playListSongs.add(playListSong); //添加到播放列表集合中去
-                myMediaPlayer.setCurrentPlayIndex(0);
-                myMediaPlayer.playSong(playListSongs.get(myMediaPlayer.getCurrentPlayIndex()));
-            }else { //否则，播放列表有歌曲，还需进一步处理
-                playListSongs.add(myMediaPlayer.getCurrentPlayIndex()+1,playListSong); //添加到播放列表集合的当前播放索引后面中去
-                for (int i = 0; i < nextPlayIndexList.size(); i++) {  //播放列表集合增加了歌曲，记录的索引需要更新处理
-                    int indexValue = nextPlayIndexList.get(i);
-                    if ( indexValue > myMediaPlayer.getCurrentPlayIndex()){
-                        nextPlayIndexList.remove(i);
-                        nextPlayIndexList.add(i,indexValue + 1);
-                    }
-                }
-                nextPlayIndexList.add(myMediaPlayer.getCurrentPlayIndex()+1);    //把这个索引记录下来
-            }
-            bottomController.updatePlayListIcon();  //更新右下角播放列表图标GUI显示信息
-        }else { //否则，播放列表存在这首歌曲
-            int indexValue = playListSongs.indexOf(playListSong);   //获取得到在播放列表中的索引位置
-            if (myMediaPlayer.getCurrentPlayIndex() != indexValue){ //如果不是当前播放的索引
-                if (nextPlayIndexList.contains(indexValue)){    //如果
-                    nextPlayIndexList.remove((Object)indexValue);
-                }
-                nextPlayIndexList.add(indexValue);  //执行添加
-            }
-        }
-
-        WindowUtils.toastInfo(mainController.getStackPane(),new Label("已添加到播放列表"));
+        myMediaPlayer.addToPlayList(playListSong);
     }
 
     /**“删除文件”contextmenu事件处理*/

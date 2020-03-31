@@ -14,7 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.PlayerStatus;
+import mediaplayer.UserStatus;
 import model.GroupSong;
 import org.dom4j.DocumentException;
 import org.springframework.context.annotation.Scope;
@@ -51,7 +52,10 @@ public class LoadGroupSongService extends javafx.concurrent.Service<ObservableLi
     private Config config;
 
     @Resource
-    private PlayerState playerState;
+    private PlayerStatus playerStatus;
+
+    @Resource
+    private UserStatus userStatus;
 
     @Resource
     private MainController mainController;
@@ -71,7 +75,7 @@ public class LoadGroupSongService extends javafx.concurrent.Service<ObservableLi
                 Platform.runLater(()->{
                     //更新UI
                     groupContentController.getLabGroupName().setText(group.getName());
-                    groupContentController.getLabUserName().setText(playerState.getUser().getName());
+                    groupContentController.getLabUserName().setText(userStatus.getUser().getName());
                     groupContentController.getLabDescription().setText(group.getDescription());
                     groupContentController.getLabCreateTime().setText(new SimpleDateFormat("yyyy-MM-dd").format(group.getCreateTime()));
                     groupContentController.getScrollPaneContainer().setVisible(true);

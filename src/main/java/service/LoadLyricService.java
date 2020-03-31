@@ -1,21 +1,15 @@
 package service;
 
 import com.alibaba.fastjson.JSON;
-import controller.content.AlbumLyricContentController;
+import controller.content.LyricContentController;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import mediaplayer.Config;
 import mediaplayer.MyMediaPlayer;
 import model.PlayListSong;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import pojo.Song;
@@ -23,11 +17,8 @@ import util.HttpClientUtils;
 
 import javax.annotation.Resource;
 import java.io.*;
-import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author super lollipop
@@ -38,7 +29,7 @@ import java.util.Map;
 public class LoadLyricService extends javafx.concurrent.Service<Void> {
 
     @Resource
-    private AlbumLyricContentController albumLyricContentController;
+    private LyricContentController lyricContentController;
 
     @Resource
     private Config config;
@@ -111,11 +102,11 @@ public class LoadLyricService extends javafx.concurrent.Service<Void> {
                         float second = (float) (Math.round(totalMilli / 1000.0 *10) / 10.0);    //将结果描述保留一位小数
 
                         try {
-                            albumLyricContentController.getLyricTimeList().add(second);
+                            lyricContentController.getLyricTimeList().add(second);
                             Platform.runLater(()->{
                                 Label labLyric = new Label(strRow); //创建歌词Label
                                 labLyric.getStyleClass().add("labLyric");   //添加ｃｓｓ类名，在ｃｓｓ文件添加样式,见AlbumLyricStyle.css文件
-                                albumLyricContentController.getVBoxLyric().getChildren().add(labLyric);
+                                lyricContentController.getVBoxLyric().getChildren().add(labLyric);
                             });
 
                         }catch (Exception e){
@@ -126,9 +117,9 @@ public class LoadLyricService extends javafx.concurrent.Service<Void> {
                     Platform.runLater(()->{
                         Label label = new Label("暂无歌词");
                         label.getStyleClass().add("labNoLyric");
-                        label.prefWidthProperty().bind(albumLyricContentController.getVBoxLyric().widthProperty());
-                        label.prefHeightProperty().bind(albumLyricContentController.getVBoxLyric().heightProperty());
-                        albumLyricContentController.getVBoxLyric().getChildren().add(label);
+                        label.prefWidthProperty().bind(lyricContentController.getVBoxLyric().widthProperty());
+                        label.prefHeightProperty().bind(lyricContentController.getVBoxLyric().heightProperty());
+                        lyricContentController.getVBoxLyric().getChildren().add(label);
                     });
                 }
                 return null;

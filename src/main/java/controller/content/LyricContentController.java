@@ -36,7 +36,7 @@ import java.util.*;
  * @date 20-2-28
  */
 @Controller
-public class AlbumLyricContentController {
+public class LyricContentController {
 
     /**VBox根容器*/
     @FXML
@@ -121,7 +121,7 @@ public class AlbumLyricContentController {
     /**标记这个面板是否正在显示在centerPane里,在bottomController里控制,当单击专辑图片时,设置显示true*/
     private boolean show;
 
-    public AlbumLyricContentController() {
+    public LyricContentController() {
         lyricTimeList = new ArrayList<>();
     }
 
@@ -323,7 +323,7 @@ public class AlbumLyricContentController {
     @FXML
     public void onClickedResizeSmall(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
-            bottomController.hideAlbumLyricPane();
+            bottomController.hideLyricPane();
         }
     }
 }

@@ -1,7 +1,7 @@
 package util;
 
 import com.alibaba.fastjson.JSON;
-import mediaplayer.PlayerState;
+import mediaplayer.PlayerStatus;
 import model.PlayListSong;
 import pojo.User;
 import java.io.*;
@@ -22,8 +22,8 @@ public final class JSONObjectUtils {
     /**根据存储文件解析出MediaPlayerState对象的函数
      * @param file 存储文件
      * @return MediaPlayerState*/
-    public static PlayerState parseMediaPlayerState(File file) throws IOException {
-        return JSON.parseObject(readObject(file), PlayerState.class);
+    public static PlayerStatus parseMediaPlayerState(File file) throws IOException {
+        return JSON.parseObject(readObject(file), PlayerStatus.class);
     }
 
     public static PlayListSong parsePlayListSong(Object object) throws IOException{

@@ -12,16 +12,13 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.PlayerStatus;
 import mediaplayer.MyMediaPlayer;
+import mediaplayer.UserStatus;
 import model.PlayListSong;
 import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.TagException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -65,25 +62,27 @@ public class LoadPlayerStateService extends javafx.concurrent.Service<Void> {
             protected Void call() throws Exception {
                 try {
                     //播放状态加载
-                    File mediaPlayerStateFile = applicationContext.getBean(Config.class).getMediaPlayerStateFile();   //获取媒体播放器状态保存的文件句柄
-                    if (mediaPlayerStateFile.exists()){ //如果存储媒体播放器状态的文件存在
-                        PlayerState playerState = JSONObjectUtils.parseMediaPlayerState(mediaPlayerStateFile);    //解析配置文件，转换成对象
+                    File playerStatusFile = applicationContext.getBean(Config.class).getPlayerStatusFile();   //获取媒体播放器状态保存的文件句柄
+                    if (playerStatusFile.exists()){ //如果存储媒体播放器状态的文件存在
+                        PlayerStatus playerStatus = JSONObjectUtils.parseMediaPlayerState(playerStatusFile);    //解析配置文件，转换成对象
                         //创建播放列表，并且设置自定义媒体播放器对象myMediaPlayer的播放列表
                         ObservableList<PlayListSong> playListSongs = FXCollections.observableArrayList();
-                        playListSongs.addAll(playerState.getPlayListSongs());
+                        playListSongs.addAll(playerStatus.getPlayListSongs());
                         myMediaPlayer.setPlayListSongs(playListSongs);
-                        myMediaPlayer.setCurrentPlayIndex(playerState.getCurrentPlayIndex());  //设置当前播放的索引
-                        myMediaPlayer.setPlayMode(playerState.getPlayMode());  //设置播放播放
-
+                        myMediaPlayer.setCurrentPlayIndex(playerStatus.getCurrentPlayIndex());  //设置当前播放的索引
+                        myMediaPlayer.setPlayMode(playerStatus.getPlayMode());  //设置播放播放
+                        myMediaPlayer.setVolume(playerStatus.getVolume());
                         Platform.runLater(() -> {
-                            bottomController.updatePlayListIcon();
-                            bottomController.getSliderVolume().setValue(playerState.getVolume());
-                            try {
-                                myMediaPlayer.playBefore(myMediaPlayer.getCurrentPlaySong()); //设置准备当前索引的歌曲
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            bottomController.getLabPlayListCount().setText(String.valueOf(playListSongs.size()));
+                            bottomController.getSliderVolume().setValue(playerStatus.getVolume());
+                            if (myMediaPlayer.getPlayListSongs() != null && myMediaPlayer.getPlayListSongs().size() > 0) {
+                                try {
+                                    myMediaPlayer.prepareGUI(); //设置准备当前索引的歌曲
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            switch (playerState.getPlayMode()) {
+                            switch (playerStatus.getPlayMode()) {
                                 case SEQUENCE_LOOP: {
                                     bottomController.getLabPlayModeIcon().setGraphic(ImageUtils.createImageView("image/NeteaseSequenceLoopMode.png", 24, 24));
                                     break;
@@ -105,9 +104,9 @@ public class LoadPlayerStateService extends javafx.concurrent.Service<Void> {
                         });
                     }
                     //登录状态加载
-                    File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile();
-                    if (loginConfigFile.exists()){
-                        User user = JSONObjectUtils.parseUser(loginConfigFile);
+                    File userStatusFile = applicationContext.getBean(Config.class).getUserStatusFile();
+                    if (userStatusFile.exists()){
+                        User user = JSONObjectUtils.parseUser(userStatusFile);
                         //验证服务器user的状态是否合法
                         String url = applicationContext.getBean(Config.class).getUserURL() + "/validate";
                         MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create().addTextBody("token",user.getToken(), ContentType.create("text/pain", Charset.forName("UTF-8")));
@@ -126,8 +125,8 @@ public class LoadPlayerStateService extends javafx.concurrent.Service<Void> {
                             user.setDescription(validUser.getDescription());
                             user.setLoginTime(validUser.getLoginTime());
                             user.setGroupList(validUser.getGroupList());
-                            JSONObjectUtils.saveObject(user,applicationContext.getBean(Config.class).getLoginConfigFile());   //保存更新的用户信息到本地存储文件
-                            applicationContext.getBean(PlayerState.class).setUser(validUser);
+                            JSONObjectUtils.saveObject(user,applicationContext.getBean(Config.class).getUserStatusFile());   //保存更新的用户信息到本地存储文件
+                            applicationContext.getBean(UserStatus.class).setUser(validUser);
                             //加载歌单指示器和"我喜欢的音乐"tab标签
                             Platform.runLater(()->{
                                 try {
@@ -151,7 +150,7 @@ public class LoadPlayerStateService extends javafx.concurrent.Service<Void> {
 
                         }catch (JSONException e){
                             System.out.println("身份验证不通过");
-                            applicationContext.getBean(Config.class).getLoginConfigFile().delete();
+                            applicationContext.getBean(Config.class).getUserStatusFile().delete();
                             File userImageFile = new File(user.getImageURL().substring(5));
                             userImageFile.delete();
                             Platform.runLater(()->{
@@ -160,7 +159,7 @@ public class LoadPlayerStateService extends javafx.concurrent.Service<Void> {
                         }catch (HttpHostConnectException e){
                             System.out.println("无网络连接");
                             //设置缓存保存的用户信息文件
-                            applicationContext.getBean(PlayerState.class).setUser(user);
+                            applicationContext.getBean(UserStatus.class).setUser(user);
                             Platform.runLater(()->{
                                 try {
                                     leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());    //歌单指示器组件

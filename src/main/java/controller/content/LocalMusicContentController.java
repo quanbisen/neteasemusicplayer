@@ -255,17 +255,17 @@ public class LocalMusicContentController {
         EventHandler<MouseEvent> onClickedTableSongRow = mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
                 LocalSong selectedLocalSong = tableViewSong.getSelectionModel().getSelectedItem();
-                if (myMediaPlayer.getPlayListSongs() == null || myMediaPlayer.getPlayListSongs().size() ==0){
+                if (myMediaPlayer.getPlayListSongs() == null || myMediaPlayer.getPlayListSongs().size() == 0){
                     myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
                     myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.toPlayListSong(selectedLocalSong)));  //设置当前播放的歌曲在播放列表playList中的位置
-                } else if (myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()).equals(SongUtils.toPlayListSong(selectedLocalSong)) && myMediaPlayer.getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
+                } else if (myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()).equals(SongUtils.toPlayListSong(selectedLocalSong)) && myMediaPlayer.getPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
                     return;
                 } else {
                     myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表
                     myMediaPlayer.setCurrentPlayIndex(myMediaPlayer.getPlayListSongs().indexOf(SongUtils.toPlayListSong(selectedLocalSong)));  //设置当前播放的歌曲在播放列表playList中的位置
                 }
                 try {
-                    myMediaPlayer.playSong(myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()));      //播放选中的歌曲
+                    myMediaPlayer.playSong();      //播放选中的歌曲
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

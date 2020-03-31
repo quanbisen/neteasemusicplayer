@@ -37,7 +37,7 @@ public class ValidateUserService extends javafx.concurrent.Service<Void> {
             @Override
             protected Void call() throws Exception {
 
-                File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile();  //获取播放器存储登录文件句柄
+                File userStatusFile = applicationContext.getBean(Config.class).getUserStatusFile();  //获取播放器存储登录文件句柄
 //                if (loginConfigFile.exists()) { //如果文件存在，解析文件查询用户并更新UI界面
 //                    try {
 //                        applicationContext.getBean(Config.class).setUser(JSONObjectUtils.parseUser(loginConfigFile));  //设置文件读取到的用户信息

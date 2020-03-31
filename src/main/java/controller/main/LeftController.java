@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.UserStatus;
 import org.dom4j.DocumentException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -109,9 +109,9 @@ public class LeftController {
 
         this.setSelectedTab(hBoxExploreMusicTab);   //初始化“发现音乐”为选择的标签
 
-        User user = applicationContext.getBean(PlayerState.class).getUser();
+        User user = applicationContext.getBean(UserStatus.class).getUser();
         if (user != null){
-            labUserName.setText(applicationContext.getBean(PlayerState.class).getUser().getName());  //设置用户名称*/
+            labUserName.setText(user.getName());  //设置用户名称*/
         }
 
         labUserImage.setClip(new Circle(19,19,19)); //切割用户头像
@@ -184,7 +184,7 @@ public class LeftController {
     public void onClickedHBoxUserInfo(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             if (centerController.getStackPane().getChildren().size()==1){
-                if (applicationContext.getBean(PlayerState.class).getUser() == null){  //如果登录配置文件不存在，则没有登录
+                if (applicationContext.getBean(UserStatus.class).getUser() == null){  //如果登录配置文件不存在，则没有登录
                     FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/right-slide-unlogin.fxml");
                     BorderPane borderPaneRoot = fxmlLoader.load();
 

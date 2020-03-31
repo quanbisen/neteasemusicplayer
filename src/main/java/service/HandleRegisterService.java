@@ -7,7 +7,7 @@ import controller.authentication.RegisterVerifyController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.UserStatus;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.context.ApplicationContext;
@@ -43,7 +43,7 @@ public class HandleRegisterService extends javafx.concurrent.Service<Void> {
             protected Void call() throws Exception {
 
                 String url = applicationContext.getBean(Config.class).getUserURL() + "/register";
-                RegisterResponse registerResponse = applicationContext.getBean(PlayerState.class).getRegisterResponse();
+                RegisterResponse registerResponse = applicationContext.getBean(UserStatus.class).getRegisterResponse();
                 String id = registerResponse.getId();
                 String password = registerResponse.getPassword();
                 String code = registerVerifyController.getTfCode().getText();
@@ -58,7 +58,7 @@ public class HandleRegisterService extends javafx.concurrent.Service<Void> {
                 Platform.runLater(()->{
                     registerVerifyController.getLabVerifyMessage().setText(message);
                     if (registerVerifyController.getLabVerifyMessage().getText().equals("注册成功")){
-                        applicationContext.getBean(PlayerState.class).setRegisterResponse(null); //清空注册临时对象
+                        applicationContext.getBean(UserStatus.class).setRegisterResponse(null); //清空注册临时对象
                         registerVerifyController.getTimeSchedule().cancel();    //取消倒计时服务
                         try {
                             registerInputController.getVisualPane().setBottom(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-success.fxml").load());

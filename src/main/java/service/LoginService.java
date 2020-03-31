@@ -3,17 +3,15 @@ package service;
 import application.SpringFXMLLoader;
 import com.alibaba.fastjson.JSON;
 import controller.authentication.LoginController;
-import controller.component.GroupTabController;
 import controller.main.CenterController;
 import controller.main.LeftController;
 import controller.main.MainController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.UserStatus;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.springframework.context.ApplicationContext;
@@ -71,16 +69,15 @@ public class LoginService extends javafx.concurrent.Service<Void> {
 
                 }else { //否则，认证通过
                     user = JSON.parseObject(responseString,User.class);
-                    applicationContext.getBean(PlayerState.class).setUser(user); //保存User对象到applicationContext，user对象有token信息
+                    applicationContext.getBean(UserStatus.class).setUser(user); //保存User对象到applicationContext，user对象有token信息
 
                     Path imagePath = applicationContext.getBean(Config.class).getCachePath().resolve("image");
                     Files.createDirectories(imagePath);
-                    System.out.println();
                     File imageFile = new File(imagePath.toString() + File.separator + TimeUtils.formatDate(user.getLoginTime(),"yyyyMMddHHmmss") + user.getImageURL().substring(user.getImageURL().lastIndexOf("."))); //用用户的用户名作为图片命名
                     HttpClientUtils.download(user.getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
                     user.setImageURL("file:"+imageFile.getPath());
                     //保存登录信息到本地文件
-                    File loginConfigFile = applicationContext.getBean(Config.class).getLoginConfigFile();
+                    File loginConfigFile = applicationContext.getBean(Config.class).getUserStatusFile();
                     loginConfigFile.delete();
                     loginConfigFile.createNewFile();  //创建新的文件
                     JSONObjectUtils.saveObject(user,loginConfigFile);  //调用存储的函数，写入到文件
@@ -92,8 +89,8 @@ public class LoginService extends javafx.concurrent.Service<Void> {
 
                         ((Stage)loginController.getPfPassword().getScene().getWindow()).close();      //关闭窗口
                         WindowUtils.releaseBorderPane(mainController.getBorderPane());  //释放中间的面板，可以接受鼠标事件和改变透明度
-                        leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(applicationContext.getBean(PlayerState.class).getUser().getImageURL(),38,38));  //设置用户头像图片
-                        leftController.getLabUserName().setText(applicationContext.getBean(PlayerState.class).getUser().getName());  //设置用户名称
+                        leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(applicationContext.getBean(UserStatus.class).getUser().getImageURL(),38,38));  //设置用户头像图片
+                        leftController.getLabUserName().setText(applicationContext.getBean(UserStatus.class).getUser().getName());  //设置用户名称
                         WindowUtils.toastInfo(centerController.getStackPane(),new Label("登录成功"));
 
                         //加载歌单指示器和"我喜欢的音乐"tab标签

@@ -4,10 +4,8 @@ import com.alibaba.fastjson.JSON;
 import controller.main.LeftController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.UserStatus;
 import org.dom4j.DocumentException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -16,7 +14,6 @@ import pojo.Group;
 import pojo.User;
 import util.HttpClientUtils;
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -52,7 +49,7 @@ public class SynchronizeGroupService extends javafx.concurrent.ScheduledService<
 
             @Override
             protected Void call() throws Exception {
-                User user = applicationContext.getBean(PlayerState.class).getUser();
+                User user = applicationContext.getBean(UserStatus.class).getUser();
                 if (user != null){  //用户存在
                     try {
                         String url = applicationContext.getBean(Config.class).getGroupURL() + "/query/" + user.getToken();

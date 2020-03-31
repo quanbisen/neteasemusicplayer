@@ -426,8 +426,8 @@ public final class SongUtils {
 
     /**把表格中的items转换成播放列表集合的函数
      * @param tableItems 表格items
-     * @return ObservableList<PlayListSong>*/
-    public static ObservableList<PlayListSong> getPlayListSongs(List tableItems){
+     * @return List<PlayListSong>*/
+    public static List<PlayListSong> getPlayListSongs(List tableItems){
         ObservableList<PlayListSong> observableList = FXCollections.observableArrayList();
         for (int i = 0; i < tableItems.size(); i++) {
             Object tableItem = tableItems.get(i);

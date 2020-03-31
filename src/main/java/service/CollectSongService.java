@@ -1,7 +1,6 @@
 package service;
 
 import com.alibaba.fastjson.JSON;
-import controller.component.GroupCandidateController;
 import controller.content.LocalMusicContentController;
 import controller.main.LeftController;
 import controller.main.MainController;
@@ -13,7 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.PlayerStatus;
+import mediaplayer.UserStatus;
 import model.LocalSong;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -48,7 +48,10 @@ public class CollectSongService extends javafx.concurrent.Service<Void> {
     private Config config;
 
     @Resource
-    private PlayerState playerState;
+    private PlayerStatus playerStatus;
+
+    @Resource
+    private UserStatus userStatus;
 
     @Resource
     private ChoseGroupController choseGroupController;
@@ -62,7 +65,7 @@ public class CollectSongService extends javafx.concurrent.Service<Void> {
             @Override
             protected Void call() throws Exception {
                 //找出与选中歌单名称匹配的Group
-                List<Group> groupList = playerState.getUser().getGroupList();
+                List<Group> groupList = userStatus.getUser().getGroupList();
                 Group selectedGroup = null;
                 for (int i = 0; i < groupList.size(); i++) {
                     if (groupList.get(i).getName().equals(choseGroupController.getChoseGroupName())){

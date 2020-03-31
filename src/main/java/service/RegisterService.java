@@ -7,7 +7,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.paint.Color;
 import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.UserStatus;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.context.ApplicationContext;
@@ -50,7 +50,7 @@ public class RegisterService extends javafx.concurrent.Service<Void> {
                             addTextBody("password",password,ContentType.create("text/pain",Charset.forName("UTF-8")));
                     String responseString = HttpClientUtils.executePost(url,multipartEntityBuilder.build());
                     RegisterResponse registerResponse = JSON.parseObject(responseString,RegisterResponse.class);
-                    applicationContext.getBean(PlayerState.class).setRegisterResponse(registerResponse);     //存储注册响应对象到applicationContext管理的Config.class Bean中
+                    applicationContext.getBean(UserStatus.class).setRegisterResponse(registerResponse);     //存储注册响应对象到applicationContext管理的Config.class Bean中
                     if (registerResponse.getMessage().equals("验证码发送成功")){
                         Platform.runLater(()->{
                             try {

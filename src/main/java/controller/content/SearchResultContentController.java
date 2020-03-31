@@ -120,7 +120,7 @@ public class SearchResultContentController {
     }
 
 
-    /**单击表格存储歌曲的容器事件处理*/
+    /**单击表格歌曲的容器事件处理*/
     @FXML
     public void onClickedTableView(MouseEvent mouseEvent) throws Exception{
         if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
@@ -128,14 +128,14 @@ public class SearchResultContentController {
                 myMediaPlayer.setPlayListSongs(FXCollections.observableArrayList());
             }
             PlayListSong newPlaySong = SongUtils.toPlayListSong((Song) tableViewSong.getSelectionModel().getSelectedItem());
-            ObservableList<PlayListSong> playListSongs = myMediaPlayer.getPlayListSongs();
+            List<PlayListSong> playListSongs = myMediaPlayer.getPlayListSongs();
             if (playListSongs.size() == 0){
                 playListSongs.add(newPlaySong);
             }else {
                 playListSongs.add(myMediaPlayer.getCurrentPlayIndex()+1,newPlaySong);  //添加到播放列表后面
             }
             myMediaPlayer.setCurrentPlayIndex(playListSongs.indexOf(newPlaySong));    //更新当前播放的索引值
-            myMediaPlayer.playSong(playListSongs.get(myMediaPlayer.getCurrentPlayIndex()));      //播放选中的歌曲
+            myMediaPlayer.playSong();      //播放选中的歌曲
             bottomController.getLabPlayListCount().setText(String.valueOf(playListSongs.size())); //更新右下角歌单数量的显示文本 林
         }
     }

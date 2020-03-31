@@ -3,7 +3,6 @@ package controller.popup;
 import application.SpringFXMLLoader;
 import controller.component.GroupCandidateController;
 import controller.component.GroupIndicatorController;
-import controller.main.LeftController;
 import controller.main.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import mediaplayer.Config;
-import mediaplayer.PlayerState;
+import mediaplayer.UserStatus;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import pojo.Group;
@@ -72,7 +70,7 @@ public class ChoseGroupController {
     }
 
     public void initialize() throws IOException {
-        List<Group> groupList = applicationContext.getBean(PlayerState.class).getUser().getGroupList();
+        List<Group> groupList = applicationContext.getBean(UserStatus.class).getUser().getGroupList();
         for (int i = 0; i < groupList.size(); i++) {
             addGroupCandidate(groupList.get(i));
         }
