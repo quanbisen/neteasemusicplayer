@@ -98,14 +98,12 @@ public class Config {
         Path configParent;
         Path configDir;
         String appData = System.getenv("APPDATA");
-        System.out.println(appData);
         if (appData != null) {
             configParent = Paths.get(appData);
-            configDir = configParent.resolve("neteasemusicplayer");
         } else {
             configParent = Paths.get(System.getProperty("user.home"));
-            configDir = configParent.resolve(".neteasemusicplayer");
         }
+        configDir = configParent.resolve("neteasemusicplayer");
         configPath = Files.createDirectories(configDir);
     }
 

@@ -66,7 +66,7 @@ public class FXApplication extends Application {
             primaryStage.setMinWidth(870.0);
             primaryStage.setMinHeight(620);
         }
-        addIconifiedBehavior(primaryStage);    //添加最大化最小化的行为
+        addMinimizeBehavior(primaryStage);    //添加最大化最小化的行为
         primaryStage.show();  //显示主舞台
         // 获取屏幕可视化的宽高（Except TaskBar），把窗体设置在可视化的区域居中
         primaryStage.setX((Screen.getPrimary().getVisualBounds().getWidth() - primaryStage.getWidth()) / 2.0);
@@ -90,7 +90,7 @@ public class FXApplication extends Application {
     /**
      * 修补在最大化状态下，最小化窗体之后单击任务栏图标恢复时，窗体的高度和宽度是全屏的问题。修复后，宽度和高度是为屏幕可视化的宽度和高度
      */
-    private void addIconifiedBehavior(Stage primaryStage) {
+    private void addMinimizeBehavior(Stage primaryStage) {
         primaryStage.iconifiedProperty().addListener((observable, oldValue, newValue) -> {
             //确保Windows平台下,窗体在最大化状态下最小化后，单击任务栏图标显示时占据的屏幕大小是可视化的全屏
             if (primaryStage.isMaximized() && WindowUtils.isWindowsPlatform()) {

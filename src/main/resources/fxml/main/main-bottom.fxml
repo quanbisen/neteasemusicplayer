@@ -18,7 +18,7 @@
             <padding>
                 <Insets right="29" />
             </padding>
-            <Label fx:id="labAlbum" onMouseClicked="#onClickedAlbum">
+            <Label fx:id="labAlbum" onMouseClicked="#onClickedAlbum" prefHeight="60" prefWidth="60" maxHeight="60" maxWidth="60" minWidth="60" minHeight="60">
                 <graphic>
                     <ImageView fitHeight="58" fitWidth="58"><Image url="@/image/DefaultAlbumImage_200.png" requestedHeight="58.0" requestedWidth="58.0"/></ImageView>
                 </graphic>

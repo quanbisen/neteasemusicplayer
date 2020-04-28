@@ -254,9 +254,11 @@ public class LeftController {
 
     /**当登录用户身份验证失败时，移除歌单tab组件的函数*/
     public void removeAllGroupTab(){
-        vBoxTabContainer.getChildren().remove(5,vBoxTabContainer.getChildren().size() - 1);
-        for (int i = 4; i < tabList.size(); i++) {
-            tabList.remove(i);
+        if (vBoxTabContainer.getChildren().size() > 5){ //如果vBoxTabContainer容器的孩子大于5，证明存在歌单tab.
+            vBoxTabContainer.getChildren().remove(5,vBoxTabContainer.getChildren().size());
+            for (int i = 4; i < tabList.size(); i++) {
+                tabList.remove(i);
+            }
         }
     }
 
