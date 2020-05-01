@@ -1,4 +1,4 @@
-package controller.authentication;
+package controller.user;
 
 import controller.main.CenterController;
 import controller.main.LeftController;
@@ -10,16 +10,12 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import mediaplayer.Config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
-import pojo.User;
 import service.LoginService;
 import util.*;
 
 import javax.annotation.Resource;
-import java.io.*;
-import java.util.function.UnaryOperator;
 
 @Controller
 public class LoginController {

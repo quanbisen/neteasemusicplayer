@@ -2,7 +2,7 @@ package service;
 
 import application.SpringFXMLLoader;
 import com.alibaba.fastjson.JSON;
-import controller.authentication.RegisterInputController;
+import controller.user.RegisterInputController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.paint.Color;

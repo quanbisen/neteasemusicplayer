@@ -239,14 +239,14 @@ public class LeftController {
         tabList.get(tabList.size() - 1).setUserData(group); //存储对象
     }
 
-    /**根据歌单名称移除歌单标签的函数
+    /**根据歌单对象移除歌单标签的函数
      * @param group 歌单对象*/
     public void removeGroupTab(Group group) throws DocumentException {
         for (int i = 5; i < tabList.size(); i++) {
             if (((Label)tabList.get(i).getChildren().get(0)).getText().equals(group.getName())){  //如果歌单名称相等，移除
                 tabList.get(i).setUserData(null);
                 vBoxTabContainer.getChildren().remove(tabList.get(i));
-                tabList.remove(tabList.get(i));
+                tabList.remove(i);
                 XMLUtils.removeGroup(applicationContext.getBean(Config.class).getGroupsSongFile(),group);  //删除xml文件存储的歌单信息
             }
         }
@@ -256,8 +256,8 @@ public class LeftController {
     public void removeAllGroupTab(){
         if (vBoxTabContainer.getChildren().size() > 5){ //如果vBoxTabContainer容器的孩子大于5，证明存在歌单tab.
             vBoxTabContainer.getChildren().remove(5,vBoxTabContainer.getChildren().size());
-            for (int i = 4; i < tabList.size(); i++) {
-                tabList.remove(i);
+            while (tabList.size() > 4){
+                tabList.remove(tabList.size() - 1);
             }
         }
     }
@@ -278,6 +278,10 @@ public class LeftController {
         for (int i = 4; i < tabList.size(); i++) {
             if (((Group) tabList.get(i).getUserData()).getId() == id){
                 tabList.get(i).setUserData(group);
+                Label labTabName = (Label)tabList.get(i).getChildren().get(0);  //获取显示歌单名称Label组件
+                if (!labTabName.getText().equals(group.getName())){ //如果名称修改了，更新左侧的歌单名称tab
+                    labTabName.setText(group.getName());
+                }
                 break;
             }
         }
@@ -287,6 +291,10 @@ public class LeftController {
     /**传入歌单集合对象,更新歌单分组的UI及数据
      * @param groupList 歌单对象集合*/
     public void updateGroup(List<Group> groupList) throws DocumentException {
+        System.out.println(groupList);
+        tabList.forEach(hBox -> {
+            System.out.println(hBox.getUserData());
+        });
         for (int i = 0; i < groupList.size(); i++) {
             Group group = getGroupTabData(groupList.get(i).getId());
             if (group != null){    //如果当前存在歌单名称,还需判断里面的信息是否改变

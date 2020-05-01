@@ -3,7 +3,7 @@ package controller.dialog;
 import controller.main.CenterController;
 import controller.main.LeftController;
 import controller.main.MainController;
-import controller.authentication.RightSlideLoginController;
+import controller.user.RightSlideLoginController;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

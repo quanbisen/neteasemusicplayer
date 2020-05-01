@@ -2,8 +2,8 @@ package service;
 
 import application.SpringFXMLLoader;
 import com.alibaba.fastjson.JSON;
-import controller.authentication.RegisterInputController;
-import controller.authentication.RegisterVerifyController;
+import controller.user.RegisterInputController;
+import controller.user.RegisterVerifyController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import mediaplayer.Config;

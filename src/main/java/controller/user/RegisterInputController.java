@@ -1,4 +1,4 @@
-package controller.authentication;
+package controller.user;
 
 import controller.main.MainController;
 import javafx.application.Platform;

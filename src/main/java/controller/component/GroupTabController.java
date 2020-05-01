@@ -84,7 +84,6 @@ public class GroupTabController {
             }else if (mouseEvent.getClickCount() == 5){
                 setupGroupContent();
             }
-
         }
     }
 

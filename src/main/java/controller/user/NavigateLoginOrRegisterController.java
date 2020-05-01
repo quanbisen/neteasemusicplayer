@@ -1,4 +1,4 @@
-package controller.authentication;
+package controller.user;
 
 import application.SpringFXMLLoader;
 import controller.main.MainController;

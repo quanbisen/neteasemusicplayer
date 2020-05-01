@@ -19,9 +19,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import pojo.Group;
 import service.UpdateGroupService;
-import util.ImageUtils;
-import util.WindowUtils;
-
 import javax.annotation.Resource;
 import java.io.File;
 
@@ -88,7 +85,9 @@ public class EditGroupContentController {
     }
 
     public void initialize() throws Exception {
-
+        if (choseImageFile != null){    //如果不为null，重置为null
+            choseImageFile = null;
+        }
         group = (Group) leftController.getContextMenuShownTab().getUserData();
         tfGroupName.setText(group.getName());
         taDescription.setText(group.getDescription());
@@ -136,7 +135,7 @@ public class EditGroupContentController {
 
     /**专辑封面的事件处理*/
     @FXML
-    public void onClickedAlbumImage(MouseEvent mouseEvent) {
+    public synchronized void onClickedAlbumImage(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
@@ -177,6 +176,6 @@ public class EditGroupContentController {
     @FXML
     public void onClickedSave(ActionEvent actionEvent) {
         applicationContext.getBean(UpdateGroupService.class).start();   //启动更新
-        this.onClickedCancel(actionEvent);
+        onClickedCancel(actionEvent);
     }
 }

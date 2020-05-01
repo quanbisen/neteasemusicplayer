@@ -58,6 +58,10 @@ public final class ImageUtils {
         return new Image("image/DefaultAlbumImage_200.png",width,height,true,true);
     }
 
+    /**根据mp3文件资源路径获取专辑mp3文件的专辑图
+     * @param resource 资源路径
+     * @param width 宽度
+     * @param height 高度*/
     public static Image getAlbumImage(String resource,double width, double height) throws IOException, TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException {
         MP3File mp3File = new MP3File(resource);
         if (mp3File.hasID3v2Tag()){

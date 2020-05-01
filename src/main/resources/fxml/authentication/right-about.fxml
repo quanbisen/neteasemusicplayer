@@ -10,7 +10,7 @@
 
 <BorderPane prefHeight="400.0" prefWidth="310.0"
             stylesheets="@../../css/RightAboutStyle.css"
-            fx:controller="controller.authentication.RightAboutController"
+            fx:controller="controller.user.RightAboutController"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1">
    <top>

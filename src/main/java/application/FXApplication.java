@@ -63,8 +63,8 @@ public class FXApplication extends Application {
             WindowUtils.addResizable(primaryStage,860,570);  //为primaryStage添加自由缩放
             WindowUtils.addWindowsStyle(primaryStage);  //为primaryStage添加一些GUI的修复代码
         }else { //minWidth="870.0" minHeight="580.0"
-            primaryStage.setMinWidth(870.0);
-            primaryStage.setMinHeight(620);
+//            primaryStage.setMinWidth(870.0);
+//            primaryStage.setMinHeight(620);
         }
         addMinimizeBehavior(primaryStage);    //添加最大化最小化的行为
         primaryStage.show();  //显示主舞台

@@ -158,7 +158,7 @@ public class SearchInputContentController {
     /**启动搜索服务的函数*/
     public void startSearchService() throws IOException {
         if (parent == null){    //容器对象为空时才加载
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/searchresult-content.fxml");
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/search-result-content.fxml");
             parent = fxmlLoader.load();
         }
         SearchSongService searchSongService = applicationContext.getBean(SearchSongService.class);  //获取服务对象

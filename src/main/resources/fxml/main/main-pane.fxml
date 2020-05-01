@@ -5,11 +5,11 @@
 
 <StackPane fx:id="stackPane" stylesheets="@../../css/MainPaneStyle.css"
            fx:controller="controller.main.MainController"
-           minWidth="870.0" minHeight="580.0"
+           minWidth="870.0" minHeight="560.0"
            xmlns="http://javafx.com/javafx/8.0.171"
            xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <BorderPane fx:id="borderPane" prefHeight="580.0" prefWidth="870.0">
+        <BorderPane fx:id="borderPane" prefHeight="560.0" prefWidth="870.0">
             <top>
                 <!--        <fx:include source="main-top.fxml"></fx:include>-->
             </top>

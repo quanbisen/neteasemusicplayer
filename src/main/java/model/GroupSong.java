@@ -24,4 +24,5 @@ public class GroupSong {
     private String totalTime;
     private Date addTime;
     private String resourceURL;
+    private String imageURL;
 }

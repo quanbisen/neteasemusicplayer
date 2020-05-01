@@ -18,6 +18,10 @@ import mediaplayer.PlayerStatus;
 import mediaplayer.UserStatus;
 import model.GroupSong;
 import org.dom4j.DocumentException;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import pojo.Group;
@@ -27,6 +31,7 @@ import util.WindowUtils;
 import util.XMLUtils;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
@@ -85,7 +90,6 @@ public class LoadGroupSongService extends javafx.concurrent.Service<ObservableLi
                 if (groupSongs != null) {
                     ObservableList<GroupSong> observableList = FXCollections.observableArrayList(); //创建表格内容集合
                     observableList.addAll(groupSongs);
-
 
                     //设置喜欢的图标
                     Image favoredImage = new Image("/image/FavoredIcon_16.png", 16, 16, true, true);
@@ -151,39 +155,61 @@ public class LoadGroupSongService extends javafx.concurrent.Service<ObservableLi
                             return 0;
                         }
                     });
-
-                    Platform.runLater(() -> {
-                        if (group.getImageURL() != null) {   //如果图片的资源不为空,加载图片
-                            Image image = new Image(group.getImageURL(),200,200,true,true);
-                            if (!image.isError()){
-                                groupContentController.getIvAlbumImage().setImage(image);
-                            }else {
-                                loadGroupAlbumImage(observableList);
+                    Platform.runLater(()->{
+                        //如果获取歌单信息的UIL图片(在线资源)失败，加载本地文件的专辑图片
+                        if (!setupOnlineImage(group)){
+                            try {
+                                Image image = getOptimizedImage(observableList,200,200);
+                                if (image != null){
+                                    groupContentController.getIvAlbumImage().setImage(image);
+                                }else {
+                                    groupContentController.getIvAlbumImage().setImage(new Image("/image/DefaultAlbumImage_200.png",200,200,true,true));
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        }else {
-                            loadGroupAlbumImage(observableList);
                         }
-
                         groupContentController.getTableViewGroupSong().setMinHeight(observableList.size() * 40);    //设置表格的高度
-
                     });
                     return observableList;
                 }else {
+                    Platform.runLater(()->{
+                        setupOnlineImage(group);
+                    });
                     return null;
                 }
             }
 
-            /**加载歌单专辑图片函数,默认加载歌单集合第一个歌曲的图片
-             * @param observableList 歌单歌曲集合*/
-            private void loadGroupAlbumImage(ObservableList<GroupSong> observableList) {
-                //面板的专辑图片是最新添加的歌曲的专辑图
-                if (!observableList.get(0).getResourceURL().contains("http://")) {   //如果最新的歌曲是本地音乐文件,获取文件的专辑图,设置成文件的专辑图
-                    try {
-                        groupContentController.getIvAlbumImage().setImage(ImageUtils.getAlbumImage(observableList.get(0).getResourceURL(), 200, 200));
-                    } catch (Exception e) {
-                        groupContentController.getIvAlbumImage().setImage(new Image("/image/DefaultAlbumImage_200.png", 200, 200, true, true));
+            private boolean setupOnlineImage(Group group){
+                if (group.getImageURL() != null) {   //如果图片的资源不为空,加载图片
+                    Image image = new Image(group.getImageURL(), 200, 200, true, true);
+                    if (!image.isError()) {
+                        groupContentController.getIvAlbumImage().setImage(image);
+                        return true;
+                    }else {
+                        return false;
                     }
                 }
+                return false;
+            }
+
+            /**获取歌单专辑图片函数
+             * @param observableList 歌单歌曲集合
+             * @return*/
+            private Image getOptimizedImage(ObservableList<GroupSong> observableList, double width, double height) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+                //面板的专辑图片是最新添加的歌曲的专辑图
+                for (int i = 0; i < observableList.size(); i++) {
+                    if (!observableList.get(i).getResourceURL().contains("http://")){   //没有包含"http字样",那就是本地歌曲了.
+                        Image imageData = ImageUtils.getAlbumImage(observableList.get(i).getResourceURL(), width, height);
+                        if (imageData != null) return imageData;
+                    }else{
+                        Image image = new Image(observableList.get(i).getImageURL(),width,height,true,true);
+                        if (!image.isError()){
+                            return image;
+                        }
+                    }
+                }
+                return null;
             }
         };
         return task;

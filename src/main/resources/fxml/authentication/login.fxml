@@ -16,7 +16,7 @@
 
 <BorderPane fx:id="shadowPane" prefHeight="440.0" prefWidth="350.0" maxHeight="440.0" maxWidth="350.0"
             stylesheets="@../../css/LoginStyle.css"
-            fx:controller="controller.authentication.LoginController"
+            fx:controller="controller.user.LoginController"
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <BorderPane fx:id="visualPane" prefHeight="430.0" prefWidth="340.0">

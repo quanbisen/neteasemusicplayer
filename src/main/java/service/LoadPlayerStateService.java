@@ -183,8 +183,6 @@ public class LoadPlayerStateService extends javafx.concurrent.Service<Void> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //启动同步歌单的服务
-//          applicationContext.getBean(SynchronizeGroupService.class).start();
         });
     }
 }

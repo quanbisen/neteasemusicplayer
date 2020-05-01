@@ -2,7 +2,7 @@ package service;
 
 import application.SpringFXMLLoader;
 import com.alibaba.fastjson.JSON;
-import controller.authentication.LoginController;
+import controller.user.LoginController;
 import controller.main.CenterController;
 import controller.main.LeftController;
 import controller.main.MainController;
@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mediaplayer.Config;
 import mediaplayer.UserStatus;
 import org.apache.http.entity.ContentType;
@@ -17,6 +18,7 @@ import org.apache.http.entity.StringEntity;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import pojo.Group;
 import pojo.User;
 import util.*;
 
@@ -26,6 +28,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @Service
 @Scope("prototype")
@@ -69,8 +72,6 @@ public class LoginService extends javafx.concurrent.Service<Void> {
 
                 }else { //否则，认证通过
                     user = JSON.parseObject(responseString,User.class);
-                    applicationContext.getBean(UserStatus.class).setUser(user); //保存User对象到applicationContext，user对象有token信息
-
                     Path imagePath = applicationContext.getBean(Config.class).getCachePath().resolve("image");
                     Files.createDirectories(imagePath);
                     File imageFile = new File(imagePath.toString() + File.separator + TimeUtils.formatDate(user.getLoginTime(),"yyyyMMddHHmmss") + user.getImageURL().substring(user.getImageURL().lastIndexOf("."))); //用用户的用户名作为图片命名
@@ -78,14 +79,18 @@ public class LoginService extends javafx.concurrent.Service<Void> {
                     user.setImageURL("file:"+imageFile.getPath());
                     //保存登录信息到本地文件
                     File loginConfigFile = applicationContext.getBean(Config.class).getUserStatusFile();
-                    loginConfigFile.delete();
-                    loginConfigFile.createNewFile();  //创建新的文件
-                    JSONObjectUtils.saveObject(user,loginConfigFile);  //调用存储的函数，写入到文件
-                    //关闭登录界面，并且开始同步歌单
+                    if (loginConfigFile.exists()){
+                        loginConfigFile.delete();
+                    }
+                    JSONObjectUtils.saveObject(user,loginConfigFile);  //调用存储的函数，将用户对象写入到文件
+                    //查询用户创建的歌单对象集合，开始同步歌单，并且关闭登录界面
+                    applicationContext.getBean(UserStatus.class).setUser(user); //保存User对象到applicationContext，user对象有token信息
+                    List<Group> groupList = JSON.parseArray(HttpClientUtils.executeGet(applicationContext.getBean(Config.class).getGroupURL() + "/query/" + user.getToken()),Group.class);  //执行查询歌单
                     Platform.runLater(()->{
-                        //加载用户创建的歌单
-                        applicationContext.getBean(SynchronizeGroupService.class).restart();
-//                        applicationContext.getBean(ScheduledQueryUserService.class).restart();    //重新启动定时任务
+                        //启动加载用户创建的歌单计划服务
+                        SynchronizeGroupService synchronizeGroupService = applicationContext.getBean(SynchronizeGroupService.class);
+                        synchronizeGroupService.setDelay(Duration.seconds(10));
+                        synchronizeGroupService.restart();
 
                         ((Stage)loginController.getPfPassword().getScene().getWindow()).close();      //关闭窗口
                         WindowUtils.releaseBorderPane(mainController.getBorderPane());  //释放中间的面板，可以接受鼠标事件和改变透明度
@@ -93,13 +98,13 @@ public class LoginService extends javafx.concurrent.Service<Void> {
                         leftController.getLabUserName().setText(applicationContext.getBean(UserStatus.class).getUser().getName());  //设置用户名称
                         WindowUtils.toastInfo(centerController.getStackPane(),new Label("登录成功"));
 
-                        //加载歌单指示器和"我喜欢的音乐"tab标签
+                        //加载歌单指示器和"我喜欢的音乐"及用户创建的歌单tab标签
                         try {
                             leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());   //歌单指示器组件
-//                            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/favorgroup-tab.fxml");    //"我喜欢的音乐"tab
-//                            leftController.getVBoxTabContainer().getChildren().add(fxmlLoader.load());
-//                            GroupTabController groupTabController = fxmlLoader.getController();
-//                            leftController.getTabList().add(groupTabController.getHBoxGroup());
+
+                            for (int i = 0; i < groupList.size(); i++) {       //遍历歌单集合，添加到UI界面上
+                                leftController.addGroupTab(groupList.get(i));
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

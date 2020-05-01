@@ -4,7 +4,6 @@ import controller.main.BottomController;
 import controller.main.CenterController;
 import controller.main.MainController;
 import javafx.animation.*;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.CacheHint;
 import javafx.scene.control.*;
@@ -40,7 +39,7 @@ public class LyricContentController {
 
     /**VBox根容器*/
     @FXML
-    private VBox vBoxAlbumLyricContainer;
+    private VBox vBoxLyricContentContainer;
 
     @FXML
     private StackPane stackPane;
@@ -53,7 +52,7 @@ public class LyricContentController {
 
     /**root 的左孩子容器*/
     @FXML
-    public BorderPane albumLyricPane;
+    public BorderPane albumPane;
 
     /**root 的中间孩子容器*/
     @FXML
@@ -173,12 +172,12 @@ public class LyricContentController {
         //设置布局的宽高度绑定
         absolutelyBind(root,stackPane);
         absolutelyBind(labBlur,stackPane);
-        absolutelyBind(stackPane,vBoxAlbumLyricContainer);
+        absolutelyBind(stackPane,vBoxLyricContentContainer);
 
         stackPane.widthProperty().addListener(((observable, oldValue, newValue) -> {
-            albumLyricPane.setPrefWidth(observable.getValue().doubleValue()/100*43);
-            albumLyricPane.setMaxWidth(observable.getValue().doubleValue()/100*43);
-            albumLyricPane.setMinWidth(observable.getValue().doubleValue()/100*43);
+            albumPane.setPrefWidth(observable.getValue().doubleValue()/100*43);
+            albumPane.setMaxWidth(observable.getValue().doubleValue()/100*43);
+            albumPane.setMinWidth(observable.getValue().doubleValue()/100*43);
             lyricPane.setPrefWidth(observable.getValue().doubleValue()/100*57);
             lyricPane.setMaxWidth(observable.getValue().doubleValue()/100*57);
             lyricPane.setMinWidth(observable.getValue().doubleValue()/100*57);
@@ -201,7 +200,7 @@ public class LyricContentController {
         rotateTransition.setByAngle(360);   //360度旋转
         rotateTransition.setCycleCount(Animation.INDEFINITE);   //无数次
 
-        loadAlbumLyric();
+        loadAlbumLyric();   //加载专辑歌词
 
         /**实现scrollPane的滚动条在不滚动一段时间后隐藏滚动条的效果　ｓｔａｒｔ
          * －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－*/

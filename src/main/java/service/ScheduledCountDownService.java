@@ -1,6 +1,6 @@
 package service;
 
-import controller.authentication.RegisterVerifyController;
+import controller.user.RegisterVerifyController;
 import javafx.application.Platform;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;

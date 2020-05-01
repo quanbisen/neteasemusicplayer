@@ -17,6 +17,7 @@ import pojo.Group;
 import pojo.Song;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,10 +36,14 @@ public final class XMLUtils {
     /**获取xml文件的根元素
      * @param xmlFile
      * @return Element*/
-    public static Element getRootElement(File xmlFile) throws DocumentException {
-        SAXReader reader = new SAXReader();
-        Document dom = reader.read(xmlFile);
-        return dom.getRootElement();
+    public static Element getRootElement(File xmlFile) {
+        try {
+            SAXReader reader = new SAXReader();
+            Document dom = reader.read(xmlFile);
+            return dom.getRootElement();
+        }catch (DocumentException e){
+            return null;
+        }
     }
 
     /**给根节点添加元素
@@ -233,10 +238,12 @@ public final class XMLUtils {
 
     public static void removeGroup(File groupsSongFile, Group group) throws DocumentException {
         Element root = getRootElement(groupsSongFile);
-        Element groupElement = getGroupElement(root.elements("Group"),group);
-        if (groupElement != null){
-            groupElement.detach();
-            saveToFile(groupsSongFile,root.getDocument());
+        if (root != null){  //如果根元素不为null
+            Element groupElement = getGroupElement(root.elements("Group"),group);
+            if (groupElement != null){
+                groupElement.detach();
+                saveToFile(groupsSongFile,root.getDocument());
+            }
         }
     }
 

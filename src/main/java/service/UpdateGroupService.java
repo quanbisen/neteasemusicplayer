@@ -3,9 +3,17 @@ package service;
 import com.alibaba.fastjson.JSON;
 import controller.content.EditGroupContentController;
 import controller.main.CenterController;
+import controller.main.LeftController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import mediaplayer.Config;
 import mediaplayer.PlayerStatus;
 import mediaplayer.UserStatus;
@@ -32,9 +40,6 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
     private Config config;
 
     @Resource
-    private PlayerStatus playerStatus;
-
-    @Resource
     private UserStatus userStatus;
 
     @Resource
@@ -42,6 +47,9 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
 
     @Resource
     private ApplicationContext applicationContext;
+
+    @Resource
+    private LeftController leftController;
 
     @Override
     protected Task<Void> createTask() {
@@ -53,7 +61,8 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
                 String description = editGroupContentController.getTaDescription().getText();
                 String userID = userStatus.getUser().getId();
                 try {
-                    Group group = editGroupContentController.getGroup();
+                    Group group = new Group();
+                    group.setId(editGroupContentController.getGroup().getId());
                     group.setName(name);
                     group.setDescription(description);
                     group.setUserID(userID);
@@ -62,10 +71,30 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
                         multipartEntityBuilder.addBinaryBody("image",editGroupContentController.getChoseImageFile());
                     }
                     String responseString = HttpClientUtils.executePost(url,multipartEntityBuilder.build());
-                    System.out.println(responseString);
                     Platform.runLater(()->{
                         WindowUtils.toastInfo(centerController.getStackPane(),new Label(responseString));
-                        applicationContext.getBean(SynchronizeGroupService.class).restart();    //启动同步歌单服务
+                        SynchronizeGroupService synchronizeGroupService = applicationContext.getBean(SynchronizeGroupService.class);
+                        synchronizeGroupService.restart();    //启动同步歌单服务
+                        EventHandler<WorkerStateEvent> workerStateEventEventHandler = new EventHandler<WorkerStateEvent>() {
+                            @Override
+                            public void handle(WorkerStateEvent event) {
+                                Integer groupID = editGroupContentController.getGroup().getId();
+                                if ( groupID != null){
+                                    HBox selectedTab = leftController.getSelectedTab();
+                                    if (selectedTab.getUserData() != null && groupID == ((Group)selectedTab.getUserData()).getId()){
+                                        System.out.println("update");
+                                        Event.fireEvent(selectedTab, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+                                                0, 0, 0, MouseButton.PRIMARY, 5, true, true, true, true,
+                                                true, true, true, true, true, true, null));
+                                    }
+                                }
+                                synchronizeGroupService.removeEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED,this);
+
+                                synchronizeGroupService.cancel();
+                            }
+                        };
+                        synchronizeGroupService.setOnSucceeded(workerStateEventEventHandler);
+
                     });
                 }catch (Exception e){e.printStackTrace();}
 

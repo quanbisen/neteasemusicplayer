@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vBoxAlbumLyricContainer" stylesheets="@../../css/AlbumLyricStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.LyricContentController">
+<VBox fx:id="vBoxLyricContentContainer" stylesheets="@../../css/AlbumLyricStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.LyricContentController">
    <children>
       <StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="876.0">
          <children>
@@ -96,7 +96,7 @@
                   </BorderPane>
                </center>
                <left>
-                  <BorderPane fx:id="albumLyricPane" prefHeight="200.0" prefWidth="380.0" BorderPane.alignment="CENTER">
+                  <BorderPane fx:id="albumPane" prefHeight="200.0" prefWidth="380.0" BorderPane.alignment="CENTER">
                      <center>
                         <VBox fx:id="vBoxAlbum" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">
                            <children>
