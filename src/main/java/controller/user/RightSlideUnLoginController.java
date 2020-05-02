@@ -96,7 +96,7 @@ public class RightSlideUnLoginController {
     public void onClickedLoginButton(ActionEvent actionEvent) throws IOException {
         //创建登录stage部分
         Stage primaryStage = (Stage) borderPaneRoot.getScene().getWindow();
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/navigate-login-register.fxml");
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/user/navigate-login-register.fxml");
         loginOrRegisterStage = StageUtils.getStage(primaryStage,fxmlLoader.load());
         StageUtils.synchronizeCenter(primaryStage,loginOrRegisterStage);   //设置createMusicGroupStage对象居中到primaryStage
         WindowUtils.blockBorderPane(mainController.getBorderPane());         //设置borderPane不响应鼠标事件和改变透明度
@@ -111,7 +111,7 @@ public class RightSlideUnLoginController {
     @FXML
     public void onClickedAbout(MouseEvent mouseEvent) throws IOException {
         if(mouseEvent.getButton() == MouseButton.PRIMARY){
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/right-about.fxml");
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/user/right-about.fxml");
             visualBorderPane = (BorderPane) borderPaneRoot.getRight();
             borderPaneRoot.setRight(fxmlLoader.load());
         }

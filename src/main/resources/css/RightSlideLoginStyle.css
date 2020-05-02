@@ -15,3 +15,13 @@
     -fx-padding: 0 0 0 2;
     -fx-effect: dropshadow(three-pass-box, #C2C2C4, 10, 0, -2, 0);
 }
+#btnEdit:pressed
+{
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+.hBoxTab:pressed
+{
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
+}

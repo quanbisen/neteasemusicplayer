@@ -59,7 +59,7 @@ public class SearchResultContentController {
 
     /**显示歌曲的表格组件*/
     @FXML
-    private TableView tableViewSong;
+    private TableView<Song> tableViewSong;
 
     /**注入搜索输入页面的控制器*/
     @Resource
@@ -73,7 +73,7 @@ public class SearchResultContentController {
     @Resource
     private BottomController bottomController;
 
-    public TableView getTableViewSong() {
+    public TableView<Song> getTableViewSong() {
         return tableViewSong;
     }
 
@@ -127,7 +127,7 @@ public class SearchResultContentController {
             if (myMediaPlayer.getPlayListSongs() == null){
                 myMediaPlayer.setPlayListSongs(FXCollections.observableArrayList());
             }
-            PlayListSong newPlaySong = SongUtils.toPlayListSong((Song) tableViewSong.getSelectionModel().getSelectedItem());
+            PlayListSong newPlaySong = SongUtils.toPlayListSong(tableViewSong.getSelectionModel().getSelectedItem());
             List<PlayListSong> playListSongs = myMediaPlayer.getPlayListSongs();
             if (playListSongs.size() == 0){
                 playListSongs.add(newPlaySong);

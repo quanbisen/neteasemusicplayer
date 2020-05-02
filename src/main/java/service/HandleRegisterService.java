@@ -61,7 +61,7 @@ public class HandleRegisterService extends javafx.concurrent.Service<Void> {
                         applicationContext.getBean(UserStatus.class).setRegisterResponse(null); //清空注册临时对象
                         registerVerifyController.getTimeSchedule().cancel();    //取消倒计时服务
                         try {
-                            registerInputController.getVisualPane().setBottom(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-success.fxml").load());
+                            registerInputController.getVisualPane().setBottom(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/user/register-success.fxml").load());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import model.PlayListSong;
@@ -25,6 +26,7 @@ import util.*;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -128,9 +130,20 @@ public class MyMediaPlayer extends PlayerStatus implements IMediaPlayer {
         String resource = playListSongs.get(currentPlayIndex).getResource();
         if (resource.contains("http:")){    //如果是在线资源，加载专辑图，并设置显示
             mediaPlayer = new MediaPlayer(new Media(resource)); //创建在线资源的媒体播放器对象
-        }else {
-            mediaPlayer = new MediaPlayer(new Media(new File(resource).toURI().toString()));  //创建本地资源的媒体播放器对象
+            mediaPlayer.setOnError(()->{
+                WindowUtils.toastInfo(mainController.getStackPane(),new Label("资源获取失败"));
+                pause();
+            });
+        }else { //本地文件资源
+            File mediaFile = new File(resource);
+            if (!mediaFile.exists()){       //文件不存在,播放失败
+                WindowUtils.toastInfo(mainController.getStackPane(),new Label("播放失败"));
+                pause();
+            }else {
+                mediaPlayer = new MediaPlayer(new Media(mediaFile.toURI().toString()));  //创建本地资源的媒体播放器对象
+            }
         }
+
         mediaPlayer.volumeProperty().bind(bottomController.getSliderVolume().valueProperty());  //设置媒体播放器的音量绑定音量条组件的音量
         mediaPlayer.setMute(isMute());
         mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
@@ -326,7 +339,7 @@ public class MyMediaPlayer extends PlayerStatus implements IMediaPlayer {
      * @param tableItems 需要播放的表格集合*/
     @Override
     public void playAll(List tableItems) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
-        this.initializePlayList(tableItems);
+        initializePlayList(tableItems);
         if (playMode == PlayMode.SHUFFLE){   //如果当前播放模式为"随机播放"
             //生成一个随机数，执行播放
             int randomIndex=new Random().nextInt(playListSongs.size());
@@ -343,9 +356,9 @@ public class MyMediaPlayer extends PlayerStatus implements IMediaPlayer {
      * @param index 播放索引*/
     @Override
     public void playAll(List tableItems,int index) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
-        this.initializePlayList(tableItems);
+        initializePlayList(tableItems);
         currentPlayIndex = index;
-        this.playSong();      //播放当前的索引歌曲
+        playSong();      //播放当前的索引歌曲
     }
 
     @Override
@@ -620,7 +633,9 @@ public class MyMediaPlayer extends PlayerStatus implements IMediaPlayer {
      */
     @Override
     public void pause() {
-        mediaPlayer.pause();
+        if (mediaPlayer != null){
+            mediaPlayer.pause();
+        }
         bottomController.getLabPlay().setGraphic(ImageUtils.createImageView("image/NeteasePause.png", 32, 32));  //"播放、暂停"按钮图片
         if (lyricContentController.isShow() && lyricContentController.getRotateTransition().getStatus() != Animation.Status.PAUSED){
             lyricContentController.getRotateTransition().pause();

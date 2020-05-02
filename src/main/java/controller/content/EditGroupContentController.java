@@ -104,7 +104,6 @@ public class EditGroupContentController {
             ivAlbum.setImage(new Image("/image/DefaultAlbumImage_200.png",210,210,true,true));
         }
 
-
         btnSave.setOpacity(0.8);
         btnSave.setMouseTransparent(true);
 
@@ -135,7 +134,7 @@ public class EditGroupContentController {
 
     /**专辑封面的事件处理*/
     @FXML
-    public synchronized void onClickedAlbumImage(MouseEvent mouseEvent) {
+    public void onClickedAlbumImage(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(
@@ -163,13 +162,9 @@ public class EditGroupContentController {
     @FXML
     public void onClickedCancel(ActionEvent actionEvent) {
         leftController.setSelectedTab(leftController.getSelectedTab());
-        fireEvent(leftController.getSelectedTab());
-    }
-
-    private void fireEvent(Node node){
-        Event.fireEvent(node, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+        Event.fireEvent(leftController.getSelectedTab(), new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
                 0, 0, 0, MouseButton.PRIMARY, 5, true, true, true, true,
-                true, true, true, true, true, true, null));
+                true, true, true, true, true, true, null));     //fire选中的tab的鼠标事件
     }
 
     /**“保存”按钮的事件处理*/

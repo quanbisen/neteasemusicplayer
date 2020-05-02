@@ -4,6 +4,7 @@ import controller.content.LocalMusicContentController;
 import controller.main.MainController;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -126,8 +127,10 @@ public class ChoseFolderController {
         for(String pathValue:selectedPaths){  //遍历逐个目录路径保存
             XMLUtils.addOneRecord(choseFolderConfigFile,"Folder","path",pathValue);
         }
-        labCloseIcon.getScene().getWindow().hide();      //关闭窗口
-        WindowUtils.releaseBorderPane(mainController.getBorderPane());
+
+        onClickedCloseIcon(new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+                true, true, true, true, true, true, null)); //关闭窗口
 
         if (!ListUtils.checkWeatherSame(selectedPaths,folderPathList)){   //如果不一样，证明更改了目录，重新加载目录下的歌曲文件
             System.out.println("need to load song");

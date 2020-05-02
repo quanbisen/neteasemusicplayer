@@ -10,30 +10,28 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPaneRoot" prefHeight="475.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            stylesheets="@../../css/RightSlideLoginedStyle.css"
-            fx:controller="controller.user.RightSlideLoginController">
+<BorderPane fx:id="borderPaneRoot" prefHeight="475.0" prefWidth="766.0" stylesheets="@../../css/RightSlideLoginStyle.css" xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.RightSlideLoginController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
    <right>
       <BorderPane prefHeight="400.0" prefWidth="310.0" styleClass="mainContainer" BorderPane.alignment="CENTER">
          <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="281.0" spacing="208.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="281.0" spacing="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="账号">
+                  <Label text="账号" textFill="#333333">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="32.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #B8B9BF; -fx-padding: 0;" text="编辑" />
+                  <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#onClickedBtnEdit" prefHeight="18.0" prefWidth="40.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #B8B9BF; -fx-padding: 0;" text="编辑" textFill="#333333" />
                </children>
             </HBox>
          </top>
          <center>
             <VBox prefHeight="391.0" prefWidth="310.0" style="-fx-border-width: 1 0 1 0; -fx-border-color: #DDDEE1;" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="15.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="15.0" styleClass="hBoxTab">
                      <children>
                         <Label fx:id="labUserImage">
                            <graphic>
@@ -47,10 +45,10 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </Label>
-                        <Label fx:id="labUserName" text="quanbisen" ></Label>
+                        <Label fx:id="labUserName" text="quanbisen" />
                      </children>
                   </HBox>
-                  <HBox onMouseClicked="#onClickedAbout" prefHeight="70.0" prefWidth="310.0" spacing="10.0" style="-fx-border-color: #DDDEE1; -fx-border-width: 1 0 1 0;">
+                  <HBox onMouseClicked="#onClickedAbout" prefHeight="70.0" prefWidth="310.0" spacing="10.0" style="-fx-border-color: #DDDEE1; -fx-border-width: 1 0 1 0;" styleClass="hBoxTab">
                      <children>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -75,7 +73,7 @@
             </VBox>
          </center>
          <bottom>
-            <HBox fx:id="hBoxLogout" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER" onMouseClicked="#onClickedLogout">
+            <HBox fx:id="hBoxLogout" alignment="CENTER_LEFT" onMouseClicked="#onClickedLogout" prefHeight="70.0" prefWidth="200.0" spacing="10.0" styleClass="hBoxTab" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>

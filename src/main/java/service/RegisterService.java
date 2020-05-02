@@ -54,7 +54,7 @@ public class RegisterService extends javafx.concurrent.Service<Void> {
                     if (registerResponse.getMessage().equals("验证码发送成功")){
                         Platform.runLater(()->{
                             try {
-                                registerInputController.getVisualPane().setBottom(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-verify.fxml").load());
+                                registerInputController.getVisualPane().setBottom(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/user/register-verify.fxml").load());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

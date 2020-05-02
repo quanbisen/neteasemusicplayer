@@ -1,0 +1,157 @@
+.combo-box,.date-picker{
+    -fx-background-color: WHITE;
+    -fx-font-family: "Microsoft YaHei";
+    -fx-border-insets: 0 0;
+    -fx-padding: 0;
+    -fx-border-width: 1;
+    -fx-border-color: #C9C9CA;
+    -fx-min-height: 26;
+    -fx-max-height: 26;
+    -fx-pref-height: 26;
+}
+.combo-box .list-cell {
+    -fx-background-color: WHITE;
+    -fx-text-fill: BLACK;
+    -fx-padding: 3 0 2 3;
+    -fx-border-insets: 0 0 0 0;
+    -fx-alignment: center;
+    /*-fx-border-color: RED;*/
+}
+.combo-box .list-cell:hover {
+    -fx-background-color: #E6E6E6;
+}
+.combo-box .list-cell:selected{
+    /*-fx-background-color: RED;*/
+}
+.combo-box-base > .arrow-button {
+    /*-fx-padding: 0;*/
+}
+
+.date-picker .arrow-button{
+    -fx-background-color: WHITE;
+}
+
+.date-picker-popup {
+    /*-fx-background-color: WHITE;*/
+}
+
+/*切换月/年的左右按钮形状的样式*/
+.date-picker-popup > * > .spinner > .button > .left-arrow,.date-picker-popup > * > .spinner > .button > .right-arrow {
+    -fx-background-color: #636368;
+}
+.date-picker-popup > .month-year-pane {
+    -fx-background-color: derive(-fx-box-border,30%), linear-gradient(to bottom, derive(#FFFFFF,-3%), derive(#FFFFFF,5%) 50%, derive(#FFFFFF,-3%));
+}
+.date-picker-popup > * > .spinner > .button:focused{
+    -fx-background-color: #C9C9CA, -fx-inner-border, -fx-body-color, transparent, -fx-body-color;
+}
+.date-picker-popup > * > .today:hover,
+.date-picker-popup > * > .today.selected {
+    -fx-background-color: #E6E6E6, derive(-fx-selection-bar-non-focused, -20%),#E6E6E6;
+}
+.date-picker-popup > * > .day-cell:hover,
+.date-picker-popup > * > .selected,
+.date-picker-popup > * > .previous-month.selected,
+.date-picker-popup > * > .next-month.selected {
+    -fx-background: #E0E0E0;
+}
+.date-picker-popup > * > .today {
+    -fx-background-color: #E0E0E0, derive(-fx-selection-bar-non-focused, -20%), -fx-control-inner-background;
+}
+.date-picker-popup > * > .previous-month.today:hover,
+.date-picker-popup > * > .next-month.today:hover {
+    -fx-background-color: -fx-selection-bar-non-focused, derive(-fx-selection-bar-non-focused, -20%), -fx-selection-bar-non-focused;
+}
+.date-picker-popup > * > .selected{
+    -fx-background-color: #E0E0E0;
+}
+
+
+
+/*EditGroupContentStyle.css file*/
+.label{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+}
+#btnSave{
+    -fx-pref-height: 30;
+    -fx-pref-width: 90;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 14;
+    -fx-background-color: #BC2F2D;
+    -fx-border-color: #BC2F2D;
+    -fx-text-fill: WHITE;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+#btnCancel
+{
+    -fx-pref-height: 30;
+    -fx-pref-width: 90;
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 14;
+    -fx-background-color: WHITE;
+    -fx-text-fill: #BC2F2D;
+    -fx-border-color: #BC2F2D;
+    -fx-border-width: 1;
+}
+#btnSave:hover,#btnCancel:hover
+{
+    -fx-opacity: 0.8;
+}
+.text-field,.text-area
+{
+    -fx-font-family: "Microsoft YaHei","SimSun";
+    -fx-font-size: 14;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E4E4E7;
+
+}
+.text-area .content
+{
+    -fx-background-color: #FFFFFF;
+}
+.text-area .scroll-bar:vertical:disabled {
+    -fx-opacity: 0;
+}
+.scroll-bar:vertical
+{
+    -fx-pref-width: 4;
+    -fx-background-color: transparent;
+}
+.scroll-bar:vertical .thumb
+{
+    -fx-background-color: #C8C9CC;
+    -fx-background-insets: 0;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:vertical .thumb:hover
+{
+    -fx-background-color: #ADAFB2;
+}
+.scroll-bar:vertical .track
+{
+    -fx-background-color:#FFFFFF;
+    -fx-background-insets: 1 0 3 0;
+}
+
+/*关闭按钮:垂直和水平的按钮*/
+.scroll-bar .increment-arrow
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .decrement-arrow
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .increment-button
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}
+.scroll-bar .decrement-button
+{
+    visibility: hidden;
+    -fx-padding: 0.0em 0.0em 0.0em 0.0em; /* 0 0 0 0 */
+}

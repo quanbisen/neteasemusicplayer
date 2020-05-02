@@ -184,20 +184,16 @@ public class LeftController {
     public void onClickedHBoxUserInfo(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             if (centerController.getStackPane().getChildren().size()==1){
+                FXMLLoader fxmlLoader;
                 if (applicationContext.getBean(UserStatus.class).getUser() == null){  //如果登录配置文件不存在，则没有登录
-                    FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/right-slide-unlogin.fxml");
-                    BorderPane borderPaneRoot = fxmlLoader.load();
-
-                    StackPane stackPane = centerController.getStackPane();
-                    stackPane.getChildren().add(borderPaneRoot);  //添加进stackPane
+                    fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/user/right-slide-unlogin.fxml");
                 }
                 else {  //如果登录对象存在，则已经登录过了。
-                    FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/right-slide-login.fxml");
-                    BorderPane borderPaneRoot = fxmlLoader.load();
-
-                    StackPane stackPane = centerController.getStackPane();
-                    stackPane.getChildren().add(borderPaneRoot);  //添加进stackPane
+                    fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/user/right-slide-login.fxml");
                 }
+                BorderPane borderPaneRoot = fxmlLoader.load();
+                StackPane stackPane = centerController.getStackPane();
+                stackPane.getChildren().add(borderPaneRoot);  //添加进stackPane
             }
         }
     }

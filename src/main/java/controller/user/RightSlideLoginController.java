@@ -2,8 +2,12 @@ package controller.user;
 
 import application.SpringFXMLLoader;
 import controller.main.CenterController;
+import controller.main.LeftController;
 import controller.main.MainController;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -13,10 +17,12 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mediaplayer.UserStatus;
+import org.springframework.context.ApplicationContext;
 import pojo.User;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -55,16 +61,19 @@ public class RightSlideLoginController {
 
     /**注入窗体根容器（BorderPane）的中间容器的控制器*/
     @Resource
-    CenterController centerController;
+    private CenterController centerController;
 
     /**注入Spring上下文工具类*/
     @Resource
-    private ConfigurableApplicationContext applicationContext;
-
+    private ApplicationContext applicationContext;
 
     /**注入窗体根容器（BorderPane）的控制类*/
     @Resource
-    MainController mainController;
+    private MainController mainController;
+
+    /**注入左侧的控制器*/
+    @Resource
+    private LeftController leftController;
 
     public BorderPane getBorderPaneRoot() {
         return borderPaneRoot;
@@ -74,8 +83,7 @@ public class RightSlideLoginController {
         return visualBorderPane;
     }
 
-
-    public void initialize() throws IOException {
+    public void initialize() {
         //宽高绑定
         borderPaneRoot.prefHeightProperty().bind(centerController.getBorderPane().heightProperty());
         borderPaneRoot.prefWidthProperty().bind(centerController.getBorderPane().widthProperty());
@@ -85,14 +93,18 @@ public class RightSlideLoginController {
         translateTransition.setToX(0);
         translateTransition.play();
         translateTransition.setOnFinished(event -> {
-            borderPaneRoot.getCenter().setOnMouseClicked(event1 -> {
-                TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.2),borderPaneRoot);
-                borderPaneRoot.setTranslateX(0);
-                translateTransitionOut.setToX(310);
-                translateTransitionOut.play();
-                translateTransitionOut.setOnFinished(event2 -> {
-                    centerController.getStackPane().getChildren().remove(1,centerController.getStackPane().getChildren().size());
-                });
+            borderPaneRoot.getCenter().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    TranslateTransition translateTransitionOut = new TranslateTransition(Duration.seconds(0.2),borderPaneRoot);
+                    borderPaneRoot.setTranslateX(0);
+                    translateTransitionOut.setToX(310);
+                    translateTransitionOut.play();
+                    translateTransitionOut.setOnFinished(event2 -> {
+                        centerController.getStackPane().getChildren().remove(1,centerController.getStackPane().getChildren().size());
+                    });
+                    borderPaneRoot.getCenter().removeEventHandler(MouseEvent.MOUSE_CLICKED,this);
+                }
             });
         });
 
@@ -110,7 +122,7 @@ public class RightSlideLoginController {
     @FXML
     public void onClickedAbout(MouseEvent mouseEvent) throws IOException {
         if(mouseEvent.getButton() == MouseButton.PRIMARY){
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/right-about.fxml");
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/user/right-about.fxml");
             visualBorderPane = (BorderPane) borderPaneRoot.getRight();
             borderPaneRoot.setRight(fxmlLoader.load());
         }
@@ -127,5 +139,16 @@ public class RightSlideLoginController {
             WindowUtils.blockBorderPane(mainController.getBorderPane());
             dialogStage.showAndWait();  //显示对话框
         }
+    }
+
+    /**“编辑”按钮的事件处理*/
+    @FXML
+    public void onClickedBtnEdit(ActionEvent actionEvent) throws IOException {
+        Event.fireEvent(borderPaneRoot.getCenter(),new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+                true, true, true, true, true, true, null)); //fire单击中间容器的事件，关闭右滑出来的页面
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/content/edit-user-content.fxml");
+        leftController.resetSelectedTab();
+        centerController.getBorderPane().setCenter(fxmlLoader.load());
     }
 }

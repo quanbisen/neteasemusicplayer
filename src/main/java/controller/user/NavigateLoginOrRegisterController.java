@@ -67,7 +67,7 @@ public class NavigateLoginOrRegisterController {
     public void onClickedLoginButton(ActionEvent actionEvent) throws IOException {
 
         Scene loginScene = btnLogin.getScene();
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/login.fxml");
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/user/login.fxml");
         loginScene.setRoot(fxmlLoader.load());
     }
 
@@ -76,7 +76,7 @@ public class NavigateLoginOrRegisterController {
     public void onClickedRegisterButton(ActionEvent actionEvent) throws IOException {
 
         Scene registerScene = btnRegister.getScene();
-        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-input.fxml");
+        FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/user/register-input.fxml");
         registerScene.setRoot(fxmlLoader.load());
     }
 }

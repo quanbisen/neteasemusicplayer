@@ -31,7 +31,7 @@ public class RegisterSuccessController {
     public void onClickedJumpToLogin(MouseEvent mouseEvent) throws IOException {
         if (mouseEvent.getButton() == MouseButton.PRIMARY){
             Scene scene = btnJumpToLogin.getScene();
-            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/login.fxml");
+            FXMLLoader fxmlLoader = applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/user/login.fxml");
             scene.setRoot(fxmlLoader.load());
         }
     }
