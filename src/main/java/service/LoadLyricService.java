@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import mediaplayer.Config;
 import mediaplayer.MyMediaPlayer;
 import model.PlayListSong;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.springframework.context.annotation.Scope;
@@ -74,8 +75,8 @@ public class LoadLyricService extends javafx.concurrent.Service<Void> {
                             lyricFile = new File(lyricPath + File.separator + playListSong.getName() + " - " + playListSong.getSinger() + lyricURL.substring(lyricURL.lastIndexOf(".")));
                             HttpClientUtils.download(lyricURL,lyricFile);   //下载歌词文件
                         }
-                    }catch (Exception e){
-                        e.printStackTrace();
+                    }catch (HttpHostConnectException e){
+                        System.out.println("加载歌词无网络导致异常");
                         return null;
                     }
                 }

@@ -5,6 +5,8 @@ import controller.main.CenterController;
 import controller.main.LeftController;
 import controller.main.MainController;
 import javafx.animation.TranslateTransition;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -31,6 +33,7 @@ import util.StageUtils;
 import util.WindowUtils;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -44,9 +47,9 @@ public class RightSlideLoginController {
     @FXML
     private BorderPane borderPaneRoot;
 
-    /**显示用户头像的Label组件*/
+    /**显示用户头像的ImageView组件*/
     @FXML
-    private Label labUserImage;
+    private ImageView ivUserImage;
 
     /**显示用户名称的Label组件*/
     @FXML
@@ -74,6 +77,9 @@ public class RightSlideLoginController {
     /**注入左侧的控制器*/
     @Resource
     private LeftController leftController;
+
+    @Resource
+    private UserStatus userStatus;
 
     public BorderPane getBorderPaneRoot() {
         return borderPaneRoot;
@@ -110,10 +116,32 @@ public class RightSlideLoginController {
 
         //设置登录用户的UI组件显示
         Circle circle = new Circle(20,20,20);
-        User user = applicationContext.getBean(UserStatus.class).getUser();
-        ImageView userImage = ImageUtils.createImageView(new Image(user.getImageURL()),40,40);
-        userImage.setClip(circle);   //设置圆形图片
-        labUserImage.setGraphic(userImage);
+        User user = userStatus.getUser();
+        if (user.getLocalImagePath() != null && new File(user.getLocalImagePath().substring(5)).exists()){  //如果本地存储的头像文件存在
+            ivUserImage.setImage(new Image(user.getLocalImagePath(),40,40,true,true));
+        }else {
+            ivUserImage.setImage(new Image("image/UserDefaultImage.png",40,40,true,true));
+        }
+        new Service<Void>() {   //创建加载在线图片的后台服务
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        if (user.getImageURL() != null){
+                            Image image = new Image(user.getImageURL(),40,40,true,true);
+                            if (!image.isError()){
+                                ivUserImage.setImage(image);
+                            }else {
+                                ivUserImage.setImage(new Image("image/UserDefaultImage.png",40,40,true,true));
+                            }
+                        }
+                        return null;
+                    }
+                };
+            }
+        }.start();
+        ivUserImage.setClip(circle);   //设置圆形图片
         labUserName.setText(user.getName());
 
     }

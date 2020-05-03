@@ -4,15 +4,19 @@ import com.alibaba.fastjson.JSON;
 import controller.main.LeftController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.util.Duration;
+import lombok.SneakyThrows;
 import mediaplayer.Config;
 import mediaplayer.UserStatus;
-import org.dom4j.DocumentException;
+import org.apache.http.conn.HttpHostConnectException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import pojo.Group;
 import pojo.User;
 import util.HttpClientUtils;
+
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -29,6 +33,11 @@ public class SynchronizeGroupService extends javafx.concurrent.ScheduledService<
 
     @Resource
     private LeftController leftController;
+
+    public SynchronizeGroupService(){
+        setPeriod(Duration.seconds(15));
+        setDelay(Duration.seconds(5));
+    }
 
     @Override
     protected Task<Void> createTask() {
@@ -49,24 +58,24 @@ public class SynchronizeGroupService extends javafx.concurrent.ScheduledService<
 
             @Override
             protected Void call() throws Exception {
-                System.out.println("schedule");
                 User user = applicationContext.getBean(UserStatus.class).getUser();
                 if (user != null){  //用户存在
                     try {
+                        System.out.println("schedule synchronize group service start...");
                         String url = applicationContext.getBean(Config.class).getGroupURL() + "/query/" + user.getToken();
                         String responseString = HttpClientUtils.executeGet(url);    //执行查询歌单
                         List<Group> groupList = JSON.parseArray(responseString,Group.class);
                         if (groupList != null && groupList.size() > 0){
-                            Platform.runLater(()->{
-                                try {
+                            Platform.runLater(new Runnable() {
+                                @SneakyThrows
+                                @Override
+                                public void run() {
                                     leftController.updateGroup(groupList);  //调用更新歌单分组函数
-                                } catch (DocumentException e) {
-                                    e.printStackTrace();
                                 }
                             });
                         }
-                    }catch (Exception e){
-                        e.printStackTrace();
+                    }catch (HttpHostConnectException e){
+                        System.out.println("同步歌单服务无网络导致失败");
                     }
                 }else { //否则,取消定时任务
                     this.cancel();

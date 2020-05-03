@@ -76,7 +76,7 @@
                      <children>
                         <Label maxWidth="39.0" prefHeight="18.0" prefWidth="39.0" style="-fx-font-size: 13; -fx-text-fill: #666666;" text="昵称：" />
                         <TextField fx:id="tfPetName" minHeight="42.0" prefHeight="42.0" prefWidth="218.0" GridPane.columnIndex="1" />
-                        <Label fx:id="labTips" style="-fx-alignment: center; -fx-text-fill: #BC2F2C;" text="呢称不能为空" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="labTips" style="-fx-alignment: center; -fx-text-fill: #BC2F2C;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label prefHeight="206.0" prefWidth="39.0" style="-fx-font-size: 13; -fx-text-fill: #666666; -fx-alignment: top-left;" text="介绍：" GridPane.rowIndex="2" />
                         <TextArea fx:id="taDescription" prefHeight="68.0" prefWidth="258.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label prefHeight="206.0" prefWidth="39.0" style="-fx-font-size: 13; -fx-text-fill: #666666;" text="性别：" GridPane.rowIndex="3" />
@@ -94,45 +94,11 @@
                         <Label prefHeight="206.0" prefWidth="39.0" style="-fx-font-size: 13; -fx-text-fill: #666666;" text="省市：" GridPane.rowIndex="5" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
-                              <ComboBox fx:id="cbProvince" prefWidth="100.0" value="北京">
+                              <ComboBox fx:id="cbProvince" prefWidth="100.0" value="">
                                  <items>
-                                    <FXCollections fx:factory="observableArrayList">
-                                       <String fx:value="北京" />
-                                       <String fx:value="天津" />
-                                       <String fx:value="上海" />
-                                       <String fx:value="重庆" />
-                                       <String fx:value="河北" />
-                                       <String fx:value="山西" />
-                                       <String fx:value="辽宁" />
-                                       <String fx:value="吉林" />
-                                       <String fx:value="黑龙江" />
-                                       <String fx:value="江苏" />
-                                       <String fx:value="浙江" />
-                                       <String fx:value="安徽" />
-                                       <String fx:value="福建" />
-                                       <String fx:value="江西" />
-                                       <String fx:value="山东" />
-                                       <String fx:value="河南" />
-                                       <String fx:value="湖北" />
-                                       <String fx:value="湖南" />
-                                       <String fx:value="广东" />
-                                       <String fx:value="海南" />
-                                       <String fx:value="四川" />
-                                       <String fx:value="贵州" />
-                                       <String fx:value="云南" />
-                                       <String fx:value="陕西" />
-                                       <String fx:value="甘肃" />
-                                       <String fx:value="青海" />
-                                       <String fx:value="台湾" />
-                                       <String fx:value="广西" />
-                                       <String fx:value="内蒙古" />
-                                       <String fx:value="西藏" />
-                                       <String fx:value="宁夏" />
-                                       <String fx:value="新疆" />
-                                    </FXCollections>
                                  </items>
                               </ComboBox>
-                              <ComboBox fx:id="cbCity" prefWidth="100.0" />
+                              <ComboBox fx:id="cbCity" prefWidth="100.0" value=""/>
                            </children>
                         </HBox>
                      </children>

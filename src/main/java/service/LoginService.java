@@ -76,7 +76,7 @@ public class LoginService extends javafx.concurrent.Service<Void> {
                     Files.createDirectories(imagePath);
                     File imageFile = new File(imagePath.toString() + File.separator + TimeUtils.formatDate(user.getLoginTime(),"yyyyMMddHHmmss") + user.getImageURL().substring(user.getImageURL().lastIndexOf("."))); //用用户的用户名作为图片命名
                     HttpClientUtils.download(user.getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
-                    user.setImageURL("file:"+imageFile.getPath());
+                    user.setLocalImagePath("file:"+imageFile.getPath());
                     //保存登录信息到本地文件
                     File loginConfigFile = applicationContext.getBean(Config.class).getUserStatusFile();
                     if (loginConfigFile.exists()){
@@ -89,7 +89,7 @@ public class LoginService extends javafx.concurrent.Service<Void> {
                     Platform.runLater(()->{
                         //启动加载用户创建的歌单计划服务
                         SynchronizeGroupService synchronizeGroupService = applicationContext.getBean(SynchronizeGroupService.class);
-                        synchronizeGroupService.setDelay(Duration.seconds(10));
+                        synchronizeGroupService.setDelay(Duration.seconds(15));
                         synchronizeGroupService.restart();
 
                         ((Stage)loginController.getPfPassword().getScene().getWindow()).close();      //关闭窗口

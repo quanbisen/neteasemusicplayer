@@ -83,9 +83,10 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
                                     HBox selectedTab = leftController.getSelectedTab();
                                     if (selectedTab.getUserData() != null && groupID == ((Group)selectedTab.getUserData()).getId()){
                                         System.out.println("update");
-                                        Event.fireEvent(selectedTab, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
-                                                0, 0, 0, MouseButton.PRIMARY, 5, true, true, true, true,
-                                                true, true, true, true, true, true, null));
+                                        /**annotation for test weather need it.*/
+//                                        Event.fireEvent(selectedTab, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+//                                                0, 0, 0, MouseButton.PRIMARY, 5, true, true, true, true,
+//                                                true, true, true, true, true, true, null));
                                     }
                                 }
                                 synchronizeGroupService.removeEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED,this);

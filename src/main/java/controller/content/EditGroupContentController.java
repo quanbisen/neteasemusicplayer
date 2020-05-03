@@ -5,7 +5,6 @@ import controller.main.MainController;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -110,6 +109,8 @@ public class EditGroupContentController {
         tfGroupName.textProperty().addListener(((observable, oldValue, newValue) -> {
             if (observable.getValue().trim().equals("")){
                 labTips.setText("歌单名不能为空");
+                btnSave.setOpacity(0.8);
+                btnSave.setMouseTransparent(true);
             }else if (!observable.getValue().equals(group.getName())){
                 btnSave.setMouseTransparent(false);
                 btnSave.setOpacity(1);

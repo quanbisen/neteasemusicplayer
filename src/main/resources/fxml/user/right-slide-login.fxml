@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPaneRoot" prefHeight="475.0" prefWidth="766.0" stylesheets="@../../css/RightSlideLoginStyle.css" xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.RightSlideLoginController">
+<BorderPane fx:id="borderPaneRoot" prefHeight="475.0" prefWidth="766.0" stylesheets="@../../css/RightSlideLoginStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.RightSlideLoginController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
@@ -33,18 +33,14 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="200.0" spacing="15.0" styleClass="hBoxTab">
                      <children>
-                        <Label fx:id="labUserImage">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../image/UserDefaultImage.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
+                        <ImageView fx:id="ivUserImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/UserDefaultImage.png" requestedWidth="40" requestedHeight="40"/>
+                           </image>
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
-                        </Label>
+                        </ImageView>
                         <Label fx:id="labUserName" text="quanbisen" />
                      </children>
                   </HBox>

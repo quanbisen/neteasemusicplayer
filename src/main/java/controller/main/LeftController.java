@@ -287,10 +287,6 @@ public class LeftController {
     /**传入歌单集合对象,更新歌单分组的UI及数据
      * @param groupList 歌单对象集合*/
     public void updateGroup(List<Group> groupList) throws DocumentException {
-        System.out.println(groupList);
-        tabList.forEach(hBox -> {
-            System.out.println(hBox.getUserData());
-        });
         for (int i = 0; i < groupList.size(); i++) {
             Group group = getGroupTabData(groupList.get(i).getId());
             if (group != null){    //如果当前存在歌单名称,还需判断里面的信息是否改变

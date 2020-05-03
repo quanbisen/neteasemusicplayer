@@ -55,7 +55,7 @@ public class HttpClientUtils {
         }
         HttpGet httpGet = new HttpGet(url);
         CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
-        System.out.println(httpResponse.getStatusLine());
+        System.out.println("下载文件状态返回：" + httpResponse.getStatusLine());
         InputStream inputStream = httpResponse.getEntity().getContent();
         byte[] bytes = readInputStream(inputStream);
         FileOutputStream fileOutputStream = new FileOutputStream(file);
