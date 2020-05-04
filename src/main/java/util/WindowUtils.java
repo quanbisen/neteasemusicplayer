@@ -295,6 +295,7 @@ public final class WindowUtils {
                 "    -fx-background-color: #353535;\n" +
                 "    -fx-pref-width: 280;\n" +
                 "    -fx-pref-height: 50;\n" +
+                "    -fx-font-family: \"Microsoft YaHei\",\"SimSun\";\n" +
                 "    -fx-background-radius: 1em;");
 
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), labFading);

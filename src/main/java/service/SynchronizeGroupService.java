@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import pojo.Group;
 import pojo.User;
 import util.HttpClientUtils;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -85,6 +83,5 @@ public class SynchronizeGroupService extends javafx.concurrent.ScheduledService<
         };
         return task;
     }
-
 
 }

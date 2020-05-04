@@ -126,11 +126,6 @@ public class EditUserContentController {
         blockSaveButton();  //初始化保存按钮不可点击
 
         User user = userStatus.getUser();
-        if (user.getLocalImagePath() != null && new File(user.getLocalImagePath().substring(5)).exists()){
-            ivImage.setImage(new Image(user.getLocalImagePath(),210,210,true,true));
-        }else {
-            ivImage.setImage(new Image("image/DefaultAlbumImage_200.png",210,210,true,true));
-        }
         new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -141,6 +136,8 @@ public class EditUserContentController {
                             Image image = new Image(user.getImageURL(),210,210,true,true);
                             if (!image.isError()){
                                 ivImage.setImage(image);
+                            }else if (user.getLocalImagePath() != null && new File(user.getLocalImagePath().substring(5)).exists()){
+                                ivImage.setImage(new Image(user.getLocalImagePath(),210,210,true,true));
                             }else {
                                 ivImage.setImage(new Image("image/DefaultAlbumImage_200.png",210,210,true,true));
                             }

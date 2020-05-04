@@ -21,13 +21,9 @@ import org.springframework.stereotype.Service;
 import pojo.Group;
 import pojo.User;
 import util.*;
-
 import javax.annotation.Resource;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 @Service
@@ -72,25 +68,13 @@ public class LoginService extends javafx.concurrent.Service<Void> {
 
                 }else { //否则，认证通过
                     user = JSON.parseObject(responseString,User.class);
-                    Path imagePath = applicationContext.getBean(Config.class).getCachePath().resolve("image");
-                    Files.createDirectories(imagePath);
-                    File imageFile = new File(imagePath.toString() + File.separator + TimeUtils.formatDate(user.getLoginTime(),"yyyyMMddHHmmss") + user.getImageURL().substring(user.getImageURL().lastIndexOf("."))); //用用户的用户名作为图片命名
-                    HttpClientUtils.download(user.getImageURL(),imageFile);  //下载用户的头像文件，保存供下次打开播放器使用
-                    user.setLocalImagePath("file:"+imageFile.getPath());
-                    //保存登录信息到本地文件
-                    File loginConfigFile = applicationContext.getBean(Config.class).getUserStatusFile();
-                    if (loginConfigFile.exists()){
-                        loginConfigFile.delete();
-                    }
-                    JSONObjectUtils.saveObject(user,loginConfigFile);  //调用存储的函数，将用户对象写入到文件
+                    LocalPersistenceUtils.saveUserStatus(applicationContext.getBean(Config.class),user);  //使用本地持久化工具保存用户对象
                     //查询用户创建的歌单对象集合，开始同步歌单，并且关闭登录界面
                     applicationContext.getBean(UserStatus.class).setUser(user); //保存User对象到applicationContext，user对象有token信息
                     List<Group> groupList = JSON.parseArray(HttpClientUtils.executeGet(applicationContext.getBean(Config.class).getGroupURL() + "/query/" + user.getToken()),Group.class);  //执行查询歌单
                     Platform.runLater(()->{
                         //启动加载用户创建的歌单计划服务
-                        SynchronizeGroupService synchronizeGroupService = applicationContext.getBean(SynchronizeGroupService.class);
-                        synchronizeGroupService.setDelay(Duration.seconds(15));
-                        synchronizeGroupService.restart();
+                        applicationContext.getBean(SynchronizeGroupService.class).restart();
 
                         ((Stage)loginController.getPfPassword().getScene().getWindow()).close();      //关闭窗口
                         WindowUtils.releaseBorderPane(mainController.getBorderPane());  //释放中间的面板，可以接受鼠标事件和改变透明度

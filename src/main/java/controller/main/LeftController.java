@@ -1,10 +1,13 @@
 package controller.main;
 
 import controller.component.GroupTabController;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -17,8 +20,10 @@ import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
 import pojo.Group;
 import pojo.User;
+import util.ImageUtils;
 import util.XMLUtils;
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -194,6 +199,55 @@ public class LeftController {
                 BorderPane borderPaneRoot = fxmlLoader.load();
                 StackPane stackPane = centerController.getStackPane();
                 stackPane.getChildren().add(borderPaneRoot);  //添加进stackPane
+            }
+        }
+    }
+
+    /**根据user对象更新左侧UI的显示，包括歌单名称、用户信息等
+     * @param user 用户对象
+     */
+    public void updateUserAndGroupList(User user) throws IOException {
+        updateUserInformation(user);
+        updateUserGroupList(user);
+    }
+
+    /**用户呢称和头像文件UI更新
+     * @param user 用户对象*/
+    public void updateUserInformation(User user){
+        labUserName.setText(user.getName());
+        new javafx.concurrent.Service<Void>() {     //创建一个加载在线图片资源的服务。
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        if (user.getImageURL() != null){
+                            Image image = new Image(user.getImageURL(),38,38,true,true);
+                            if (!image.isError()){
+                                ((ImageView)labUserImage.getGraphic()).setImage(image);
+                            }else if (user.getLocalImagePath() != null && new File(user.getLocalImagePath().substring(5)).exists()){   //如果本地存储的图片文件存在，设置图片显示
+                                ((ImageView)labUserImage.getGraphic()).setImage(new Image(user.getLocalImagePath(),38,38,true,true));
+                            } else {
+                                ((ImageView)labUserImage.getGraphic()).setImage(new Image("image/UserDefaultImage.png",38,38,true,true));
+                            }
+                        }
+                        return null;
+                    }
+                };
+            }
+        }.start();  //启动服务
+    }
+
+    /**更新用户创建的歌单
+     * @param user 用户对象*/
+    private void updateUserGroupList(User user) throws IOException {
+        //加载歌单指示器和"我喜欢的音乐"tab标签
+        removeAllGroupTab(); //先移除先前的歌单tab
+        vBoxTabContainer.getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());    //歌单指示器组件
+        List<Group> groupList = user.getGroupList();
+        if (groupList != null){
+            for (int i = 0; i < groupList.size(); i++) {    //遍历集合添加列表
+                addGroupTab(groupList.get(i));
             }
         }
     }

@@ -117,11 +117,6 @@ public class RightSlideLoginController {
         //设置登录用户的UI组件显示
         Circle circle = new Circle(20,20,20);
         User user = userStatus.getUser();
-        if (user.getLocalImagePath() != null && new File(user.getLocalImagePath().substring(5)).exists()){  //如果本地存储的头像文件存在
-            ivUserImage.setImage(new Image(user.getLocalImagePath(),40,40,true,true));
-        }else {
-            ivUserImage.setImage(new Image("image/UserDefaultImage.png",40,40,true,true));
-        }
         new Service<Void>() {   //创建加载在线图片的后台服务
             @Override
             protected Task<Void> createTask() {
@@ -132,7 +127,9 @@ public class RightSlideLoginController {
                             Image image = new Image(user.getImageURL(),40,40,true,true);
                             if (!image.isError()){
                                 ivUserImage.setImage(image);
-                            }else {
+                            }else if (user.getLocalImagePath() != null && new File(user.getLocalImagePath().substring(5)).exists()){  //如果本地存储的头像文件存在
+                                ivUserImage.setImage(new Image(user.getLocalImagePath(),40,40,true,true));
+                            } else {
                                 ivUserImage.setImage(new Image("image/UserDefaultImage.png",40,40,true,true));
                             }
                         }

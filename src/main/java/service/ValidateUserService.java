@@ -61,10 +61,10 @@ public class ValidateUserService extends javafx.concurrent.Service<Void> {
                         User user = JSONObjectUtils.parseUser(userStatusFile);
                         File imageFile = null;
                         if (user != null){  //如果用户对象不为空才执行
-                            if (user.getLocalImagePath() != null){
+                            updateUser(user);
+                            if (user.getLocalImagePath() != null){  //如果本地存储的头像文件不为空，创建文件句柄
                                 imageFile = new File(user.getLocalImagePath().substring(5)); //本地存储的用户头像文件句柄
                             }
-                            updateUser(user);   //根据user对象更新左侧用户信息及歌单
                             //验证服务器user的状态是否合法
                             String url = applicationContext.getBean(Config.class).getUserURL() + "/validate";
                             MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create().addTextBody("token", user.getToken(), ContentType.create("text/pain", Charset.forName("UTF-8")));
@@ -108,53 +108,19 @@ public class ValidateUserService extends javafx.concurrent.Service<Void> {
                 return null;
             }
 
-            /**根据user对象更新左侧UI的显示，包括歌单名称、用户信息等
-             * @param user 用户对象
-             */
-            private void updateUser(User user) {
-                userStatus.setUser(user); //保存用户信息到applicationContext的UserState
-                //加载歌单指示器和"我喜欢的音乐"tab标签
-                Platform.runLater(() -> {
-                    try {
-                        leftController.removeAllGroupTab(); //先移除先前的歌单tab
-                        //用户呢称和头像文件UI更新
-                        leftController.getLabUserName().setText(user.getName());
-                        if (user.getLocalImagePath() != null && new File(user.getLocalImagePath().substring(5)).exists()){   //如果本地存储的图片文件存在，设置图片显示
-                            leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(user.getLocalImagePath(), 38, 38));
-                        }
-                        new javafx.concurrent.Service<Void>() {     //创建一个加载在线图片资源的服务。
-                            @Override
-                            protected Task<Void> createTask() {
-                                return new Task<Void>() {
-                                    @Override
-                                    protected Void call() throws Exception {
-                                        if (user.getImageURL() != null){
-                                            Image image = new Image(user.getImageURL(),38,38,true,true);
-                                            if (!image.isError()){
-                                                ((ImageView)leftController.getLabUserImage().getGraphic()).setImage(image);
-                                            }else {
-                                                ((ImageView)leftController.getLabUserImage().getGraphic()).setImage(new Image("image/UserDefaultImage.png",38,38,true,true));
-                                            }
-                                        }
-                                        return null;
-                                    }
-                                };
-                            }
-                        }.start();  //启动服务
-                        leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());    //歌单指示器组件
-                        user.getGroupList().forEach(group -> {
-                            try {
-                                leftController.addGroupTab(group);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
         };
         return task;
+    }
+
+    /**调用左侧控制器更新用户歌单和头像呢称等信息*/
+    private void updateUser(User user){
+        userStatus.setUser(user); //保存用户信息到applicationContext的UserState
+        Platform.runLater(() -> {
+            try {
+                leftController.updateUserAndGroupList(userStatus.getUser());//根据user对象更新左侧用户信息及歌单
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
     }
 }
