@@ -73,9 +73,6 @@ public class LoginService extends javafx.concurrent.Service<Void> {
                     applicationContext.getBean(UserStatus.class).setUser(user); //保存User对象到applicationContext，user对象有token信息
                     List<Group> groupList = JSON.parseArray(HttpClientUtils.executeGet(applicationContext.getBean(Config.class).getGroupURL() + "/query/" + user.getToken()),Group.class);  //执行查询歌单
                     Platform.runLater(()->{
-                        //启动加载用户创建的歌单计划服务
-                        applicationContext.getBean(SynchronizeGroupService.class).restart();
-
                         ((Stage)loginController.getPfPassword().getScene().getWindow()).close();      //关闭窗口
                         WindowUtils.releaseBorderPane(mainController.getBorderPane());  //释放中间的面板，可以接受鼠标事件和改变透明度
                         leftController.getLabUserImage().setGraphic(ImageUtils.createImageView(applicationContext.getBean(UserStatus.class).getUser().getImageURL(),38,38));  //设置用户头像图片
@@ -85,7 +82,6 @@ public class LoginService extends javafx.concurrent.Service<Void> {
                         //加载歌单指示器和"我喜欢的音乐"及用户创建的歌单tab标签
                         try {
                             leftController.getVBoxTabContainer().getChildren().add(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/component/group-indicator.fxml").load());   //歌单指示器组件
-
                             for (int i = 0; i < groupList.size(); i++) {       //遍历歌单集合，添加到UI界面上
                                 leftController.addGroupTab(groupList.get(i));
                             }

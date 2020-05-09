@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.stereotype.Component;
 import service.LoadPlayerStateService;
-import service.SynchronizeGroupService;
 import service.ValidateUserService;
 import util.JSONObjectUtils;
 import util.WindowUtils;
@@ -38,7 +37,6 @@ public class FXApplication extends Application {
         applicationContext = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_PATH);
         applicationContext.getBean(LoadPlayerStateService.class).start();   //启动加载播放器播放列表的服务
         applicationContext.getBean(ValidateUserService.class).start();      //启动验证用户的服务（验证用户并添加歌单）
-        applicationContext.getBean(SynchronizeGroupService.class).start();  //启动同步用户歌单的定时服务
     }
 
     public static void main(String[] args) {
@@ -98,16 +96,12 @@ public class FXApplication extends Application {
             LyricContentController lyricContentController = applicationContext.getBean(LyricContentController.class);
             if (observable.getValue()){
                 System.out.println("cancel");
-                /**#######Service########*/
-                applicationContext.getBean(SynchronizeGroupService.class).cancel();
                 /**#####RotateTransition######*/
                 if (lyricContentController.isShow() && lyricContentController.getRotateTransition().getStatus() == Animation.Status.RUNNING){
                     lyricContentController.getRotateTransition().pause();
                 }
             }else {
                 System.out.println("restart");
-                /**#########Service###########*/
-                applicationContext.getBean(SynchronizeGroupService.class).restart();
                 /**#####RotateTransition######*/
                 if (lyricContentController.isShow()
                         && lyricContentController.getRotateTransition().getStatus() == Animation.Status.PAUSED

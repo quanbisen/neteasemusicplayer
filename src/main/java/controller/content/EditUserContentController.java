@@ -126,7 +126,7 @@ public class EditUserContentController {
         blockSaveButton();  //初始化保存按钮不可点击
 
         User user = userStatus.getUser();
-        new Service<Void>() {
+        new Service<Void>() {   //创建加载图片的服务
             @Override
             protected Task<Void> createTask() {
                 return new Task<Void>() {

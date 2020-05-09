@@ -76,39 +76,6 @@ public class RegisterService extends javafx.concurrent.Service<Void> {
                 }
 
                 return null;
-
-//                //生成邮箱验证码
-//                String code = EmailUtils.generateCode();
-//                //创建持久化对象，存储到applicationContext用作验证，然后尝试插入数据库
-//                Register register = new Register(id,password,code);
-//                applicationContext.getBean(Config.class).setRegister(register);   //保存到applicationContext
-//                try {
-//                    int row = registerDao.insert(register);
-//                    if (row == 1){
-//                        EmailUtils.sendEmail(id,code);
-//                        Platform.runLater(()->{
-//                            try {
-//                                registerInputController.getVisualPane().setBottom(applicationContext.getBean(SpringFXMLLoader.class).getLoader("/fxml/authentication/register-verify.fxml").load());
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        });
-//                        return true;
-//                    }else {
-//                        Platform.runLater(()->{
-//                            registerInputController.getLabRegisterInformation().setTextFill(Color.rgb(181, 44, 46));
-//                            registerInputController.getLabRegisterInformation().setText("注册失败");
-//                        });
-//                        return false;
-//                    }
-//                } catch (PersistenceException e){
-//                    e.printStackTrace();
-//                    Platform.runLater(()->{
-//                        registerInputController.getLabRegisterInformation().setTextFill(Color.rgb(181,44,46));
-//                        registerInputController.getLabRegisterInformation().setText("账户已注册");
-//                    });
-//                }
-//                return null;
             }
         };
         return task;

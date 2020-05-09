@@ -10,16 +10,13 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-@NoArgsConstructor
 public class Group {
-    @NonNull
     private Integer id;
-    @NonNull
     private String name;
     private String description;
     private Date createTime;
     private String imageURL;
-    @NonNull
+    private String localImagePath;  //歌单本地存储路径
     private String userID;
     private int favor;
 }

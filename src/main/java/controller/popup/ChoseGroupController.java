@@ -4,6 +4,8 @@ import application.SpringFXMLLoader;
 import controller.component.GroupCandidateController;
 import controller.component.GroupIndicatorController;
 import controller.main.MainController;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -81,12 +83,24 @@ public class ChoseGroupController {
         HBox hBoxGroupCandidate = fxmlLoader.load();    //加载容器组件
         GroupCandidateController groupCandidateController = fxmlLoader.getController(); //获取控制器
         groupCandidateController.getLabGroupName().setText(group.getName()); //设置显示歌单名称的Label组件文本
-        if (group.getImageURL() != null){        //如果存在图片URL
-            Image image = new Image(group.getImageURL(),50,50,true,true);    //创建图片资源
-            if (!image.isError()){  //如果没发生错误.
-                groupCandidateController.getLabGroupName().setGraphic(ImageUtils.createImageView(image,50,50)); //设置图片
+        new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        if (group.getImageURL() != null){        //如果存在图片URL
+                            Image image = new Image(group.getImageURL(),50,50,true,true);    //创建图片资源
+                            if (!image.isError()){  //如果没发生错误.
+                                groupCandidateController.getLabGroupName().setGraphic(ImageUtils.createImageView(image,50,50)); //设置图片
+                            }
+                        }
+                        return null;
+                    }
+                };
             }
-        }
+        }.start();
+
         vWrapGroupCandidate.getChildren().add(hBoxGroupCandidate);
     }
 

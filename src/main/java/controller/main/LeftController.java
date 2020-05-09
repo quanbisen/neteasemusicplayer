@@ -2,6 +2,7 @@ package controller.main;
 
 import controller.component.GroupTabController;
 import javafx.concurrent.Task;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -238,6 +239,10 @@ public class LeftController {
         }.start();  //启动服务
     }
 
+    public void updateGroupTabData(Group group){
+
+    }
+
     /**更新用户创建的歌单
      * @param user 用户对象*/
     private void updateUserGroupList(User user) throws IOException {
@@ -324,18 +329,36 @@ public class LeftController {
         return null;
     }
 
-    private void setGroupTabData(Group group,int id){
+    /**根据ID设置group tab的的数据
+     * @param group 歌单分组信息
+     * @param id 歌单分组ID*/
+    public void setGroupTabData(Group group,int id){
+        HBox hBox = getGroupTabByID(id);
+        hBox.setUserData(group);
+        Label labTabName = (Label)hBox.getChildren().get(0);  //获取显示歌单名称Label组件
+        if (!labTabName.getText().equals(group.getName())){ //如果名称修改了，更新左侧的歌单名称tab
+            labTabName.setText(group.getName());
+        }
+
+        return;
+    }
+
+    /**重新加载歌单分组标签对应的内容*/
+    public void reloadGroupTabContent(int id){
+        HBox hBox = getGroupTabByID(id);
+        Event.fireEvent(hBox,new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+                0, 0, 0, MouseButton.PRIMARY, 5, true, true, true, true,
+                true, true, true, true, true, true, null));
+    }
+
+    /**根据歌单分组的id获取歌单分组标签HBox容器*/
+    private HBox getGroupTabByID(int id){
         for (int i = 4; i < tabList.size(); i++) {
             if (((Group) tabList.get(i).getUserData()).getId() == id){
-                tabList.get(i).setUserData(group);
-                Label labTabName = (Label)tabList.get(i).getChildren().get(0);  //获取显示歌单名称Label组件
-                if (!labTabName.getText().equals(group.getName())){ //如果名称修改了，更新左侧的歌单名称tab
-                    labTabName.setText(group.getName());
-                }
-                break;
+                return tabList.get(i);
             }
         }
-        return;
+        return null;
     }
 
     /**传入歌单集合对象,更新歌单分组的UI及数据
@@ -351,6 +374,19 @@ public class LeftController {
                 removeGroupTab(groupList.get(i));
             }
         }
+    }
+
+    /**判断groupList是否存在歌单名称为groupName的歌单，存在返回true，否则返回false
+     * @param groupList
+     * @param groupName
+     * @return boolean*/
+    private boolean exist(List<Group> groupList,String groupName){
+        for (int i = 0; i < groupList.size(); i++) {
+            if (groupList.get(i).getName().equals(groupName)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**获取目前选中的是哪一个标签的名称,如果没有找到，会抛出异常

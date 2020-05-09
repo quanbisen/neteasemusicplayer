@@ -1,6 +1,8 @@
 package service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import controller.content.EditGroupContentController;
 import controller.main.CenterController;
 import controller.main.LeftController;
@@ -71,32 +73,20 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
                         multipartEntityBuilder.addBinaryBody("image",editGroupContentController.getChoseImageFile());
                     }
                     String responseString = HttpClientUtils.executePost(url,multipartEntityBuilder.build());
-                    Platform.runLater(()->{
-                        WindowUtils.toastInfo(centerController.getStackPane(),new Label(responseString));
-                        SynchronizeGroupService synchronizeGroupService = applicationContext.getBean(SynchronizeGroupService.class);
-                        synchronizeGroupService.restart();    //启动同步歌单服务
-                        EventHandler<WorkerStateEvent> workerStateEventEventHandler = new EventHandler<WorkerStateEvent>() {
-                            @Override
-                            public void handle(WorkerStateEvent event) {
-                                Integer groupID = editGroupContentController.getGroup().getId();
-                                if ( groupID != null){
-                                    HBox selectedTab = leftController.getSelectedTab();
-                                    if (selectedTab.getUserData() != null && groupID == ((Group)selectedTab.getUserData()).getId()){
-                                        System.out.println("update");
-                                        /**annotation for test weather need it.*/
-//                                        Event.fireEvent(selectedTab, new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
-//                                                0, 0, 0, MouseButton.PRIMARY, 5, true, true, true, true,
-//                                                true, true, true, true, true, true, null));
-                                    }
-                                }
-                                synchronizeGroupService.removeEventHandler(WorkerStateEvent.WORKER_STATE_SUCCEEDED,this);
-
-                                synchronizeGroupService.cancel();
+                    try {
+                        group = JSONObject.parseObject(responseString,Group.class);
+                        int groupID = group.getId();
+                        leftController.setGroupTabData(group,groupID); //更新group的信息
+                        Platform.runLater(()->{
+                            if (groupID == ((Group)leftController.getSelectedTab().getUserData()).getId()){ //如果更新的歌单是当前显示中的歌单，需要重新加载
+                                leftController.reloadGroupTabContent(groupID);
                             }
-                        };
-                        synchronizeGroupService.setOnSucceeded(workerStateEventEventHandler);
+                            WindowUtils.toastInfo(centerController.getStackPane(),new Label("保存成功"));
+                        });
+                    }catch (JSONException e){   //catch 解析异常，证明保存失败，responseString服务器返回的是“保存失败”
+                        Platform.runLater(()->WindowUtils.toastInfo(centerController.getStackPane(),new Label(responseString)));
+                    }
 
-                    });
                 }catch (Exception e){e.printStackTrace();}
 
                 return null;
