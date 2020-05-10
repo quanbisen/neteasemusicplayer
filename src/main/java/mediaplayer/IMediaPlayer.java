@@ -35,4 +35,5 @@ public interface IMediaPlayer {
     void setMute(boolean mute);
     void switchMute();
     void switchPlayMode();
+    boolean isPlayingThis(PlayListSong playListSong);
 }

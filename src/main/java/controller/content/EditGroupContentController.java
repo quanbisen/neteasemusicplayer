@@ -2,6 +2,8 @@ package controller.content;
 
 import controller.main.LeftController;
 import controller.main.MainController;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -91,17 +93,27 @@ public class EditGroupContentController {
         tfGroupName.setText(group.getName());
         taDescription.setText(group.getDescription());
         //设置专辑图片
-        if (group.getImageURL() != null){
-            Image image = new Image(group.getImageURL(),210,210,true,true);
-            System.out.println(group);
-            if (!image.isError()){
-                ivAlbum.setImage(image);
-            }else {
-                ivAlbum.setImage(new Image("/image/DefaultAlbumImage_200.png",210,210,true,true));
+        new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        if (group.getImageURL() != null){
+                            Image image = new Image(group.getImageURL(),210,210,true,true);
+                            if (!image.isError()){
+                                ivAlbum.setImage(image);
+                            }else {
+                                ivAlbum.setImage(new Image("/image/DefaultAlbumImage_200.png",210,210,true,true));
+                            }
+                        }else {
+                            ivAlbum.setImage(new Image("/image/DefaultAlbumImage_200.png",210,210,true,true));
+                        }
+                        return null;
+                    }
+                };
             }
-        }else {
-            ivAlbum.setImage(new Image("/image/DefaultAlbumImage_200.png",210,210,true,true));
-        }
+        }.start();
 
         btnSave.setOpacity(0.8);
         btnSave.setMouseTransparent(true);

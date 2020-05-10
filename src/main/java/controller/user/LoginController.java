@@ -193,7 +193,7 @@ public class LoginController {
             labLoginInformation.setText("");  //清空文本信息
             LoginService loginService = applicationContext.getBean(LoginService.class);
             loginProgressIndicator.visibleProperty().bind(loginService.runningProperty());
-            loginService.start();
+            loginService.restart();
         }
     }
 

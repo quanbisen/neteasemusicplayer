@@ -16,11 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="groupContentContainer" alignment="TOP_CENTER" stylesheets="@../../css/GroupContentStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.GroupContentController">
+<StackPane fx:id="groupContentContainer" alignment="TOP_CENTER" stylesheets="@../../css/GroupContentStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.content.GroupContentController">
    <children>
-      <ScrollPane fx:id="scrollPaneContainer" hbarPolicy="NEVER" style="-fx-background-color: transparent;">
+      <ScrollPane fx:id="scrollPaneContainer" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" style="-fx-background-color: transparent;-fx-padding: 0px;-fx-background-insets: 0px;">
          <content>
-            <StackPane fx:id="stackPane" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0">
+            <StackPane fx:id="stackPane" alignment="TOP_CENTER" prefHeight="300.0" prefWidth="500.0">
                <children>
                   <Label fx:id="labBlur" prefHeight="200.0" prefWidth="560.0" text="Label" />
                   <VBox fx:id="vBoxContainer" prefHeight="401.0" prefWidth="600.0" style="-fx-background-color: transparent;">

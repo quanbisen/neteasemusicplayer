@@ -52,7 +52,7 @@ public class GroupTabContextMenuController {
     /**”删除“歌单事件处理*/
     @FXML
     public void onClickedDeleteGroup(ActionEvent actionEvent) throws Exception {
-        applicationContext.getBean(DeleteGroupService.class).start();
+        applicationContext.getBean(DeleteGroupService.class).restart();
     }
 
 

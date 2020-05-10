@@ -20,7 +20,7 @@ import java.nio.charset.Charset;
  * @date 20-2-16
  */
 @Service
-@Scope(value = "prototype")
+@Scope("singleton")
 public class ResendRegisterCodeService extends javafx.concurrent.Service<ScheduledCountDownService> {
 
 

@@ -10,7 +10,6 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import mediaplayer.Config;
 import mediaplayer.UserStatus;
 import org.apache.http.entity.ContentType;
@@ -27,7 +26,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class LoginService extends javafx.concurrent.Service<Void> {
 
     /**注入登录页面的控制器*/

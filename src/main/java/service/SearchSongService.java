@@ -21,7 +21,7 @@ import java.util.List;
  * 用户输入搜索文本确认搜索需要启动的服务
  */
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class SearchSongService extends javafx.concurrent.Service<ObservableList<Song>> {
 
     @Resource

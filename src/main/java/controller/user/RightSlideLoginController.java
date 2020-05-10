@@ -19,16 +19,13 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mediaplayer.UserStatus;
 import org.springframework.context.ApplicationContext;
-import pojo.User;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
-import util.ImageUtils;
+import pojo.User;
 import util.StageUtils;
 import util.WindowUtils;
 

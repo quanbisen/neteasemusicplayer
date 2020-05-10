@@ -24,7 +24,7 @@ import java.util.List;
  * @date 20-2-9
  */
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class LoadLocalSingerImageService extends javafx.concurrent.Service<Void> {
 
     @Resource

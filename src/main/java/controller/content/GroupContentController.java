@@ -29,6 +29,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import service.LoadGroupSongService;
 import util.ImageUtils;
+import util.WindowUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -40,7 +41,6 @@ import java.util.List;
  */
 @Controller
 public class GroupContentController {
-
 
     @FXML
     private StackPane groupContentContainer;
@@ -195,10 +195,10 @@ public class GroupContentController {
     }
 
     public void initialize(){
-        vBoxContainer.prefWidthProperty().bind(groupContentContainer.widthProperty());
-        vBoxContainer.prefHeightProperty().bind(groupContentContainer.heightProperty());
-        stackPane.prefWidthProperty().bind(groupContentContainer.widthProperty());
-        stackPane.prefHeightProperty().bind(groupContentContainer.heightProperty());
+        //容器布局绑定
+        WindowUtils.absolutelyBind(vBoxContainer,groupContentContainer);
+        WindowUtils.absolutelyBind(stackPane,groupContentContainer);
+
         groupContentContainer.widthProperty().addListener(((observable, oldValue, newValue) -> {
             labBlur.setPrefWidth(observable.getValue().doubleValue() - 150);
         }));
@@ -247,35 +247,40 @@ public class GroupContentController {
         LoadGroupSongService loadGroupSongService = applicationContext.getBean(LoadGroupSongService.class);
         progressIndicator.visibleProperty().bind(loadGroupSongService.runningProperty());
         tableViewGroupSong.itemsProperty().bind(loadGroupSongService.valueProperty());
-        loadGroupSongService.start();
-
-        tableViewGroupSong.setRowFactory(new Callback<TableView<GroupSong>, TableRow<GroupSong>>() {
-            @Override
-            public TableRow<GroupSong> call(TableView<GroupSong> param) {
-                return new TableRow<GroupSong>(){
+        loadGroupSongService.restart();
+        loadGroupSongService.setOnSucceeded(event -> {
+            if (tableViewGroupSong.getItems() != null && tableViewGroupSong.getItems().size() > 0){
+                tableViewGroupSong.setMinHeight(tableViewGroupSong.getItems().size() * 40);    //设置表格的高度
+                tableViewGroupSong.setRowFactory(new Callback<TableView<GroupSong>, TableRow<GroupSong>>() {
                     @Override
-                    protected void updateItem(GroupSong item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!empty){
-                            //设置索引列
-                            if ( 0 <= getIndex() && getIndex() < 9){
-                                item.setIndex("0" + (getIndex() + 1));
-                            }else {
-                                item.setIndex(String.valueOf(getIndex() + 1));
+                    public TableRow<GroupSong> call(TableView<GroupSong> param) {
+                        return new TableRow<GroupSong>(){
+                            @Override
+                            protected void updateItem(GroupSong item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (!empty){
+                                    //设置索引列
+                                    if ( 0 <= getIndex() && getIndex() < 9){
+                                        item.setIndex("0" + (getIndex() + 1));
+                                    }else {
+                                        item.setIndex(String.valueOf(getIndex() + 1));
+                                    }
+                                    //设置本地资源图标标识
+                                    if (!item.getResourceURL().contains("http://")){    //没有包含http,那么就是本地资源了.添加本地资源的图标标识
+                                        Label labLocalFlag = new Label("",ImageUtils.createImageView(new Image("/image/LocalFlag_10.png"),10,10));
+                                        labLocalFlag.getStyleClass().add("labLocalFlag");
+                                        item.setLabLocalFlag(labLocalFlag);
+                                    }
+                                }
                             }
-                            //设置本地资源图标标识
-                            if (!item.getResourceURL().contains("http://")){    //没有包含http,那么就是本地资源了.添加本地资源的图标标识
-                                Label labLocalFlag = new Label("",ImageUtils.createImageView(new Image("/image/LocalFlag_10.png"),10,10));
-                                labLocalFlag.getStyleClass().add("labLocalFlag");
-                                item.setLabLocalFlag(labLocalFlag);
-                            }
-                        }
+                        };
                     }
-                };
+                });
             }
         });
 
     }
+
 
     /**"播放全部"事件处理*/
     @FXML

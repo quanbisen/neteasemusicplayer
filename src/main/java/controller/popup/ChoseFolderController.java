@@ -137,7 +137,7 @@ public class ChoseFolderController {
             LoadLocalSongService loadLocalSongService = applicationContext.getBean(LoadLocalSongService.class);
             localMusicContentController.getProgressIndicator().visibleProperty().bind(loadLocalSongService.runningProperty());
             localMusicContentController.getTableViewSong().itemsProperty().bind(loadLocalSongService.valueProperty());
-            loadLocalSongService.start();
+            loadLocalSongService.restart();
 
             //因为需要重新加载歌曲,所以需要判断是否播放器有歌曲正在播放中
             if (myMediaPlayer.getPlayer()!=null){  //如果媒体播放器对象存在,销毁它

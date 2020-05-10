@@ -218,6 +218,6 @@ public class RegisterInputController {
     public void onClickedRegisterButton(ActionEvent actionEvent) throws IOException {
         RegisterService registerService = applicationContext.getBean(RegisterService.class);
         registerProgressIndicator.visibleProperty().bind(registerService.runningProperty());
-        registerService.start();
+        registerService.restart();
     }
 }

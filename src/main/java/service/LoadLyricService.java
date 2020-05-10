@@ -26,7 +26,7 @@ import java.nio.file.Path;
  * @date 20-2-29
  */
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class LoadLyricService extends javafx.concurrent.Service<Void> {
 
     @Resource

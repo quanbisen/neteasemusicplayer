@@ -41,7 +41,7 @@ import java.util.List;
  * @date 20-3-10
  */
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class LoadGroupSongService extends javafx.concurrent.Service<ObservableList<GroupSong>> {
 
     @Resource
@@ -75,7 +75,9 @@ public class LoadGroupSongService extends javafx.concurrent.Service<ObservableLi
         Task<ObservableList<GroupSong>> task = new Task<ObservableList<GroupSong>>() {
             @Override
             protected ObservableList<GroupSong> call() throws Exception {
+
                 System.out.println(leftController.getSelectedTab().getUserData());
+
                 Group group = (Group) leftController.getSelectedTab().getUserData();
                 Platform.runLater(()->{
                     //更新UI
@@ -86,7 +88,8 @@ public class LoadGroupSongService extends javafx.concurrent.Service<ObservableLi
                     groupContentController.getScrollPaneContainer().setVisible(true);
                     groupContentController.getLabBlur().setVisible(true);
                 });
-                List<GroupSong> groupSongs = XMLUtils.getGroupSongs(config.getGroupsSongFile(), group);
+                List<GroupSong> groupSongs = XMLUtils.getGroupSongs(config.getGroupsSongFile(), group); //获取本地存储的歌单歌曲记录
+
                 if (groupSongs != null) {
                     ObservableList<GroupSong> observableList = FXCollections.observableArrayList(); //创建表格内容集合
                     observableList.addAll(groupSongs);
@@ -169,7 +172,6 @@ public class LoadGroupSongService extends javafx.concurrent.Service<ObservableLi
                                 e.printStackTrace();
                             }
                         }
-                        groupContentController.getTableViewGroupSong().setMinHeight(observableList.size() * 40);    //设置表格的高度
                     });
                     return observableList;
                 }else {
@@ -194,16 +196,16 @@ public class LoadGroupSongService extends javafx.concurrent.Service<ObservableLi
             }
 
             /**获取歌单专辑图片函数
-             * @param observableList 歌单歌曲集合
+             * @param groupSongList 歌单歌曲集合
              * @return*/
-            private Image getOptimizedImage(ObservableList<GroupSong> observableList, double width, double height) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
+            private Image getOptimizedImage(List<GroupSong> groupSongList, double width, double height) throws ReadOnlyFileException, CannotReadException, TagException, InvalidAudioFrameException, IOException {
                 //面板的专辑图片是最新添加的歌曲的专辑图
-                for (int i = 0; i < observableList.size(); i++) {
-                    if (!observableList.get(i).getResourceURL().contains("http://")){   //没有包含"http字样",那就是本地歌曲了.
-                        Image imageData = ImageUtils.getAlbumImage(observableList.get(i).getResourceURL(), width, height);
+                for (int i = 0; i < groupSongList.size(); i++) {
+                    if (!groupSongList.get(i).getResourceURL().contains("http://")){   //没有包含"http字样",那就是本地歌曲了.
+                        Image imageData = ImageUtils.getAlbumImage(groupSongList.get(i).getResourceURL(), width, height);
                         if (imageData != null) return imageData;
                     }else{
-                        Image image = new Image(observableList.get(i).getImageURL(),width,height,true,true);
+                        Image image = new Image(groupSongList.get(i).getImageURL(),width,height,true,true);
                         if (!image.isError()){
                             return image;
                         }

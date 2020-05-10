@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -308,5 +309,17 @@ public final class WindowUtils {
         });
         //开始播放渐变动画提示
         fadeTransition.play();
+    }
+
+    /**设置布局的宽高度绑定
+     * @param needBindRegion 需要绑定的容器
+     * @param bindRegion 绑定到的容器*/
+    public static void absolutelyBind(Region needBindRegion, Region bindRegion){
+        needBindRegion.prefWidthProperty().bind(bindRegion.widthProperty());
+        needBindRegion.prefHeightProperty().bind(bindRegion.heightProperty());
+        needBindRegion.minWidthProperty().bind(bindRegion.widthProperty());
+        needBindRegion.minHeightProperty().bind(bindRegion.heightProperty());
+        needBindRegion.maxWidthProperty().bind(bindRegion.widthProperty());
+        needBindRegion.maxHeightProperty().bind(bindRegion.heightProperty());
     }
 }

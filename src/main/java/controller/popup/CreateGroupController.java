@@ -109,8 +109,7 @@ public class CreateGroupController {
 
         ((Stage)tfInput.getScene().getWindow()).close();
         WindowUtils.releaseBorderPane(mainController.getBorderPane());    //释放borderPane的鼠标事件并且还原透明度
-
-        applicationContext.getBean(CreateGroupService.class).start();   //启动创建歌单更新数据库的服务
+        applicationContext.getBean(CreateGroupService.class).restart();   //启动创建歌单更新数据库的服务
     }
 
     /**"取消"按钮鼠标单机事件处理*/

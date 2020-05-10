@@ -255,9 +255,7 @@ public class LocalMusicContentController {
         EventHandler<MouseEvent> onClickedTableSongRow = mouseEvent -> {
             if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2){  //鼠标双击执行
                 LocalSong selectedLocalSong = tableViewSong.getSelectionModel().getSelectedItem();
-                if (myMediaPlayer.getPlayListSongs().get(myMediaPlayer.getCurrentPlayIndex()).equals(SongUtils.toPlayListSong(selectedLocalSong))
-                        && myMediaPlayer.getPlayer() != null
-                        && myMediaPlayer.getPlayer().getStatus() == MediaPlayer.Status.PLAYING) {   //如果选中的歌曲是当前播放的歌曲，并且正在播放中，那么返回不做处理
+                if (myMediaPlayer.isPlayingThis(SongUtils.toPlayListSong(selectedLocalSong))) {   //如果选中的歌曲是当前播放的歌曲，并且正在播放中，那么返回不做处理
                     return;
                 }else {
                     myMediaPlayer.setPlayListSongs(SongUtils.getPlayListSongs(tableViewSong.getItems()));     //设置当前播放列表

@@ -678,4 +678,17 @@ public class MyMediaPlayer extends PlayerStatus implements IMediaPlayer {
             lyricContentController.getRotateTransition().play();
         }
     }
+
+    /**
+     * 判断是否正在播放次播放列表歌曲
+     * */
+    @Override
+    public boolean isPlayingThis(PlayListSong playListSong) {
+        if (currentPlayIndex != -1 && playListSongs.get(currentPlayIndex).equals(playListSong)
+                && mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

@@ -24,7 +24,7 @@ import java.nio.charset.Charset;
  * @date 20-2-16
  */
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class HandleRegisterService extends javafx.concurrent.Service<Void> {
 
     @Resource

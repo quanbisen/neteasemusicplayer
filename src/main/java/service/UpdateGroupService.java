@@ -8,31 +8,21 @@ import controller.main.CenterController;
 import controller.main.LeftController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import mediaplayer.Config;
-import mediaplayer.PlayerStatus;
 import mediaplayer.UserStatus;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import pojo.Group;
 import util.HttpClientUtils;
 import util.WindowUtils;
-
 import javax.annotation.Resource;
 import java.nio.charset.Charset;
 
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class UpdateGroupService extends javafx.concurrent.Service<Void> {
 
     @Resource
@@ -46,9 +36,6 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
 
     @Resource
     private CenterController centerController;
-
-    @Resource
-    private ApplicationContext applicationContext;
 
     @Resource
     private LeftController leftController;
@@ -77,8 +64,10 @@ public class UpdateGroupService extends javafx.concurrent.Service<Void> {
                         group = JSONObject.parseObject(responseString,Group.class);
                         int groupID = group.getId();
                         leftController.setGroupTabData(group,groupID); //更新group的信息
+                        userStatus.updateGroup(group,groupID);
                         Platform.runLater(()->{
-                            if (groupID == ((Group)leftController.getSelectedTab().getUserData()).getId()){ //如果更新的歌单是当前显示中的歌单，需要重新加载
+                            if (leftController.getSelectedTab().getUserData() != null &&
+                                    groupID == ((Group)leftController.getSelectedTab().getUserData()).getId()){ //如果更新的歌单是当前显示中的歌单，需要重新加载
                                 leftController.reloadGroupTabContent(groupID);
                             }
                             WindowUtils.toastInfo(centerController.getStackPane(),new Label("保存成功"));

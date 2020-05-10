@@ -68,7 +68,7 @@ public class RegisterVerifyController {
         timeSchedule = applicationContext.getBean(ScheduledCountDownService.class);
         timeSchedule.setTime(applicationContext.getBean(UserStatus.class).getRegisterResponse().getExpireSecond()); //设置倒计时时间
         timeSchedule.setPeriod(Duration.seconds(1));
-        timeSchedule.start();
+        timeSchedule.restart();
 
 //        tfCode.setTextFormatter(new TextFormatter<String>(change -> {
 //            if (change.getText().matches("^[0-9]") || change.isDeleted()){
@@ -83,7 +83,7 @@ public class RegisterVerifyController {
         if (mouseEvent.getButton() == MouseButton.PRIMARY && !tfCode.getText().equals("")){
             HandleRegisterService handleRegisterService = applicationContext.getBean(HandleRegisterService.class);
             verifyProgressIndicator.visibleProperty().bind(handleRegisterService.runningProperty());
-            handleRegisterService.start();
+            handleRegisterService.restart();
         }
     }
 
@@ -101,9 +101,9 @@ public class RegisterVerifyController {
             resendRegisterCodeService.setOnSucceeded(event -> {
                 timeSchedule = resendRegisterCodeService.getValue();
                 timeSchedule.setPeriod(Duration.seconds(1));
-                timeSchedule.start();
+                timeSchedule.restart();
             });
-            resendRegisterCodeService.start();
+            resendRegisterCodeService.restart();
         }
     }
 }

@@ -22,8 +22,9 @@ public class User {
     private String sex;
     private Date birthday;
     private String imageURL;
+    private String localImagePath;
     private String province;
     private String city;
-    private String localImagePath;  //本地头像图片存储位置
     private List<Group> groupList;
 }
+

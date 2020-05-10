@@ -22,7 +22,7 @@ import java.io.File;
  * @date 20-2-17
  */
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class LoadPlayerStateService extends javafx.concurrent.Service<Void> {
 
     @Resource

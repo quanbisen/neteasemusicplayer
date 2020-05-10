@@ -1,6 +1,5 @@
 package service;
 
-import application.SpringFXMLLoader;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import controller.main.LeftController;
@@ -8,8 +7,6 @@ import controller.main.MainController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import mediaplayer.Config;
 import mediaplayer.UserStatus;
 import org.apache.http.conn.HttpHostConnectException;
@@ -20,7 +17,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import pojo.User;
 import util.HttpClientUtils;
-import util.ImageUtils;
 import util.JSONObjectUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
@@ -70,6 +66,7 @@ public class ValidateUserService extends javafx.concurrent.Service<Void> {
                             MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create().addTextBody("token", user.getToken(), ContentType.create("text/pain", Charset.forName("UTF-8")));
                             try {
                                 String responseString = HttpClientUtils.executePost(url, multipartEntityBuilder.build());
+                                System.out.println(responseString);
                                 user = JSON.parseObject(responseString, User.class);
                                 if (user != null) {  //如果user不为null，证明服务器验证通过。
                                     if (imageFile != null && imageFile.exists()) { //如果原来存储的头像文件存在，删除它
@@ -95,7 +92,7 @@ public class ValidateUserService extends javafx.concurrent.Service<Void> {
                                     WindowUtils.toastInfo(mainController.getStackPane(),new Label("无网络连接"));
                                 });
 
-                            }
+                            } catch (Exception e){e.printStackTrace();}
                         }
                     }catch (JSONException e){
                         System.out.println("登录信息失效");

@@ -35,7 +35,7 @@ import java.util.List;
  * @date 20-3-9
  */
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class CollectSongService extends javafx.concurrent.Service<Void> {
 
     @Resource

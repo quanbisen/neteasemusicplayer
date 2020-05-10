@@ -1,7 +1,6 @@
 package util;
 
 import mediaplayer.Config;
-import org.springframework.context.ApplicationContext;
 import pojo.User;
 
 import java.io.File;

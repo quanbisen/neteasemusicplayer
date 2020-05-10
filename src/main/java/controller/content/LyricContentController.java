@@ -26,6 +26,8 @@ import org.springframework.stereotype.Controller;
 import service.HideScrollerBarService;
 import service.LoadLyricService;
 import util.ImageUtils;
+import util.WindowUtils;
+
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.*;
@@ -170,9 +172,9 @@ public class LyricContentController {
 
     public void initialize() throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
         //设置布局的宽高度绑定
-        absolutelyBind(root,stackPane);
-        absolutelyBind(labBlur,stackPane);
-        absolutelyBind(stackPane,vBoxLyricContentContainer);
+        WindowUtils.absolutelyBind(root,stackPane);
+        WindowUtils.absolutelyBind(labBlur,stackPane);
+        WindowUtils.absolutelyBind(stackPane,vBoxLyricContentContainer);
 
         stackPane.widthProperty().addListener(((observable, oldValue, newValue) -> {
             albumPane.setPrefWidth(observable.getValue().doubleValue()/100*43);
@@ -221,15 +223,7 @@ public class LyricContentController {
          * －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－*/
     }
 
-    /**设置布局的宽高度绑定*/
-    private void absolutelyBind(Region needBindRegion,Region bindRegion){
-        needBindRegion.prefWidthProperty().bind(bindRegion.widthProperty());
-        needBindRegion.prefHeightProperty().bind(bindRegion.heightProperty());
-        needBindRegion.minWidthProperty().bind(bindRegion.widthProperty());
-        needBindRegion.minHeightProperty().bind(bindRegion.heightProperty());
-        needBindRegion.maxWidthProperty().bind(bindRegion.widthProperty());
-        needBindRegion.maxHeightProperty().bind(bindRegion.heightProperty());
-    }
+
 
     /**设置专辑图片和歌词的函数*/
     public void loadAlbumLyric() throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {

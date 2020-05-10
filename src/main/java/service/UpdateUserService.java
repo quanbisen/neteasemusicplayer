@@ -8,7 +8,6 @@ import controller.main.MainController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
-import lombok.SneakyThrows;
 import mediaplayer.Config;
 import mediaplayer.UserStatus;
 import org.apache.http.conn.HttpHostConnectException;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import pojo.User;
 import util.HttpClientUtils;
-import util.JSONObjectUtils;
 import util.LocalPersistenceUtils;
 import util.WindowUtils;
 import javax.annotation.Resource;
@@ -32,7 +30,7 @@ import java.util.Date;
  * @date 5/3/20
  */
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class UpdateUserService extends javafx.concurrent.Service<Void>{
 
     @Resource

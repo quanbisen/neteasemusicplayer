@@ -2,8 +2,8 @@ package controller.popup;
 
 import application.SpringFXMLLoader;
 import controller.component.GroupCandidateController;
-import controller.component.GroupIndicatorController;
 import controller.main.MainController;
+import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -20,6 +20,7 @@ import mediaplayer.UserStatus;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import pojo.Group;
+import util.GroupUtils;
 import util.ImageUtils;
 import util.StageUtils;
 import util.WindowUtils;
@@ -51,9 +52,6 @@ public class ChoseGroupController {
 
     @Resource
     private ApplicationContext applicationContext;
-
-    @Resource
-    private GroupIndicatorController groupIndicatorController;
 
     public BorderPane getActualPane() {
         return actualPane;
@@ -89,12 +87,8 @@ public class ChoseGroupController {
                 return new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-                        if (group.getImageURL() != null){        //如果存在图片URL
-                            Image image = new Image(group.getImageURL(),50,50,true,true);    //创建图片资源
-                            if (!image.isError()){  //如果没发生错误.
-                                groupCandidateController.getLabGroupName().setGraphic(ImageUtils.createImageView(image,50,50)); //设置图片
-                            }
-                        }
+                        Image image = GroupUtils.getGroupImage(group,50,50);
+                        Platform.runLater(()->groupCandidateController.getLabGroupName().setGraphic(ImageUtils.createImageView(image,image.getWidth(),image.getHeight()))); //设置图片
                         return null;
                     }
                 };

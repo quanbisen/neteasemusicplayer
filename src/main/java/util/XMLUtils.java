@@ -1,6 +1,5 @@
 package util;
 
-import javafx.scene.control.Label;
 import model.GroupSong;
 import model.LocalSong;
 import model.PlayListSong;
@@ -14,10 +13,8 @@ import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.dom4j.tree.DefaultAttribute;
 import pojo.Group;
-import pojo.Song;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;

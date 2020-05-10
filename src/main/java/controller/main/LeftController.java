@@ -21,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import application.SpringFXMLLoader;
 import pojo.Group;
 import pojo.User;
-import util.ImageUtils;
 import util.XMLUtils;
 import javax.annotation.Resource;
 import java.io.File;
@@ -226,7 +225,8 @@ public class LeftController {
                             Image image = new Image(user.getImageURL(),38,38,true,true);
                             if (!image.isError()){
                                 ((ImageView)labUserImage.getGraphic()).setImage(image);
-                            }else if (user.getLocalImagePath() != null && new File(user.getLocalImagePath().substring(5)).exists()){   //如果本地存储的图片文件存在，设置图片显示
+                            }else if (user.getLocalImagePath() != null && new File(user.getLocalImagePath().substring(5)).exists()
+                            && new File(user.getLocalImagePath().substring(5)).length() > 200){   //如果本地存储的图片文件存在，设置图片显示 (大于200字节是因为下载失败的图片保存的大小是165字节)
                                 ((ImageView)labUserImage.getGraphic()).setImage(new Image(user.getLocalImagePath(),38,38,true,true));
                             } else {
                                 ((ImageView)labUserImage.getGraphic()).setImage(new Image("image/UserDefaultImage.png",38,38,true,true));
@@ -339,7 +339,6 @@ public class LeftController {
         if (!labTabName.getText().equals(group.getName())){ //如果名称修改了，更新左侧的歌单名称tab
             labTabName.setText(group.getName());
         }
-
         return;
     }
 

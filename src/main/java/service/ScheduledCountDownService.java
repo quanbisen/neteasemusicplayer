@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class ScheduledCountDownService extends ScheduledService<Number> {
 
     private int time;

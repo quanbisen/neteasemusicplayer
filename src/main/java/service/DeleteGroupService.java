@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 import java.nio.charset.Charset;
 
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class DeleteGroupService extends javafx.concurrent.Service<Void> {
 
     @Resource

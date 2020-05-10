@@ -25,7 +25,7 @@ import java.nio.charset.Charset;
  * @date 19-12-7
  */
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class RegisterService extends javafx.concurrent.Service<Void> {
 
     /**注入注册页面的控制器*/

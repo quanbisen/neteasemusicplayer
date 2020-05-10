@@ -23,7 +23,7 @@ import java.util.Map;
  * @date 20-2-10
  */
 @Service
-@Scope("prototype")
+@Scope("singleton")
 public class LoadLocalAlbumImageService extends javafx.concurrent.Service<Boolean> {
 
     @Resource
