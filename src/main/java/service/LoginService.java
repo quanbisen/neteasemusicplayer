@@ -26,7 +26,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class LoginService extends javafx.concurrent.Service<Void> {
 
     /**注入登录页面的控制器*/

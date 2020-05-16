@@ -78,7 +78,7 @@
                      <center>
                         <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <ScrollPane fx:id="scrollLyric" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+                              <ScrollPane fx:id="scrollLyric" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;-fx-padding: 0px;-fx-background-insets: 0px;">
                                  <content>
                                     <VBox fx:id="vBoxLyric" prefWidth="429.0" style="-fx-background-color: transparent;" />
                                  </content>

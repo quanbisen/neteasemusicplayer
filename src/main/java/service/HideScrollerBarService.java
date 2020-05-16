@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @date 20-2-28
  */
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class HideScrollerBarService extends javafx.concurrent.ScheduledService<Void> {
 
     @Resource

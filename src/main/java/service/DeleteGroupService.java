@@ -6,8 +6,8 @@ import controller.main.MainController;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
-import lombok.SneakyThrows;
 import mediaplayer.Config;
+import mediaplayer.UserStatus;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.dom4j.DocumentException;
@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 import java.nio.charset.Charset;
 
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class DeleteGroupService extends javafx.concurrent.Service<Void> {
 
     @Resource
@@ -34,7 +34,9 @@ public class DeleteGroupService extends javafx.concurrent.Service<Void> {
     @Resource
     private MainController mainController;
 
-    @SneakyThrows
+    @Resource
+    private UserStatus userStatus;
+
     @Override
     protected Task<Void> createTask() {
         Task<Void> task = new Task<Void>() {
@@ -47,6 +49,7 @@ public class DeleteGroupService extends javafx.concurrent.Service<Void> {
                 String responseString = HttpClientUtils.executePost(url,entity);
                 Platform.runLater(()->{
                     if (responseString.equals("删除歌单成功")){
+
                         try {
                             leftController.removeGroupTab(group);
                         } catch (DocumentException e) {

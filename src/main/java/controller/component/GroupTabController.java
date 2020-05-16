@@ -13,6 +13,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import mediaplayer.UserStatus;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -44,6 +45,9 @@ public class GroupTabController {
 
     @Resource
     private ApplicationContext applicationContext;
+
+    @Resource
+    private UserStatus userStatus;
 
     public HBox getHBoxGroup() {
         return hBoxGroup;

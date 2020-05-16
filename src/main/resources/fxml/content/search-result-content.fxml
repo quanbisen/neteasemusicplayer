@@ -23,10 +23,10 @@
                      <center>
                         <TableView fx:id="tableViewSong" onMouseClicked="#onClickedTableView" prefHeight="292.0" prefWidth="516.0" style="-fx-padding: 0;">
                            <columns>
-                              <TableColumn fx:id="nameColumn" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="歌名" />
-                              <TableColumn fx:id="singerColumn" editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="歌手" />
-                              <TableColumn fx:id="albumColumn" editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="专辑" />
-                              <TableColumn fx:id="totalTimeColumn" editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="时长" />
+                              <TableColumn fx:id="columnName" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="200.0" resizable="false" text="歌名" />
+                              <TableColumn fx:id="columnSinger" editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="歌手" />
+                              <TableColumn fx:id="columnAlbum" editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="专辑" />
+                              <TableColumn fx:id="columnTotalTime" editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="时长" />
                            </columns>
                            <placeholder>
                               <Label text=""/>

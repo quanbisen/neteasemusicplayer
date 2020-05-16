@@ -28,7 +28,7 @@ import java.nio.charset.Charset;
  * @date 20-2-20
  */
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class CreateGroupService extends javafx.concurrent.Service<Void> {
 
     @Resource

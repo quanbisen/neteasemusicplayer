@@ -393,10 +393,14 @@ public class MyMediaPlayer extends PlayerStatus implements IMediaPlayer {
             }
             playSong();  //执行播放索引值对应的歌曲
         }
+        if (lyricContentController.isShow()){
+            lyricContentController.loadAlbumLyric();
+        }
     }
 
     @Override
     public void playNext() throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException {
+
         if (playListSongs.size() == 1) {     //播放列表的歌曲只有一首歌时执行的处理
             mediaPlayer.seek(new Duration(0));
         } else {      //否则播放列表的歌曲大于1，播放下一首歌曲
@@ -426,6 +430,9 @@ public class MyMediaPlayer extends PlayerStatus implements IMediaPlayer {
                 nextPlayIndexList.remove(index);
             }
             playSong();  //执行播放索引值对应的歌曲
+        }
+        if (lyricContentController.isShow()){
+            lyricContentController.loadAlbumLyric();
         }
     }
 

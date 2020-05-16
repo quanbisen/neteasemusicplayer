@@ -458,7 +458,16 @@ public final class SongUtils {
      * @param song
      * @return PlayListSong*/
     public static PlayListSong toPlayListSong(Song song){
-        return new PlayListSong(song.getName(), song.getSinger(), song.getAlbum(), song.getTotalTime(), song.getResourceURL(),song.getLyricURL(),song.getAlbumURL());
+        StringBuilder singerBuilder = new StringBuilder();
+        if (song.getSingerList() != null && song.getSingerList().size() > 0){
+            for (int i = 0; i < song.getSingerList().size(); i++) {
+                if (i != 0){
+                    singerBuilder.append("/");
+                }
+                singerBuilder.append(song.getSingerList().get(i).getName());
+            }
+        }
+        return new PlayListSong(song.getName(), singerBuilder.toString(), song.getAlbumName(), song.getTotalTime(), song.getResourceURL(),song.getLyricURL(),song.getAlbumURL());
     }
 
     /**把在线音乐对象模型转换成播放列表模型函数

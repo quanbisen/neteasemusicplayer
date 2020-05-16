@@ -74,6 +74,9 @@ public class LeftController {
     @Resource
     private ApplicationContext applicationContext;
 
+    @Resource
+    private UserStatus userStatus;
+
     /**"本地音乐"标签的内容容器*/
     private Parent localMusicParent;
 
@@ -292,6 +295,9 @@ public class LeftController {
             tabList.add(groupTabController.getHBoxGroup());
         }
         tabList.get(tabList.size() - 1).setUserData(group); //存储对象
+        if (!userStatus.getUser().getGroupList().contains(group)){
+            userStatus.getUser().getGroupList().add(group);     //把返回的对象添加到用户状态对象
+        }
     }
 
     /**根据歌单对象移除歌单标签的函数
@@ -302,8 +308,12 @@ public class LeftController {
                 tabList.get(i).setUserData(null);
                 vBoxTabContainer.getChildren().remove(tabList.get(i));
                 tabList.remove(i);
+                userStatus.getUser().getGroupList().remove(group);
                 XMLUtils.removeGroup(applicationContext.getBean(Config.class).getGroupsSongFile(),group);  //删除xml文件存储的歌单信息
             }
+        }
+        if (userStatus.getUser().getGroupList().contains(group)){
+            userStatus.getUser().getGroupList().remove(group);     //移除
         }
     }
 

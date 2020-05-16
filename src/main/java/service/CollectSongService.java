@@ -20,6 +20,7 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import pojo.Group;
+import pojo.Singer;
 import pojo.Song;
 import util.HttpClientUtils;
 import util.WindowUtils;
@@ -28,6 +29,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -35,7 +37,7 @@ import java.util.List;
  * @date 20-3-9
  */
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class CollectSongService extends javafx.concurrent.Service<Void> {
 
     @Resource
@@ -92,8 +94,21 @@ public class CollectSongService extends javafx.concurrent.Service<Void> {
 
                         Song song = new Song(); //创建song对象
                         song.setName(localSong.getName());
-                        song.setSinger(localSong.getSinger());
-                        song.setAlbum(localSong.getAlbum());
+                        List<Singer> singerList = new LinkedList<>();   //创建歌手集合对象
+                        if (localSong.getSinger().contains("/")){    //包含两个歌手字符串
+                            String[] singerArray = localSong.getSinger().split("/"); //切割字符串
+                            for (int i = 0; i < singerArray.length; i++) {
+                                Singer singer = new Singer();
+                                singer.setName(singerArray[i]);
+                                singerList.add(singer);
+                            }
+                        }else { //否则，这有一个歌手
+                            Singer singer = new Singer();
+                            singer.setName(localSong.getSinger());
+                            singerList.add(singer);
+                        }
+                        song.setSingerList(singerList);
+                        song.setAlbumName(localSong.getAlbum());
                         //尝试插入数据到数据库中,实现云同步.注意,后端数据库中找到了与song的名称,歌手,专辑相同的才进行插入
                         String responseStr = addPersistenceGroupSong(selectedGroup,song);
                         System.out.println(responseStr);

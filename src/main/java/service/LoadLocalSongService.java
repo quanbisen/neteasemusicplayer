@@ -20,7 +20,7 @@ import java.util.List;
  * @date 19-12-2
  */
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class LoadLocalSongService extends javafx.concurrent.Service<ObservableList<LocalSong>>{
 
     /**

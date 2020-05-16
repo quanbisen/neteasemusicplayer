@@ -13,7 +13,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import util.XMLUtils;
-
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;

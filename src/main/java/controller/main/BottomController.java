@@ -195,7 +195,9 @@ public class BottomController {
     /**显示专辑歌词面板函数*/
     public void showLyricPane() throws ReadOnlyFileException, IOException, TagException, InvalidAudioFrameException, CannotReadException {
         lyricContentController.setShow(true);
-//        lyricContentController.loadAlbumLyric();  //调用加载专辑、歌词的函数
+        if (vBoxLyricContentContainer != null){
+            lyricContentController.loadAlbumLyric();  //调用加载专辑、歌词的函数
+        }
         if (!centerController.getStackPane().getChildren().contains(vBoxLyricContentContainer)){
             centerController.getStackPane().getChildren().add(vBoxLyricContentContainer);
         }

@@ -41,7 +41,7 @@ import java.util.List;
  * @date 20-3-10
  */
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class LoadGroupSongService extends javafx.concurrent.Service<ObservableList<GroupSong>> {
 
     @Resource

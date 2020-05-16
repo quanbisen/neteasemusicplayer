@@ -85,14 +85,13 @@ BorderPane
     -fx-border-color:transparent;
     -fx-alignment: center-left;
     -fx-padding: 5 5 5 5;
-
 }
 /*设置表格第一列的样式*/
-#nameColumn.table-cell{
+.table-view .nameColumn{
     -fx-text-fill: #333333;
     -fx-padding:0 0 0 25;
 }
-#singerColumn.table-cell,#albumColumn.table-cell,#totalTimeColumn.table-cell{
+.table-view .singerColumn,.table-view .albumColumn,.table-view .totalTimeColumn{
     -fx-text-fill: #333333;
     -fx-padding:0 0 0 5;
 }

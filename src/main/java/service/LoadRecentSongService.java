@@ -18,7 +18,7 @@ import java.util.List;
  * @date 20-1-29
  */
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class LoadRecentSongService extends javafx.concurrent.Service<ObservableList<RecentSong>> {
 
     @Resource

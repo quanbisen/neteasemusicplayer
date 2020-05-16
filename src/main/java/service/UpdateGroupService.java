@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import java.nio.charset.Charset;
 
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class UpdateGroupService extends javafx.concurrent.Service<Void> {
 
     @Resource

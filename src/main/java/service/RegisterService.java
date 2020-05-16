@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import response.RegisterResponse;
 import util.HttpClientUtils;
-
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -25,7 +24,7 @@ import java.nio.charset.Charset;
  * @date 19-12-7
  */
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class RegisterService extends javafx.concurrent.Service<Void> {
 
     /**注入注册页面的控制器*/

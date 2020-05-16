@@ -29,7 +29,7 @@ import java.nio.charset.Charset;
  * @date 20-2-11
  */
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class ValidateUserService extends javafx.concurrent.Service<Void> {
 
     @Resource

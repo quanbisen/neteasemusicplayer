@@ -27,6 +27,10 @@ public class Config {
         return server + "/singer";
     }
 
+    public String getAlbumURL(){
+        return server + "/album";
+    }
+
     public String getUserURL(){
         return server + "/user";
     }

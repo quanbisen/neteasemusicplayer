@@ -30,7 +30,7 @@ import java.util.Date;
  * @date 5/3/20
  */
 @Service
-@Scope("singleton")
+@Scope("prototype")
 public class UpdateUserService extends javafx.concurrent.Service<Void>{
 
     @Resource
@@ -50,14 +50,17 @@ public class UpdateUserService extends javafx.concurrent.Service<Void>{
 
     @Override
     protected Task<Void> createTask() {
-        return new Task<Void>() {
+        Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 String url = config.getUserURL() + "/update";
                 String name = editUserContentController.getTfPetName().getText();
                 String description = editUserContentController.getTaDescription().getText();
                 String sex = editUserContentController.getCbSex().getValue();
-                Date birthday = Date.from(editUserContentController.getDpBirthday().getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+                Date birthday = null;
+                if (editUserContentController.getDpBirthday().getValue() != null){
+                    birthday = Date.from(editUserContentController.getDpBirthday().getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+                }
                 String province = editUserContentController.getCbProvince().getValue();
                 String city = editUserContentController.getCbCity().getValue();
                 User user = new User();
@@ -107,5 +110,6 @@ public class UpdateUserService extends javafx.concurrent.Service<Void>{
                 return null;
             }
         };
+        return task;
     }
 }
