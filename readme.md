@@ -29,32 +29,32 @@ sudo apt install ubuntu-restricted-extras ffmpeg
 
 ##### 功能结构图
 
-![](https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112358播放器客户端功能模块图.jpg)
+<div align='center'><img src='https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112358播放器客户端功能模块图.jpg'></img></div>
 
 ##### 1. 基本功能
 
-![](https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112351基本功能模块实现图.jpg)
+<div align='center'><img src='https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112351基本功能模块实现图.jpg'></img></div>
 
 ##### 2. 用户标识功能
 
-![](https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112434用户标识功能模块实现图.jpg)
+<div align='center'><img src='https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112434用户标识功能模块实现图.jpg'></img></div>
 
 ##### 3. 搜索功能模块
 
-![](https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112354搜索功能模块实现图.jpg)
+<div align='center'><img src='https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112354搜索功能模块实现图.jpg'></img></div>
 
 ##### 4. 最近播放功能模块
 
-![](https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112402最近播放功能模块实现图.jpg)
+<div align='center'><img src='https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112402最近播放功能模块实现图.jpg'></img></div>
 
 ##### 5. 歌单管理功能模块
 
-![](https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112409歌单管理功能模块实现图.jpg)
+<div align='center'><img src='https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112409歌单管理功能模块实现图.jpg'></img></div>
 
 ##### 6. 本地音乐功能模块
 
-![](https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603114249本地音乐功能模块实现图.jpg)
+<div align='center'><img src='https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603114249本地音乐功能模块实现图.jpg'></img></div>
 
 ##### 7. 歌词显示功能模块
 
-![](https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112425歌词显示功能模块实现图.jpg)
+<div align='center'><img src='https://images.cnblogs.com/cnblogs_com/quanbisen/1779769/o_200603112425歌词显示功能模块实现图.jpg'></img></div>
